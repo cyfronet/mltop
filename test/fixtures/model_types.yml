@@ -1,0 +1,19 @@
+text_to_text:
+  name: Text to text
+  from: text
+  to: text
+
+text_to_movie:
+  name: Text to movie
+  from: text
+  to: movie
+
+movie_to_text:
+  name: Movie to text
+  from: movie
+  to: text
+
+movie_to_movie:
+  name: Movie to movie
+  from: movie
+  to: movie
