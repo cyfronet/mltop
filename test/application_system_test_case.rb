@@ -1,5 +1,9 @@
 require "test_helper"
 
+ActiveSupport.on_load(:action_dispatch_system_test_case) do
+  ActionDispatch::SystemTesting::Server.silence_puma = true
+end
+
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   if ENV["CAPYBARA_SERVER_PORT"]
     served_by host: "rails-app", port: ENV["CAPYBARA_SERVER_PORT"]
