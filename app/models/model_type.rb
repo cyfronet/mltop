@@ -1,5 +1,10 @@
 class ModelType < ApplicationRecord
-  TYPES = { movie: "movie", text: "text" }
+  has_many :models,
+    dependent: :destroy
+
+  has_many :benchmarks,
+    class_name: "ModelBenchmark",
+    dependent: :destroy
 
   with_options presence: true do
     validates :name
@@ -7,6 +12,11 @@ class ModelType < ApplicationRecord
     validates :to
   end
 
-  enum from: TYPES, _prefix: true
-  enum to: TYPES, _prefix: true
+  TYPES = { movie: "movie", text: "text" }
+  enum :from, TYPES, prefix: true
+  enum :to, TYPES, prefix: true
+
+  def metrics
+    @metrics ||= benchmarks.flat_map(&:metrics)
+  end
 end

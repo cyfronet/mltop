@@ -1,8 +1,38 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<table class="table-auto border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm">
+  <thead class="bg-slate-50 dark:bg-slate-700">
+    <tr>
+      <th colspan="1" rowspan="2" class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+        Models
+      </th>
+      <% @model_type.benchmarks.each do |benchmark| %>
+        <th colspan="<%= benchmark.metrics.size %>" class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center font-black">
+          <%= benchmark.name %>
+        </th>
+        <% end %>
+    </tr>
+    <tr>
+      <% @model_type.metrics.each do |metric| %>
+        <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-center">
+          <%= link_to model_type_path(@model_type, mid: metric.id, o: metric_order(metric)), class: "flex items-center justify-center" do %>
+            <span class="mr-3"><%= metric.name %></span>
+            <%= sort_chevron(metric) %>
+          <% end %>
+        </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @models.each do |model| %>
+      <tr>
+        <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+          <%= model.name %>
+        </td>
+        <% model.ordered_scores(@model_type.metrics).each do |score| %>
+          <td class="border border-slate-300 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400 text-center">
+            <%= score.value %>
+          </td>
+        <% end %>
+      </tr>
     <% end %>
-
-    <h1 clss="font-bold text-4xl"><%= @model_type.name %></h1>
-</div>
+  </tbody>
+</table>

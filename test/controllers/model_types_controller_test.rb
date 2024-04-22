@@ -7,7 +7,7 @@ class ModelTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show model_type" do
-    get model_type_url(model_types(:text_to_text))
+    get model_type_url(model_types(:t2t))
     assert_response :success
   end
 end
