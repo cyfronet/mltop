@@ -26,10 +26,6 @@ class Model < ApplicationRecord
     #   .order(score: :asc)
   end
 
-  def self.ordered_by_benchmark(benchmark, order: :desc)
-
-  end
-
   def ordered_scores(metrics)
     metrics.map do |metric|
       scores.find { |s| s.metric_id == metric.id }
