@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :model_types, only: [ :index, :show ]
   resources :models, only: [ :show ]
+  resources :benchmarks, only: [ :show ], controller: "model_benchmarks", as: :model_benchmark
 
   get "up" => "rails/health#show", as: :rails_health_check
 
