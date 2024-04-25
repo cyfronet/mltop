@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root "model_types#index"
 
   resources :model_types, only: [ :index, :show ]
+  resources :models, only: [ :show ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 
