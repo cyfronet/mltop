@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_04_19_111624) do
+ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_19_111624) do
     t.datetime "updated_at", null: false
     t.index ["metric_id"], name: "index_models_scores_on_metric_id"
     t.index ["model_id"], name: "index_models_scores_on_model_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "plgrid_login"
+    t.string "email"
+    t.string "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "model_benchmarks", "model_types"

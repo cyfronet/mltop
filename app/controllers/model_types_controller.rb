@@ -1,4 +1,6 @@
 class ModelTypesController < ApplicationController
+  allow_unauthenticated_access only: [ :index, :show ]
+
   helper_method :selected_order, :selected_metric
 
   def index

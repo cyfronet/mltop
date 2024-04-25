@@ -16,6 +16,8 @@ gem "tailwindcss-rails"
 
 gem "bootsnap", require: false
 
+gem "omniauth_openid_connect"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "brakeman", require: false

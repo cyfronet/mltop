@@ -8,6 +8,23 @@
           <% end %>
         </div>
       </div>
+      <div class="flex items-center">
+        <div class="hidden md:ml-6 md:flex md:space-x-8">
+          <% if signed_in? %>
+            <%= link_to "Dashboard", root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
+            <%= link_to "My submissions", root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <% if signed_in? %>
+            <%= button_to "Log out", sign_out_path, method: :delete, class: "relative inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-black border border-black hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-black" %>
+          <% else %>
+            <%= link_to "Log in", sign_in_path, type:"button", class: "relative inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-black border border-black hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-black" %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
