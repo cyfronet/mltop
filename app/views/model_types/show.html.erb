@@ -1,5 +1,9 @@
+<% content_for :head do %>
+  <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+<% end %>
+
 <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm">
-  <thead class="bg-zinc-50 dark:bg-zinc-700">
+  <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
     <tr>
       <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
         Models
