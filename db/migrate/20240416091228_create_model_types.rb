@@ -4,8 +4,8 @@ class CreateModelTypes < ActiveRecord::Migration[7.2]
 
     create_table :model_types do |t|
       t.string :name
-      t.column :from, :format, null: false
-      t.column :to, :format, null: false
+      t.enum :from, enum_type: :format, null: false
+      t.enum :to, enum_type: :format, null: false
 
       t.timestamps
     end
