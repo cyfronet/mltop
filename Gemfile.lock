@@ -138,9 +138,6 @@ GEM
     irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
     loofah (2.22.0)
@@ -310,7 +307,6 @@ DEPENDENCIES
   capybara
   debug
   importmap-rails
-  jbuilder
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
@@ -321,7 +317,6 @@ DEPENDENCIES
   stimulus-rails
   tailwindcss-rails
   turbo-rails
-  tzinfo-data
   web-console
 
 BUNDLED WITH
