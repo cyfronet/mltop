@@ -6,7 +6,8 @@ class ModelTypesController < ApplicationController
   end
 
   def show
-    @model_type = ModelType.includes(benchmarks: :metrics, models: :scores).find(params[:id])
+    @model_type = ModelType.includes(benchmarks: :metrics).find(params[:id])
+
     @models = @model_type.models
     @models = @models.ordered_by_metric(selected_metric, order: selected_order) if selected_metric
   end

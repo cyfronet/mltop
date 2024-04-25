@@ -20,6 +20,14 @@ class Model < ApplicationRecord
     end
 
     order&.to_s == "desc" ? sorted.reverse : sorted
+    # Model.select("models.*, scores.value as score")
+    #   .joins(:scores)
+    #   .where(scores: { metric: })
+    #   .order(score: :asc)
+  end
+
+  def self.ordered_by_benchmark(benchmark, order: :desc)
+
   end
 
   def ordered_scores(metrics)
