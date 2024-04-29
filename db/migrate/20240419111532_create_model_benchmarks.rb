@@ -3,7 +3,7 @@ class CreateModelBenchmarks < ActiveRecord::Migration[7.2]
     create_table :model_benchmarks do |t|
       t.string :name
 
-      t.references :model_type, null: false, foreign_key: true
+      t.references :task, null: false, foreign_key: true
 
       t.timestamps
     end

@@ -1,5 +1,5 @@
 class ModelBenchmark < ApplicationRecord
-  belongs_to :model_type
+  belongs_to :task
 
   has_many :metrics,
     class_name: "ModelBenchmarks::Metric", foreign_key: "benchmark_id",

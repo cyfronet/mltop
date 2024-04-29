@@ -20,10 +20,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
 
   create_table "model_benchmarks", force: :cascade do |t|
     t.string "name"
-    t.bigint "model_type_id", null: false
+    t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["model_type_id"], name: "index_model_benchmarks_on_model_type_id"
+    t.index ["task_id"], name: "index_model_benchmarks_on_task_id"
   end
 
   create_table "model_benchmarks_metrics", force: :cascade do |t|
@@ -34,20 +34,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
     t.index ["benchmark_id"], name: "index_model_benchmarks_metrics_on_benchmark_id"
   end
 
-  create_table "model_types", force: :cascade do |t|
-    t.string "name"
-    t.enum "from", null: false, enum_type: "format"
-    t.enum "to", null: false, enum_type: "format"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "models", force: :cascade do |t|
     t.string "name"
-    t.bigint "model_type_id", null: false
+    t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["model_type_id"], name: "index_models_on_model_type_id"
+    t.index ["task_id"], name: "index_models_on_task_id"
   end
 
   create_table "models_scores", force: :cascade do |t|
@@ -60,6 +52,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
     t.index ["model_id"], name: "index_models_scores_on_model_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.enum "from", null: false, enum_type: "format"
+    t.enum "to", null: false, enum_type: "format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "plgrid_login"
@@ -69,9 +69,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "model_benchmarks", "model_types"
+  add_foreign_key "model_benchmarks", "tasks"
   add_foreign_key "model_benchmarks_metrics", "model_benchmarks", column: "benchmark_id"
-  add_foreign_key "models", "model_types"
+  add_foreign_key "models", "tasks"
   add_foreign_key "models_scores", "model_benchmarks_metrics", column: "metric_id"
   add_foreign_key "models_scores", "models"
 end

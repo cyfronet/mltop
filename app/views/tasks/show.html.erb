@@ -8,16 +8,16 @@
       <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
         Models
       </th>
-      <% @model_type.benchmarks.each do |benchmark| %>
+      <% @task.benchmarks.each do |benchmark| %>
         <th colspan="<%= benchmark.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
           <%= link_to benchmark.name, benchmark %>
         </th>
         <% end %>
     </tr>
     <tr>
-      <% @model_type.metrics.each do |metric| %>
+      <% @task.metrics.each do |metric| %>
         <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-          <%= link_to model_type_path(@model_type, mid: metric.id, o: metric_order(metric)), class: "flex items-center justify-center" do %>
+          <%= link_to task_path(@task, mid: metric.id, o: metric_order(metric)), class: "flex items-center justify-center" do %>
             <span class="mr-3"><%= metric.name %></span>
             <%= sort_chevron(metric) %>
           <% end %>
@@ -31,7 +31,7 @@
         <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 font-bold">
           <%= link_to model.name, model %>
         </td>
-        <% model.ordered_scores(@model_type.metrics).each do |score| %>
+        <% model.ordered_scores(@task.metrics).each do |score| %>
           <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
             <%= score.value %>
           </td>

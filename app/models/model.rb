@@ -1,5 +1,5 @@
 class Model < ApplicationRecord
-  belongs_to :model_type
+  belongs_to :task
 
   has_many :scores,
     class_name: "Models::Score",

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root "model_types#index"
+  root "tasks#index"
 
-  resources :model_types, only: [ :index, :show ]
+  resources :tasks, only: [ :index, :show ]
   resources :models, only: [ :show ]
   resources :benchmarks, only: [ :show ], controller: "model_benchmarks", as: :model_benchmark
 

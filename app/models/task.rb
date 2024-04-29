@@ -1,4 +1,4 @@
-class ModelType < ApplicationRecord
+class Task < ApplicationRecord
   has_many :models,
     dependent: :destroy
 

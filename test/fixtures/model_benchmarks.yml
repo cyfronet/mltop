@@ -2,8 +2,8 @@
 
 sacrebley:
   name: Sacrebley
-  model_type: t2t
+  task: t2t
 
 blueurt:
   name: Blueurt
-  model_type: t2t
+  task: t2t

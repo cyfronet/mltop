@@ -2,7 +2,7 @@ require "test_helper"
 
 class ModelTest < ActiveSupport::TestCase
   setup do
-    @t2t = model_types("t2t")
+    @t2t = tasks("t2t")
   end
 
   test "sorting by metric" do

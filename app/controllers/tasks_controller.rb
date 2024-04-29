@@ -1,16 +1,16 @@
-class ModelTypesController < ApplicationController
+class TasksController < ApplicationController
   allow_unauthenticated_access only: [ :index, :show ]
 
   helper_method :selected_order, :selected_metric
 
   def index
-    @model_types = ModelType.all
+    @tasks = Task.all
   end
 
   def show
-    @model_type = ModelType.includes(benchmarks: :metrics).find(params[:id])
+    @task = Task.includes(benchmarks: :metrics).find(params[:id])
 
-    @models = @model_type.models
+    @models = @task.models
     @models = @models.ordered_by_metric(selected_metric, order: selected_order) if selected_metric
   end
 
