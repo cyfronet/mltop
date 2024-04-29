@@ -1,6 +1,6 @@
 class CreateTasks < ActiveRecord::Migration[7.2]
   def change
-    create_enum :format, [ "movie", "text" ]
+    create_enum :format, [ "movie", "audio", "text" ]
 
     create_table :tasks do |t|
       t.string :name

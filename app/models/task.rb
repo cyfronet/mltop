@@ -12,7 +12,7 @@ class Task < ApplicationRecord
     validates :to
   end
 
-  TYPES = { movie: "movie", text: "text" }
+  TYPES = { movie: "movie", audio: "audio", text: "text" }
   enum :from, TYPES, prefix: true
   enum :to, TYPES, prefix: true
 

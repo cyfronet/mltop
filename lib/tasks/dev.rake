@@ -2,10 +2,10 @@ if Rails.env.local?
   namespace :dev do
     desc "Sample data for local development environment"
     task seed: "db:setup" do
-      t2t = Task.find_or_create_by(name: "Text to text", from: :text, to: :text)
-      t2m = Task.find_or_create_by(name: "Text to movie", from: :text, to: :movie)
-      m2m = Task.find_or_create_by(name: "Movie to movie", from: :movie, to: :movie)
-      m2t = Task.find_or_create_by(name: "Movie to text", from: :movie, to: :text)
+      t2t = Task.find_or_create_by(name: "Automatic Speech Recognition (ASR)", from: :audio, to: :text)
+      t2m = Task.find_or_create_by(name: "Speech-to-text Translation (ST)", from: :audio, to: :text)
+      m2m = Task.find_or_create_by(name: "Machine (text-to-text) Translation (MT)", from: :text, to: :text)
+      m2t = Task.find_or_create_by(name: "Lip Reading (LR)", from: :movie, to: :text)
 
       [ t2t, t2m, m2m, m2t ].each do |type|
         sacrebleu = type.benchmarks.find_or_create_by(name: "Sacrebleu")
