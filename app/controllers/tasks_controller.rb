@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.includes(benchmarks: :metrics).find(params[:id])
+    @task = Task.includes(evaluators: :metrics).find(params[:id])
 
     @models = @task.models
     @models = @models.ordered_by_metric(selected_metric, order: selected_order) if selected_metric
@@ -20,6 +20,6 @@ class TasksController < ApplicationController
     end
 
     def selected_metric
-      @metric ||= ModelBenchmarks::Metric.find_by(id: params[:mid]) if params[:mid].present?
+      @metric ||= Evaluators::Metric.find_by(id: params[:mid]) if params[:mid].present?
     end
 end

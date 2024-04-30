@@ -10,12 +10,12 @@ class ModelTest < ActiveSupport::TestCase
     m2 = create_model(name: "m2", blue: 3)
     m3 = create_model(name: "m3", blue: 2)
 
-    asc = Model.ordered_by_metric(model_benchmarks_metrics(:blue), order: :asc)
+    asc = Model.ordered_by_metric(evaluators_metrics(:blue), order: :asc)
     assert_equal m1, asc[0]
     assert_equal m3, asc[1]
     assert_equal m2, asc[2]
 
-    desc = Model.ordered_by_metric(model_benchmarks_metrics(:blue))
+    desc = Model.ordered_by_metric(evaluators_metrics(:blue))
     assert_equal m2, desc[0]
     assert_equal m3, desc[1]
     assert_equal m1, desc[2]
@@ -24,9 +24,9 @@ class ModelTest < ActiveSupport::TestCase
   def create_model(name:, blue:, chrf: 0, ter: 0)
     model = @t2t.models.create(name:)
 
-    model.scores.create(metric: model_benchmarks_metrics(:blue), value: blue)
-    model.scores.create(metric: model_benchmarks_metrics(:chrf), value: chrf)
-    model.scores.create(metric: model_benchmarks_metrics(:ter), value: ter)
+    model.scores.create(metric: evaluators_metrics(:blue), value: blue)
+    model.scores.create(metric: evaluators_metrics(:chrf), value: chrf)
+    model.scores.create(metric: evaluators_metrics(:ter), value: ter)
 
     model
   end

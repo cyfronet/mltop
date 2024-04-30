@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :tasks, only: [ :index, :show ]
   resources :models, only: [ :show ]
-  resources :benchmarks, only: [ :show ], controller: "model_benchmarks", as: :model_benchmark
+  resources :evaluators, only: [ :show ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 

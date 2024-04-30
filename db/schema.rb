@@ -18,20 +18,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "format", ["movie", "audio", "text"]
 
-  create_table "model_benchmarks", force: :cascade do |t|
+  create_table "evaluators", force: :cascade do |t|
     t.string "name"
     t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_model_benchmarks_on_task_id"
+    t.index ["task_id"], name: "index_evaluators_on_task_id"
   end
 
-  create_table "model_benchmarks_metrics", force: :cascade do |t|
+  create_table "evaluators_metrics", force: :cascade do |t|
     t.string "name"
-    t.bigint "benchmark_id", null: false
+    t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["benchmark_id"], name: "index_model_benchmarks_metrics_on_benchmark_id"
+    t.index ["evaluator_id"], name: "index_evaluators_metrics_on_evaluator_id"
   end
 
   create_table "models", force: :cascade do |t|
@@ -69,9 +69,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "model_benchmarks", "tasks"
-  add_foreign_key "model_benchmarks_metrics", "model_benchmarks", column: "benchmark_id"
+  add_foreign_key "evaluators", "tasks"
+  add_foreign_key "evaluators_metrics", "evaluators"
   add_foreign_key "models", "tasks"
-  add_foreign_key "models_scores", "model_benchmarks_metrics", column: "metric_id"
+  add_foreign_key "models_scores", "evaluators_metrics", column: "metric_id"
   add_foreign_key "models_scores", "models"
 end

@@ -8,9 +8,9 @@
       <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
         Models
       </th>
-      <% @task.benchmarks.each do |benchmark| %>
-        <th colspan="<%= benchmark.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
-          <%= link_to benchmark.name, benchmark %>
+      <% @task.evaluators.each do |evaluator| %>
+        <th colspan="<%= evaluator.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
+          <%= link_to evaluator.name, evaluator %>
         </th>
         <% end %>
     </tr>

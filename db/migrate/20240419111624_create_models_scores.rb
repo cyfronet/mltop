@@ -4,7 +4,7 @@ class CreateModelsScores < ActiveRecord::Migration[7.2]
       t.float :value
 
       t.references :model, null: false, foreign_key: true
-      t.references :metric, null: false, foreign_key: { to_table: "model_benchmarks_metrics" }
+      t.references :metric, null: false, foreign_key: { to_table: "evaluators_metrics" }
 
       t.timestamps
     end

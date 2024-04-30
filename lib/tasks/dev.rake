@@ -8,15 +8,15 @@ if Rails.env.local?
       m2t = Task.find_or_create_by(name: "Lip Reading (LR)", from: :movie, to: :text)
 
       [ t2t, t2m, m2m, m2t ].each do |type|
-        sacrebleu = type.benchmarks.find_or_create_by(name: "Sacrebleu")
+        sacrebleu = type.evaluators.find_or_create_by(name: "Sacrebleu")
         sacrebleu.metrics.find_or_create_by(name: "blue")
         sacrebleu.metrics.find_or_create_by(name: "chrf")
         sacrebleu.metrics.find_or_create_by(name: "ter")
 
-        bleurt = type.benchmarks.find_or_create_by(name: "bleurt")
+        bleurt = type.evaluators.find_or_create_by(name: "bleurt")
         bleurt.metrics.find_or_create_by(name: "bleurt")
 
-        metrics = type.benchmarks.flat_map(&:metrics)
+        metrics = type.metrics
 
         100.times do |i|
           model = type.models.create(name: "#{type.name} model #{i + 1}")

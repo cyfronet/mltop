@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 _fixture:
-    model_class: ModelBenchmarks::Metric
+    model_class: Evaluators::Metric
 
 blue:
   name: blue
-  benchmark: sacrebley
+  evaluator: sacrebley
 
 chrf:
   name: chrf
-  benchmark: sacrebley
+  evaluator: sacrebley
 
 ter:
   name: ter
-  benchmark: sacrebley
+  evaluator: sacrebley
 
 blueurt:
   name: blueurt
-  benchmark: sacrebley
+  evaluator: sacrebley

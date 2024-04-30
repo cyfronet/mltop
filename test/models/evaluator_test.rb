@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ModelBenchmarksControllerTest < ActionDispatch::IntegrationTest
+class EvaluatorTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

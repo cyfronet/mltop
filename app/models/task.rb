@@ -2,8 +2,8 @@ class Task < ApplicationRecord
   has_many :models,
     dependent: :destroy
 
-  has_many :benchmarks,
-    class_name: "ModelBenchmark",
+  has_many :evaluators,
+    class_name: "Evaluator",
     dependent: :destroy
 
   with_options presence: true do
@@ -17,6 +17,6 @@ class Task < ApplicationRecord
   enum :to, TYPES, prefix: true
 
   def metrics
-    @metrics ||= benchmarks.flat_map(&:metrics)
+    @metrics ||= evaluators.flat_map(&:metrics)
   end
 end
