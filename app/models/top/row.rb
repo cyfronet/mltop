@@ -11,10 +11,11 @@ class Top::Row
     @subtasks_count = subtasks_count
   end
 
-  def self.where(task:)
+  def self.where(task:, test_set: nil)
     scores = Score
       .includes(evaluation: { subtask_test_set: :test_set, model: {} })
       .joins(metric: :evaluator).where(evaluation: { subtask_test_sets: { test_sets: { task_id: task } } })
+    scores = scores.where(evaluation: { subtask_test_sets: { test_set_id: test_set } }) if test_set
 
     subtasks_count = task.subtasks.size
 

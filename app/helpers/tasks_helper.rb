@@ -1,4 +1,4 @@
-module ModelTypesHelper
+module TasksHelper
   def metric_order(test_set, metric)
     selected_order == "desc" ? "asc" : "desc" if test_set_metric_active?(test_set, metric)
   end
