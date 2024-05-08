@@ -1,9 +1,5 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 sacrebley:
   name: Sacrebley
-  task: t2t
 
 blueurt:
   name: Blueurt
-  task: t2t

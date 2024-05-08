@@ -1,0 +1,7 @@
+st_sacrebley:
+  task: st
+  evaluator: sacrebley
+
+st_blueurt:
+  task: st
+  evaluator: blueurt

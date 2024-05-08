@@ -137,6 +137,10 @@ GEM
       faraday (>= 1, < 3)
     faraday-net_http (3.1.0)
       net-http
+    fixture_factory (0.3.0)
+      activemodel (>= 5.2)
+      activerecord (>= 5.2)
+      activesupport (>= 5.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -370,6 +374,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  fixture_factory
   importmap-rails
   omniauth_openid_connect
   pg (~> 1.1)

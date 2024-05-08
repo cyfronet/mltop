@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :tasks, only: [ :index, :show ]
   resources :models, only: [ :show ]
   resources :evaluators, only: [ :show ]
+  resources :test_set, only: [ :show ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 

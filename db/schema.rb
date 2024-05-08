@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
+ActiveRecord::Schema[7.2].define(version: 2024_05_06_124558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,38 +18,86 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "format", ["movie", "audio", "text"]
 
-  create_table "evaluators", force: :cascade do |t|
-    t.string "name"
-    t.bigint "task_id", null: false
+  create_table "evaluations", force: :cascade do |t|
+    t.bigint "subtask_test_set_id", null: false
+    t.bigint "model_id", null: false
+    t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_evaluators_on_task_id"
+    t.index ["evaluator_id"], name: "index_evaluations_on_evaluator_id"
+    t.index ["model_id"], name: "index_evaluations_on_model_id"
+    t.index ["subtask_test_set_id"], name: "index_evaluations_on_subtask_test_set_id"
   end
 
-  create_table "evaluators_metrics", force: :cascade do |t|
+  create_table "evaluators", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "metrics", force: :cascade do |t|
     t.string "name"
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["evaluator_id"], name: "index_evaluators_metrics_on_evaluator_id"
+    t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 
   create_table "models", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.float "value"
+    t.bigint "metric_id", null: false
+    t.bigint "evaluation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["evaluation_id"], name: "index_scores_on_evaluation_id"
+    t.index ["metric_id", "evaluation_id"], name: "index_scores_on_metric_id_and_evaluation_id", unique: true
+    t.index ["metric_id"], name: "index_scores_on_metric_id"
+  end
+
+  create_table "subtask_test_sets", force: :cascade do |t|
+    t.bigint "subtask_id", null: false
+    t.bigint "test_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subtask_id", "test_set_id"], name: "index_subtask_test_sets_on_subtask_id_and_test_set_id", unique: true
+    t.index ["subtask_id"], name: "index_subtask_test_sets_on_subtask_id"
+    t.index ["test_set_id"], name: "index_subtask_test_sets_on_test_set_id"
+  end
+
+  create_table "subtasks", force: :cascade do |t|
+    t.string "name"
+    t.string "source_language"
+    t.string "target_language"
     t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_models_on_task_id"
+    t.index ["task_id"], name: "index_subtasks_on_task_id"
   end
 
-  create_table "models_scores", force: :cascade do |t|
-    t.float "value"
-    t.bigint "model_id", null: false
-    t.bigint "metric_id", null: false
+  create_table "task_evaluators", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["metric_id"], name: "index_models_scores_on_metric_id"
-    t.index ["model_id"], name: "index_models_scores_on_model_id"
+    t.index ["evaluator_id"], name: "index_task_evaluators_on_evaluator_id"
+    t.index ["task_id", "evaluator_id"], name: "index_task_evaluators_on_task_id_and_evaluator_id", unique: true
+    t.index ["task_id"], name: "index_task_evaluators_on_task_id"
+  end
+
+  create_table "task_models", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "model_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["model_id"], name: "index_task_models_on_model_id"
+    t.index ["task_id", "model_id"], name: "index_task_models_on_task_id_and_model_id", unique: true
+    t.index ["task_id"], name: "index_task_models_on_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -58,6 +106,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "test_sets", force: :cascade do |t|
+    t.string "name"
+    t.bigint "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_test_sets_on_task_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,9 +125,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_04_25_132715) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "evaluators", "tasks"
-  add_foreign_key "evaluators_metrics", "evaluators"
-  add_foreign_key "models", "tasks"
-  add_foreign_key "models_scores", "evaluators_metrics", column: "metric_id"
-  add_foreign_key "models_scores", "models"
+  add_foreign_key "evaluations", "evaluators"
+  add_foreign_key "evaluations", "models"
+  add_foreign_key "evaluations", "subtask_test_sets"
+  add_foreign_key "metrics", "evaluators"
+  add_foreign_key "scores", "evaluations"
+  add_foreign_key "scores", "metrics"
+  add_foreign_key "subtask_test_sets", "subtasks"
+  add_foreign_key "subtask_test_sets", "test_sets"
+  add_foreign_key "subtasks", "tasks"
+  add_foreign_key "task_models", "models"
+  add_foreign_key "task_models", "tasks"
+  add_foreign_key "test_sets", "tasks"
 end

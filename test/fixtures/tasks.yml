@@ -1,19 +1,19 @@
-t2t:
-  name: Text to text
+asr:
+  name: Automatic Speech Recognition (ASR)
+  from: audio
+  to: text
+
+st:
+  name: Speech-to-text Translation (ST)
+  from: audio
+  to: text
+
+mt:
+  name: Machine (text-to-text) Translation (MT)
   from: text
   to: text
 
-t2m:
-  name: Text to movie
-  from: text
-  to: movie
-
-m2t:
-  name: Movie to text
+lr:
+  name: Lips Reading (LR)
   from: movie
   to: text
-
-m2m:
-  name: Movie to movie
-  from: movie
-  to: movie

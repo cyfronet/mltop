@@ -7,7 +7,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show task" do
-    get task_url(tasks(:t2t))
+    get task_url(tasks(:st))
     assert_response :success
   end
 end

@@ -8,33 +8,38 @@
       <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
         Models
       </th>
-      <% @task.evaluators.each do |evaluator| %>
-        <th colspan="<%= evaluator.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
-          <%= link_to evaluator.name, evaluator %>
+      <% @task.test_sets.each do |test_set| %>
+        <th colspan="<%= @task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
+          <%= link_to test_set.name, test_set %>
         </th>
         <% end %>
     </tr>
     <tr>
-      <% @task.metrics.each do |metric| %>
-        <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-          <%= link_to task_path(@task, mid: metric.id, o: metric_order(metric)), class: "flex items-center justify-center" do %>
-            <span class="mr-3"><%= metric.name %></span>
-            <%= sort_chevron(metric) %>
-          <% end %>
-        </th>
+      <% @task.test_sets.each do |test_set| %>
+        <% @task.metrics.each do |metric| %>
+          <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
+            <%= link_to task_path(@task, mid: metric.id, tsid: test_set.id, o: metric_order(test_set, metric)), class: "flex items-center justify-center" do %>
+              <span class="mr-3"><%= metric.name %></span>
+              <%= sort_chevron(test_set, metric) %>
+            <% end %>
+          </th>
+        <% end %>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% @models.each do |model| %>
+    <% @rows.each do |row| %>
       <tr>
         <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 font-bold">
-          <%= link_to model.name, model %>
+          <%= link_to row.name, row.model %>
         </td>
-        <% model.ordered_scores(@task.metrics).each do |score| %>
-          <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
-            <%= score.value %>
-          </td>
+
+        <% @task.test_sets.each do |test_set| %>
+          <% @task.metrics.each do |metric| %>
+            <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
+              <%= row.score(test_set:, metric:).value %>
+            </td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

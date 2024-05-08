@@ -1,6 +1,6 @@
-class CreateModels < ActiveRecord::Migration[7.2]
+class CreateTestSets < ActiveRecord::Migration[7.2]
   def change
-    create_table :models do |t|
+    create_table :test_sets do |t|
       t.string :name
 
       t.references :task, null: false, foreign_key: true

@@ -1,17 +1,17 @@
 class TasksController < ApplicationController
   allow_unauthenticated_access only: [ :index, :show ]
 
-  helper_method :selected_order, :selected_metric
+  helper_method :selected_order, :selected_metric, :selected_test_set
 
   def index
     @tasks = Task.all
   end
 
   def show
-    @task = Task.includes(evaluators: :metrics).find(params[:id])
-
-    @models = @task.models
-    @models = @models.ordered_by_metric(selected_metric, order: selected_order) if selected_metric
+    @task = Task.includes(test_sets: :subtasks).find(params[:id])
+    @rows = Top::Row
+      .where(task: @task)
+      .order(test_set: selected_test_set, metric: selected_metric, order: selected_order)
   end
 
   private
@@ -20,6 +20,10 @@ class TasksController < ApplicationController
     end
 
     def selected_metric
-      @metric ||= Evaluators::Metric.find_by(id: params[:mid]) if params[:mid].present?
+      @metric ||= Metric.find_by(id: params[:mid]) if params[:mid].present?
+    end
+
+    def selected_test_set
+      @test_set ||= TestSet.find_by(id: params[:tsid]) if params[:tsid].present?
     end
 end

@@ -1,6 +1,8 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "fixture_factory"
+require_relative "factories"
 
 module ActiveSupport
   class TestCase
