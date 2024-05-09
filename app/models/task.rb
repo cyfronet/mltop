@@ -12,6 +12,7 @@ class Task < ApplicationRecord
 
   with_options presence: true do
     validates :name
+    validates :slug, length: { maximum: 15 }
     validates :from
     validates :to
   end

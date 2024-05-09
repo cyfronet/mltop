@@ -102,6 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_06_124558) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
+    t.string "slug"
     t.enum "from", null: false, enum_type: "format"
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false

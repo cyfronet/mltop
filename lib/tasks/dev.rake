@@ -2,10 +2,10 @@ if Rails.env.local?
   namespace :dev do
     desc "Sample data for local development environment"
     task seed: "db:setup" do
-      Task.find_or_create_by!(name: "Automatic Speech Recognition (ASR)", from: :audio, to: :text)
-      st = Task.find_or_create_by!(name: "Speech-to-text Translation (ST)", from: :audio, to: :text)
-      Task.find_or_create_by!(name: "Machine (text-to-text) Translation (MT)", from: :text, to: :text)
-      Task.find_or_create_by!(name: "Lips Reading (LR)", from: :movie, to: :text)
+      Task.find_or_create_by!(name: "Automatic Speech Recognition", slug: "ASR", from: :audio, to: :text)
+      st = Task.find_or_create_by!(name: "Speech-to-text Translation", slug: "ST", from: :audio, to: :text)
+      Task.find_or_create_by!(name: "Machine (text-to-text) Translation", slug: "MT", from: :text, to: :text)
+      Task.find_or_create_by!(name: "Lips Reading", slug: "LR", from: :movie, to: :text)
 
       en_pl = st.subtasks.find_or_create_by!(name: "en->pl", source_language: "en", target_language: "pl")
       en_it = st.subtasks.find_or_create_by!(name: "en->it", source_language: "en", target_language: "it")

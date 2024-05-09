@@ -1,19 +1,23 @@
 asr:
-  name: Automatic Speech Recognition (ASR)
+  name: Automatic Speech Recognition
+  slug: ASR
   from: audio
   to: text
 
 st:
-  name: Speech-to-text Translation (ST)
+  name: Speech-to-text Translation
+  slug: ST
   from: audio
   to: text
 
 mt:
-  name: Machine (text-to-text) Translation (MT)
+  name: Machine (text-to-text) Translation
+  slug: MT
   from: text
   to: text
 
 lr:
-  name: Lips Reading (LR)
+  name: Lips Reading
+  slug: LR
   from: movie
   to: text
