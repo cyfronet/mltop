@@ -2,6 +2,8 @@
   <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
 <% end %>
 
+<% breadcrumb :test_set, @test_set %>
+
 <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8 text-center"><%= @task.name %>: <%= @test_set.name %></h1>
 
 <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm">
