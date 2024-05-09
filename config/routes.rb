@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :tasks, only: [ :index, :show ] do
     resource :leaderboard, only: :show, module: :tasks
   end
-  resources :test_sets, only: [ :show ]
+  resources :test_sets, only: [ :show ] do
+    resource :leaderboard, only: :show, module: :test_sets
+  end
   resources :models, only: [ :show ]
   resources :evaluators, only: [ :show ]
   resources :test_set, only: [ :show ]
