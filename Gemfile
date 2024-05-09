@@ -18,6 +18,8 @@ gem "bootsnap", require: false
 
 gem "omniauth_openid_connect"
 
+gem "gretel"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "brakeman", require: false
