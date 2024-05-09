@@ -42,8 +42,10 @@
 
         <% @task.test_sets.each do |test_set| %>
           <% @task.metrics.each do |metric| %>
-            <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
-              <%= row.score(test_set:, metric:).value %>
+            <%- value = row.score(test_set:, metric:).value %>
+            <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center"
+                style="background-color: <%= interpolate_color(value) %>">
+              <%= value %>
             </td>
           <% end %>
         <% end %>
