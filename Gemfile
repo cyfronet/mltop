@@ -19,6 +19,7 @@ gem "bootsnap", require: false
 gem "omniauth_openid_connect"
 
 gem "gretel"
+gem "active_link_to"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

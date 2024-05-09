@@ -1,5 +1,6 @@
-class TasksController < ApplicationController
-  allow_unauthenticated_access only: [ :index, :show ]
+class Tasks::LeaderboardsController < ApplicationController
+  allow_unauthenticated_access only: [ :show ]
+
 
   helper_method :selected_order, :selected_metric, :selected_test_set
 
@@ -8,7 +9,10 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.includes(:test_sets, :subtasks).find(params[:id])
+    @task = Task.includes(:test_sets, :metrics).find(params[:task_id])
+    @rows = Top::Row
+      .where(task: @task)
+      .order(test_set: selected_test_set, metric: selected_metric, order: selected_order)
   end
 
   private

@@ -97,6 +97,9 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    active_link_to (1.0.5)
+      actionpack
+      addressable
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
@@ -373,6 +376,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_link_to
   bootsnap
   brakeman
   capybara

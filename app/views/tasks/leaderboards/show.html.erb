@@ -1,0 +1,53 @@
+<% content_for :head do %>
+  <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+<% end %>
+
+<% breadcrumb :task_leaderboard, @task %>
+
+<h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8 text-center"><%= @task.name %> Leaderboard</h1>
+
+<%= render "tasks/menu", task: @task %>
+
+<table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm">
+  <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+    <tr>
+      <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
+        Models
+      </th>
+      <% @task.test_sets.each do |test_set| %>
+        <th colspan="<%= @task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
+          <%= link_to test_set.name, test_set_path(test_set) %>
+        </th>
+        <% end %>
+    </tr>
+    <tr>
+      <% @task.test_sets.each do |test_set| %>
+        <% @task.metrics.each do |metric| %>
+          <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
+            <%= link_to task_leaderboard_path(@task, mid: metric.id, tsid: test_set.id, o: metric_order(test_set, metric)), class: "flex items-center justify-center" do %>
+              <span class="mr-3"><%= metric.name %></span>
+              <%= sort_chevron(test_set, metric) %>
+            <% end %>
+          </th>
+        <% end %>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rows.each do |row| %>
+      <tr>
+        <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 font-bold">
+          <%= link_to row.name, row.model %>
+        </td>
+
+        <% @task.test_sets.each do |test_set| %>
+          <% @task.metrics.each do |metric| %>
+            <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
+              <%= row.score(test_set:, metric:).value %>
+            </td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
