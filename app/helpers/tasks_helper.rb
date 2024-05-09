@@ -16,13 +16,12 @@ module TasksHelper
       metric == selected_metric && test_set == selected_test_set
     end
 
-  def interpolate_color(metric)
+  def interpolate_color(metric_value)
+      value = [ 0, [ 100, metric_value ].min ].max
 
-      value = [0, [100, metric].min].max
-
-      red = [255, 0, 0]
-      yellow = [255, 255, 0]
-      green = [0, 255, 0]
+      red = [ 255, 0, 0 ]
+      yellow = [ 255, 255, 0 ]
+      green = [ 0, 255, 0 ]
 
       # Interpolate between red and yellow
       if value <= 50
@@ -37,6 +36,7 @@ module TasksHelper
           g = (yellow[1] + ratio * (green[1] - yellow[1])).to_i
           b = (yellow[2] + ratio * (green[2] - yellow[2])).to_i
       end
-      return "rgb(#{r}, #{g}, #{b})"
+
+      "rgb(#{r}, #{g}, #{b})"
   end
 end
