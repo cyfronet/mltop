@@ -1,0 +1,38 @@
+<%= test_set.description %>
+
+
+<table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm mt-5">
+  <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+    <tr>
+      <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
+        From\To
+      </th>
+
+      <% test_set.to_languages.each do |to_lang| %>
+        <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center">
+          <%= to_lang %>
+        </th>
+      <% end %>
+  </thead>
+  <tbody>
+    <% test_set.from_languages.each do |from_lang| %>
+      <tr>
+        <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
+          <%= from_lang %>
+        </td>
+
+
+        <% test_set.to_languages.each do |to_lang| %>
+          <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
+            <%= from_lang %> -> <%= to_lang %>
+          </th>
+        <% end %>
+      </tr>
+    <% end %>
+<table>
+
+<div class="mt-8 mb-20 flex justify-center">
+  <button type="button" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+    Download <%= test_set.name %> dataset
+  </button>
+</div>

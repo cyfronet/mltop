@@ -10,6 +10,8 @@ class Task < ApplicationRecord
   has_many :evaluators, through: :task_evaluators
   has_many :metrics, through: :evaluators
 
+  has_rich_text :description
+
   with_options presence: true do
     validates :name
     validates :slug, length: { maximum: 15 }

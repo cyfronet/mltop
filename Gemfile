@@ -25,6 +25,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
+  gem "faker"
 end
 
 group :development do
@@ -39,3 +40,5 @@ group :test do
   gem "selenium-webdriver"
   gem "fixture_factory"
 end
+
+gem "image_processing", "~> 1.12"

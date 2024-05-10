@@ -4,5 +4,7 @@ class Model < ApplicationRecord
 
   has_many :evaluations, dependent: :destroy
 
+  has_rich_text :description
+
   validates :name, presence: true
 end

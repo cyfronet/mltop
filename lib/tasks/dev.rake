@@ -1,11 +1,17 @@
 if Rails.env.local?
+
   namespace :dev do
     desc "Sample data for local development environment"
     task seed: "db:setup" do
+      include ActionView::Helpers::TextHelper
       Task.find_or_create_by!(name: "Automatic Speech Recognition", slug: "ASR", from: :audio, to: :text)
       st = Task.find_or_create_by!(name: "Speech-to-text Translation", slug: "ST", from: :audio, to: :text)
       Task.find_or_create_by!(name: "Machine (text-to-text) TRanslation", slug: "MT", from: :text, to: :text)
       Task.find_or_create_by!(name: "Lips Reading", slug: "LR", from: :movie, to: :text)
+
+      Task.all.each do |task|
+        task.update(description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" ")))
+      end
 
       en_pl = st.subtasks.find_or_create_by!(name: "en->pl", source_language: "en", target_language: "pl")
       en_it = st.subtasks.find_or_create_by!(name: "en->it", source_language: "en", target_language: "it")
@@ -17,6 +23,10 @@ if Rails.env.local?
       flores = st.test_sets.find_or_create_by!(name: "FLORES")
       flores.subtask_test_sets.find_or_create_by!(subtask: en_pl)
       flores.subtask_test_sets.find_or_create_by!(subtask: en_it)
+
+      [ mustc, flores ].each do |test_set|
+        test_set.update(description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
+      end
 
       sacrebleu = Evaluator.find_or_create_by!(name: "Sacrebleu")
       sacrebleu.metrics.find_or_create_by!(name: "blue")
