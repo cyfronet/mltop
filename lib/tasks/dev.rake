@@ -10,7 +10,10 @@ if Rails.env.local?
       Task.find_or_create_by!(name: "Lips Reading", slug: "LR", from: :movie, to: :text)
 
       Task.all.each do |task|
-        task.update(description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" ")))
+        task.update(
+          info: Faker::Lorem.paragraphs(number: 3).join(" "),
+          description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" "))
+        )
       end
 
       en_pl = st.subtasks.find_or_create_by!(name: "en->pl", source_language: "en", target_language: "pl")
@@ -44,6 +47,7 @@ if Rails.env.local?
 
         (ENV["MODELS_COUNT"]&.to_i || 10).times do |i|
           model = task.models.find_or_create_by!(name: "#{task.name} - Model #{i + 1}")
+          model.update(description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" ")))
 
           evaluators.each do |evaluator|
             subtasks_test_sets.each do |subtask_test_set|

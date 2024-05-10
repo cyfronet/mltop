@@ -1,19 +1,21 @@
 module NavHelper
-  def mltop_nav(&block)
-    nav = Nav.new(self)
+  def mltop_nav(manual: false, &block)
+    nav = Nav.new(self, manual)
     block.call(nav)
 
     nav.render
   end
+
   private
     class Nav
-      def initialize(view)
+      def initialize(view, manual = false)
         @view = view
+        @manual = manual
         @sections = {}
       end
 
-      def section(name, link)
-        @sections[name] = link
+      def section(name, link, active: nil)
+        @sections[name] = { link:, active: }
       end
 
       def render
@@ -35,14 +37,14 @@ module NavHelper
             tag.div class: "hidden sm:block" do
               tag.nav class: "isolate flex divide-x divide-gray-200 rounded-lg shadow", "aria-label" => "Tabs" do
                 @sections.map do |title, link|
-                  concat menu_link(title, link)
+                  concat menu_link(title, **link)
                 end
               end
             end
           end
 
-          def menu_link(title, link)
-            active = @view.is_active_link?(@view.url_for(link), :exclusive)
+          def menu_link(title, link:, active:)
+            active = @manual ? active : @view.is_active_link?(@view.url_for(link), :exclusive)
 
             options = { class: "text-gray-#{active ? 900 : 500} group relative min-w-0 flex-1 overflow-hidden bg-gray-50 py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10" }
             options["aria-current"] = "page" if active

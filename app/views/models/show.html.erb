@@ -1,5 +1,19 @@
-<div class="flex justify-between items-center mb-8">
-  <h1 class="font-bold text-4xl">
-    <%= @model.name %>
-  </h1>
+<h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8 text-center">
+  <%= @model.name %>
+</h1>
+
+<%= @model.description %>
+
+<div class="px-4 pt-12 sm:px-6 lg:px-8">
+  <%= mltop_nav(manual: true) do |nav| %>
+    <% @model.tasks.each do |task| %>
+      <% nav.section task.name, model_path(@model, tid: task.id), active: task == @task %>
+    <% end %>
+  <% end %>
 </div>
+
+<% if @task && @test_set && @metric %>
+  <%= render "scores", model: @model, task: @task, test_set: @test_set, test_sets: @test_sets, metric: @metric, metrics: @metrics %>
+<% else %>
+  <%= render "empty" %>
+<% end %>
