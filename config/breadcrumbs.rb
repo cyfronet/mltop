@@ -20,3 +20,7 @@ crumb :test_set_leaderboard do |test_set|
   link "Leaderboard", test_set_leaderboard_path(test_set)
   parent :test_set, test_set
 end
+
+crumb :model do |model|
+  link model.name, model
+end
