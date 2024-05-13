@@ -13,6 +13,6 @@
 </div>
 
 <section>
-  <p><%= test_set.name %> test set</p>
-  <p><%= metric.name %> metric</p>
+  <p><%= test_set.name %> <%= get_model_metric_on_given_test_set(model,metric,test_set) %> </p>
+  <p><%= metric.name %> metric </p>
 </section>
