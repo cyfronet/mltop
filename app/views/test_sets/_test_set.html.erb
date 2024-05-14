@@ -4,27 +4,36 @@
 <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm mt-5">
   <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
     <tr>
-      <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
+      <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left bg-white">
         From\To
       </th>
 
-      <% test_set.target_languages.each do |to_lang| %>
+      <% test_set.target_languages.each do |target_language| %>
         <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center">
-          <%= to_lang %>
+          <%= target_language %>
         </th>
       <% end %>
   </thead>
   <tbody>
-    <% test_set.source_languages.each do |from_lang| %>
+    <% test_set.source_languages.each do |source_language| %>
       <tr>
-        <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
-          <%= from_lang %>
+        <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center bg-zinc-50 dark:bg-zinc-700">
+          <%= source_language %>
         </td>
 
 
-        <% test_set.target_languages.each do |to_lang| %>
-          <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center">
-            <%= from_lang %> -> <%= to_lang %>
+        <% test_set.target_languages.each do |target_language| %>
+          <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400">
+            <%- subtask_test_set = test_set.for_subtask(source_language, target_language) %>
+            <% if subtask_test_set %>
+              <%= link_to subtask_test_set.input, class: "flex justify-center hover:text-black" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              <% end %>
+            <% else %>
+              -
+            <% end %>
           </th>
         <% end %>
       </tr>
