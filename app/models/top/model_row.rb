@@ -5,15 +5,9 @@ class Top::ModelRow
     @test_set = test_set
   end
 
-  def all_source_languages
-    @test_set.subtasks.map(&:source_language).uniq.sort
-  end
+  delegate :source_languages, :target_languages, to: :@test_set
 
-  def all_target_languages
-    @test_set.subtasks.map(&:target_language).uniq.sort
-  end
-
-  def get_subtask_specific_score(source_language, target_language)
+  def score(source_language, target_language)
     subtask = Subtask.find_by(source_language: source_language, target_language: target_language)
     evaluator = @metric.evaluator
     subtask_test_set = SubtaskTestSet.find_by(subtask: subtask, test_set: @test_set)
