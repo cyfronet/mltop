@@ -16,13 +16,21 @@ if Rails.env.local?
         )
       end
 
-      en_pl = st.subtasks.create!(name: "en->pl", source_language: "en", target_language: "pl")
-      en_it = st.subtasks.create!(name: "en->it", source_language: "en", target_language: "it")
+      languages = %w[ pl it de fr es pr th ]
+
+      subtasks =
+        languages
+          .product(languages)
+          .reject { |tuple| tuple.first == tuple.last }
+          .map do |source, target|
+            st.subtasks.create!(name: "#{source}->#{target}",
+                                source_language: source, target_language: target)
+          end
 
       mustc = st.test_sets.create!(name: "MUSTC", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
       flores = st.test_sets.create!(name: "FLORES", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
       [ mustc, flores ].each do |test_set|
-        [ en_pl, en_it ].each do |subtask|
+        subtasks.each do |subtask|
           test_set.subtask_test_sets.create!(
             subtask: subtask,
             input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "input.txt" },

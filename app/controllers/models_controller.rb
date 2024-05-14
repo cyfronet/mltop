@@ -12,6 +12,7 @@ class ModelsController < ApplicationController
 
     @test_set = find_by_query_param(@test_sets, :tsid)
     @metric = find_by_query_param(@metrics, :mid)
+    @model_row = Top::ModelRow.new(@model, @metric, @test_set)
   end
 
   private
