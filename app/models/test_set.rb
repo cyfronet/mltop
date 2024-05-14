@@ -9,11 +9,23 @@ class TestSet < ApplicationRecord
 
   validates :name, presence: true
 
-  def from_languages
-    %w[ en pl it ]
+  def source_languages
+    @source_languages ||= subtask_test_sets_cache.keys.map(&:first).uniq.sort
   end
 
-  def to_languages
-    %w[ en pl it ]
+  def target_languages
+    @target_languages ||= subtask_test_sets_cache.keys.map(&:second).uniq.sort
   end
+
+  def for_subtask(source_language, target_language)
+    subtask_test_sets_cache[[ source_language, target_language ]]
+  end
+
+  private
+    def subtask_test_sets_cache
+      @subtask_test_sets_cache ||=
+        subtask_test_sets.includes(:subtask).index_by do |sts|
+          [ sts.subtask.source_language, sts.subtask.target_language ]
+        end
+    end
 end
