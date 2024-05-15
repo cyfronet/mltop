@@ -2,7 +2,7 @@ if Rails.env.local?
 
   namespace :dev do
     desc "Sample data for local development environment"
-    task recreate: %w[ db:drop db:create db:migrate db:seed db:setup ] do
+    task recreate: %w[ db:drop db:create db:migrate db:seed ] do
       include ActionView::Helpers::TextHelper
       Task.create!(name: "Automatic Speech Recognition", slug: "ASR", from: :audio, to: :text)
       st = Task.create!(name: "Speech-to-text Translation", slug: "ST", from: :audio, to: :text)
