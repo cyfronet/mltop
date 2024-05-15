@@ -34,7 +34,7 @@ module NavHelper
           end
 
           def menu
-            tag.div class: "hidden sm:block" do
+            tag.div class: "block" do
               tag.nav class: "isolate flex divide-x divide-gray-200 rounded-lg shadow", "aria-label" => "Tabs" do
                 @sections.map do |title, link|
                   concat menu_link(title, **link)

@@ -1,4 +1,4 @@
-<div class=" mx-16 mt-5">
+<div class=" mx-16 mt-5 mb-5">
   <%= form_tag model_path(model), method: :get, class: "flex place-content-center" do %>
     <%= hidden_field_tag(:tid, task.id) %>
     <%# <%= label_tag "tsid", "Test set" %>
@@ -13,6 +13,32 @@
 </div>
 
 <section>
-  <p><%= test_set.name %> test set</p>
-  <p><%= metric.name %> metric</p>
+  <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm">
+    <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+      <tr>
+        <th colspan="1" rowspan="2" class="border border-white-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left" style="background-color: white;">
+        From\To
+      </th>
+        <% @model_row.target_languages.each do |target_language| %>
+          <th style="border-right: 1px solid #d1d5db;"><%= target_language %></th>        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @model_row.source_languages.each do |source_language| %>
+        <tr>
+          <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-black-800 dark:text-black-400 text-center"
+                style="background-color:#fafafa;">
+          <%= source_language %></td>
+          <% @model_row.target_languages.each do |target_language| %>
+              <%- score = @model_row.score(source_language, target_language) -%>
+              <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-black-800 dark:text-black-400 text-center"
+                style="background-color: <%= interpolate_color(score) unless score.nil? %>">
+              <%= score unless score.nil? %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </section>
