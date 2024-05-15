@@ -34,7 +34,7 @@
               <%- score = @model_row.score(source_language, target_language) -%>
               <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-black-800 dark:text-black-400 text-center"
                 style="background-color: <%= interpolate_color(score) unless score.nil? %>">
-              <%= score unless score.nil? %>
+              <%= score && number_with_precision(score, precision: 2) %>
             </td>
           <% end %>
         </tr>
