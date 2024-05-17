@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", github: "rails/rails", branch: "main"
+gem "rails", github: "rails/rails", branch: "7-2-stable"
 
 gem "puma", ">= 5.0"
 
