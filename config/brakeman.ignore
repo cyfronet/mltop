@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "ef7e7a982f3ec825ce39063440a691f0fb46b023f931660f63218b7cc78117be",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/test_sets/downloads_controller.rb",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(TestSet.find(params[:test_set_id]).all_inputs_zip_path, :type => \"application/zip\", :filename => (\"#{TestSet.find(params[:test_set_id]).name}.zip\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TestSets::DownloadsController",
+        "method": "show"
+      },
+      "user_input": "TestSet.find(params[:test_set_id]).all_inputs_zip_path",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "updated": "2024-05-22 15:22:24 +0200",
+  "brakeman_version": "6.1.2"
+}
