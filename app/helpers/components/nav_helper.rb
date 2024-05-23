@@ -1,4 +1,4 @@
-module NavHelper
+module Components::NavHelper
   def mltop_nav(manual: false, &block)
     nav = Nav.new(self, manual)
     block.call(nav)
