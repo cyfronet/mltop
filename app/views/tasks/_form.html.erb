@@ -1,0 +1,30 @@
+<%# locals: (task:) %>
+
+<%= form_with(model: task, class: "contents") do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+        <% task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-12">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <%= form.text_field :name, wrapper: "sm:col-span-4" %>
+      <%= form.text_field :slug, wrapper: "sm:col-span-2" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
+      <%= form.select :from, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
+      <%= form.select :to, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <%= link_to "Cancel", root_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
+    <%= form.submit %>
+  </div>
+<% end %>

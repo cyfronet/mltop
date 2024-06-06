@@ -1,9 +1,18 @@
 crumb :root do
-  link "Home", root_path
+  link "Tasks", root_path
 end
 
 crumb :task do |task|
   link task.name, task
+end
+
+crumb :new_task do |task|
+  link "New", new_task_path
+end
+
+crumb :edit_task do |task|
+  link "Edit", edit_task_path(task)
+  parent :task, task
 end
 
 crumb :task_leaderboard do |task|

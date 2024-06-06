@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.2]
       t.string :plgrid_login
       t.string :email
       t.string :uid
+      t.integer :roles_mask
 
       t.timestamps
     end

@@ -248,6 +248,8 @@ GEM
     public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
+    pundit (2.3.1)
+      activesupport (>= 3.0.0)
     racc (1.8.0)
     rack (3.0.11)
     rack-oauth2 (2.2.1)
@@ -287,6 +289,7 @@ GEM
       io-console (~> 0.5)
     rexml (3.2.8)
       strscan (>= 3.0.9)
+    role_model (0.8.2)
     rubocop (1.63.5)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -401,8 +404,10 @@ DEPENDENCIES
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
+  pundit
   rails!
   redis (>= 4.0.1)
+  role_model
   rubocop-rails-omakase
   selenium-webdriver
   stimulus-rails

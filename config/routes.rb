@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get "test_sets/show"
   root "tasks#index"
 
-  resources :tasks, only: [ :index, :show ] do
+  resources :tasks do
     resource :leaderboard, only: :show, module: :tasks
   end
   resources :test_sets, only: [ :show ] do

@@ -161,6 +161,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
     t.string "plgrid_login"
     t.string "email"
     t.string "uid"
+    t.integer "roles_mask"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

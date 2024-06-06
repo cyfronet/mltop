@@ -17,6 +17,8 @@ gem "tailwindcss-rails"
 gem "bootsnap", require: false
 
 gem "omniauth_openid_connect"
+gem "pundit"
+gem "role_model"
 
 gem "gretel"
 gem "active_link_to"
