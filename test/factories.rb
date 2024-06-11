@@ -7,6 +7,7 @@ class ActiveSupport::TestCase
   define_factories do
     factory(:model) do |count|
       {
+        owner: users("marek"),
         name: "model#{count}",
         tasks: [ tasks("st") ]
       }

@@ -1,5 +1,4 @@
 if Rails.env.local?
-
   namespace :dev do
     desc "Sample data for local development environment"
     task recreate: %w[ db:drop db:create db:migrate db:seed ] do
@@ -50,12 +49,18 @@ if Rails.env.local?
       st.task_evaluators.create!(evaluator: sacrebleu)
       st.task_evaluators.create!(evaluator: bleurt)
 
+      uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
+      me = User.create!(uid:, plgrid_login: "will-be-updated",
+                        email: "will@be.updated",
+                        roles_mask: 1)
+
       [ st ].each do |task|
         evaluators = task.evaluators
         subtasks_test_sets = SubtaskTestSet.joins(:subtask).where(subtask: { task: })
 
         (ENV["MODELS_COUNT"]&.to_i || 10).times do |i|
           model = task.models.create!(
+            owner: me,
             name: "#{task.name} - Model #{i + 1}",
             description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" "))
           )

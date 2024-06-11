@@ -1,0 +1,7 @@
+<% breadcrumb :submissions %>
+
+<%= mltop_title "My submissions" %>
+
+<ul role="list" class="divide-y divide-gray-100">
+  <%= render partial: "submission", collection: @models, as: :model %>
+</ul>

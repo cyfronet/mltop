@@ -83,8 +83,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
 
   create_table "models", force: :cascade do |t|
     t.string "name"
+    t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_models_on_owner_id"
   end
 
   create_table "scores", force: :cascade do |t|
@@ -172,6 +174,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
   add_foreign_key "evaluations", "models"
   add_foreign_key "evaluations", "subtask_test_sets"
   add_foreign_key "metrics", "evaluators"
+  add_foreign_key "models", "users", column: "owner_id"
   add_foreign_key "scores", "evaluations"
   add_foreign_key "scores", "metrics"
   add_foreign_key "subtask_test_sets", "subtasks"
