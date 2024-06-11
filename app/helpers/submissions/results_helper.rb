@@ -1,0 +1,2 @@
+module Submissions::ResultsHelper
+end

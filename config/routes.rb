@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :submissions do
+    get "evaluations/index"
+    get "results/index"
+  end
   get "test_sets/show"
   root "tasks#index"
 
@@ -13,7 +17,10 @@ Rails.application.routes.draw do
   resources :evaluators, only: [ :show ]
   resources :test_set, only: [ :show ]
 
-  resources :submissions
+  resources :submissions do
+    resources :results, only: :index, module: :submissions
+    resources :evaluations, only: :index, module: :submissions
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 

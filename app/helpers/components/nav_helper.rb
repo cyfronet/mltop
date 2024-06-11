@@ -50,8 +50,8 @@ module Components::NavHelper
         @sections = {}
       end
 
-      def section(name, link, active: nil)
-        @sections[name] = { link:, active: }
+      def section(name, link, active: nil, condition: :exlusive)
+        @sections[name] = { link:, active:, condition: }
       end
 
       def render
@@ -79,8 +79,8 @@ module Components::NavHelper
             end
           end
 
-          def menu_link(title, link:, active:)
-            active = @manual ? active : @view.is_active_link?(@view.url_for(link), :exclusive)
+          def menu_link(title, link:, active:, condition:)
+            active = @manual ? active : @view.is_active_link?(@view.url_for(link), condition)
 
             options = { class: "text-gray-#{active ? 900 : 500} group relative min-w-0 flex-1 overflow-hidden bg-gray-50 py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10" }
             options["aria-current"] = "page" if active

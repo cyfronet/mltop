@@ -1,5 +1,5 @@
 <% breadcrumb :submission, @model %>
 
-<%= mltop_title @model.name %>
+<%= render "submissions/header", model: @model %>
 
 <%= render "form", model: @model %>

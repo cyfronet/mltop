@@ -14,7 +14,7 @@
             <%- links.add "Dashboard", root_path, [[ "tasks", "tasks/leaderboards" ]] %>
             <%- links.add "Models", models_path, [ "models" ] %>
             <% if signed_in? %>
-              <%- links.add "My submissions", submissions_path, [ "submissions" ] %>
+              <%- links.add "My submissions", submissions_path, /submissions\/.*/ %>
             <% end %>
           <% end %>
         </div>
