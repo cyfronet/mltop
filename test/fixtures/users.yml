@@ -3,3 +3,9 @@ marek:
   email: marek@mltop.local
   plgrid_login: plgmarek
   uid: uid123
+
+szymon:
+  name: Szymon Szymkowski
+  email: szymon@mltop.local
+  plgrid_login: plgszymon
+  uid: uid123

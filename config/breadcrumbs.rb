@@ -33,3 +33,17 @@ end
 crumb :model do |model|
   link model.name, model
 end
+
+crumb :submissions do
+  link "My submissions", submissions_path
+end
+
+crumb :submission do |model|
+  link model.name, submission_path(model)
+  parent :submissions
+end
+
+crumb :new_submission do |model|
+  link "New submission", new_submission_path(model)
+  parent :submissions
+end

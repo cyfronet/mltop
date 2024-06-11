@@ -1,0 +1,42 @@
+<%# locals: (model:) %>
+
+<%= form_with(model:, url:model.new_record? ? submissions_path : submission_path(@model), class: "contents") do |form| %>
+  <% if model.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(model.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+        <% model.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-12">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <%= form.text_field :name, wrapper: "col-span-full" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
+
+      <fieldset>
+        <legend class="text-sm font-semibold leading-6 text-gray-900">Compatibility map</legend>
+        <div class="mt-6 space-y-6">
+          <%= form.collection_check_boxes :task_ids, @tasks, :id, :name do |b| %>
+            <div class="relative flex gap-x-3">
+              <div class="flex h-6 items-center">
+                <%= b.check_box(class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600") %>
+              </div>
+              <div class="text-sm leading-6">
+                <%= b.label(class: "font-medium text-gray-900") %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <%= form.submit %>
+  </div>
+<% end %>

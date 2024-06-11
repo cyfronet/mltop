@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :evaluators, only: [ :show ]
   resources :test_set, only: [ :show ]
 
+  resources :submissions
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/*
