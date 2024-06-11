@@ -1,5 +1,5 @@
 class ModelsController < ApplicationController
-  allow_unauthenticated_access only: :show
+  allow_unauthenticated_access
 
   def index
     @models = Model.all

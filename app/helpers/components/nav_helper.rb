@@ -1,4 +1,11 @@
 module Components::NavHelper
+  def mltop_navlinks(&block)
+    nav_links = NavLinks.new(self)
+    block.call(nav_links)
+
+    nav_links.render
+  end
+
   def mltop_nav(manual: false, &block)
     nav = Nav.new(self, manual)
     block.call(nav)
@@ -7,6 +14,35 @@ module Components::NavHelper
   end
 
   private
+    class NavLinks
+      def initialize(view)
+        @view = view
+        @links = []
+      end
+
+      def add(name, url, condition = :exclusive)
+        @links << { name:, url:, active: active?(url, condition) }
+      end
+
+      def render
+        @view.capture do
+          @links.map do |link|
+            css = [
+              "inline-flex items-center px-1 pt-1 text-sm font-medium",
+              link[:active] ? "text-gray-900" : "text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            ].join(" ")
+
+            @view.concat @view.link_to(link[:name], link[:url], class: css)
+          end
+        end
+      end
+
+      private
+        def active?(link, condition)
+          @view.is_active_link?(@view.url_for(link), condition)
+        end
+    end
+
     class Nav
       def initialize(view, manual = false)
         @view = view
