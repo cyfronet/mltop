@@ -20,8 +20,7 @@ class SubmissionsController < ApplicationController
     if @model.save
       redirect_to submission_path(@model), notice: "Model created"
     else
-      @tasks = Task.all
-      render :new, status: :unprocessable_entity
+      render_error :new
     end
   end
 
@@ -29,11 +28,15 @@ class SubmissionsController < ApplicationController
     if @model.update(model_params)
       redirect_to submission_path(@model), notice: "Model updated"
     else
-      render :show, status: :unprocessable_entity
+      render_error :show
     end
   end
 
   private
+    def render_error(view)
+      @tasks = Task.all
+      render view, status: :unprocessable_entity
+    end
     def model_params
       params.required(:model).permit(:name, :description, task_ids: [])
     end
