@@ -12,6 +12,7 @@
         <div class="hidden md:ml-6 md:flex md:space-x-8">
           <% if signed_in? %>
             <%= link_to "Dashboard", root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
+            <%= link_to "Models", models_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
             <%= link_to "My submissions", submissions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" %>
           <% end %>
         </div>

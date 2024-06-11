@@ -1,4 +1,4 @@
-<% breadcrumbs.tap do |links| %>
+<% breadcrumbs(autoroot: false).tap do |links| %>
   <% if links.any? %>
     <div class="flex justify-center p-3">
       <nav class="flex" aria-label="Breadcrumb">

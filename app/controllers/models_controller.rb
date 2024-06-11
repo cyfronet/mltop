@@ -1,6 +1,10 @@
 class ModelsController < ApplicationController
   allow_unauthenticated_access only: :show
 
+  def index
+    @models = Model.all
+  end
+
   def show
     @model = Model.includes(:tasks).find(params[:id])
 

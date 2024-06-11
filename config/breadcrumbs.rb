@@ -1,13 +1,15 @@
-crumb :root do
-  link "Tasks", root_path
+crumb :dashboard do
+  link "Dashboard", root_path
 end
 
 crumb :task do |task|
   link task.name, task
+  parent :dashboard
 end
 
 crumb :new_task do |task|
   link "New", new_task_path
+  parent :tasks
 end
 
 crumb :edit_task do |task|
@@ -30,8 +32,13 @@ crumb :test_set_leaderboard do |test_set|
   parent :test_set, test_set
 end
 
+crumb :models do |model|
+  link "Models", models_path
+end
+
 crumb :model do |model|
   link model.name, model
+  parent :models
 end
 
 crumb :submissions do

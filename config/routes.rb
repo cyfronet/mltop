@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resource :leaderboard, only: :show, module: :test_sets
     resource :download, only: :show, module: :test_sets
   end
-  resources :models, only: [ :show ]
+  resources :models, only: [ :index, :show ]
   resources :evaluators, only: [ :show ]
   resources :test_set, only: [ :show ]
 
