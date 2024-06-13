@@ -1,6 +1,6 @@
 <div class="px-4 py-12 sm:px-6 lg:px-8">
   <%= mltop_nav do |nav| %>
-    <% nav.section "Summary", test_set_path(test_set) %>
-    <% nav.section "Leaderboard", test_set_leaderboard_path(test_set) %>
+    <% nav.section "Summary", test_set_path(test_set), condition: [ "test_sets" ] %>
+    <% nav.section "Leaderboard", test_set_leaderboard_path(test_set), condition: [ "test_sets/leaderboards" ] %>
   <% end %>
 </div>
