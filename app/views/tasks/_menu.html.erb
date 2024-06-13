@@ -1,6 +1,6 @@
 <div class="px-4 py-12 sm:px-6 lg:px-8">
   <%= mltop_nav do |nav| %>
-    <% nav.section "Summary", task %>
-    <% nav.section "Leaderboard", [task, :leaderboard] %>
+    <% nav.section "Summary", task, condition: [ "tasks" ] %>
+    <% nav.section "Leaderboard", [task, :leaderboard], condition: [ "tasks/leaderboards" ] %>
   <% end %>
 </div>
