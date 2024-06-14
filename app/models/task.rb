@@ -22,4 +22,8 @@ class Task < ApplicationRecord
   TYPES = { video: "video", audio: "audio", text: "text" }
   enum :from, TYPES, prefix: true
   enum :to, TYPES, prefix: true
+
+  def to_s
+    "#{name} (#{slug})"
+  end
 end
