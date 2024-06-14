@@ -18,8 +18,7 @@ Rails.application.routes.draw do
   resources :test_set, only: [ :show ]
 
   resources :submissions do
-    resources :results, only: :index, module: :submissions
-    resources :evaluations, only: :index, module: :submissions
+    resources :hypotheses, only: :index, module: :submissions
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

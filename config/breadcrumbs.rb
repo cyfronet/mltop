@@ -55,12 +55,7 @@ crumb :new_submission do |model|
   parent :submissions
 end
 
-crumb :submission_results do |model|
-  link "Results", submission_results_path(model)
-  parent :submission, model
-end
-
-crumb :submission_evaluations do |model|
-  link "Evaluations", submission_evaluations_path(model)
+crumb :submission_hypotheses do |model|
+  link "Hypotheses", submission_hypotheses_path(model)
   parent :submission, model
 end

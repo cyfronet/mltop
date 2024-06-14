@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "format", ["movie", "audio", "text"]
+  create_enum "format", ["video", "audio", "text"]
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false

@@ -23,5 +23,5 @@ lr:
   name: Lips Reading
   slug: LR
   info: Short LR task info
-  from: movie
+  from: video
   to: text

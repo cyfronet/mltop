@@ -3,10 +3,25 @@ if Rails.env.local?
     desc "Sample data for local development environment"
     task recreate: %w[ db:drop db:create db:migrate db:seed ] do
       include ActionView::Helpers::TextHelper
+      # text to text
+      Task.create!(name: "Machine translation", slug: "MT", from: :text, to: :text)
+      Task.create!(name: "Sumarization", slug: "SUM", from: :text, to: :text)
+
+      # audio to text
       Task.create!(name: "Automatic Speech Recognition", slug: "ASR", from: :audio, to: :text)
-      st = Task.create!(name: "Speech-to-text Translation", slug: "ST", from: :audio, to: :text)
-      Task.create!(name: "Machine (text-to-text) TRanslation", slug: "MT", from: :text, to: :text)
-      Task.create!(name: "Lips Reading", slug: "LR", from: :movie, to: :text)
+      st = Task.create!(name: "Speech Translation", slug: "ST", from: :audio, to: :text)
+      Task.create!(name: "Speech Sumarization", slug: "SSUM", from: :audio, to: :text)
+      Task.create!(name: "Speech Question-Anwering", slug: "SQA", from: :audio, to: :text)
+      Task.create!(name: "Spoken Language Understanding", slug: "SLU", from: :audio, to: :text)
+
+      # video to text
+      Task.create!(name: "Lip Reading", slug: "LIPREAD", from: :video, to: :text)
+
+      # text to audio
+      Task.create!(name: "Text-to-Speech", slug: "TTS", from: :text, to: :audio)
+
+      # text to video
+      Task.create!(name: "Lep Generation", slug: "LIPGEN", from: :text, to: :audio)
 
       Task.all.each do |task|
         task.update(
@@ -59,10 +74,11 @@ if Rails.env.local?
         subtasks_test_sets = SubtaskTestSet.joins(:subtask).where(subtask: { task: })
 
         (ENV["MODELS_COUNT"]&.to_i || 10).times do |i|
-          model = task.models.create!(
+          model = Model.create!(
             owner: me,
             name: "#{task.name} - Model #{i + 1}",
-            description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" "))
+            description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" ")),
+            task_ids: [ task.id ]
           )
 
           evaluators.each do |evaluator|

@@ -3,7 +3,6 @@
 <div class="px-4 py-12 sm:px-6 lg:px-8">
   <%= mltop_nav do |nav| %>
     <%- nav.section "Model info", submission_path(model), condition: [ "submissions" ] %>
-    <%- nav.section "Results uploads", submission_results_path(model), condition: [ "submissions/results" ] %>
-    <%- nav.section "Evaluations", submission_evaluations_path(model), condition: [ "submissions/evaluations" ] %>
+    <%- nav.section "Hyphoteses", submission_hypotheses_path(model), condition: [ "submissions/hypotheses" ] %>
   <% end %>
 </div>
