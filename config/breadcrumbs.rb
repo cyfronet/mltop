@@ -55,7 +55,7 @@ crumb :new_submission do |model|
   parent :submissions
 end
 
-crumb :submission_hypotheses do |model|
-  link "Hypotheses", submission_hypotheses_path(model)
+crumb :submission_task do |model, task|
+  link "#{task.slug} Hypotheses", submission_task_path(model, task)
   parent :submission, model
 end
