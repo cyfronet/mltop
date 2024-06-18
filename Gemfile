@@ -13,6 +13,7 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
+gem "image_processing", "~> 1.12"
 
 gem "bootsnap", require: false
 
@@ -44,4 +45,7 @@ group :test do
   gem "fixture_factory"
 end
 
-gem "image_processing", "~> 1.12"
+group :production do
+  gem "sentry-ruby"
+  gem "sentry-rails"
+end
