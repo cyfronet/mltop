@@ -12,7 +12,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       realm: Rails.application.credentials.dig(:sso, :realm),
       identifier: Rails.application.credentials.dig(:sso, :identifier),
       secret: Rails.application.credentials.dig(:sso, :secret),
-      redirect_uri: "http://localhost:3000/auth/sso/callback"
+      redirect_uri: "#{Rails.application.credentials.dig(:sso, :redirect_uri_base)}/auth/sso/callback"
     }
 end
 
