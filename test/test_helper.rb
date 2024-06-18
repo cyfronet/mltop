@@ -15,7 +15,7 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
     OmniAuth.config.test_mode = true
 
-    def sign_in_as(name)
+    def sign_in_as(name, teams: [ "plggmeetween" ])
       user = users(name)
       OmniAuth.config.add_mock(
         "sso",
@@ -24,7 +24,12 @@ module ActiveSupport
           name: user.name,
           email: user.email,
           nickname: user.plgrid_login
-        }
+        },
+        extra: {
+          raw_info: {
+            groups: teams
+          }
+        },
       )
       get "/auth/sso/callback"
     end
