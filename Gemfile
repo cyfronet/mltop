@@ -24,6 +24,9 @@ gem "role_model"
 gem "gretel"
 gem "active_link_to"
 
+# app security
+gem "rack-attack"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "brakeman", require: false
