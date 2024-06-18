@@ -22,3 +22,12 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## ENV variables
+
+To customize the application you can set the following ENV variables:
+
+  * `HOST` - Application host used in `*_url` helpers.
+    Default is set to `127.0.0.1`.
+  * `SENTRY_DN` - if present Portal will sent error and performance
+    information to Sentry

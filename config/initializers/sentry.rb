@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+if Rails.env.production? && ENV["SENTRY_DSN"]
+  Sentry.init do |config|
+    config.dsn = ENV["SENTRY_DSN"]
+    config.breadcrumbs_logger = [ :active_support_logger, :http_logger ]
+
+    config.environment = ENV["SENTRY_ENVIRONMENT"] if ENV["SENTRY_ENVIRONMENT"].present?
+    config.enabled_environments = %w[production staging]
+
+    config.traces_sample_rate = 0.5
+
+    config.send_default_pii = true
+  end
+end
