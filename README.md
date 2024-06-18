@@ -1,27 +1,54 @@
-# README
+# SPEECHM (codename: mltop)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[SPEECHM](https://speechm.cloud.cyfronet.pl)
+(Speech Performance Evaluation Criteria and Holistic Metrics) - a
+benchmark to evaluate multimodal downstream tasks. Automated metrics available
+in a centralised evaluation server allow a quick and accessible approach to
+evaluate and compare different models. Besides the pure performance evaluation,
+we also intend to assess additional aspects of the models, such as real-time
+factors, biases, privacy awareness and the integration of additional context.
 
-Things you may want to cover:
+## Dependencies
 
-* Ruby version
+asdf-vm can be used to install dependencies below. [(asdf guide)](https://asdf-vm.com/guide/getting-started.html)
 
-* System dependencies
+Then add required plugins:
 
-* Configuration
+* MRI (`asdf plugin add ruby`)
 
-* Database creation
+Next run `asdf install`
 
-* Database initialization
+Further dependencies
+* PostgreSQL (`sudo apt-get install postgresql`)
+* PostgreSQL libpq-dev (`sudo apt-get install libpq-dev`)
 
-* How to run the test suite
+## DBMS Settings
 
-* Services (job queues, cache servers, search engines, etc.)
+You need to create user/role for your account in PostgreSQL. You can do it
+using the 'createuser' command line tool. Then, make sure to alter this user
+for rights to create databases.
 
-* Deployment instructions
+For example:
+`sudo -u postgres createuser name -s`
 
-* ...
+## Running in development mode
+
+You need to have `config/master.key` file to run an application in development
+mode. Contact @mkasztelnik for details.
+
+To make database preparation and dependencies you can use:
+
+```
+./bin/setup
+```
+
+To start only web application run:
+
+```
+bin/dev
+```
+
+Now you can point your browser into `http://localhost:3000`.
 
 ## ENV variables
 
@@ -31,3 +58,60 @@ To customize the application you can set the following ENV variables:
     Default is set to `127.0.0.1`.
   * `SENTRY_DN` - if present Portal will sent error and performance
     information to Sentry
+
+## Testing
+
+Some tests require Chrome headless installed. Please take a look at:
+https://developers.google.com/web/updates/2017/04/headless-chrome for manual. To
+install chrome on your debian based machine use following snippet:
+
+```
+curl -sS -L https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >
+/etc/apt/sources.list.d/google.list
+
+apt-get update -q
+apt-get install -y google-chrome-stable
+```
+
+To execute all tests run:
+
+```
+./bin/rails test
+./bin/rails test:system
+```
+
+## Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new pull request
+6. When feature is ready add reviewers and wait for feedback (at least one
+   approve should be given and all review comments should be resolved)
+
+## Populating database with fake data
+
+To setup development database and populate it with generated data run:
+
+```
+./bin/rails dev:recreate
+```
+
+It will drop existing database, create a new one and populate with generated
+data. Since the generated models need to be linked with the user script needs to
+create user entry in advance. To link created user entry with you account please
+add following entry into `.env` file.
+
+```
+UID=your-user-uid-from-keycloa
+```
+
+The simples way to discover your PLGrid SSO UID is to start the application with
+blank database, login though the PLGrid and inspect your UID by invoking
+following command in the rails console:
+
+```ruby
+User.first.uid
+```
