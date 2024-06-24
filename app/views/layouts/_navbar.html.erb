@@ -15,6 +15,9 @@
             <%- links.add "Models", models_path, [ "models" ] %>
             <% if signed_in? %>
               <%- links.add "My submissions", submissions_path, /submissions\/.*/ %>
+              <% if Current.user.admin? %>
+                <%- links.add "Adminland", admin_tasks_path, /admin\/.*/ %>
+              <% end %>
             <% end %>
           <% end %>
         </div>
@@ -22,9 +25,9 @@
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <% if signed_in? %>
-            <%= button_to "Log out", sign_out_path, method: :delete, class: "relative inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-black border border-black hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-black" %>
+            <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-primary" %>
           <% else %>
-            <%= link_to "Log in", sign_in_path, type:"button", class: "relative inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-black border border-black hover:bg-black hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-black" %>
+            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-primary" %>
           <% end %>
         </div>
       </div>

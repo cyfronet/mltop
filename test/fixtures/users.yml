@@ -2,10 +2,12 @@ marek:
   name: Marek Markowski
   email: marek@mltop.local
   plgrid_login: plgmarek
-  uid: uid123
+  uid: uid-marek
+  roles_mask: 1 # admin
 
 szymon:
   name: Szymon Szymkowski
   email: szymon@mltop.local
   plgrid_login: plgszymon
-  uid: uid123
+  uid: uid-szymon
+  roles_mask: 0

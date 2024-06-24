@@ -7,14 +7,9 @@ crumb :task do |task|
   parent :dashboard
 end
 
-crumb :new_task do |task|
+crumb :new_admin_task do |task|
   link "New", new_task_path
-  parent :tasks
-end
-
-crumb :edit_task do |task|
-  link "Edit", edit_task_path(task)
-  parent :task, task
+  parent :admin_tasks
 end
 
 crumb :task_leaderboard do |task|
@@ -58,4 +53,18 @@ end
 crumb :submission_task do |model, task|
   link "#{task.slug} Hypotheses", submission_task_path(model, task)
   parent :submission, model
+end
+
+crumb :admin_tasks do
+  link "Manage tasks", admin_tasks_path
+end
+
+crumb :admin_task do |task|
+  link task, admin_task_path(task)
+  parent :admin_tasks
+end
+
+crumb :edit_admin_task do |task|
+  link "Edit", edit_admin_task_path(task)
+  parent :admin_task, task
 end

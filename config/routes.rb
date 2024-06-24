@@ -17,6 +17,11 @@ Rails.application.routes.draw do
     resources :tasks, only: [ :index, :show ], module: :submissions
   end
 
+  namespace :admin do
+    resources :tasks
+    resources :test_sets
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/*

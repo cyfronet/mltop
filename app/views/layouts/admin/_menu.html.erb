@@ -1,0 +1,6 @@
+<div class="px-4 py-12 sm:px-6 lg:px-8">
+  <%= mltop_nav do |nav| %>
+    <% nav.section "Tasks", admin_tasks_path, condition: [ "admin/tasks" ] %>
+    <% nav.section "Test sets", admin_test_sets_path, condition: [ "admin/test_sets" ] %>
+  <% end %>
+</div>

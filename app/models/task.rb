@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
-  has_many :task_model, dependent: :destroy
-  has_many :models, through: :task_model
+  has_many :task_models, dependent: :destroy
+  has_many :models, through: :task_models
 
   has_many :subtasks, dependent: :destroy
 
