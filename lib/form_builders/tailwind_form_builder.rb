@@ -5,7 +5,7 @@ module FormBuilders
 
     TEXT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2".freeze
     SELECT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 mt-2".freeze
-    SUBMIT_BUTTON_STYLE = "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600".freeze
+    SUBMIT_BUTTON_STYLE = "btn btn-success".freeze
     LABEL_STYLE = "block text-sm font-medium leading-6 text-gray-900".freeze
     CHECKBOX_STYLE = "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600".freeze
 
@@ -23,7 +23,7 @@ module FormBuilders
 
     def submit(value = nil, options = {})
       custom_opts, opts = partition_custom_opts(options)
-      classes = apply_style_classes(SUBMIT_BUTTON_STYLE, custom_opts)
+      classes = join_classes(SUBMIT_BUTTON_STYLE, custom_opts[:class])
 
       super(value, { class: classes }.merge(opts))
     end

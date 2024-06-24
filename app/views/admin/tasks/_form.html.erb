@@ -1,6 +1,6 @@
 <%# locals: (task:) %>
 
-<%= form_with(model: task, class: "contents") do |form| %>
+<%= form_with(model: task, url: [:admin, task], class: "contents") do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="mt-6 flex items-center justify-end gap-x-6">
-    <%= link_to "Cancel", root_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
+    <%= link_to "Cancel", [:admin, task], class: "btn btn-primary" %>
     <%= form.submit %>
   </div>
 <% end %>

@@ -28,5 +28,14 @@ class ActiveSupport::TestCase
         value: Random.rand(100)
       }
     end
+
+    factory(:task) do |i|
+      {
+        name: "Task #{i}",
+        slug: "task#{i}",
+        from: "video",
+        to: "text"
+      }
+    end
   end
 end
