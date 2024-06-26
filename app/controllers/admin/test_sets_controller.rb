@@ -6,15 +6,17 @@ class Admin::TestSetsController < Admin::ApplicationController
   end
 
   def show
-    @test_set = TestSet.includes(:tasks).find(params[:id])
+    @test_set = TestSet.find(params[:id])
   end
 
   def new
     @test_set = TestSet.new
+    @tasks = Task.all
   end
 
   def create
     @test_set = TestSet.new(test_set_params)
+    @tasks = Task.all
     if @test_set.save
       redirect_to admin_test_set_path(@test_set), notice: "Test set was successfully created."
     else
@@ -23,6 +25,7 @@ class Admin::TestSetsController < Admin::ApplicationController
   end
 
   def edit
+    @tasks = Task.all
   end
 
   def update
@@ -34,8 +37,8 @@ class Admin::TestSetsController < Admin::ApplicationController
   end
 
   def destroy
-    if @test_set.delete
-      redirect_to admin_test_sets_path, notice: "Test set \"#{@test_set}\" was successfully deleted."
+    if @test_set.destroy
+      redirect_to admin_test_sets_path, notice: "Test set \"#{@test_set.name}\" was successfully deleted."
     else
       redirect_to admin_test_set_path(@test_set), alert: "Unable to delete test set."
     end
@@ -43,7 +46,7 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   private
     def test_set_params
-      params.required(:test_set).permit(:name, :slug, :description, :subtasks)
+      params.required(:test_set).permit(:name, :task_id, :description, :subtasks)
     end
 
     def find_test_set

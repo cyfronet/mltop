@@ -12,6 +12,8 @@ crumb :new_admin_task do |task|
   parent :admin_tasks
 end
 
+
+
 crumb :task_leaderboard do |task|
   link "Leaderboard", task_leaderboard_path(task)
   parent :task, task
@@ -24,6 +26,11 @@ end
 crumb :test_set do |test_set|
   link test_set.name, test_set_path(test_set)
   parent :test_sets
+end
+
+crumb :new_admin_test_set do |test_set|
+  link "New", new_admin_test_set_path
+  parent :admin_test_sets
 end
 
 crumb :test_set_leaderboard do |test_set|
@@ -66,6 +73,15 @@ end
 crumb :admin_task do |task|
   link task, admin_task_path(task)
   parent :admin_tasks
+end
+
+crumb :admin_test_sets do
+  link "Manage test sets", admin_test_sets_path
+end
+
+crumb :admin_test_set do |test_set|
+  link test_set, admin_test_set_path(test_set)
+  parent :admin_test_sets
 end
 
 crumb :edit_admin_task do |task|
