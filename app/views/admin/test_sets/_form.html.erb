@@ -1,0 +1,61 @@
+<%# locals: (test_set:) %>
+
+<%= form_with(model: test_set, url: [:admin, test_set], class: "contents") do |form| %>
+  <% if test_set.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(test_set.errors.count, "error") %> prohibited this test_set from being saved:</h2>
+
+      <ul>
+        <% test_set.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-12">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <%= form.text_field :name, wrapper: "sm:col-span-4" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
+      <%= form.collection_select :task_id, @tasks, :id, :name, { prompt: "Select a task" }, { class: "sm:col-span-4" } %>
+
+    </div>
+  </div>
+  <h3 class="mt-5 mb-2">Subtasks</h3> 
+  <div id="subtasks-container">
+  </div>
+  
+
+  <button id="add-subtask" type="button" class="btn btn-primary" style="margin-top: 20px;">
+  Add Subtask
+</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('add-subtask').addEventListener('click', function() {
+    const container = document.getElementById('subtasks-container');
+    const newFieldHTML = `
+      <div class="subtask-field" style="margin-top: 20px;">
+        <input type="text" name="subtasks[][source_language]" placeholder="Source Language" required>
+        <input type="text" name="subtasks[][target_language]" placeholder="Target Language" required>
+        <button type="button" class="remove-subtask btn btn-primary" style="margin-left: 10px;">Remove</button>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', newFieldHTML);
+  });
+
+  // Event listener for removing subtasks
+  document.getElementById('subtasks-container').addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-subtask')) {
+      e.target.parentElement.remove();
+    }
+  });
+});
+  </script>
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <%= link_to "Cancel", [:admin, test_set], class: "btn btn-primary" %>
+    <%= form.submit %>
+  </div>
+
+  
+<% end %>
