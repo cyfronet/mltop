@@ -81,6 +81,15 @@ To execute all tests run:
 ./bin/rails test:system
 ```
 
+## Becoming an admin
+
+We don't deliver roles management UI yet. To promote the regular user to an
+admin you need to user rails console (`./bin/rails c`) and then:
+
+```
+User.find_by(email: "user@email").update(roles: [:admin])
+```
+
 ## Contributing
 
 1. Fork the project
