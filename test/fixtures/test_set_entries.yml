@@ -1,0 +1,15 @@
+flores_en:
+  test_set: flores
+  language: en
+
+flores_pl:
+  test_set: flores
+  language: pl
+
+mustc_end:
+  test_set: mustc
+  language: en
+
+mustc_pl:
+  test_set: mustc
+  language: pl
