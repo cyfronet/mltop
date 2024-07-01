@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 028f92613b9e636087f595580722c655c4477313
+  revision: df028327844b6564be8d09075b52288260d4da42
   branch: 7-2-stable
   specs:
     actioncable (7.2.0.beta2)
@@ -69,7 +69,7 @@ GIT
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
-      logger
+      logger (>= 1.4.2)
       minitest (>= 5.1)
       tzinfo (~> 2.0, >= 2.0.5)
     rails (7.2.0.beta2)
@@ -198,11 +198,11 @@ GEM
     matrix (0.4.2)
     mini_magick (4.13.1)
     mini_mime (1.1.5)
-    minitest (5.23.1)
+    minitest (5.24.1)
     msgpack (1.7.2)
     net-http (0.4.1)
       uri
-    net-imap (0.4.13)
+    net-imap (0.4.14)
       date
       net-protocol
     net-pop (0.1.2)
@@ -262,7 +262,7 @@ GEM
     pundit (2.3.2)
       activesupport (>= 3.0.0)
     racc (1.8.0)
-    rack (3.1.3)
+    rack (3.1.4)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-oauth2 (2.2.1)
