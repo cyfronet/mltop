@@ -5,16 +5,16 @@ flores_en_input:
 
 flores_pl_input:
   name: input
-  record: flores_en_it (TestSetEntry)
+  record: flores_pl (TestSetEntry)
   blob: flores_pl_input_blob
 
 mustc_en_input:
   name: input
-  record: mustc_en_pl (TestSetEntry)
+  record: mustc_en (TestSetEntry)
   blob: mustc_en_input_blob
 
 mustc_pl_input:
   name: input
-  record: mustc_en_it (TestSetEntry)
+  record: mustc_pl (TestSetEntry)
   blob: mustc_pl_input_blob
 

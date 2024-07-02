@@ -1,7 +1,7 @@
 class Subtask < ApplicationRecord
   belongs_to :task
 
-  has_many :subtask_test_sets, dependent: :destroy
+  has_many :groundtruths, dependent: :destroy
 
   with_options presence: true do
     validates :name

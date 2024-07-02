@@ -37,18 +37,29 @@ if Rails.env.local?
           .product(languages)
           .reject { |tuple| tuple.first == tuple.last }
           .map do |source, target|
-            st.subtasks.create!(name: "#{source}->#{target}",
-                                source_language: source, target_language: target)
+            st.subtasks.create!(
+              name: "#{source}->#{target}",
+              source_language: source, target_language: target
+            )
           end
 
       mustc = st.test_sets.create!(name: "MUSTC", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
       flores = st.test_sets.create!(name: "FLORES", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
       [ mustc, flores ].each do |test_set|
+        entries_map =
+          languages
+            .map do |language|
+              test_set.entries.create!(
+                language:,
+                input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{language}.txt" }
+              )
+            end
+            .entries.index_by(&:language)
+
         subtasks.each do |subtask|
-          test_set.subtask_test_sets.create!(
-            subtask: subtask,
-            input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "input.txt" },
-            reference: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "input.txt" }
+          subtask.groundtruths.create!(
+            test_set_entry: entries_map[subtask.source_language],
+            input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{subtask.target_language}.txt" }
           )
         end
       end
@@ -70,27 +81,36 @@ if Rails.env.local?
                         roles_mask: 1)
 
       [ st ].each do |task|
-        evaluators = task.evaluators
-        subtasks_test_sets = SubtaskTestSet.joins(:subtask).where(subtask: { task: })
+        hypotheses_ids =
+          (0..(ENV["MODELS_COUNT"]&.to_i || 10)).map do |i|
+            model = Model.create!(
+              owner: me,
+              name: "#{task.name} - Model #{i + 1}",
+              description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" ")),
+              task_ids: [ task.id ]
+            )
 
-        (ENV["MODELS_COUNT"]&.to_i || 10).times do |i|
-          model = Model.create!(
-            owner: me,
-            name: "#{task.name} - Model #{i + 1}",
-            description: simple_format(Faker::Lorem.paragraphs(number: 25).join(" ")),
-            task_ids: [ task.id ]
-          )
-
-          evaluators.each do |evaluator|
-            subtasks_test_sets.each do |subtask_test_set|
-              evaluation = model.evaluations.create!(evaluator:, subtask_test_set:)
-
-              evaluator.metrics.each do |metric|
-                evaluation.scores.create!(metric:, value: Random.rand(100))
-              end
+            Groundtruth.joins(:subtask).where(subtask: { task_id: task }).map do |gt|
+              gt.hypotheses.create!(
+                model:,
+                input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "hypothesis.txt" }
+              )
             end
           end
-        end
+            .flatten.map(&:id)
+
+        evaluations_attrs =
+          task.evaluators.pluck(:id).product(hypotheses_ids).map do |evaluator_id, hypothesis_id|
+            { evaluator_id:, hypothesis_id: }
+          end
+        evaluations_ids = Evaluation.insert_all!(evaluations_attrs, returning: %w[ id ]).rows.flatten
+        metrics_ids = Metric.joins(evaluator: :tasks).where(evaluator: { tasks: task }).pluck(:id)
+
+        scores_attrs =
+          evaluations_ids.product(metrics_ids).map do |evaluation_id, metric_id|
+            { evaluation_id:, metric_id:, value: Random.rand(100) }
+          end
+        Score.insert_all!(scores_attrs)
       end
     end
   end

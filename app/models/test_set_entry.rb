@@ -1,5 +1,6 @@
 class TestSetEntry < ApplicationRecord
   belongs_to :test_set
+  has_many :groundtruths, dependent: :destroy
 
   has_one_attached :input
 

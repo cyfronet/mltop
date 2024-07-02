@@ -1,0 +1,7 @@
+flores_en_pl_st:
+  test_set_entry: flores_en
+  subtask: st_en_pl
+
+flores_en_it_st:
+  test_set_entry: flores_en
+  subtask: st_en_it
