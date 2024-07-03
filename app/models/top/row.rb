@@ -13,30 +13,31 @@ class Top::Row
 
   def self.where(task:, test_set: nil)
     scores = Score
-      .includes(evaluation: { subtask_test_set: :test_set, model: {} })
-      .joins(metric: :evaluator).where(evaluation: { subtask_test_sets: { test_sets: { task_id: task } } })
-    scores = scores.where(evaluation: { subtask_test_sets: { test_set_id: test_set } }) if test_set
+      .joins(evaluation: { hypothesis: { groundtruth: [ :subtask, :test_set_entry ] } })
+      .where(evaluation: { hypotheses: { groundtruths: { subtasks: { task_id: task } } } })
+    scores = scores.where(evaluation: { hypotheses: { groundtruths: { test_set_entities: { test_set_id: test_set } } } }) if test_set
 
+    scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, groundtruths.subtask_id, test_set_entries.test_set_id")
     subtasks_count = task.subtasks.size
 
-    rows = scores
-            .group_by { |score| score.evaluation.model }
-            .map { |model, scores| new(model, scores, subtasks_count) }
+    scores_by_model_id = scores.group_by { |score| score.model_id }
+    models = Model.where(id: scores_by_model_id.keys).index_by(&:id)
+    rows = scores_by_model_id.map { |model_id, scores| new(models[model_id], scores, subtasks_count) }
 
     Top::Rows.new(rows)
   end
 
   def score(test_set:, metric:, subtask: nil)
     scores = @scores.filter do |score|
-      (!test_set || score.evaluation.subtask_test_set.test_set_id == test_set.id) &&
+      (!test_set || score.test_set_id == test_set.id) &&
         (!metric || score.metric_id == metric.id)
     end
 
     scores = if subtask
-      scores.filter { |score| score.evaluation.subtask_test_set.subtask_id == subtask.id }
+      scores.filter { |score| score.subtask_id == subtask.id }
     else
       scores
-        .group_by { |score| [ score.metric_id, score.evaluation.subtask_test_set.test_set_id ] }
+        .group_by { |score| [ score.metric_id, score.test_set_id ] }
         .values.map do |list|
           Score.new(metric:, value: list.sum(&:value) / @subtasks_count)
         end
