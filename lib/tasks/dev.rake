@@ -54,7 +54,7 @@ if Rails.env.local?
                 input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{language}.txt" }
               )
             end
-            .entries.index_by(&:language)
+            .index_by(&:language)
 
         subtasks.each do |subtask|
           subtask.groundtruths.create!(
@@ -82,7 +82,7 @@ if Rails.env.local?
 
       [ st ].each do |task|
         hypotheses_ids =
-          (0..(ENV["MODELS_COUNT"]&.to_i || 10)).map do |i|
+          (1..(ENV["MODELS_COUNT"]&.to_i || 10)).map do |i|
             model = Model.create!(
               owner: me,
               name: "#{task.name} - Model #{i + 1}",
@@ -103,13 +103,20 @@ if Rails.env.local?
           task.evaluators.pluck(:id).product(hypotheses_ids).map do |evaluator_id, hypothesis_id|
             { evaluator_id:, hypothesis_id: }
           end
-        evaluations_ids = Evaluation.insert_all!(evaluations_attrs, returning: %w[ id ]).rows.flatten
-        metrics_ids = Metric.joins(evaluator: :tasks).where(evaluator: { tasks: task }).pluck(:id)
+        evaluations = Evaluation.insert_all!(evaluations_attrs, returning: %w[ id evaluator_id ]).rows
+        metrics = Metric
+          .joins(evaluator: :tasks)
+          .where(evaluator: { tasks: task })
+          .pluck(:id, :evaluator_id)
+          .group_by(&:second)
+          .transform_values { |v| v.map(&:first) }
 
         scores_attrs =
-          evaluations_ids.product(metrics_ids).map do |evaluation_id, metric_id|
-            { evaluation_id:, metric_id:, value: Random.rand(100) }
-          end
+          evaluations.map do |evaluation_id, evaluator_id|
+            metrics[evaluator_id].map do |metric_id|
+              { evaluation_id:, metric_id:, value: Random.rand(100) }
+            end
+          end.flatten
         Score.insert_all!(scores_attrs)
       end
     end
