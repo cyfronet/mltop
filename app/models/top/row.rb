@@ -9,6 +9,7 @@ class Top::Row
     @model = model
     @scores = scores
     @subtasks_count = subtasks_count
+    @cached_scores = {}
   end
 
   def self.where(task:, test_set: nil)
@@ -28,6 +29,10 @@ class Top::Row
   end
 
   def score(test_set:, metric:, subtask: nil)
+    @cached_scores[[ test_set, metric, subtask ]] ||= calculate_score(test_set:, metric:, subtask:)
+  end
+
+  def calculate_score(test_set:, metric:, subtask: nil)
     scores = @scores.filter do |score|
       (!test_set || score.test_set_id == test_set.id) &&
         (!metric || score.metric_id == metric.id)
