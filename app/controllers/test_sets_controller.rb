@@ -3,6 +3,6 @@ class TestSetsController < ApplicationController
 
   def show
     @test_set = TestSet.find(params[:id])
-    @task = @test_set.task
+    @tasks = @test_set.tasks
   end
 end

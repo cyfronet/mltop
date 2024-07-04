@@ -16,7 +16,7 @@ class ModelsController < ApplicationController
 
     @test_set = find_by_query_param(@test_sets, :tsid)
     @metric = find_by_query_param(@metrics, :mid)
-    @model_row = Model::Scores.new(model: @model, metric: @metric, test_set: @test_set)
+    @model_row = Model::Scores.new(model: @model, task: @task, metric: @metric, test_set: @test_set)
   end
 
   private

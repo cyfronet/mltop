@@ -1,0 +1,7 @@
+st_flores:
+  task: st
+  test_set: flores
+
+st_mustc:
+  task: st
+  test_set: mustc

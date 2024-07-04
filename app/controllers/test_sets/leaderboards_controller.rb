@@ -5,7 +5,8 @@ class TestSets::LeaderboardsController < ApplicationController
 
   def show
     @test_set = TestSet.find(params[:test_set_id])
-    @task = @test_set.task
+    @tasks = @test_set.tasks
+    @task = @tasks.first
 
     @rows = Top::Row
       .where(task: @task, test_set: @test_set)
