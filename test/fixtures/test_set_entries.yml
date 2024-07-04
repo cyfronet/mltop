@@ -6,7 +6,7 @@ flores_pl:
   test_set: flores
   language: pl
 
-mustc_end:
+mustc_en:
   test_set: mustc
   language: en
 
