@@ -16,7 +16,7 @@ class Top::Row
     scores = Score
       .joins(evaluation: { hypothesis: { groundtruth: [ :subtask, :test_set_entry ] } })
       .where(evaluation: { hypotheses: { groundtruths: { subtasks: { task_id: task } } } })
-    scores = scores.where(evaluation: { hypotheses: { groundtruths: { test_set_entities: { test_set_id: test_set } } } }) if test_set
+    scores = scores.where(evaluation: { hypotheses: { groundtruths: { test_set_entries: { test_set_id: test_set } } } }) if test_set
 
     scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, groundtruths.subtask_id, test_set_entries.test_set_id")
     subtasks_count = task.subtasks.size
