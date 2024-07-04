@@ -4,22 +4,22 @@ class Model::ScoresTest < ActiveSupport::TestCase
   test "model scores for selected metric and test set" do
     other_model = create(:model, name: "Other task", tasks: [ tasks(:st) ])
     model = create(:model, name: "Model", tasks: [ tasks(:st) ])
+    hypothesis_pl = create(:hypothesis, model:, groundtruth: groundtruths("flores_en_pl_st"))
+    hypothesis_it = create(:hypothesis, model:, groundtruth: groundtruths("flores_en_it_st"))
+    other_hypothesis = create(:hypothesis, model: other_model)
 
-    evaluation = create(:evaluation, model:,
-                        evaluator: evaluators(:sacrebley),
-                        subtask_test_set: subtask_test_sets(:flores_en_pl))
+    evaluation = create(:evaluation, hypothesis: hypothesis_pl,
+                        evaluator: evaluators(:sacrebley))
     create(:score, evaluation:, metric: metrics("blue"), value: 1)
     create(:score, evaluation:, metric: metrics("chrf"), value: 2)
 
-    evaluation = create(:evaluation, model:,
-                        evaluator: evaluators(:sacrebley),
-                        subtask_test_set: subtask_test_sets(:flores_en_it))
+    evaluation = create(:evaluation, hypothesis: hypothesis_it,
+                        evaluator: evaluators(:sacrebley))
     create(:score, evaluation:, metric: metrics("blue"), value: 3)
     create(:score, evaluation:, metric: metrics("chrf"), value: 4)
 
-    evaluation = create(:evaluation, model: other_model,
-                        evaluator: evaluators(:sacrebley),
-                        subtask_test_set: subtask_test_sets(:flores_en_pl))
+    evaluation = create(:evaluation, hypothesis: other_hypothesis,
+                        evaluator: evaluators(:sacrebley))
     create(:score, evaluation:, metric: metrics("blue"), value: 5)
     create(:score, evaluation:, metric: metrics("chrf"), value: 6)
 

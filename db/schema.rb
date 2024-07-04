@@ -57,20 +57,38 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
   end
 
   create_table "evaluations", force: :cascade do |t|
-    t.bigint "subtask_test_set_id", null: false
-    t.bigint "model_id", null: false
+    t.bigint "hypothesis_id", null: false
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["evaluator_id"], name: "index_evaluations_on_evaluator_id"
-    t.index ["model_id"], name: "index_evaluations_on_model_id"
-    t.index ["subtask_test_set_id"], name: "index_evaluations_on_subtask_test_set_id"
+    t.index ["hypothesis_id"], name: "index_evaluations_on_hypothesis_id"
   end
 
   create_table "evaluators", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "groundtruths", force: :cascade do |t|
+    t.bigint "subtask_id", null: false
+    t.bigint "test_set_entry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subtask_id", "test_set_entry_id"], name: "index_groundtruths_on_subtask_id_and_test_set_entry_id", unique: true
+    t.index ["subtask_id"], name: "index_groundtruths_on_subtask_id"
+    t.index ["test_set_entry_id"], name: "index_groundtruths_on_test_set_entry_id"
+  end
+
+  create_table "hypotheses", force: :cascade do |t|
+    t.bigint "model_id", null: false
+    t.bigint "groundtruth_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["groundtruth_id"], name: "index_hypotheses_on_groundtruth_id"
+    t.index ["model_id", "groundtruth_id"], name: "index_hypotheses_on_model_id_and_groundtruth_id", unique: true
+    t.index ["model_id"], name: "index_hypotheses_on_model_id"
   end
 
   create_table "metrics", force: :cascade do |t|
@@ -98,16 +116,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
     t.index ["evaluation_id"], name: "index_scores_on_evaluation_id"
     t.index ["metric_id", "evaluation_id"], name: "index_scores_on_metric_id_and_evaluation_id", unique: true
     t.index ["metric_id"], name: "index_scores_on_metric_id"
-  end
-
-  create_table "subtask_test_sets", force: :cascade do |t|
-    t.bigint "subtask_id", null: false
-    t.bigint "test_set_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["subtask_id", "test_set_id"], name: "index_subtask_test_sets_on_subtask_id_and_test_set_id", unique: true
-    t.index ["subtask_id"], name: "index_subtask_test_sets_on_subtask_id"
-    t.index ["test_set_id"], name: "index_subtask_test_sets_on_test_set_id"
   end
 
   create_table "subtasks", force: :cascade do |t|
@@ -150,6 +158,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "test_set_entries", force: :cascade do |t|
+    t.string "language", null: false
+    t.bigint "test_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language", "test_set_id"], name: "index_test_set_entries_on_language_and_test_set_id", unique: true
+    t.index ["test_set_id"], name: "index_test_set_entries_on_test_set_id"
+  end
+
   create_table "test_sets", force: :cascade do |t|
     t.string "name"
     t.bigint "task_id", null: false
@@ -171,16 +188,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "evaluations", "evaluators"
-  add_foreign_key "evaluations", "models"
-  add_foreign_key "evaluations", "subtask_test_sets"
+  add_foreign_key "evaluations", "hypotheses"
+  add_foreign_key "groundtruths", "subtasks"
+  add_foreign_key "groundtruths", "test_set_entries"
+  add_foreign_key "hypotheses", "groundtruths"
+  add_foreign_key "hypotheses", "models"
   add_foreign_key "metrics", "evaluators"
   add_foreign_key "models", "users", column: "owner_id"
   add_foreign_key "scores", "evaluations"
   add_foreign_key "scores", "metrics"
-  add_foreign_key "subtask_test_sets", "subtasks"
-  add_foreign_key "subtask_test_sets", "test_sets"
   add_foreign_key "subtasks", "tasks"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
+  add_foreign_key "test_set_entries", "test_sets"
   add_foreign_key "test_sets", "tasks"
 end

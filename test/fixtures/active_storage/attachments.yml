@@ -1,39 +1,20 @@
-flores_en_pl_input:
+flores_en_input:
   name: input
-  record: flores_en_pl (SubtaskTestSet)
-  blob: flores_en_pl_input_blob
+  record: flores_en (TestSetEntry)
+  blob: flores_en_input_blob
 
-flores_en_it_input:
+flores_pl_input:
   name: input
-  record: flores_en_it (SubtaskTestSet)
-  blob: flores_en_it_input_blob
+  record: flores_pl (TestSetEntry)
+  blob: flores_pl_input_blob
 
-flores_en_pl_reference:
-  name: reference
-  record: flores_en_pl (SubtaskTestSet)
-  blob: flores_en_pl_reference_blob
-
-flores_en_it_reference:
-  name: reference
-  record: flores_en_it (SubtaskTestSet)
-  blob: flores_en_it_reference_blob
-
-mustc_en_pl_input:
+mustc_en_input:
   name: input
-  record: mustc_en_pl (SubtaskTestSet)
-  blob: mustc_en_pl_input_blob
+  record: mustc_en (TestSetEntry)
+  blob: mustc_en_input_blob
 
-mustc_en_it_input:
+mustc_pl_input:
   name: input
-  record: mustc_en_it (SubtaskTestSet)
-  blob: mustc_en_it_input_blob
+  record: mustc_pl (TestSetEntry)
+  blob: mustc_pl_input_blob
 
-mustc_en_pl_reference:
-  name: reference
-  record: mustc_en_pl (SubtaskTestSet)
-  blob: mustc_en_pl_reference_blob
-
-mustc_en_it_reference:
-  name: reference
-  record: mustc_en_it (SubtaskTestSet)
-  blob: mustc_en_it_reference_blob

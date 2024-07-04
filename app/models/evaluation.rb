@@ -1,7 +1,6 @@
 class Evaluation < ApplicationRecord
-  belongs_to :model
   belongs_to :evaluator
-  belongs_to :subtask_test_set
+  belongs_to :hypothesis
 
   has_many :scores, dependent: :destroy
 end

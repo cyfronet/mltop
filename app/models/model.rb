@@ -5,7 +5,7 @@ class Model < ApplicationRecord
   has_many :tasks, through: :task_models
   accepts_nested_attributes_for :tasks, allow_destroy: true
 
-  has_many :evaluations, dependent: :destroy
+  has_many :hypothesis, dependent: :destroy
 
   has_rich_text :description
 

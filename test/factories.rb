@@ -13,17 +13,23 @@ class ActiveSupport::TestCase
       }
     end
 
+    factory(:hypothesis) do
+      {
+        groundtruth: groundtruths("flores_en_pl_st"),
+        input: { io: StringIO.new("hypothesis"), filename: "hypothesis.txt" }
+      }
+    end
+
     factory(:evaluation) do
       {
-        model: create(:model),
-        evaluator: evaluators(:blueurt),
-        subtask_test_set: subtask_test_sets(:flores_en_pl)
+        hypothesis: build(:hypothesis),
+        evaluator: evaluators(:blueurt)
       }
     end
 
     factory(:score) do
       {
-        evaluation: create(:evaluation),
+        evaluation: build(:evaluation),
         metric: metrics(:blueurt),
         value: Random.rand(100)
       }

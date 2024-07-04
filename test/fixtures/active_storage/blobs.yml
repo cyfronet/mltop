@@ -1,9 +1,5 @@
-flores_en_pl_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
-flores_en_it_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
-flores_en_pl_reference_blob: <%= ActiveStorage::FixtureSet.blob filename: "ref.txt" %>
-flores_en_it_reference_blob: <%= ActiveStorage::FixtureSet.blob filename: "ref.txt" %>
+flores_en_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
+flores_pl_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
 
-mustc_en_pl_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
-mustc_en_it_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
-mustc_en_pl_reference_blob: <%= ActiveStorage::FixtureSet.blob filename: "ref.txt" %>
-mustc_en_it_reference_blob: <%= ActiveStorage::FixtureSet.blob filename: "ref.txt" %>
+mustc_en_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
+mustc_pl_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
