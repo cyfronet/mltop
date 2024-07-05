@@ -6,14 +6,17 @@ class TestSets::LeaderboardsController < ApplicationController
   def show
     @test_set = TestSet.find(params[:test_set_id])
     @tasks = @test_set.tasks
-    @task = @tasks.first
 
     @rows = Top::Row
-      .where(task: @task, test_set: @test_set)
+      .where(task: selected_task, test_set: @test_set)
       .order(test_set: @test_set, metric: selected_metric, order: selected_order, subtask: selected_subtask)
   end
 
   private
+    def selected_task
+      @task ||= @tasks.detect { |t| t.id == params[:tid] } || @tasks.first
+    end
+
     def selected_test_set
       @test_set
     end
