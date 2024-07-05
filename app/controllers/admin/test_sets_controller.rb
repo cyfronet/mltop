@@ -15,8 +15,11 @@ class Admin::TestSetsController < Admin::ApplicationController
   end
 
   def create
-    @test_set = TestSet.new(test_set_params)
-    @tasks = Task.all
+    # Nie wiem jak tu do tego podejsc - czy to jest dobre rozwiazanie?
+    # W sensie, takie parametry wejsciowe sa ok, kolejna kwestia jak w widoku dodac tak
+    # abyt mozna bylo robic wiele subtaskow i jak potem to parsować i łaczyć tutaj z taskiem?
+    @test_set = TestSet.new(test_set_params.except(:subtask_ground_truth_file, :subtask_from, :subtask_to))
+
     if @test_set.save
       redirect_to admin_test_set_path(@test_set), notice: "Test set was successfully created."
     else
@@ -25,7 +28,6 @@ class Admin::TestSetsController < Admin::ApplicationController
   end
 
   def edit
-    @tasks = Task.all
   end
 
   def update
@@ -46,7 +48,7 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   private
     def test_set_params
-      params.required(:test_set).permit(:name, :task_id, :description, :subtasks)
+      params.required(:test_set).permit(:name, :description, :subtask_from, :subtask_to, :subtask_ground_truth_file)
     end
 
     def find_test_set
