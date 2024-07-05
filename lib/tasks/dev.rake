@@ -43,8 +43,12 @@ if Rails.env.local?
             )
           end
 
-      mustc = st.test_sets.create!(name: "MUSTC", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
-      flores = st.test_sets.create!(name: "FLORES", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
+      mustc = TestSet.create!(name: "MUSTC", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
+      flores = TestSet.create!(name: "FLORES", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
+
+      TaskTestSet.create!(task: st, test_set: mustc)
+      TaskTestSet.create!(task: st, test_set: flores)
+
       [ mustc, flores ].each do |test_set|
         entries_map =
           languages

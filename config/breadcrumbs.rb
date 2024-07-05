@@ -17,9 +17,13 @@ crumb :task_leaderboard do |task|
   parent :task, task
 end
 
+crumb :test_sets do
+  link "Test sets", test_sets_path
+end
+
 crumb :test_set do |test_set|
   link test_set.name, test_set_path(test_set)
-  parent :task, test_set.task
+  parent :test_sets
 end
 
 crumb :test_set_leaderboard do |test_set|

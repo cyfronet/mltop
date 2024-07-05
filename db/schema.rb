@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
+ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
     t.index ["task_id"], name: "index_task_models_on_task_id"
   end
 
+  create_table "task_test_sets", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "test_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_test_sets_on_task_id"
+    t.index ["test_set_id"], name: "index_task_test_sets_on_test_set_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.text "info"
@@ -169,10 +178,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
 
   create_table "test_sets", force: :cascade do |t|
     t.string "name"
-    t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_test_sets_on_task_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -200,6 +207,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_09_224306) do
   add_foreign_key "subtasks", "tasks"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
+  add_foreign_key "task_test_sets", "tasks"
+  add_foreign_key "task_test_sets", "test_sets"
   add_foreign_key "test_set_entries", "test_sets"
-  add_foreign_key "test_sets", "tasks"
 end

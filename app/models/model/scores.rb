@@ -1,7 +1,7 @@
 class Model::Scores
   attr_reader :source_languages, :target_languages
 
-  def initialize(model:, metric:, test_set:)
+  def initialize(model:, task:, metric:, test_set:)
     @test_set = test_set
     @scores_map = Score
       .joins(evaluation: { hypothesis: { groundtruth: [ :subtask, :test_set_entry ] } })
@@ -9,7 +9,7 @@ class Model::Scores
       .select("value, subtasks.source_language, subtasks.target_language")
       .map { |s| [ [ s.source_language, s.target_language ], s.value ] }.to_h
 
-    languages = Subtask.where(task_id: test_set.task_id).pluck(:source_language, :target_language)
+    languages = Subtask.where(task_id: task).pluck(:source_language, :target_language)
     @source_languages = languages.map(&:first).uniq.sort
     @target_languages = languages.map(&:last).uniq.sort
   end

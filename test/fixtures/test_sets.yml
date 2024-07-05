@@ -1,7 +1,5 @@
 flores:
   name: FLORES
-  task: st
 
 mustc:
   name: MUSTC
-  task: st

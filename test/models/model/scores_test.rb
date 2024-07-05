@@ -23,12 +23,12 @@ class Model::ScoresTest < ActiveSupport::TestCase
     create(:score, evaluation:, metric: metrics("blue"), value: 5)
     create(:score, evaluation:, metric: metrics("chrf"), value: 6)
 
-    scores = Model::Scores.new(model:, test_set: test_sets("flores"), metric: metrics("blue"))
+    scores = Model::Scores.new(model:, task: tasks("st"), test_set: test_sets("flores"), metric: metrics("blue"))
     assert_nil scores.score("en", "pt"), "Nil should be returned for non existing score"
     assert_equal 1, scores.score("en", "pl")
     assert_equal 3, scores.score("en", "it")
 
-    scores = Model::Scores.new(model:, test_set: test_sets("flores"), metric: metrics("chrf"))
+    scores = Model::Scores.new(model:, task: tasks("st"), test_set: test_sets("flores"), metric: metrics("chrf"))
     assert_nil scores.score("en", "pt"), "Nil should be returned for non existing score"
     assert_equal 2, scores.score("en", "pl")
     assert_equal 4, scores.score("en", "it")
