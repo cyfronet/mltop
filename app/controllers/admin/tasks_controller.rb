@@ -14,8 +14,9 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-
+    @task = Task.new(task_params.except(:test_sets))
+    associated_test_sets = TestSet.where(name: task_params[:test_sets])
+    @task.test_sets = associated_test_sets
     if @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully created."
     else
@@ -27,7 +28,10 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def update
-    if @task.update(task_params)
+    if @task.update(task_params.except(:test_sets))
+      associated_test_sets = TestSet.where(name: task_params[:test_sets])
+      @task.test_sets = associated_test_sets
+      @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -44,7 +48,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   private
     def task_params
-      params.required(:task).permit(:name, :slug, :description, :from, :to)
+      params.required(:task).permit(:name, :slug, :description, :from, :to, test_sets: [])
     end
 
     def find_task

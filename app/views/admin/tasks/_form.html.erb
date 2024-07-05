@@ -20,6 +20,7 @@
       <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <%= form.select :from, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
       <%= form.select :to, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
+      <%= form.select :test_sets, TestSet.all.map(& :name), multiple: true, include_blank: false, wrapper: "sm:col-span-1" %>
     </div>
   </div>
 
