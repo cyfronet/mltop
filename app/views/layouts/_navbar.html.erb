@@ -13,8 +13,9 @@
           <%= mltop_navlinks do |links| %>
             <%- links.add "Dashboard", root_path, [[ "tasks", "tasks/leaderboards" ]] %>
             <%- links.add "Models", models_path, [ "models" ] %>
+            <%- links.add "Test sets", test_sets_path, [[ "test_sets", "test_sets/leaderboards" ]] %>
             <% if signed_in? %>
-              <%- links.add "My submissions", submissions_path, /submissions\/.*/ %>
+              <%- links.add "My submissions", submissions_path, /submissions.*/ %>
               <% if Current.user.admin? %>
                 <%- links.add "Adminland", admin_tasks_path, /admin\/.*/ %>
               <% end %>

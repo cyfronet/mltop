@@ -1,0 +1,38 @@
+<%= test_set.description %>
+
+<table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm mt-5">
+  <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+    <tr>
+      <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left bg-white">
+        Language
+      </th>
+
+      <% test_set.languages.each do |language| %>
+        <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center">
+          <%= language %>
+        </th>
+      <% end %>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center bg-zinc-50 dark:bg-zinc-700">
+      </td>
+      <% test_set.languages.each do |language| %>
+        <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400">
+          <%- entry = test_set.entry_for_language(language) %>
+          <%= link_to entry.input, class: "flex justify-center hover:text-black" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<div class="mt-8 mb-20 flex justify-center">
+  <%= link_to test_set_download_path(test_set), class: "rounded-md bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" do %>
+    Download <%= test_set.name %> dataset
+  <% end %>
+</div>
