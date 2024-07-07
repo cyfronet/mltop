@@ -14,8 +14,8 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def create
-    @task = Task.new(task_params.except(:test_sets))
-    associated_test_sets = TestSet.where(name: task_params[:test_sets])
+    @task = Task.new(task_params.except(:test_set_ids))
+    associated_test_sets = TestSet.where(id: task_params[:test_set_ids])
     @task.test_sets = associated_test_sets
     if @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully created."
@@ -28,8 +28,8 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def update
-    if @task.update(task_params.except(:test_sets))
-      associated_test_sets = TestSet.where(name: task_params[:test_sets])
+    if @task.update(task_params.except(:test_set_ids))
+      associated_test_sets = TestSet.where(id: task_params[:test_set_ids])
       @task.test_sets = associated_test_sets
       @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully updated."
@@ -48,7 +48,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   private
     def task_params
-      params.required(:task).permit(:name, :slug, :description, :from, :to, test_sets: [])
+      params.required(:task).permit(:name, :slug, :description, :from, :to, test_set_ids: [])
     end
 
     def find_task

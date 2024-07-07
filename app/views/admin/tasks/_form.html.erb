@@ -19,8 +19,16 @@
       <%= form.text_field :slug, wrapper: "sm:col-span-2" %>
       <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <%= form.select :from, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
-      <%= form.select :to, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
-      <%= form.select :test_sets, TestSet.all.map(& :name), multiple: true, include_blank: false, wrapper: "sm:col-span-1" %>
+      <%= form.select :to , Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
+      <%
+=begin%>
+  TODO -  the creation of the test set checkboxes could possibly be ported to Turbo too,
+  as with many test sets parallel loading would be beneficial
+<%
+=end%>
+      <% TestSet.pluck(:id, :name).each do |test_set_id, test_set_name| %>
+        <%= form.check_box :test_set_ids,  {multiple: true, wrapper: "sm:col-span-1", label: test_set_name}, test_set_id, nil %>
+      <% end %> 
     </div>
   </div>
 
