@@ -9,6 +9,12 @@ class Groundtruth < ApplicationRecord
 
   validates :language, presence: true, uniqueness: { scope: :test_set_entry },
   inclusion: { in: LANGUAGES, message: "%{value} is not a correct language code" }
+  validates :test_set_entry, uniqueness: { scope: :subtask_id }
+  validate :attached_input
+
+  def attached_input
+    errors.add :base, "File has to be attached" unless input.attached?
+  end
 
   def to_s
     "#{test_set_entry.language}->#{language}"
