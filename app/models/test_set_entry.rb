@@ -12,4 +12,8 @@ class TestSetEntry < ApplicationRecord
     ext = File.extname(input_blob.filename.to_s)
     "#{test_set.name}--#{language}#{ext}"
   end
+
+  def name
+    language.concat(test_set.name)
+  end
 end
