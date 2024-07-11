@@ -1,0 +1,25 @@
+<%= turbo_frame_tag "groundtruth_form" do %>
+  <% if @groundtruth.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(@groundtruth.errors.count, "error") %> prohibited this groundtruth from being saved:</h2>
+      <ul>
+        <% @groundtruth.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: @groundtruth, url: admin_task_groundtruths_path, local: true, data: { controller: "load-entries" } do |f| %>
+    <%= f.collection_select :test_set_id, @test_sets, :id, :name, {selected: @test_set }, { id: 'task_test_set_id', data: { action: "change->load-entries#testSetChanged", "load-entries-target": "testSet" } } %>
+    <%= f.collection_select :test_set_entry_id, @test_set.entries, :id, :name, {selected: @groundtruth.test_set_entry_id }, { id: 'task_test_set_entry_id', data: { "load-entries-target": "entry" } } %>
+    <%= f.file_field :input %>
+    <%= f.text_field :language %>
+
+    <%= f.hidden_field :test_set_entries, value: @test_sets.map { |ts| { id: ts.id, entries: ts.entries.map { |e| { id: e.id, name: e.name } } } }.to_json, data: { "load-entries-target": "testSetEntries" } %>
+ <div>
+    <%= f.button :submit, class: "btn btn-success" %>
+    <%= link_to "Cancel", :back, class: "btn btn-primary" %>
+  </div>
+  <% end %>
+<% end %>
