@@ -14,7 +14,11 @@ class TestSets::LeaderboardsController < ApplicationController
 
   private
     def selected_task
-      @task ||= @tasks.detect { |t| t.id == params[:tid] } || @tasks.first
+      if params[:tid]
+        @task ||= @tasks.find(params[:tid])
+      else
+        @task = @tasks.first
+      end
     end
 
     def selected_test_set
