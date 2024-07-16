@@ -28,12 +28,23 @@
       </div>
 
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium leading-6 text-gray-900">Subtasks</dt>
+        <dt class="text-sm font-medium leading-6 text-gray-900">Test set entries</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-          <%= @test_set.subtasks.map(&:name).join(', ') %>
-  </dd>
+           <% @test_set.entries.each do |entry| %>
+           <div class="flex justify-between items-center py-2 border-b">
+              <span><%= entry.language %></span>
+                <button type="button" class="btn btn-warning">Download</button>
+                  <%= button_to "Delete", [:admin, entry], method: :delete, class: "btn btn-danger",
+                   form: { "data-turbo-confirm": "Are you sure you want to remove this test set entry? The groundtruth data will be lost!" } %>
+            </div>
+        <% end %>
+        </dd>
       </div>
-      
+      <%= turbo_frame_tag "add_new_entry" do %>
+        <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
+          <%= link_to "Add entry", [:add_new_entry, :admin, @test_set], type:"button", class: "btn btn-warning" %>
+        </div>
+      <% end %>
 
     </dl>
   </div>

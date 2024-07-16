@@ -10,6 +10,7 @@ class TestSet < ApplicationRecord
   has_rich_text :description
 
   validates :name, presence: true
+  accepts_nested_attributes_for :entries, allow_destroy: true
 
   def languages
     @languages = entries.map(&:language)

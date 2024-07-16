@@ -1,5 +1,5 @@
 class Admin::TestSetsController < Admin::ApplicationController
-  before_action :find_test_set, only: %i[edit update destroy]
+  before_action :find_test_set, only: %i[edit update destroy add_new_entry]
 
   def index
     @test_sets = TestSet.all
@@ -43,9 +43,14 @@ class Admin::TestSetsController < Admin::ApplicationController
     end
   end
 
+  def add_new_entry
+    # placeholder for now
+    @test_set = TestSet.find(params[:id])
+  end
+
   private
     def test_set_params
-      params.required(:test_set).permit(:name, :description)
+      params.required(:test_set).permit(:name, :description, entries_attributes: [ :id, :language, :input ])
     end
 
     def find_test_set

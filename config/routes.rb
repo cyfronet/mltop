@@ -26,6 +26,12 @@ Rails.application.routes.draw do
       resources :entries, only: :index, module: :test_sets
     end
     resources :evaluators
+    resources :test_sets do
+      member do
+        get :add_new_entry
+      end
+    end
+    resources :test_set_entries
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
