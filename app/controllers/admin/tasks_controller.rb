@@ -14,9 +14,7 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def create
-    @task = Task.new(task_params.except(:test_set_ids))
-    associated_test_sets = TestSet.where(id: task_params[:test_set_ids])
-    @task.test_sets = associated_test_sets
+    @task = Task.new(task_params)
     if @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully created."
     else
@@ -28,9 +26,7 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def update
-    if @task.update(task_params.except(:test_set_ids))
-      associated_test_sets = TestSet.where(id: task_params[:test_set_ids])
-      @task.test_sets = associated_test_sets
+    if @task.update(task_params)
       @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully updated."
     else
