@@ -22,7 +22,9 @@ Rails.application.routes.draw do
       resources :entries, only: :index, module: :tasks
       resources :groundtruths, only: [ :new, :create ], module: :tasks
     end
-    resources :test_sets
+    resources :test_sets do
+      resources :entries, only: :index, module: :test_sets
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

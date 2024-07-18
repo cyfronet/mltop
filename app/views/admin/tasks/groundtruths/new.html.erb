@@ -15,8 +15,6 @@
     <%= f.collection_select :test_set_entry_id, @test_set.entries, :id, :name, {selected: @groundtruth.test_set_entry_id }, { id: 'task_test_set_entry_id', data: { "load-entries-target": "entry" } } %>
     <%= f.file_field :input %>
     <%= f.text_field :language %>
-
-    <%= f.hidden_field :test_set_entries, value: @test_sets.map { |ts| { id: ts.id, entries: ts.entries.map { |e| { id: e.id, name: e.name } } } }.to_json, data: { "load-entries-target": "testSetEntries" } %>
  <div>
     <%= f.button :submit, class: "btn btn-success" %>
     <%= link_to "Cancel", :back, class: "btn btn-primary" %>

@@ -4,21 +4,32 @@ export default class extends Controller {
   static targets = ["testSet", "entry", "testSetEntries"];
 
   connect() {
-    this.testSetEntries = JSON.parse(this.testSetEntriesTarget.value);
+    this.loadEntries();
   }
 
-  testSetChanged() {
-    const selectedTestSetId = parseInt(this.testSetTarget.value);
-    const selectedTestSet = this.testSetEntries.find(testSet => testSet.id === selectedTestSetId);
-    
-    if (selectedTestSet) {
+  loadEntries() {
+    const testSetId = this.testSetTarget.value;
+
+    fetch(`/admin/test_sets/${testSetId}/entries`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
       this.entryTarget.innerHTML = '';
-      selectedTestSet.entries.forEach(entry => {
+
+      data.forEach(entry => {
         const option = document.createElement('option');
         option.value = entry.id;
         option.text = entry.name;
         this.entryTarget.appendChild(option);
       });
-    }
+    });
+  }
+
+  testSetChanged() {
+    this.loadEntries();
   }
 }
