@@ -44,7 +44,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   private
     def task_params
-      params.required(:task).permit(:name, :slug, :description, :from, :to, test_set_ids: [])
+      params.required(:task).permit(:name, :slug, :description, :from, :to)
     end
 
     def find_task
