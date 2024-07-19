@@ -6,4 +6,9 @@ class Groundtruth < ApplicationRecord
   has_one_attached :input
 
   validates :language, presence: true, uniqueness: { scope: :test_set_entry }
+
+
+  def to_s
+    "#{test_set_entry.language}->#{language}"
+  end
 end

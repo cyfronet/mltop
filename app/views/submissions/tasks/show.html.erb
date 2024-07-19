@@ -15,9 +15,9 @@
       </div>
     </div>
     <ul role="list" class="">
-      <% @task.subtasks.each do |subtask| %>
+      <% @task.groundtruths.each do |groundtruth| %>
         <li class="p-3 bg-white sm:rounded-lg sm:shadow mx-3 my-4">
-          <%= subtask.source_language %> -> <%= subtask.target_language %>
+          <%= groundtruth %>
         </li>
       <% end %>
     </ul>
