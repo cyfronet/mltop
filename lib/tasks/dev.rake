@@ -32,17 +32,6 @@ if Rails.env.local?
 
       languages = %w[ pl it de fr es pr th ]
 
-      subtasks =
-        languages
-          .product(languages)
-          .reject { |tuple| tuple.first == tuple.last }
-          .map do |source, target|
-            st.subtasks.create!(
-              name: "#{source}->#{target}",
-              source_language: source, target_language: target
-            )
-          end
-
       mustc = TestSet.create!(name: "MUSTC", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
       flores = TestSet.create!(name: "FLORES", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
 
@@ -58,13 +47,12 @@ if Rails.env.local?
                 input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{language}.txt" }
               )
             end
-            .index_by(&:language)
 
-        subtasks.each do |subtask|
-          subtask.groundtruths.create!(
-            test_set_entry: entries_map[subtask.source_language],
-            input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{subtask.target_language}.txt" }
-          )
+        entries_map.each do |entry|
+          languages.each do |language|
+            next if entry.language == language
+            Groundtruth.create(test_set_entry: entry, language:, task: st)
+          end
         end
       end
 
@@ -94,7 +82,7 @@ if Rails.env.local?
               task_ids: [ task.id ]
             )
 
-            Groundtruth.joins(:subtask).where(subtask: { task_id: task }).map do |gt|
+            Groundtruth.where(task:).map do |gt|
               gt.hypotheses.create!(
                 model:,
                 input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "hypothesis.txt" }
