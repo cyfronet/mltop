@@ -10,8 +10,7 @@ module Admin
       end
 
       def create
-        @groundtruth = Groundtruth.new(groundtruth_params.merge({ subtask_id: 1 }))
-        # @groundtruth = Groundtruth.new(groundtruth_params.merge)
+        @groundtruth = Groundtruth.new(groundtruth_params)
         if @groundtruth.save
           @task = Task.find(params[:task_id])
           redirect_to admin_task_path(@task), notice: "Groundpath succesfully created"
@@ -25,8 +24,8 @@ module Admin
 
       private
       def groundtruth_params
-        params.require(:groundtruth).permit(:test_set_entry_id, :input)
-        # params.permit(:test_set_entry_id, :input, :language)
+        params.require(:groundtruth).permit(:test_set_entry_id, :input, :language)
+          .merge({ task_id: params[:task_id] })
       end
     end
   end
