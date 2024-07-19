@@ -25,10 +25,10 @@ module TestSetsHelper
 
   private
     def subtask_metric_active?(subtask, metric)
-      metric == selected_metric && subtask == selected_subtask
+      metric == selected_metric && subtask == selected_groundtruth
     end
 
     def aggregated_metric_active?(metric)
-      metric == selected_metric && selected_subtask.nil?
+      metric == selected_metric && selected_groundtruth.nil?
     end
 end
