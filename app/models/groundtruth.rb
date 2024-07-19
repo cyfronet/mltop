@@ -9,7 +9,6 @@ class Groundtruth < ApplicationRecord
 
   validates :language, presence: true, uniqueness: { scope: :test_set_entry },
   inclusion: { in: LANGUAGES, message: "%{value} is not a correct language code" }
-  validates :test_set_entry, uniqueness: { scope: :subtask_id }
   validate :attached_input
 
   def attached_input
