@@ -72,12 +72,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
   end
 
   create_table "groundtruths", force: :cascade do |t|
-    t.bigint "subtask_id", null: false
+    t.bigint "task_id", null: false
     t.bigint "test_set_entry_id", null: false
+    t.string "language"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["subtask_id", "test_set_entry_id"], name: "index_groundtruths_on_subtask_id_and_test_set_entry_id", unique: true
-    t.index ["subtask_id"], name: "index_groundtruths_on_subtask_id"
+    t.index ["task_id"], name: "index_groundtruths_on_task_id"
     t.index ["test_set_entry_id"], name: "index_groundtruths_on_test_set_entry_id"
   end
 
@@ -116,16 +116,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
     t.index ["evaluation_id"], name: "index_scores_on_evaluation_id"
     t.index ["metric_id", "evaluation_id"], name: "index_scores_on_metric_id_and_evaluation_id", unique: true
     t.index ["metric_id"], name: "index_scores_on_metric_id"
-  end
-
-  create_table "subtasks", force: :cascade do |t|
-    t.string "name"
-    t.string "source_language"
-    t.string "target_language"
-    t.bigint "task_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_subtasks_on_task_id"
   end
 
   create_table "task_evaluators", force: :cascade do |t|
@@ -196,7 +186,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"
-  add_foreign_key "groundtruths", "subtasks"
+  add_foreign_key "groundtruths", "tasks"
   add_foreign_key "groundtruths", "test_set_entries"
   add_foreign_key "hypotheses", "groundtruths"
   add_foreign_key "hypotheses", "models"
@@ -204,7 +194,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
   add_foreign_key "models", "users", column: "owner_id"
   add_foreign_key "scores", "evaluations"
   add_foreign_key "scores", "metrics"
-  add_foreign_key "subtasks", "tasks"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
   add_foreign_key "task_test_sets", "tasks"
