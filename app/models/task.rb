@@ -4,8 +4,7 @@ class Task < ApplicationRecord
 
   has_many :models, through: :task_models
 
-  has_many :subtasks, dependent: :destroy
-
+  has_many :groundtruths, dependent: :destroy
   has_many :task_test_sets, dependent: :destroy
   has_many :test_sets, through: :task_test_sets
 

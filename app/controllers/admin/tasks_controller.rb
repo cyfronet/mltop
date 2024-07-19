@@ -5,7 +5,7 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def show
-    @task = Task.includes(:test_sets, :subtasks).find(params[:id])
+    @task = Task.includes(:test_sets).find(params[:id])
   end
 
   def new
