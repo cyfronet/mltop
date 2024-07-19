@@ -14,7 +14,7 @@
     <%= f.collection_select :test_set_id, @test_sets, :id, :name, {selected: @test_set }, { id: 'task_test_set_id', data: { action: "change->load-entries#testSetChanged", "load-entries-target": "testSet" } } %>
     <%= f.collection_select :test_set_entry_id, @test_set.entries, :id, :name, {selected: @groundtruth.test_set_entry_id }, { id: 'task_test_set_entry_id', data: { "load-entries-target": "entry" } } %>
     <%= f.file_field :input %>
-    <%= f.text_field :language %>
+    <%= f.select :language, Groundtruth::LANGUAGES %>
  <div>
     <%= f.button :submit, class: "btn btn-success" %>
     <%= link_to "Cancel", :back, class: "btn btn-primary" %>
