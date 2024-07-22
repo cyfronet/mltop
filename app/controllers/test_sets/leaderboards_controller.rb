@@ -14,11 +14,7 @@ class TestSets::LeaderboardsController < ApplicationController
 
   private
     def selected_task
-      if params[:tid]
-        @task ||= @tasks.find(params[:tid])
-      else
-        @task = @tasks.first
-      end
+      @task ||= @tasks.detect { |t| t.id.to_s == params[:tid] } || @tasks.first
     end
 
     def selected_test_set
