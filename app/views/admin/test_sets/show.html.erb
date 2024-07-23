@@ -25,15 +25,16 @@
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
           <%= @test_set.tasks.pluck(:name).join(', ') %>
   </dd>
-      </div>
-
-      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium leading-6 text-gray-900">Test set entries</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-         <%= render partial: "entry", collection: @test_set.entries, as: :entry %>
-           
-        </dd>
-      </div>
+      </div>      
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Test set entries</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <%= turbo_frame_tag "test_set_entries_table" do %>
+            <%= render partial: "entry", collection: @test_set.entries, as: :entry %>         
+          </dd>
+           <% end %>
+        </div>
+     
       <%= turbo_frame_tag "add_new_entry" do %>
         <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
           <%= link_to "Add entry", new_admin_test_set_test_set_entry_path(@test_set), 

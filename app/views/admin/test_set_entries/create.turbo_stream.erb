@@ -1,1 +1,1 @@
-<%= turbo_stream.prepend @test_set, partial: "admin/test_sets/entry", locals: { entry: @test_set_entry } %>
+<%= turbo_stream.prepend "test_set_entries_table", partial: "admin/test_sets/entry", locals: { entry: @test_set_entry } %>
