@@ -1,5 +1,5 @@
 <%# locals: (test_set:) %>
-<%= turbo_frame_tag "add_new_entry" do %>
+<%= turbo_frame_tag dom_id(@test_set, "add_entry")do %>
   <%= form_with(model: [:admin, @test_set, @test_set_entry], class: "contents") do |form| %>
     <% if @test_set_entry.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
