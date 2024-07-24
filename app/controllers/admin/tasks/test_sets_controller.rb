@@ -3,7 +3,7 @@ module Admin
     class TestSetsController < ApplicationController
       def new
         @task = Task.preload(:test_sets).find(params[:task_id])
-        @test_sets = TestSet.all
+        @test_sets = TestSet.all - @task.test_sets
         @task_test_set = TaskTestSet.new
       end
 
