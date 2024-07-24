@@ -2,8 +2,8 @@ module Admin
   module Tasks
     class GroundtruthsController < ApplicationController
       def new
-        task = Task.preload(test_sets: [ :entries ]).find(params[:task_id])
-        @test_sets = task.test_sets
+        @task = Task.preload(test_sets: [ :entries ]).find(params[:task_id])
+        @test_sets = @task.test_sets
         @groundtruth = Groundtruth.new
         @test_set = @test_sets.first
         @test_set_entries = @test_sets.first.id
@@ -13,7 +13,7 @@ module Admin
         @groundtruth = Groundtruth.new(groundtruth_params)
         if @groundtruth.save
           @task = Task.find(params[:task_id])
-          redirect_to admin_task_path(@task), notice: "Groundpath succesfully created"
+          redirect_to admin_task_path(@task), notice: "Groundtruth succesfully created"
         else
           @task = Task.find(params[:task_id])
           @test_sets = @task.test_sets
