@@ -143,6 +143,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
     t.bigint "test_set_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["task_id", "test_set_id"], name: "index_task_test_sets_uniqueness", unique: true
     t.index ["task_id"], name: "index_task_test_sets_on_task_id"
     t.index ["test_set_id"], name: "index_task_test_sets_on_test_set_id"
   end
