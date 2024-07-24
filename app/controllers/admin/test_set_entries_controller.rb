@@ -2,15 +2,12 @@ class Admin::TestSetEntriesController < Admin::ApplicationController
   before_action :find_test_set_entry, only: %i[destroy]
   before_action :find_test_set, only: %i[new index create]
   def new
-    @test_set = TestSet.find(params[:test_set_id])
     @test_set_entry = TestSetEntry.new
   end
   def index
-    @test_set = TestSet.find(params[:test_set_id])
     @test_set_entries = @test_set.entries
   end
   def create
-    @test_set = TestSet.find(params[:test_set_id])
     @test_set_entry = @test_set.entries.new(test_set_entry_params)
     if @test_set_entry.save
       respond_to do |format|
