@@ -36,7 +36,7 @@
         <div>
           <%- if @test_sets_left %>
             <%= turbo_frame_tag dom_id(@task, "test_sets_form") do %>
-                <%= link_to "Add data sets", [:new, :admin, @task, :test_set], type:"button", class: "btn btn-warning" %>
+                <%= link_to "Add test test", [:new, :admin, @task, :test_set], type:"button", class: "btn btn-warning" %>
             <%end%>
           <%end%>
           <%- if @task.test_sets.any? %>
