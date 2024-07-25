@@ -34,9 +34,11 @@
         <dt class="text-sm font-medium leading-6 text-gray-900">Data sets</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @task.test_sets.map(&:name).join(", ") %></dd>
         <div>
+          <%- if @test_sets_left %>
             <%= turbo_frame_tag dom_id(@task, "test_sets_form") do %>
                 <%= link_to "Add data sets", [:new, :admin, @task, :test_set], type:"button", class: "btn btn-warning" %>
             <%end%>
+          <%end%>
           <%- if @task.test_sets.any? %>
             <%= turbo_frame_tag dom_id(@task, "groundtruth_form") do %>
               <%= link_to "Add groundtruths", [:new, :admin, @task, :groundtruth], type:"button", class: "btn btn-warning" %>
