@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "flash" do %>
-  <div class="flash-container" data-action="animationend->removals#remove" data-controller="removals">
+  <div class="flash-container">
       <% if notice.present? %>
         <%= render "layouts/flash/notice", text: notice %>
       <% end%>
