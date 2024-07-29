@@ -12,14 +12,14 @@
           <% end %>
         </th>
       <% end %>
-      <% test_set.groundtruths.each do |groundtruth| %>
+      <% @groundtruths.each do |groundtruth| %>
         <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
           <%= groundtruth %>
         </th>
       <% end %>
     </tr>
     <tr>
-      <% test_set.groundtruths.each do |groundtruth| %>
+      <% @groundtruths.each do |groundtruth| %>
         <% task.metrics.each do |metric| %>
           <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
             <%= link_to test_set_leaderboard_path(test_set, mid: metric.id, sid: groundtruth.id, o: test_set_metric_order(groundtruth, metric)), class: "flex items-center justify-center" do %>
@@ -46,7 +46,7 @@
           </td>
         <% end %>
 
-        <% test_set.groundtruths.each do |groundtruth| %>
+        <% @groundtruths.each do |groundtruth| %>
           <% task.metrics.each do |metric| %>
             <%- value = row.score(test_set: test_set, metric:, groundtruth:).value %>
 
