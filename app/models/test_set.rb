@@ -36,12 +36,4 @@ class TestSet < ApplicationRecord
 
     "#{tmp_dir}.zip"
   end
-
-  private
-    # this is not used
-    def input_file_name(subtask_test_set)
-      ext = File.extname(subtask_test_set.input_blob.filename)
-
-      "#{name}--#{subtask_test_set.source_langugage}-to-#{subtask_test_set.target_language}#{ext}"
-    end
 end
