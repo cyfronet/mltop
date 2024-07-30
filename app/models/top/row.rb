@@ -5,10 +5,10 @@ class Top::Row
 
   delegate :name, to: :model
 
-  def initialize(model, scores, groundtruths_count)
+  def initialize(model, scores, groundtruths_counts)
     @model = model
     @scores = scores
-    @groundtruths_count = groundtruths_count
+    @groundtruths_counts = groundtruths_counts
     @cached_scores = {}
   end
 
@@ -19,11 +19,13 @@ class Top::Row
     scores = scores.where(evaluation: { hypotheses: { groundtruths: { test_set_entries: { test_set_id: test_set } } } }) if test_set
 
     scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, test_set_entries.test_set_id, groundtruths.id as groundtruth_id")
-    groundtruths_count = task.groundtruths.size
+    groundtruths_counts = task.groundtruths.includes(:test_set_entry)
+                            .group_by { |gt| gt.test_set_entry.test_set_id }
+                            .transform_values(&:size)
 
     scores_by_model_id = scores.group_by { |score| score.model_id }
     models = Model.where(id: scores_by_model_id.keys).index_by(&:id)
-    rows = scores_by_model_id.map { |model_id, scores| new(models[model_id], scores, groundtruths_count) }
+    rows = scores_by_model_id.map { |model_id, scores| new(models[model_id], scores, groundtruths_counts) }
 
     Top::Rows.new(rows)
   end
@@ -44,7 +46,7 @@ class Top::Row
       scores
         .group_by { |score| [ score.metric_id, score.test_set_id ] }
         .values.map do |list|
-          Score.new(metric:, value: list.sum(&:value) / @groundtruths_count)
+          Score.new(metric:, value: list.sum(&:value) / @groundtruths_counts[test_set.id])
         end
     end
 
