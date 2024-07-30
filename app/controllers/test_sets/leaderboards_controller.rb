@@ -6,7 +6,7 @@ class TestSets::LeaderboardsController < ApplicationController
   def show
     @test_set = TestSet.find(params[:test_set_id])
     @tasks = @test_set.tasks
-    @groundtruths = selected_task.groundtruths.by_test_set(@test_set)
+    @groundtruths = selected_task.groundtruths.includes(:test_set_entry).by_test_set(@test_set)
 
     @rows = Top::Row
       .where(task: selected_task, test_set: @test_set)
