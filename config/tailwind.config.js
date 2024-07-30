@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'appear-then-fade': 'appear-then-fade 3s both',
+        'appear-then-fade': 'appear-then-fade 6s both',
       },
       keyframes: {
         'appear-then-fade': {
