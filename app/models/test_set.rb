@@ -4,10 +4,8 @@ class TestSet < ApplicationRecord
   has_many :task_test_sets, dependent: :destroy
   has_many :tasks, through: :task_test_sets
 
-  has_many :subtask_test_sets, dependent: :destroy
-  has_many :subtasks, through: :subtask_test_sets
-  has_many :evaluations, through: :subtask_test_sets
   has_many :entries, class_name: "TestSetEntry"
+  has_many :groundtruths, through: :entries
 
   has_rich_text :description
 
@@ -38,11 +36,4 @@ class TestSet < ApplicationRecord
 
     "#{tmp_dir}.zip"
   end
-
-  private
-    def input_file_name(subtask_test_set)
-      ext = File.extname(subtask_test_set.input_blob.filename)
-
-      "#{name}--#{subtask_test_set.source_langugage}-to-#{subtask_test_set.target_language}#{ext}"
-    end
 end

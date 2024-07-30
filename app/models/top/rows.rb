@@ -5,12 +5,12 @@ class Top::Rows
     @rows = rows
   end
 
-  def order(test_set:, metric:, subtask: nil, order: "desc")
+  def order(test_set:, metric:, order: "desc", groundtruth: nil)
     if test_set && metric
       rows = @rows.sort do |a, b|
         a, b = b, a if order == "desc"
-        a.score(test_set:, metric:, subtask:).value <=>
-          b.score(test_set:, metric:, subtask:).value
+        a.score(test_set:, metric:, groundtruth:).value <=>
+          b.score(test_set:, metric:, groundtruth:).value
       end
 
       Top::Rows.new(rows)
