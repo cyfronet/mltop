@@ -12,19 +12,19 @@
           <% end %>
         </th>
       <% end %>
-      <% task.subtasks.each do |subtask| %>
+      <% @groundtruths.each do |groundtruth| %>
         <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
-          <%= subtask.name %>
+          <%= groundtruth %>
         </th>
       <% end %>
     </tr>
     <tr>
-      <% task.subtasks.each do |subtask| %>
+      <% @groundtruths.each do |groundtruth| %>
         <% task.metrics.each do |metric| %>
           <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-            <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, sid: subtask.id, o: test_set_metric_order(subtask, metric)), class: "flex items-center justify-center" do %>
+            <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, sid: groundtruth.id, o: test_set_metric_order(groundtruth, metric)), class: "flex items-center justify-center" do %>
               <span class="mr-3"><%= metric.name %></span>
-              <%= test_set_sort_chevron(subtask, metric) %>
+              <%= test_set_sort_chevron(groundtruth, metric) %>
             <% end %>
           </th>
         <% end %>
@@ -46,9 +46,10 @@
           </td>
         <% end %>
 
-        <% task.subtasks.each do |subtask| %>
+        <% @groundtruths.each do |groundtruth| %>
           <% task.metrics.each do |metric| %>
-            <%- value = row.score(test_set: test_set, metric:, subtask:).value %>
+            <%- value = row.score(test_set: test_set, metric:, groundtruth:).value %>
+
             <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center"
                 style="background-color: <%= interpolate_color(value) %>">
               <%= number_with_precision value, precision: 2 %>

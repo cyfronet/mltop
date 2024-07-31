@@ -12,7 +12,7 @@
       <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
         <%= link_to "Edit", [:edit, :admin, @task], type:"button", class: "btn btn-warning" %>
         <%= button_to "Delete", [:admin, @task], method: :delete, class: "btn btn-danger",
-          form: { "data-turbo-confirm": "Are you sure you want to remove this task? All related elements (subtask, evalutions, scores) will be removed as well" } %>
+          form: { "data-turbo-confirm": "Are you sure you want to remove this task? All related elements (groundtruths, evalutions, scores) will be removed as well" } %>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @task.to %></dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium leading-6 text-gray-900">Data sets</dt>
+        <dt class="text-sm font-medium leading-6 text-gray-900">Test sets</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @task.test_sets.map(&:name).join(", ") %></dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

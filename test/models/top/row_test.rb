@@ -40,11 +40,11 @@ class Top::RowTest < ActiveSupport::TestCase
     row = Top::Row.where(task: tasks(:st)).first
     assert_equal 1, row.score(test_set: test_sets(:flores),
                               metric: metrics(:blueurt),
-                              subtask: subtasks(:st_en_pl)).value
+                              groundtruth: groundtruths(:flores_en_pl_st)).value
 
     assert_nil row.score(test_set: test_sets(:flores),
                          metric: metrics(:blueurt),
-                         subtask: subtasks(:st_en_it)).value,
+                         groundtruth: groundtruths(:flores_en_it_st)).value,
               "Nil score should be created when no score in DB"
   end
 
@@ -70,14 +70,14 @@ class Top::RowTest < ActiveSupport::TestCase
     assert_equal [ m3, m1, m2 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:blueurt), order: :asc).map(&:model)
 
-    # detailed, per subtask
+    # detailed, per groundtruth
     assert_equal [ m2, m3, m1 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:blueurt),
-                                            subtask: subtasks(:st_en_pl)).map(&:model)
+                                            groundtruth: groundtruths(:flores_en_pl_st)).map(&:model)
 
     assert_equal [ m1, m3, m2 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:blueurt),
-                                            subtask: subtasks(:st_en_pl), order: :asc).map(&:model)
+                                            groundtruth: groundtruths(:flores_en_pl_st), order: :asc).map(&:model)
   end
 
   private
