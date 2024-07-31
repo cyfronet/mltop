@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "flash" do %>
-  <div class="flash-container">
+  <div aria-live="assertive" class="flash-container pointer-events-none px-4 py-4 space-y-4 fixed inset-0 items-end">
       <% if notice.present? %>
         <%= render "layouts/flash/notice", text: notice %>
       <% end%>
