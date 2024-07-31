@@ -51,7 +51,8 @@ if Rails.env.local?
         entries_map.each do |entry|
           languages.each do |language|
             next if entry.language == language
-            Groundtruth.create(test_set_entry: entry, language:, task: st)
+            Groundtruth.create(test_set_entry: entry, language:, task: st,
+              input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{language}.txt" })
           end
         end
       end

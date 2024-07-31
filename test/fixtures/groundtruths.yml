@@ -7,3 +7,13 @@ flores_en_it_st:
   test_set_entry: flores_en
   language: it
   task: st
+
+mustc_en_pl_st:
+  test_set_entry: mustc_en
+  language: pl
+  task: st
+
+mustc_en_it_st:
+  test_set_entry: mustc_en
+  language: it
+  task: st

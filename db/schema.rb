@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_07_04_113022) do
   create_table "groundtruths", force: :cascade do |t|
     t.bigint "task_id", null: false
     t.bigint "test_set_entry_id", null: false
-    t.string "language"
+    t.string "language", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_groundtruths_on_task_id"
