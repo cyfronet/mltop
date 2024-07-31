@@ -72,3 +72,22 @@ crumb :edit_admin_task do |task|
   link "Edit", edit_admin_task_path(task)
   parent :admin_task, task
 end
+
+crumb :admin_evaluators do
+  link "Manage evaluators", admin_evaluators_path
+end
+
+crumb :admin_evaluator do |evaluator|
+  link evaluator, admin_evaluator_path(evaluator)
+  parent :admin_evaluators
+end
+
+crumb :new_admin_evaluator do
+  link "New", new_admin_evaluator_path
+  parent :admin_evaluators
+end
+
+crumb :edit_admin_evaluator do |evaluator|
+  link "Edit", edit_admin_evaluator_path(evaluator)
+  parent :admin_evaluator, evaluator
+end
