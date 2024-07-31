@@ -3,7 +3,6 @@
     <% if test_set_entry.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(test_set_entry.errors.count, "error") %> prohibited this test set entry from being saved:</h2>
-
       <ul>
         <% test_set_entry.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -21,7 +20,6 @@
     <%= link_to "Cancel", [:admin, test_set], class: "btn btn-primary" %>
     <%= form.submit %>
   </div>
-  
-  
+
 <% end %>
 <% end %>

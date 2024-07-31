@@ -1,5 +1,6 @@
 class Admin::TestSetEntriesController < Admin::ApplicationController
   before_action :find_test_set_entry, only: %i[destroy]
+
   before_action :find_test_set, only: %i[new index create]
   def new
     @test_set_entry = TestSetEntry.new
@@ -12,7 +13,7 @@ class Admin::TestSetEntriesController < Admin::ApplicationController
     if @test_set_entry.save
       respond_to do |format|
         format.html { redirect_to admin_test_set_path(@test_set), notice: "Test set entry was successfully created." }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = "Test set entry was successfully created (responded to turbo stream)." }
       end
     else
       render :new, status: :unprocessable_entity
@@ -28,13 +29,13 @@ class Admin::TestSetEntriesController < Admin::ApplicationController
     end
   end
   private
-  def find_test_set_entry
-    @test_set_entry = TestSetEntry.find(params[:id])
-  end
-  def find_test_set
-    @test_set = TestSet.find(params[:test_set_id])
-  end
-  def test_set_entry_params
-    params.required(:test_set_entry).permit(:language, :input)
-  end
+    def find_test_set_entry
+      @test_set_entry = TestSetEntry.find(params[:id])
+    end
+    def find_test_set
+      @test_set = TestSet.find(params[:test_set_id])
+    end
+    def test_set_entry_params
+      params.required(:test_set_entry).permit(:language, :input)
+    end
 end
