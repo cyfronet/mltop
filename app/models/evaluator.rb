@@ -7,4 +7,6 @@ class Evaluator < ApplicationRecord
   has_many :evaluations, dependent: :destroy
 
   validates :name, presence: true
+
+  def to_s = name
 end

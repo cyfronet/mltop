@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :tasks
     resources :test_sets
+    resources :evaluators
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
