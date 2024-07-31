@@ -89,6 +89,11 @@ crumb :edit_admin_task do |task|
   parent :admin_task, task
 end
 
+crumb :edit_admin_test_set do |test_set|
+  link "Edit", edit_admin_test_set_path(test_set)
+  parent :admin_test_set, test_set
+end
+
 crumb :admin_evaluators do
   link "Manage evaluators", admin_evaluators_path
 end
