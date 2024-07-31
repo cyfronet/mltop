@@ -9,17 +9,17 @@ class Model::ScoresTest < ActiveSupport::TestCase
     other_hypothesis = create(:hypothesis, model: other_model)
 
     evaluation = create(:evaluation, hypothesis: hypothesis_pl,
-                        evaluator: evaluators(:sacrebley))
+                        evaluator: evaluators(:sacrebleu))
     create(:score, evaluation:, metric: metrics("blue"), value: 1)
     create(:score, evaluation:, metric: metrics("chrf"), value: 2)
 
     evaluation = create(:evaluation, hypothesis: hypothesis_it,
-                        evaluator: evaluators(:sacrebley))
+                        evaluator: evaluators(:sacrebleu))
     create(:score, evaluation:, metric: metrics("blue"), value: 3)
     create(:score, evaluation:, metric: metrics("chrf"), value: 4)
 
     evaluation = create(:evaluation, hypothesis: other_hypothesis,
-                        evaluator: evaluators(:sacrebley))
+                        evaluator: evaluators(:sacrebleu))
     create(:score, evaluation:, metric: metrics("blue"), value: 5)
     create(:score, evaluation:, metric: metrics("chrf"), value: 6)
 

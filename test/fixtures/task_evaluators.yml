@@ -1,6 +1,6 @@
-st_sacrebley:
+st_sacrebleu:
   task: st
-  evaluator: sacrebley
+  evaluator: sacrebleu
 
 st_blueurt:
   task: st

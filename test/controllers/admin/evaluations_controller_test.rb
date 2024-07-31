@@ -26,21 +26,21 @@ class Admin::EvaluatorsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show evaluator" do
-    evaluator = evaluators(:sacrebley)
+    evaluator = evaluators(:sacrebleu)
 
     get admin_evaluator_path(evaluator)
     assert_response :success
   end
 
   test "should get edit" do
-    evaluator = evaluators(:sacrebley)
+    evaluator = evaluators(:sacrebleu)
 
     get edit_admin_evaluator_path(evaluator)
     assert_response :success
   end
 
   test "should update evaluator" do
-    evaluator = evaluators(:sacrebley)
+    evaluator = evaluators(:sacrebleu)
 
     patch admin_evaluator_path(evaluator), params: { evaluator: { name: "updated name" } }
     assert_redirected_to admin_evaluator_path(evaluator)
@@ -48,7 +48,7 @@ class Admin::EvaluatorsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy evaluator" do
-    evaluator = evaluators(:sacrebley)
+    evaluator = evaluators(:sacrebleu)
 
     assert_difference("Evaluator.count", -1) do
       delete admin_evaluator_path(evaluator)

@@ -1,15 +1,15 @@
 blue:
   name: blue
-  evaluator: sacrebley
+  evaluator: sacrebleu
 
 chrf:
   name: chrf
-  evaluator: sacrebley
+  evaluator: sacrebleu
 
 ter:
   name: ter
-  evaluator: sacrebley
+  evaluator: sacrebleu
 
 blueurt:
   name: blueurt
-  evaluator: sacrebley
+  evaluator: sacrebleu
