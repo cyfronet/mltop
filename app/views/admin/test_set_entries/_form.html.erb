@@ -1,25 +1,23 @@
-<%= turbo_frame_tag dom_id(test_set, "add_entry")do %>
-  <%= form_with(model: test_set_entry, url: [:admin, test_set, test_set_entry], class: "contents") do |form| %>
+<%= turbo_frame_tag dom_id(test_set, "add_entry") do %>
+
     <% if test_set_entry.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(test_set_entry.errors.count, "error") %> prohibited this test set entry from being saved:</h2>
-      <ul>
-        <% test_set_entry.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+        <h2><%= pluralize(test_set_entry.errors.count, "error") %> prohibited this test set entry from being saved:</h2>
+        <ul>
+          <% test_set_entry.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  <%= form_with(model: test_set_entry, url: [:admin, test_set, test_set_entry]) do |form| %>
+      <%= form.select :language, Mltop::LANGUAGES, wrapper: "sm:col-span-1" %>
+      <%= form.file_field :input %>
+      <div>
+        <%= link_to "Cancel", [:admin, test_set], class: "btn btn-primary"%>
+        <%= form.submit%>
+      </div>
   <% end %>
 
-<div class="space-y-12">
-    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-      <%= form.select :language, options_for_select(['en', 'pl']), wrapper: "sm:col-span-1" %>
-      <%= form.file_field :input, wrapper: "col-span-full" %>
-
-  <div class="mt-6 flex items-center justify-end gap-x-6">
-    <%= link_to "Cancel", [:admin, test_set], class: "btn btn-primary" %>
-    <%= form.submit %>
-  </div>
-
-<% end %>
 <% end %>
