@@ -5,4 +5,6 @@ class Hypothesis < ApplicationRecord
   has_many :evaluations, dependent: :destroy
 
   has_one_attached :input
+
+  validates :input, presence: true
 end
