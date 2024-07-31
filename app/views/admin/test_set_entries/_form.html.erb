@@ -1,11 +1,12 @@
+<%# locals: (test_set:) %>
 <%= turbo_frame_tag "add_new_entry" do %>
-  <%= form_with(model: @test_set, url: [:admin, @test_set], class: "contents") do |form| %>
-    <% if @test_set.errors.any? %>
+  <%= form_with(model: [:admin, @test_set, @test_set_entry], class: "contents") do |form| %>
+    <% if @test_set_entry.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(@test_set.errors.count, "error") %> prohibited this test set entry from being saved:</h2>
+      <h2><%= pluralize(@test_set_entry.errors.count, "error") %> prohibited this test set entry from being saved:</h2>
 
       <ul>
-        <% @test_set.errors.each do |error| %>
+        <% @test_set_entry.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -14,11 +15,8 @@
 
 <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-      <%= form.fields_for :entries_attributes do |entry_form| %>
-        <%= entry_form.select :language, options_for_select(['en', 'pl']) %>
-        <%= entry_form.file_field :input, wrapper: "col-span-full" %>
-      <% end %>
-  </div>
+      <%= form.select :language, options_for_select(['en', 'pl']), wrapper: "sm:col-span-1" %>
+      <%= form.file_field :input, wrapper: "col-span-full" %>
 
   <div class="mt-6 flex items-center justify-end gap-x-6">
     <%= link_to "Cancel", [:admin, @test_set], class: "btn btn-primary" %>

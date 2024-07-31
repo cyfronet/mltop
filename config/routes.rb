@@ -27,11 +27,8 @@ Rails.application.routes.draw do
     end
     resources :evaluators
     resources :test_sets do
-      member do
-        get :add_new_entry
-      end
+      resources :test_set_entries, path: "entries"
     end
-    resources :test_set_entries
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
