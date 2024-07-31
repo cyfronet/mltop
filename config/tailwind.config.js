@@ -10,6 +10,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'appear-then-fade': 'appear-then-fade 6s both',
+      },
+      keyframes: {
+        'appear-then-fade': {
+          '0%, 100%': { opacity: '0' },
+          '5%, 60%': { opacity: '1' },
+        }
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
