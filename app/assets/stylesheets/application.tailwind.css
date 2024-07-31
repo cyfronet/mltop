@@ -23,4 +23,8 @@
   .btn-success {
     @apply hover:border-green-500 hover:bg-green-500 hover:text-white;
   }
+
+  .flash-container {
+    @apply text-center animate-appear-then-fade;
+  }
 }

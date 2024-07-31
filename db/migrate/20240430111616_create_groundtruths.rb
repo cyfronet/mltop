@@ -3,7 +3,7 @@ class CreateGroundtruths < ActiveRecord::Migration[7.2]
     create_table :groundtruths do |t|
       t.references :task, null: false, foreign_key: true
       t.references :test_set_entry, null: false, foreign_key: true
-      t.string :language
+      t.string :language, null: false
 
       t.timestamps
     end

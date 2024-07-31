@@ -7,6 +7,8 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module Mltop
+  LANGUAGES = %w[be bg bs ca cs da de el en en es et fi fr ga gl hr hu is it lb lt lv mk mt nl no pl pr pt ro ru sk sl sr sv th tr uk]
+
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
