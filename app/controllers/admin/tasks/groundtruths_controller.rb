@@ -13,7 +13,7 @@ module Admin
         @groundtruth = Groundtruth.new(groundtruth_params)
         if @groundtruth.save
           @task = Task.find(params[:task_id])
-          redirect_to admin_task_path(@task), notice: "Groundtruth succesfully created"
+          flash.now[:notice] = "Groundtruth succesfully created"
         else
           @task = Task.find(params[:task_id])
           @test_sets = @task.test_sets
