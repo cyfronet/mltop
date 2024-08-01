@@ -13,12 +13,12 @@ class Admin::Tasks::GroundtruthsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create groundtruth" do
     assert_difference("Groundtruth.count") do
-      post admin_task_groundtruths_path(@task), params: { groundtruth: {
-        test_set_entry_id: @test_set_entry.id,  input: fixture_file_upload("input.txt"), language: "en"
+      post admin_task_groundtruths_path(@task, format: :turbo_stream), params: { groundtruth: {
+        test_set_entry_id: @test_set_entry.id,  input: fixture_file_upload("input.txt"), language: "hu"
       } }
     end
 
-    assert_redirected_to admin_task_path(@task)
+    assert_response :ok
   end
 
   test "it returns uprocessable for missing params" do
