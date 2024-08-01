@@ -3,8 +3,6 @@
 # Default to port 3000 if not specified
 export PORT="${PORT:-3000}"
 
-# Let the debug gem allow remote connections,
-# but avoid loading until `debugger` is called
 
 if command -v overmind foo >/dev/null 2>&1; then
   exec overmind start -f Procfile.dev "$@"
