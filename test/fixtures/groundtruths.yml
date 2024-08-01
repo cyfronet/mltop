@@ -8,6 +8,11 @@ flores_en_it_st:
   language: it
   task: st
 
+flores_en_pl_asr:
+  test_set_entry: flores_en
+  language: pl
+  task: asr
+
 mustc_en_pl_st:
   test_set_entry: mustc_en
   language: pl

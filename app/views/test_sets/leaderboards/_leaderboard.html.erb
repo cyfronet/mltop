@@ -6,7 +6,7 @@
       </th>
       <% task.metrics.each do |metric| %>
         <th rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-          <%= link_to test_set_leaderboard_path(test_set, mid: metric.id, o: aggregated_metric_order(metric)), class: "flex items-center justify-center" do %>
+          <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, o: aggregated_metric_order(metric)), class: "flex items-center justify-center" do %>
             <span class="mr-3"><%= metric.name %></span>
             <%= aggregated_metric_sort_chevron(metric) %>
           <% end %>
@@ -22,7 +22,7 @@
       <% @groundtruths.each do |groundtruth| %>
         <% task.metrics.each do |metric| %>
           <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-            <%= link_to test_set_leaderboard_path(test_set, mid: metric.id, sid: groundtruth.id, o: test_set_metric_order(groundtruth, metric)), class: "flex items-center justify-center" do %>
+            <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, sid: groundtruth.id, o: test_set_metric_order(groundtruth, metric)), class: "flex items-center justify-center" do %>
               <span class="mr-3"><%= metric.name %></span>
               <%= test_set_sort_chevron(groundtruth, metric) %>
             <% end %>
