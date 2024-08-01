@@ -7,7 +7,7 @@ export PORT="${PORT:-3000}"
 # but avoid loading until `debugger` is called
 
 if command -v overmind foo >/dev/null 2>&1; then
-  overmind start -f Procfile.dev
+  exec overmind start -f Procfile.dev "$@"
 else
   if ! gem list foreman -i --silent; then
     echo "Installing foreman..."
