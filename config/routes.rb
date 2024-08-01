@@ -18,8 +18,12 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :tasks
-    resources :test_sets
+    resources :tasks do
+      resources :groundtruths, only: [ :new, :create ], module: :tasks
+    end
+    resources :test_sets do
+      resources :entries, only: :index, module: :test_sets
+    end
     resources :evaluators
   end
 

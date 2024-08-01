@@ -33,6 +33,13 @@
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Test sets</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @task.test_sets.map(&:name).join(", ") %></dd>
+        <dd>
+          <%- if @task.test_sets.any? %>
+            <%= turbo_frame_tag dom_id(@task, "groundtruth_form") do %>
+              <%= link_to "Add groundtruths", [:new, :admin, @task, :groundtruth], type:"button", class: "btn btn-warning" %>
+            <%end%>
+          <% end%>
+        </dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Evaluators</dt>
