@@ -25,6 +25,9 @@ module ActiveSupport
           email: user.email,
           nickname: user.plgrid_login
         },
+        credentials: {
+          token: "some_token"
+        },
         extra: {
           raw_info: {
             groups: teams

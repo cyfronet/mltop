@@ -4,9 +4,7 @@ class SessionsController < ApplicationController
   def create
     if uid
       if meetween_member?
-        user = User.find_or_initialize_by(uid: uid)
-        user.update(name:, email:, plgrid_login:)
-
+        user = User.from_plgrid_omniauth(auth).tap { |u| u.save! }
         authenticated_as(user)
 
         redirect_to post_authenticating_url, info: "Welcome back #{name}"
@@ -29,6 +27,7 @@ class SessionsController < ApplicationController
     def email = auth && auth.info["email"]
     def plgrid_login = auth && auth.info["nickname"]
     def teams = auth && auth.dig("extra", "raw_info", "groups") || []
+    def token = auth && auth.dig("credentials", "token")
 
     def meetween_member?
       teams.include?("plggmeetween")
