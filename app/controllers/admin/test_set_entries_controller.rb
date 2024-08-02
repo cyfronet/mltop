@@ -14,7 +14,6 @@ class Admin::TestSetEntriesController < Admin::ApplicationController
     @test_set_entry = @test_set.entries.new(test_set_entry_params)
     if @test_set_entry.save
       respond_to do |format|
-        format.html { redirect_to admin_test_set_path(@test_set), notice: "Test set entry was successfully created." }
         format.turbo_stream
       end
     else
