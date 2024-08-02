@@ -9,6 +9,11 @@ class Admin::TestSetsControllerTest < ActionDispatch::IntegrationTest
     get admin_test_sets_path
     assert_response :success
   end
+  test "should get specific test set index" do
+    test_set = test_sets("flores")
+    get admin_test_set_path(test_set)
+    assert_response :success
+  end
 
   test "should get new" do
     get new_admin_test_set_path

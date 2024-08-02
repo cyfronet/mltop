@@ -12,8 +12,6 @@ crumb :new_admin_task do |task|
   parent :admin_tasks
 end
 
-
-
 crumb :task_leaderboard do |task|
   link "Leaderboard", task_leaderboard_path(task)
   parent :task, task

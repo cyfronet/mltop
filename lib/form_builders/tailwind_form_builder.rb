@@ -115,8 +115,6 @@ module FormBuilders
     end
 
     def tailwind_label(object_method, label_options, field_options)
-      # Temporary patch
-      label_options = { text: label_options } if label_options.is_a?(String)
       text, label_opts = if label_options.present?
         [ label_options[:text], label_options.except(:text) ]
       else

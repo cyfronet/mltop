@@ -15,11 +15,9 @@ module Admin
       end
 
       def create
-        @test_set_entry = @test_set.entries.new(test_set_entry_params)
+        @test_set_entry = TestSetEntry.new(test_set_entry_params.merge({ test_set: @test_set }))
         if @test_set_entry.save
-          respond_to do |format|
-            format.turbo_stream
-          end
+          flash.now[:notice] = "Entry succesfully created"
         else
           render :new, status: :unprocessable_entity
         end
@@ -27,6 +25,7 @@ module Admin
 
       def destroy
         if @test_set_entry.destroy
+          flash.now[:notice] = "Entry succesfully created"
           redirect_to admin_test_set_path(@test_set), notice: "Test set entry was successfully removed."
         else
           redirect_to admin_test_set_path(@test_set), alert: "Unable to delete test set entry."
