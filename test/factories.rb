@@ -43,5 +43,11 @@ class ActiveSupport::TestCase
         to: "text"
       }
     end
+
+    factory(:test_set) do |i|
+      {
+        name: "Test set #{i}"
+      }
+    end
   end
 end

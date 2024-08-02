@@ -6,6 +6,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   def show
     @task = Task.includes(test_sets: { entries: { input_attachment: :blob } }).find(params[:id])
+    @test_sets_left = (TestSet.count - @task.test_sets.count).positive?
   end
 
   def new
