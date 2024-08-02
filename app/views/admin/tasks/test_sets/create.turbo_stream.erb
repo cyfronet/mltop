@@ -1,0 +1,2 @@
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
+<%= turbo_stream.update dom_id(@task, "test_sets"), partial: "admin/tasks/test_sets", locals: { task: @task, test_sets_left: @test_sets_left }  %>

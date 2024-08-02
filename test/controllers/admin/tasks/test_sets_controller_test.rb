@@ -14,11 +14,11 @@ class Admin::Tasks::TestSetsControllerTest < ActionDispatch::IntegrationTest
     test_set = create(:test_set)
 
     assert_difference("TaskTestSet.count") do
-      post admin_task_test_sets_path(@task),
+      post admin_task_test_sets_path(@task, format: :turbo_stream),
         params: { task_test_set: { test_set_id: test_set.id } }
     end
 
-    assert_redirected_to admin_task_path(@task)
+    assert_response :ok
   end
 
   test "it returns uprocessable for missing params" do
