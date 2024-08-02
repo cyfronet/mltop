@@ -28,7 +28,6 @@ class Admin::TasksController < Admin::ApplicationController
 
   def update
     if @task.update(task_params)
-      @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully updated."
     else
       render :edit, status: :unprocessable_entity

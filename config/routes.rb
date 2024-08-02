@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
     resources :evaluators
     resources :test_sets do
-      resources :test_set_entries, path: "entries"
+      resources :entries, module: :test_sets
     end
   end
 

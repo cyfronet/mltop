@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center py-2 border-b">
     <span><%= entry.language %></span>
     <button type="button" class="btn btn-warning">Download</button>
-        <%= button_to "Delete", admin_test_set_test_set_entry_path(entry.test_set, entry), method: :delete, class: "btn btn-danger",
+        <%= button_to "Delete", admin_test_set_entry_path(entry.test_set, entry), method: :delete, class: "btn btn-danger",
         form: { "data-turbo-confirm": "Are you sure you want to remove this test set entry? The groundtruth data will be lost!" } %>
 </div>
