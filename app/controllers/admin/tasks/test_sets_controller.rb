@@ -11,7 +11,8 @@ module Admin
         @task_test_set = TaskTestSet.new(task_test_set_params)
         if @task_test_set.save
           @task = Task.preload(:test_sets).find(params[:task_id])
-          @test_sets_left = TestSet.all - @task.test_sets
+          @test_sets_left = (TestSet.count - @task.test_sets.count).positive?
+          debugger
           flash.now[:notice] = "Test set succesfully linked to task"
         else
           @task = Task.find(params[:task_id])
