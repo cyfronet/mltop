@@ -2,7 +2,11 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 require "fixture_factory"
+require "webmock/minitest"
 require_relative "factories"
+Dir[Rails.root.join("test/support/**/*.rb")].each { |f| require f }
+
+CcmHelpers.default_ccm_stubs!
 
 module ActiveSupport
   class TestCase
@@ -25,6 +29,9 @@ module ActiveSupport
           email: user.email,
           nickname: user.plgrid_login
         },
+        credentials: {
+          token: "some_token"
+        },
         extra: {
           raw_info: {
             groups: teams
@@ -34,4 +41,6 @@ module ActiveSupport
       get "/auth/sso/callback"
     end
   end
+
+  WebMock.disable_net_connect!(allow_localhost: true)
 end
