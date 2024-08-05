@@ -2,9 +2,11 @@ class SessionsController < ApplicationController
   allow_unauthenticated_access only: :create
 
   def create
-    if uid
-      if meetween_member?
-        user = User.from_plgrid_omniauth(auth).tap { |u| u.save! }
+    plgrid_user = Plgrid::User.from_omniauth(auth)
+    if plgrid_user.uid
+      if plgrid_user.meetween_member?
+        user = User.find_by(uid: plgrid_user.uid)
+        user.update(plgrid_user.attributes)
         authenticated_as(user)
 
         redirect_to post_authenticating_url, info: "Welcome back #{name}"
