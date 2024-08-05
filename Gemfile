@@ -46,6 +46,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "fixture_factory"
+  gem "webmock", "~> 3.10"
 end
 
 group :production do
