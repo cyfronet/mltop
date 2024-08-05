@@ -22,8 +22,6 @@ class CredentialsProvider
   end
 
   private
-    Pair = Data.define(:key, :cert)
-
     def key_cert
       @key_cert ||= generate_key_cert
     end
