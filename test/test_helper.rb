@@ -39,4 +39,6 @@ module ActiveSupport
       get "/auth/sso/callback"
     end
   end
+
+  WebMock.disable_net_connect!(allow_localhost: true)
 end
