@@ -38,6 +38,6 @@ class CredentialsProvider
       cert_path = "#{priv_key_path}-cert.pub"
       system("ssh-keygen -q -s #{priv_key_path} -I your-identity -n user -V +1h #{pub_key_path}")
 
-      [File.read(priv_key_path), File.read(cert_path)]
+      [ File.read(priv_key_path), File.read(cert_path) ]
     end
 end
