@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     plgrid_user = Plgrid::User.from_omniauth(auth)
     if plgrid_user.uid
       if plgrid_user.meetween_member?
-        user = User.find_by(uid: plgrid_user.uid)
+        user = User.find_or_initialize_by(uid: plgrid_user.uid)
         user.update(plgrid_user.attributes)
 
         authenticated_as(user)
