@@ -3,8 +3,6 @@
 require "test_helper"
 require "ostruct"
 
-CcmHelpers.default_ccm_stubs!
-
 module Plgrid
   class UserTest < ActiveSupport::TestCase
     test "plgrid login uses auth info to populate user data" do

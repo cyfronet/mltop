@@ -6,6 +6,8 @@ require "webmock/minitest"
 require_relative "factories"
 Dir[Rails.root.join("test/support/**/*.rb")].each { |f| require f }
 
+CcmHelpers.default_ccm_stubs!
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
