@@ -14,12 +14,8 @@
         </div>
       </div>
     </div>
-    <ul role="list" class="">
-      <% entries_for_test_set(test_set).each do |entry| %>
-        <li class="p-3 bg-white sm:rounded-lg sm:shadow mx-3 my-4">
-          <%= entry %>
-        </li>
-      <% end %>
-    </ul>
+    <div role="list">
+      <%= render partial: "groundtruth", collection: entries_for_test_set(test_set), as: :groundtruth %>
+    </div>
   </div>
 <% end %>
