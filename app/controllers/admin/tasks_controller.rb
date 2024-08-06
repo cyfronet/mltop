@@ -16,6 +16,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   def create
     @task = Task.new(task_params)
+
     if @task.save
       redirect_to admin_task_path(@task), notice: "Task was successfully created."
     else

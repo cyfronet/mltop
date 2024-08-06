@@ -26,11 +26,6 @@ crumb :test_set do |test_set|
   parent :test_sets
 end
 
-crumb :new_admin_test_set do |test_set|
-  link "New", new_admin_test_set_path
-  parent :admin_test_sets
-end
-
 crumb :test_set_leaderboard do |test_set|
   link "Leaderboard", test_set_leaderboard_path(test_set)
   parent :test_set, test_set
@@ -73,6 +68,11 @@ crumb :admin_task do |task|
   parent :admin_tasks
 end
 
+crumb :edit_admin_task do |task|
+  link "Edit", edit_admin_task_path(task)
+  parent :admin_task, task
+end
+
 crumb :admin_test_sets do
   link "Manage test sets", admin_test_sets_path
 end
@@ -82,9 +82,9 @@ crumb :admin_test_set do |test_set|
   parent :admin_test_sets
 end
 
-crumb :edit_admin_task do |task|
-  link "Edit", edit_admin_task_path(task)
-  parent :admin_task, task
+crumb :new_admin_test_set do |test_set|
+  link "New", new_admin_test_set_path
+  parent :admin_test_sets
 end
 
 crumb :edit_admin_test_set do |test_set|
