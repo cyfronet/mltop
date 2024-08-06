@@ -1,0 +1,25 @@
+<%= turbo_frame_tag dom_id(@groundtruth, "hypothesis_form") do %>
+  <div class="py-4">
+    <% if @hypothesis.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+        <h2><%= pluralize(@hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>
+        <ul>
+          <% @hypothesis.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @hypothesis, url: submission_hypothesis_path, local: true do |f| %>
+      <%= f.hidden_field :model_id %>
+      <%= f.hidden_field :groundtruth_id %>
+      <%= f.file_field :input %>
+
+      <div>
+        <%= f.button :submit, class: "btn btn-success" %>
+        <%= link_to "Cancel", :back, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
