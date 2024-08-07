@@ -23,11 +23,10 @@ Rails.application.routes.draw do
       resources :test_sets, only: [ :new, :create ], module: :tasks
     end
     resources :test_sets do
-      resources :entries, only: :index, module: :test_sets
-    end
-    resources :evaluators
-    resources :test_sets do
       resources :entries, module: :test_sets, shallow: true, except: [ :show ]
+    end
+    resources :evaluators do
+      resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]
     end
   end
 
