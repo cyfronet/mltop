@@ -4,6 +4,7 @@ class TestSetEntry < ApplicationRecord
 
   has_one_attached :input
 
+  validates :input, presence: true
   validates :language, presence: true, uniqueness: { scope: :test_set_id },
   inclusion: { in: Mltop::LANGUAGES, message: "%{value} is not a correct language code" }
 

@@ -26,6 +26,9 @@ Rails.application.routes.draw do
       resources :entries, only: :index, module: :test_sets
     end
     resources :evaluators
+    resources :test_sets do
+      resources :entries, module: :test_sets, shallow: true, except: [ :show ]
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

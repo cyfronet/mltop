@@ -4,7 +4,7 @@ class TestSet < ApplicationRecord
   has_many :task_test_sets, dependent: :destroy
   has_many :tasks, through: :task_test_sets
 
-  has_many :entries, class_name: "TestSetEntry"
+  has_many :entries, class_name: "TestSetEntry", dependent: :destroy
   has_many :groundtruths, through: :entries
 
   has_rich_text :description
@@ -35,5 +35,9 @@ class TestSet < ApplicationRecord
     FileUtils.rm_rf(tmp_dir)
 
     "#{tmp_dir}.zip"
+  end
+
+  def to_s
+    "#{name}"
   end
 end

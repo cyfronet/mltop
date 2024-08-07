@@ -49,5 +49,12 @@ class ActiveSupport::TestCase
         name: "Test set #{i}"
       }
     end
+    factory(:test_set_entry) do |i|
+      {
+        test_set: TestSet.last,
+        language: "en",
+        input: Rack::Test::UploadedFile.new(StringIO.new("input"), "text/plain", original_filename: "input.txt")
+    }
+    end
   end
 end

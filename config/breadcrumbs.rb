@@ -73,6 +73,25 @@ crumb :edit_admin_task do |task|
   parent :admin_task, task
 end
 
+crumb :admin_test_sets do
+  link "Manage test sets", admin_test_sets_path
+end
+
+crumb :admin_test_set do |test_set|
+  link test_set, admin_test_set_path(test_set)
+  parent :admin_test_sets
+end
+
+crumb :new_admin_test_set do |test_set|
+  link "New", new_admin_test_set_path
+  parent :admin_test_sets
+end
+
+crumb :edit_admin_test_set do |test_set|
+  link "Edit", edit_admin_test_set_path(test_set)
+  parent :admin_test_set, test_set
+end
+
 crumb :admin_evaluators do
   link "Manage evaluators", admin_evaluators_path
 end
