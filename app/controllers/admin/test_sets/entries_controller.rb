@@ -25,7 +25,7 @@ module Admin
 
       def destroy
         if @test_set_entry.destroy
-          flash.now[:notice] = "Entry succesfully created"
+          flash.now[:notice] = "Entry succesfully deleted"
           redirect_to admin_test_set_path(@test_set), notice: "Test set entry was successfully removed."
         else
           redirect_to admin_test_set_path(@test_set), alert: "Unable to delete test set entry."
