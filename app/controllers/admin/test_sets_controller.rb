@@ -10,14 +10,14 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   def new
     @test_set = TestSet.new
-    @tasks = Task.all
   end
 
   def create
     @test_set = TestSet.new(test_set_params)
 
     if @test_set.save
-      redirect_to admin_test_set_path(@test_set), notice: "Test set was successfully created."
+      redirect_to admin_test_set_path(@test_set),
+        notice: "Test set was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +28,8 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   def update
     if @test_set.update(test_set_params)
-      redirect_to admin_test_set_path(@test_set), notice: "Test set was successfully updated."
+      redirect_to admin_test_set_path(@test_set),
+        notice: "Test set was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -36,9 +37,11 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   def destroy
     if @test_set.destroy
-      redirect_to admin_test_sets_path, notice: "Test set \"#{@test_set.name}\" was successfully deleted."
+      redirect_to admin_test_sets_path,
+        notice: "Test set \"#{@test_set.name}\" was successfully deleted."
     else
-      redirect_to admin_test_set_path(@test_set), alert: "Unable to delete test set."
+      redirect_to admin_test_set_path(@test_set),
+        alert: "Unable to delete test set."
     end
   end
 

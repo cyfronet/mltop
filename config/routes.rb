@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
     resources :evaluators
     resources :test_sets do
-      resources :entries, module: :test_sets
+      resources :entries, module: :test_sets, shallow: true, except: [ :show ]
     end
   end
 
