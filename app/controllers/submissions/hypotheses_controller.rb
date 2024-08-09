@@ -16,6 +16,15 @@ class Submissions::HypothesesController < ApplicationController
     end
   end
 
+  def destroy
+    @hypothesis = Hypothesis.find_by(model_id: params[:submission_id], groundtruth_id: params[:groundtruth_id])
+    if @hypothesis.destroy
+      flash.now[:notice] = "Hypothesis succesfully deleted"
+    else
+      flash.now[:alert] = "Unable to delete hypothesis #{@hypothesis.groundtruth}"
+    end
+  end
+
   private
   def hypothesis_params
     params.require(:hypothesis).permit(:model_id, :groundtruth_id, :input)

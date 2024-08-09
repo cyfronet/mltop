@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :submissions do
     resources :tasks, only: [ :index, :show ], module: :submissions
-    resource :hypothesis, only: [ :new, :create ], module: :submissions
+    resources :hypotheses, only: [ :new, :create, :destroy ], module: :submissions
   end
 
   namespace :admin do

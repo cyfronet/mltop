@@ -2,5 +2,6 @@
   <%= groundtruth %>
   <%= turbo_frame_tag dom_id(groundtruth, "hypothesis_form") do%>
     <%= link_to "Upload hypothesis", new_submission_hypothesis_path(groundtruth_id: groundtruth.id),  class: "float-right" %>
+    <%= button_to "Delete hypothesis", submission_hypothesis_path(groundtruth_id: groundtruth.id), method: :delete, class: "float-right" %>
   <% end %>
 </div>
