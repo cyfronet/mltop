@@ -10,7 +10,7 @@ class Admin::Evaluators::MetricsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create new evaluator" do
+  test "should create new metric" do
     evaluator = evaluators("sacrebleu")
     assert_difference("evaluator.metrics.count") do
       post admin_evaluator_metrics_path(evaluator, format: :turbo_stream), params: { metric: {
