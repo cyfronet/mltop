@@ -1,7 +1,4 @@
 <div class="p-3 bg-white sm:rounded-lg sm:shadow mx-3 my-4">
   <%= groundtruth %>
-  <%= turbo_frame_tag dom_id(groundtruth, "hypothesis_form") do%>
-    <%= link_to "Upload hypothesis", new_submission_hypothesis_path(groundtruth_id: groundtruth.id),  class: "float-right" %>
-    <%= button_to "Delete hypothesis", submission_hypothesis_path(groundtruth_id: groundtruth.id), method: :delete, class: "float-right" %>
-  <% end %>
+  <%= render "actions", groundtruth:, hypothesis_exists: hypotheses_exist.include?(groundtruth.id)%>
 </div>

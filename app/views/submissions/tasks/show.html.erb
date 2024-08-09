@@ -15,7 +15,8 @@
       </div>
     </div>
     <div role="list">
-      <%= render partial: "groundtruth", collection: entries_for_test_set(test_set), as: :groundtruth %>
+      <%= render partial: "groundtruth", collection: entries_for_test_set(test_set),
+          as: :groundtruth, locals: { hypotheses_exist: @hypotheses_exist } %>
     </div>
   </div>
 <% end %>

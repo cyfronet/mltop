@@ -1,0 +1,7 @@
+<%= turbo_frame_tag dom_id(groundtruth, "hypothesis_form") do%>
+  <% if hypothesis_exists %>
+    <%= button_to "Delete hypothesis", submission_hypotheses_path(groundtruth_id: groundtruth.id), method: :delete, class: "float-right" %>
+  <% else %>
+    <%= link_to "Upload hypothesis", new_submission_hypothesis_path(groundtruth_id: groundtruth.id),  class: "float-right" %>
+  <% end %>
+<% end %>

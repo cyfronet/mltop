@@ -18,6 +18,7 @@ class Submissions::HypothesesController < ApplicationController
 
   def destroy
     @hypothesis = Hypothesis.find_by(model_id: params[:submission_id], groundtruth_id: params[:groundtruth_id])
+    @groundtruth = @hypothesis.groundtruth
     if @hypothesis.destroy
       flash.now[:notice] = "Hypothesis succesfully deleted"
     else
