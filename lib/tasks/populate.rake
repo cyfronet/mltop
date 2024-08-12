@@ -21,7 +21,8 @@ if Rails.env.local?
               else
                 # TODO clarify this - currently for tasks like LIPREAD and ASR the form
                 # of groundtruth is heterogeneous (different for each dataset). Maybe unification will be possible
-                # for now I assumed that the file with ground truth is the .yaml file
+                # for now I assumed that the file with ground truth is the .yaml file, but probably
+                # it will be .tar.gz file with audio/video files
                 source_lang = dir
                 target_lang = source_lang
                 target_ext = ".yaml"
