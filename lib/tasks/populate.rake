@@ -1,9 +1,7 @@
-require "net/scp"
-
 if Rails.env.local?
   namespace :dev do
     desc "Copy data from cluster storage and populate the database"
-    task populate:, [ :user_login ] => [ :environment ] do |t, args|
+    task :populate, [ :user_login ] => [ :environment ] do |t, args|
       REMOTE_HOST_ADDRESS = "athena.cyfronet.pl"
       USERNAME = args[:user_login]
       GROUP_STORAGE_DATA_PATH = "/net/pr2/projects/plgrid/plggmeetween/tasks"
