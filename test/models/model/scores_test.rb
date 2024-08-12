@@ -4,8 +4,8 @@ class Model::ScoresTest < ActiveSupport::TestCase
   test "model scores for selected metric and test set" do
     other_model = create(:model, name: "Other task", tasks: [ tasks(:st) ])
     model = create(:model, name: "Model", tasks: [ tasks(:st) ])
-    hypothesis_pl = create(:hypothesis, model:, groundtruth: groundtruths("flores_en_pl_st"))
-    hypothesis_it = create(:hypothesis, model:, groundtruth: groundtruths("flores_en_it_st"))
+    hypothesis_pl = create(:hypothesis, model:, test_set_entry: test_set_entries("flores_st_en_pl"))
+    hypothesis_it = create(:hypothesis, model:, test_set_entry: test_set_entries("flores_st_en_it"))
     other_hypothesis = create(:hypothesis, model: other_model)
 
     evaluation = create(:evaluation, hypothesis: hypothesis_pl,

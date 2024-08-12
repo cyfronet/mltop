@@ -71,24 +71,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "groundtruths", force: :cascade do |t|
-    t.bigint "task_id", null: false
-    t.bigint "test_set_entry_id", null: false
-    t.string "language", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_groundtruths_on_task_id"
-    t.index ["test_set_entry_id"], name: "index_groundtruths_on_test_set_entry_id"
-  end
-
   create_table "hypotheses", force: :cascade do |t|
     t.bigint "model_id", null: false
-    t.bigint "groundtruth_id", null: false
+    t.bigint "test_set_entry_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["groundtruth_id"], name: "index_hypotheses_on_groundtruth_id"
-    t.index ["model_id", "groundtruth_id"], name: "index_hypotheses_on_model_id_and_groundtruth_id", unique: true
+    t.index ["model_id", "test_set_entry_id"], name: "index_hypotheses_on_model_id_and_test_set_entry_id", unique: true
     t.index ["model_id"], name: "index_hypotheses_on_model_id"
+    t.index ["test_set_entry_id"], name: "index_hypotheses_on_test_set_entry_id"
   end
 
   create_table "metrics", force: :cascade do |t|
@@ -143,6 +133,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
     t.bigint "test_set_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["task_id", "test_set_id"], name: "index_task_test_sets_uniqueness", unique: true
     t.index ["task_id"], name: "index_task_test_sets_on_task_id"
     t.index ["test_set_id"], name: "index_task_test_sets_on_test_set_id"
   end
@@ -158,11 +149,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
   end
 
   create_table "test_set_entries", force: :cascade do |t|
-    t.string "language", null: false
+    t.string "source_language", null: false
+    t.string "target_language", null: false
     t.bigint "test_set_id", null: false
+    t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["language", "test_set_id"], name: "index_test_set_entries_on_language_and_test_set_id", unique: true
+    t.index ["source_language", "target_language", "test_set_id", "task_id"], name: "idx_on_source_language_target_language_test_set_id__e10c5b6230", unique: true
+    t.index ["task_id"], name: "index_test_set_entries_on_task_id"
     t.index ["test_set_id"], name: "index_test_set_entries_on_test_set_id"
   end
 
@@ -188,10 +182,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"
-  add_foreign_key "groundtruths", "tasks"
-  add_foreign_key "groundtruths", "test_set_entries"
-  add_foreign_key "hypotheses", "groundtruths"
   add_foreign_key "hypotheses", "models"
+  add_foreign_key "hypotheses", "test_set_entries"
   add_foreign_key "metrics", "evaluators"
   add_foreign_key "models", "users", column: "owner_id"
   add_foreign_key "scores", "evaluations"
@@ -200,5 +192,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
   add_foreign_key "task_models", "tasks"
   add_foreign_key "task_test_sets", "tasks"
   add_foreign_key "task_test_sets", "test_sets"
+  add_foreign_key "test_set_entries", "tasks"
   add_foreign_key "test_set_entries", "test_sets"
 end

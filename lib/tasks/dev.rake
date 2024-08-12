@@ -3,6 +3,7 @@ if Rails.env.local?
     desc "Sample data for local development environment"
     task recreate: %w[ db:drop db:create db:migrate db:seed ] do
       include ActionView::Helpers::TextHelper
+
       # text to text
       Task.create!(name: "Machine translation", slug: "MT", from: :text, to: :text)
       Task.create!(name: "Sumarization", slug: "SUM", from: :text, to: :text)
@@ -39,22 +40,17 @@ if Rails.env.local?
       TaskTestSet.create!(task: st, test_set: flores)
 
       [ mustc, flores ].each do |test_set|
-        entries_map =
-          languages
-            .map do |language|
-              test_set.entries.create!(
-                language:,
-                input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{language}.txt" }
-              )
-            end
-
-        entries_map.each do |entry|
-          languages.each do |language|
-            next if entry.language == language
-            Groundtruth.create(test_set_entry: entry, language:, task: st,
-              input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{language}.txt" })
+        languages
+          .product(languages)
+          .map do |source_language, target_language|
+            test_set.entries.create!(
+              task: st,
+              source_language:,
+              target_language:,
+              input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{source_language}.txt" },
+              groundtruth: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{target_language}.txt" }
+            ) unless source_language == target_language
           end
-        end
       end
 
       sacrebleu = Evaluator.create!(name: "Sacrebleu")
@@ -83,8 +79,8 @@ if Rails.env.local?
               task_ids: [ task.id ]
             )
 
-            Groundtruth.where(task:).map do |gt|
-              gt.hypotheses.create!(
+            TestSetEntry.where(task:).map do |entry|
+              entry.hypotheses.create!(
                 model:,
                 input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "hypothesis.txt" }
               )

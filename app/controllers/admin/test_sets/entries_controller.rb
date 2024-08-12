@@ -1,22 +1,14 @@
 module Admin
   module TestSets
     class EntriesController < ApplicationController
-      before_action :find_test_set, only: %i[ new index create ]
-
-      def index
-        @test_set = TestSet.find(params[:test_set_id])
-        @entries = @test_set.entries
-
-        render json: @entries.map { |entry| { id: entry.id, name: entry.name } },
-               status: :ok
-      end
+      before_action :find_test_set, only: %i[ new create ]
 
       def new
         @test_set_entry = TestSetEntry.new
       end
 
       def create
-        @test_set_entry = TestSetEntry.new(test_set_entry_params.merge({ test_set: @test_set }))
+        @test_set_entry = @test_set.entries.new(test_set_entry_params)
 
         if @test_set_entry.save
           flash.now[:notice] = "Entry succesfully created"
@@ -39,7 +31,10 @@ module Admin
         end
 
         def test_set_entry_params
-          params.required(:test_set_entry).permit(:language, :input)
+          params.required(:test_set_entry)
+            .permit(:task_id,
+                    :source_language, :target_language,
+                    :input, :groundtruth)
         end
     end
   end

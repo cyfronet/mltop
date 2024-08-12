@@ -12,8 +12,11 @@
     <% end %>
 
   <%= form_with(model: test_set_entry, url: [:admin, test_set_entry]) do |form| %>
-      <%= form.select :language, Mltop::LANGUAGES, wrapper: "sm:col-span-1" %>
+      <%= form.select :source_language, Mltop::LANGUAGES, wrapper: "sm:col-span-1" %>
+      <%= form.select :target_language, Mltop::LANGUAGES, wrapper: "sm:col-span-1" %>
+      <%= form.collection_select :task_id, Task.all, :id, :name, {}, class: "sm:col-span-1" %>
       <%= form.file_field :input %>
+      <%= form.file_field :groundtruth %>
       <div>
         <%= link_to "Cancel", [:admin, test_set], class: "btn btn-primary"%>
         <%= form.submit%>

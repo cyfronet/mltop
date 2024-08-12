@@ -30,9 +30,12 @@
         <dt class="text-sm font-medium leading-6 text-gray-900">To</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @task.to %></dd>
       </div>
-      <%= turbo_frame_tag dom_id(@task, "test_sets") do %>
-        <%= render partial: "admin/tasks/test_sets", locals: { task: @task, test_sets_left: @test_sets_left }  %>
-      <%end%>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Test sets</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <%= @task.test_sets.map(&:name).join(", ") %>
+        </dd>
+      </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Evaluators</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @task.evaluators.map(&:name).join(", ") %></dd>

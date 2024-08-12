@@ -4,30 +4,36 @@ class TestSet < ApplicationRecord
   has_many :task_test_sets, dependent: :destroy
   has_many :tasks, through: :task_test_sets
 
-  has_many :entries, class_name: "TestSetEntry", dependent: :destroy
-  has_many :groundtruths, through: :entries
+  has_many :entries, class_name: "TestSetEntry", dependent: :destroy do
+    def for_task(task)
+      where(task:)
+    end
+  end
 
   has_rich_text :description
 
   validates :name, presence: true
 
-  def languages
-    @languages = entries.map(&:language)
+  def source_languages
+    @source_languages = entries.map(&:source_language).uniq.sort
   end
 
-  def entry_for_language(language)
-    entries.detect { |e| e.language == language }
+  def target_languages
+    @target_languages = entries.map(&:target_language).uniq.sort
   end
 
-  def all_inputs_zip_path
+  def entry_for_language(source, target)
+    entries.detect { |e| e.source_language == source && e.target_language == target }
+  end
+
+  def all_inputs_zip_path(task)
     tmp_dir = Dir.mktmpdir
     Zip::File.open("#{tmp_dir}.zip", Zip::File::CREATE) do |zf|
-      entries.preload(:input_blob).with_attached_input.each do |entry|
+      entries.where(task:).preload(:input_blob).with_attached_input.each do |entry|
         if filename = entry.input_file_name
           File.open(File.join(tmp_dir, filename), "wb") do |file|
             entry.input.download { |chunk| file.write(chunk) }
           end
-
           zf.add(filename, File.join(tmp_dir, filename))
         end
       end

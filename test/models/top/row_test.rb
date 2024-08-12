@@ -21,30 +21,35 @@ class Top::RowTest < ActiveSupport::TestCase
   test "calculate aggregated score for all subtasks" do
     model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
 
-    new_evaluation(model, :flores_en_pl_st, 2)
+    new_evaluation(model, :flores_st_en_pl, 3)
     row = Top::Row.where(task: tasks(:st)).first
     assert_equal 1, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
       "Wrong score: agreegated score is calcualted for all subtask, when missing 0 is used"
 
-    new_evaluation(model, :flores_en_it_st, 1)
+    new_evaluation(model, :flores_st_en_it, 1.5)
     row = Top::Row.where(task: tasks(:st)).first
     assert_equal 1.5, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
-      "Wrong score: 2 (en->pl) + 1 (en->it) = 1.5"
+      "Wrong score: (2 (en->pl) + 1.5 (en->it) + 0 (pl->en)) / 3= 1.5"
+
+    new_evaluation(model, :flores_st_pl_en, 4.5)
+    row = Top::Row.where(task: tasks(:st)).first
+    assert_equal 3, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: (2 (en->pl) + 1.5 (en->it) + 4.5 (pl->en)) / 3 = 3"
   end
 
   test "get model score" do
     model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
 
-    new_evaluation(model, :flores_en_pl_st, 1)
+    new_evaluation(model, :flores_st_en_pl, 1)
 
     row = Top::Row.where(task: tasks(:st)).first
     assert_equal 1, row.score(test_set: test_sets(:flores),
                               metric: metrics(:blueurt),
-                              groundtruth: groundtruths(:flores_en_pl_st)).value
+                              test_set_entry: test_set_entries(:flores_st_en_pl)).value
 
     assert_nil row.score(test_set: test_sets(:flores),
                          metric: metrics(:blueurt),
-                         groundtruth: groundtruths(:flores_en_it_st)).value,
+                         test_set_entry: test_set_entries(:flores_st_en_it)).value
               "Nil score should be created when no score in DB"
   end
 
@@ -53,13 +58,13 @@ class Top::RowTest < ActiveSupport::TestCase
     m2 = create(:model, name: "model 2", tasks: [ tasks(:st) ])
     m3 = create(:model, name: "model 3", tasks: [ tasks(:st) ])
 
-    new_evaluation(m1, :flores_en_pl_st, 1)
-    new_evaluation(m2, :flores_en_pl_st, 3)
-    new_evaluation(m3, :flores_en_pl_st, 2)
+    new_evaluation(m1, :flores_st_en_pl, 1)
+    new_evaluation(m2, :flores_st_en_pl, 3)
+    new_evaluation(m3, :flores_st_en_pl, 2)
 
-    new_evaluation(m1, :flores_en_it_st, 20)
-    new_evaluation(m2, :flores_en_it_st, 30)
-    new_evaluation(m3, :flores_en_it_st, 10)
+    new_evaluation(m1, :flores_st_en_it, 20)
+    new_evaluation(m2, :flores_st_en_it, 30)
+    new_evaluation(m3, :flores_st_en_it, 10)
 
     rows = Top::Row.where(task: tasks(:st))
 
@@ -70,20 +75,20 @@ class Top::RowTest < ActiveSupport::TestCase
     assert_equal [ m3, m1, m2 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:blueurt), order: :asc).map(&:model)
 
-    # detailed, per groundtruth
+    # detailed, per test set entry
     assert_equal [ m2, m3, m1 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:blueurt),
-                                            groundtruth: groundtruths(:flores_en_pl_st)).map(&:model)
+                                            test_set_entry: test_set_entries(:flores_st_en_pl)).map(&:model)
 
     assert_equal [ m1, m3, m2 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:blueurt),
-                                            groundtruth: groundtruths(:flores_en_pl_st), order: :asc).map(&:model)
+                                            test_set_entry: test_set_entries(:flores_st_en_pl), order: :asc).map(&:model)
   end
 
   private
-    def new_evaluation(model, groundtruth_fixture_name, value)
+    def new_evaluation(model, test_set_entry_fixture_name, value)
       hypothesis = create(:hypothesis, model:,
-                          groundtruth: groundtruths(groundtruth_fixture_name))
+                          test_set_entry: test_set_entries(test_set_entry_fixture_name))
       evaluation = create(:evaluation, hypothesis:,
                           evaluator: evaluators(:blueurt))
       create(:score, evaluation:, metric: metrics(:blueurt), value:)

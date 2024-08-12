@@ -3,10 +3,10 @@ require "test_helper"
 class HypothesisTest < ActiveSupport::TestCase
   test "cannot create hypothesis without input" do
     model = create(:model)
-    groundtruth = groundtruths("flores_en_pl_st")
+    test_set_entry = test_set_entries("flores_st_en_pl")
 
-    assert_not Hypothesis.new(model:, groundtruth:).valid?
-    assert Hypothesis.new(model:, groundtruth:, input: upload_file).valid?
+    assert_not Hypothesis.new(model:, test_set_entry:).valid?
+    assert Hypothesis.new(model:, test_set_entry:, input: upload_file).valid?
   end
 
   private

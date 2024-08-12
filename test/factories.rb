@@ -15,7 +15,7 @@ class ActiveSupport::TestCase
 
     factory(:hypothesis) do
       {
-        groundtruth: groundtruths("flores_en_pl_st"),
+        test_set_entry: test_set_entries("flores_st_en_pl"),
         input: { io: StringIO.new("hypothesis"), filename: "hypothesis.txt" }
       }
     end
