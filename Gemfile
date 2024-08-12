@@ -27,6 +27,9 @@ gem "active_link_to"
 # app security
 gem "rack-attack"
 
+# file copy
+gem "net-ssh"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "brakeman", require: false
