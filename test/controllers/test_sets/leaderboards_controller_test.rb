@@ -16,7 +16,7 @@ module TestSets
       score = create(:score, evaluation:, metric: metrics(:blueurt), value: 99.99)
 
       other = create(:model, name: "other task", tasks: [ tasks(:asr) ])
-      other_hypothesis = create(:hypothesis, model: other, groundtruth: groundtruths(:flores_en_pl_asr))
+      other_hypothesis = create(:hypothesis, model: other, test_set_entry: test_set_entries(:flores_asr_en_pl))
       other_evaluation = create(:evaluation, hypothesis: other_hypothesis,
       evaluator: evaluators(:blueurt))
       other_score = create(:score, evaluation: other_evaluation, metric: metrics(:blueurt), value: 11.11)

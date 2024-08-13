@@ -15,9 +15,9 @@
       </div>
     </div>
     <ul role="list" class="">
-      <% @task.groundtruths.each do |groundtruth| %>
+      <% entries_for_test_set(test_set).each do |entry| %>
         <li class="p-3 bg-white sm:rounded-lg sm:shadow mx-3 my-4">
-          <%= groundtruth %>
+          <%= entry %>
         </li>
       <% end %>
     </ul>

@@ -18,12 +18,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :tasks do
-      resources :groundtruths, only: [ :new, :create ], module: :tasks
-      resources :test_sets, only: [ :new, :create ], module: :tasks
-    end
+    resources :tasks
     resources :test_sets do
-      resources :entries, module: :test_sets, shallow: true, except: [ :show ]
+      resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]
     end
     resources :evaluators do
       resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]

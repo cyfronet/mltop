@@ -1,20 +1,64 @@
-flores_en_input:
+flores_st_en_pl_input:
   name: input
-  record: flores_en (TestSetEntry)
-  blob: flores_en_input_blob
+  record: flores_st_en_pl (TestSetEntry)
+  blob: flores_st_en_pl_input_blob
 
-flores_pl_input:
+flores_st_en_pl_groundtruth:
+  name: groundtruth
+  record: flores_st_en_pl (TestSetEntry)
+  blob: flores_st_en_pl_groundtruth_blob
+
+
+flores_st_en_it_input:
   name: input
-  record: flores_pl (TestSetEntry)
-  blob: flores_pl_input_blob
+  record: flores_st_en_it (TestSetEntry)
+  blob: flores_st_en_it_input_blob
 
-mustc_en_input:
+flores_st_en_it_groundtruth:
+  name: groundtruth
+  record: flores_st_en_it (TestSetEntry)
+  blob: flores_st_en_it_groundtruth_blob
+
+
+flores_st_pl_en_input:
   name: input
-  record: mustc_en (TestSetEntry)
-  blob: mustc_en_input_blob
+  record: flores_st_pl_en (TestSetEntry)
+  blob: flores_st_pl_en_input_blob
 
-mustc_pl_input:
+flores_st_pl_en_groundtruth:
+  name: groundtruth
+  record: flores_st_pl_en (TestSetEntry)
+  blob: flores_st_pl_en_groundtruth_blob
+
+
+flores_asr_en_pl_input:
   name: input
-  record: mustc_pl (TestSetEntry)
-  blob: mustc_pl_input_blob
+  record: flores_asr_en_pl (TestSetEntry)
+  blob: flores_asr_en_pl_input_blob
 
+flores_asr_en_pl_groundtruth:
+  name: groundtruth
+  record: flores_asr_en_pl (TestSetEntry)
+  blob: flores_asr_en_pl_groundtruth_blob
+
+
+mustc_st_en_pl_input:
+  name: input
+  record: mustc_st_en_pl (TestSetEntry)
+  blob: mustc_st_en_pl_input_blob
+
+mustc_st_en_pl_groundtruth:
+  name: groundtruth
+  record: mustc_st_en_pl (TestSetEntry)
+  blob: mustc_st_en_pl_groundtruth_blob
+
+
+mustc_st_pl_en_input:
+  name: input
+  record: mustc_st_pl_en (TestSetEntry)
+  blob: mustc_st_pl_en_input_blob
+
+mustc_st_pl_en_groundtruth:
+  name: groundtruth
+  record: mustc_st_pl_en (TestSetEntry)
+  blob: mustc_st_pl_en_groundtruth_blob

@@ -1,6 +1,6 @@
 class Hypothesis < ApplicationRecord
   belongs_to :model
-  belongs_to :groundtruth
+  belongs_to :test_set_entry
 
   has_many :evaluations, dependent: :destroy
 
