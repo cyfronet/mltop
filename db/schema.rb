@@ -128,16 +128,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
     t.index ["task_id"], name: "index_task_models_on_task_id"
   end
 
-  create_table "task_test_sets", force: :cascade do |t|
-    t.bigint "task_id", null: false
-    t.bigint "test_set_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id", "test_set_id"], name: "index_task_test_sets_uniqueness", unique: true
-    t.index ["task_id"], name: "index_task_test_sets_on_task_id"
-    t.index ["test_set_id"], name: "index_task_test_sets_on_test_set_id"
-  end
-
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.text "info"
@@ -190,8 +180,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
   add_foreign_key "scores", "metrics"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
-  add_foreign_key "task_test_sets", "tasks"
-  add_foreign_key "task_test_sets", "test_sets"
   add_foreign_key "test_set_entries", "tasks"
   add_foreign_key "test_set_entries", "test_sets"
 end

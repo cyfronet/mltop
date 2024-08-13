@@ -1,14 +1,12 @@
 require "zip"
 
 class TestSet < ApplicationRecord
-  has_many :task_test_sets, dependent: :destroy
-  has_many :tasks, through: :task_test_sets
-
   has_many :entries, class_name: "TestSetEntry", dependent: :destroy do
     def for_task(task)
       where(task:)
     end
   end
+  has_many :tasks, -> { distinct }, through: :entries
 
   has_rich_text :description
 
