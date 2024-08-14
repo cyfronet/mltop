@@ -7,7 +7,10 @@ class Top::Row
 
   def initialize(model, scores, entries_counts)
     @model = model
-    @scores = scores
+
+    @scores = scores.group_by { |s| [ s.test_set_id, s.metric_id ] }
+    @scores.default = []
+
     @entries_counts = entries_counts
     @cached_scores = {}
   end
@@ -32,10 +35,7 @@ class Top::Row
   end
 
   def calculate_score(test_set:, metric:, test_set_entry: nil)
-    scores = @scores.filter do |score|
-      (!test_set || score.test_set_id == test_set.id) &&
-        (!metric || score.metric_id == metric.id)
-    end
+    scores = @scores[[ test_set.id, metric.id ]]
 
     scores = if test_set_entry
       scores.filter { |score| score.test_set_entry_id == test_set_entry.id }
