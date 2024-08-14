@@ -1,4 +1,4 @@
 <%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
-<%= turbo_stream.update dom_id(@groundtruth, "hypothesis_form"),
+<%= turbo_stream.update dom_id(@test_set_entry, "hypothesis_form"),
     partial: "submissions/tasks/actions",
-    locals: { groundtruth: @groundtruth,  hypothesis_exists: true } %>
+    locals: { entry: @test_set_entry, hypothesis_id: @hypothesis.id } %>
