@@ -5,18 +5,13 @@ class Submissions::HypothesesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as("marek")
     @model = create(:model, owner: users("marek"))
     @task = @model.tasks.first
-    @groundtruth = groundtruths("flores_en_it_st")
-  end
-
-  test "should get new" do
-    get submission_tasks_path(@model)
-    assert_redirected_to submission_task_path(@model, @model.tasks.first)
+    @test_set_entry = test_set_entries("flores_st_en_it")
   end
 
   test "should create hypotheses" do
     assert_difference("Hypothesis.count") do
       post submission_hypotheses_path(submission_id: @model.id, format: :turbo_stream),
-        params: { hypothesis: { groundtruth_id: @groundtruth.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
+        params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
     end
 
     assert_response :ok
@@ -24,20 +19,20 @@ class Submissions::HypothesesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "it returns uprocessable for invalid params" do
-    @hypothesis = create(:hypothesis, model: @model, groundtruth: @groundtruth)
+    @hypothesis = create(:hypothesis, model: @model, test_set_entry: @test_set_entry)
 
     assert_no_difference("Hypothesis.count") do
       post submission_hypotheses_path(submission_id: @model.id),
-        params: { hypothesis: { groundtruth_id: @groundtruth.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
+        params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
     end
 
-    assert_response :unprocessable_entity
+    assert_equal "There was an error creating hypothesis", flash[:alert]
   end
 
   test "should delete hypothesis" do
-    @hypothesis = create(:hypothesis, model: @model, groundtruth: @groundtruth)
+    @hypothesis = create(:hypothesis, model: @model, test_set_entry: @test_set_entry)
     assert_difference("Hypothesis.count", -1) do
-      delete submission_hypotheses_path(submission_id: @model.id, groundtruth_id: @groundtruth.id, format: :turbo_stream)
+      delete hypothesis_path(id: @hypothesis.id, format: :turbo_stream)
     end
 
     assert_response :ok

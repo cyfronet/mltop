@@ -1,4 +1,4 @@
-class Submissions::HypothesesController < ApplicationControlle
+class Submissions::HypothesesController < ApplicationController
   def create
     @model = Current.user.models.find(params[:submission_id])
     @hypothesis = @model.hypothesis.new(hypothesis_params)
@@ -6,8 +6,8 @@ class Submissions::HypothesesController < ApplicationControlle
     if @hypothesis.save
       flash.now[:notice] = "Hypothesis succesfully created"
     else
-      @test_set_entry = @hypothesis.test_set_entry
-      render(:new, status: :unprocessable_entity)
+      flash.now[:alert] = "There was an error creating hypothesis"
+      redirect_back fallback_location: submission_task_path(@model, @model.tasks.first)
     end
   end
 
