@@ -22,11 +22,11 @@ class Submissions::HypothesesControllerTest < ActionDispatch::IntegrationTest
     @hypothesis = create(:hypothesis, model: @model, test_set_entry: @test_set_entry)
 
     assert_no_difference("Hypothesis.count") do
-      post submission_hypotheses_path(submission_id: @model.id),
+      post submission_hypotheses_path(submission_id: @model.id, format: :turbo_stream),
         params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
     end
 
-    assert_equal "There was an error creating hypothesis", flash[:alert]
+    assert_equal "Unable to create hypothesis", flash[:alert]
   end
 
   test "should delete hypothesis" do
