@@ -6,8 +6,9 @@ class Submissions::HypothesesController < ApplicationController
     if @hypothesis.save
       flash.now[:notice] = "Hypothesis succesfully created"
     else
-      flash.now[:alert] = "There was an error creating hypothesis"
-      redirect_back fallback_location: submission_task_path(@model, @model.tasks.first)
+      @submission_id = @model.id
+      flash.now[:alert] = "Unable to create hypothesis"
+      render(:create, status: :bad_request)
     end
   end
 
