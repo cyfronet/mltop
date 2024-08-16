@@ -7,4 +7,5 @@ class Hypothesis < ApplicationRecord
   has_one_attached :input
 
   validates :input, presence: true
+  validates :test_set_entry, uniqueness: { scope: :model }
 end
