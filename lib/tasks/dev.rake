@@ -50,12 +50,12 @@ if Rails.env.local?
           end
       end
 
-      sacrebleu = Evaluator.create!(name: "Sacrebleu")
+      sacrebleu = Evaluator.create!(name: "Sacrebleu", script: dummy_script([ "blue", "chrf", "ter" ]), host: "ares.cyfronet.pl")
       sacrebleu.metrics.create!(name: "blue")
       sacrebleu.metrics.create!(name: "chrf")
       sacrebleu.metrics.create!(name: "ter")
 
-      bleurt = Evaluator.create!(name: "bleurt")
+      bleurt = Evaluator.create!(name: "bleurt", script: dummy_script([ "bluert" ]), host: "ares.cyfronet.pl")
       bleurt.metrics.create!(name: "bleurt")
 
       st.task_evaluators.create!(evaluator: sacrebleu)
@@ -106,5 +106,25 @@ if Rails.env.local?
         Score.insert_all!(scores_attrs)
       end
     end
+  end
+
+  def dummy_script(metric_names)
+    scores = { scores: metric_names.map do |metric|
+        [ metric, rand(100.0) ]
+      end.to_h
+    }
+    <<~SCR
+      #SBATCH -A plgmeetween2004-cpu
+      #SBATCH -p plgrid-now
+      #SBATCH --ntasks-per-node=1
+      #SBATCH --time=00:01:00
+      #!/bin/bash -l
+
+      echo $GROUNDTRUTH_URL
+      curl -X POST $RESULTS_URL \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Token $TOKEN"
+      -d "#{scores.to_json}"
+    SCR
   end
 end

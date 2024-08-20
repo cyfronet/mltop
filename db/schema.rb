@@ -62,12 +62,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
+    t.string "job_id"
     t.index ["evaluator_id"], name: "index_evaluations_on_evaluator_id"
     t.index ["hypothesis_id"], name: "index_evaluations_on_hypothesis_id"
   end
 
   create_table "evaluators", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.text "script", null: false
+    t.string "host", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

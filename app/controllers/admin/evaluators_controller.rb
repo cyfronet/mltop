@@ -43,7 +43,7 @@ class Admin::EvaluatorsController < Admin::ApplicationController
 
   private
     def evaluator_params
-      params.required(:evaluator).permit(:name)
+      params.required(:evaluator).permit(:name, :script, :host)
     end
 
     def find_evaluator
