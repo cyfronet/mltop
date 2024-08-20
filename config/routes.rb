@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   resources :evaluators, only: [ :show ]
   resources :test_set, only: [ :show ]
 
+  resources :evaluations, only: [] do
+    resources :metrics, only: [ :create ], defaults: { format: :json }, module: :evaluations
+  end
+
   resources :submissions do
     resources :tasks, only: [ :index, :show ], module: :submissions
     resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true

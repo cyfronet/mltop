@@ -80,6 +80,7 @@ GEM
     ast (2.4.2)
     attr_required (1.0.2)
     base64 (0.2.0)
+    bcrypt (3.1.20)
     bigdecimal (3.1.8)
     bindata (2.5.0)
     bindex (0.8.1)
@@ -417,6 +418,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
+  bcrypt (~> 3.1.7)
   bootsnap
   brakeman
   capybara

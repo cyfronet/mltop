@@ -27,6 +27,8 @@ gem "active_link_to"
 # app security
 gem "rack-attack"
 
+gem "bcrypt", "~> 3.1.7"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "brakeman", require: false
