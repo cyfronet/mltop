@@ -35,7 +35,9 @@ class Evaluations::SubmitMetricsTest < ActionDispatch::IntegrationTest
 
   private
     def headers(token)
-      { "Authorization" => "Bearer #{token}", "ContentType" => "application/json" }
+      authorization = ActionController::HttpAuthentication::Token.encode_credentials(token)
+
+      { "Authorization" => authorization, "ContentType" => "application/json" }
     end
 
     def valid_scores   = { scores: { blue: 1, chrf: 2, ter: 3.3 } }

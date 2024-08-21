@@ -1,5 +1,6 @@
 module Evaluations::Authentication
   extend ActiveSupport::Concern
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
   included do
     before_action :require_authentication
@@ -7,14 +8,8 @@ module Evaluations::Authentication
 
   private
     def require_authentication
-      @evaluation = Evaluation.authenticate_by(id: params[:evaluation_id], token:)
-      render status: 401, json: { error: "Invalid evaluation or token." } unless @evaluation
-    end
-
-    def token
-      pattern = /^Bearer /
-      header = request.headers["HTTP_AUTHORIZATION"]
-
-      header.gsub(pattern, "") if header&.match(pattern)
+      @evaluation = authenticate_or_request_with_http_token do |token, options|
+        Evaluation.authenticate_by(id: params[:evaluation_id], token:)
+      end
     end
 end
