@@ -1,24 +1,24 @@
 require "test_helper"
 
-class Evaluations::SubmitMetricsTest < ActionDispatch::IntegrationTest
+class Evaluations::SubmitScoresTest < ActionDispatch::IntegrationTest
   def setup
     @evaluation = create(:evaluation, evaluator: evaluators(:sacrebleu))
   end
 
-  test "can submit metrics for running evaluation" do
+  test "can submit scores for running evaluation" do
     token = @evaluation.reset_token!
 
-    post evaluation_metrics_path(@evaluation),
+    post evaluation_scores_path(@evaluation),
       params: valid_scores,
       headers: headers(token)
 
     assert_response :success
   end
 
-  test "all metrics needs to be given" do
+  test "all scores needs to be given" do
     token = @evaluation.reset_token!
 
-    post evaluation_metrics_path(@evaluation),
+    post evaluation_scores_path(@evaluation),
       params: invalid_scores,
       headers: headers(token)
 
@@ -26,7 +26,7 @@ class Evaluations::SubmitMetricsTest < ActionDispatch::IntegrationTest
   end
 
   test "require valid token" do
-    post evaluation_metrics_path(@evaluation),
+    post evaluation_scores_path(@evaluation),
       params: valid_scores,
       headers: headers("invalid")
 

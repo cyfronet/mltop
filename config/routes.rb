@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :test_set, only: [ :show ]
 
   resources :evaluations, only: [] do
-    resources :metrics, only: [ :create ], defaults: { format: :json }, module: :evaluations
+    resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
   end
 
   resources :submissions do

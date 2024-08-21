@@ -1,4 +1,4 @@
-class Evaluations::MetricsController < Evaluations::ApplicationController
+class Evaluations::ScoresController < Evaluations::ApplicationController
   def create
     @evaluation.record_scores!(scores_params)
 
