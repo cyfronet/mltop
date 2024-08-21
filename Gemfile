@@ -50,6 +50,7 @@ group :test do
   gem "selenium-webdriver"
   gem "fixture_factory"
   gem "webmock", "~> 3.10"
+  gem "mocha"
 end
 
 group :production do

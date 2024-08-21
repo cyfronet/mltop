@@ -186,6 +186,8 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     minitest (5.25.1)
+    mocha (2.4.5)
+      ruby2_keywords (>= 0.0.5)
     msgpack (1.7.2)
     net-http (0.4.1)
       uri
@@ -336,6 +338,7 @@ GEM
     ruby-vips (2.2.2)
       ffi (~> 1.12)
       logger
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     securerandom (0.3.1)
     selenium-webdriver (4.23.0)
@@ -414,6 +417,7 @@ DEPENDENCIES
   hpckit!
   image_processing (~> 1.12)
   importmap-rails
+  mocha
   omniauth_openid_connect
   pg (~> 1.1)
   propshaft

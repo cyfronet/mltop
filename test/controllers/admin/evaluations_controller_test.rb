@@ -18,7 +18,7 @@ class Admin::EvaluatorsControllerTest < ActionDispatch::IntegrationTest
   test "should create new evaluator" do
     assert_difference("Evaluator.count") do
       post admin_evaluators_url, params: { evaluator: {
-        name: "New evaluator name"
+        name: "New evaluator name", script: "dummy script", host: "dummy host"
       } }
     end
 

@@ -4,6 +4,9 @@ require "rails/test_help"
 require "fixture_factory"
 require "webmock/minitest"
 require_relative "factories"
+require "mocha/minitest"
+require "minitest/autorun"
+
 Dir[Rails.root.join("test/support/**/*.rb")].each { |f| require f }
 
 CcmHelpers.default_ccm_stubs!
