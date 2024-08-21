@@ -10,9 +10,7 @@ class Evaluation < ApplicationRecord
   def record_scores!(values)
     transaction do
       metrics.each do |metric|
-        value = values[metric.name].present? ? values[metric.name].to_f : nil
-
-        scores.create! metric:, value:
+        scores.create! metric:, value: values[metric.name]&.to_f
       end
     end
   end
