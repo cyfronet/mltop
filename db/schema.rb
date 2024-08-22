@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
   end
 
   create_table "evaluations", force: :cascade do |t|
+    t.string "token_digest"
     t.bigint "hypothesis_id", null: false
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false

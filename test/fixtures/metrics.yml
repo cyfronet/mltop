@@ -12,4 +12,4 @@ ter:
 
 blueurt:
   name: blueurt
-  evaluator: sacrebleu
+  evaluator: blueurt
