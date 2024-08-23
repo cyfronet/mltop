@@ -8,7 +8,7 @@ class Evaluation < ApplicationRecord
   has_many :scores, dependent: :destroy
 
   enum :status, {
-    new: 0,
+    created: 0,
     pending: 1,
     running: 2,
     completed: 3,
