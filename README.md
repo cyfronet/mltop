@@ -50,6 +50,28 @@ bin/dev
 
 Now you can point your browser into `http://localhost:3000`.
 
+
+## ngrok
+While you're developing locally, there still needs to be a way for the cluster to contact the server.
+This is because `evaluations` contacts cluster to download/upload files.
+To achieve it, we're using ngrok. It enables you to get `localhost` out in the world.
+
+First you have to [install and setup ngrok](https://ngrok.com/download)
+
+Then, open terminal and run this command - your local server should be running!
+```
+ngrok http 3000
+```
+After you make a request to your localhost server, ngrok server should start working.
+You can find the url to it in the terminal where you ran the command above.
+
+We are automatically discover ngrok URL and extract host from it. If you want to
+override you can set `HOST` environment variable:
+
+```bash
+export HOST=mee.public.host
+```
+
 ## ENV variables
 
 To customize the application you can set the following ENV variables:
