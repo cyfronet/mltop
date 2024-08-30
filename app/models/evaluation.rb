@@ -29,19 +29,27 @@ class Evaluation < ApplicationRecord
 
   def submit(user)
     new_token = reset_token!
-    request = client(user).submit(script(new_token))
-    if request.class == Net::HTTPOK
-      update(status: :pending, job_id: JSON.parse(request.body)["result"]["job_id"])
+    request = submit_script(user, new_token)
+    if request.success?
+      update(status: :pending, job_id: request.job_id)
     else
       update(status: :failed)
     end
     request
   end
 
+  def update_status(new_status)
+    update(status: (new_status || "failed").downcase)
+  end
+
   private
 
+  def submit_script(user, new_token)
+    Hpc::Response.new(request: client(user).submit(script(new_token)))
+  end
+
   def client(user)
-    @client ||= ::Hpc::Client.for(user, evaluator.host)
+    @client ||= Mltop.hpc_client(user, evaluator.host)
   end
 
   def script(new_token)
