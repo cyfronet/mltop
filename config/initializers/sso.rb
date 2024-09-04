@@ -1,4 +1,3 @@
-redirect_uri = ENV["NGROK_HOST"].blank? ? "#{Rails.application.credentials.dig(:sso, :redirect_uri_base)}/auth/plgrid/callback" : "https://#{ENV.fetch("NGROK_HOST")}/auth/plgrid/callback"
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :openid_connect,
@@ -14,7 +13,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       realm: Rails.application.credentials.dig(:sso, :realm),
       identifier: Rails.application.credentials.dig(:sso, :identifier),
       secret: Rails.application.credentials.dig(:sso, :secret),
-      redirect_uri:
+      redirect_uri: ENV.fetch("REDIRECT_URI")
     }
 end
 

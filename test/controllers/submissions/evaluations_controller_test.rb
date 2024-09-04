@@ -13,7 +13,7 @@ module Submissions
       hypothesis = create(:hypothesis, model:)
       Hypothesis.any_instance.stubs(:evaluate!).returns(true)
 
-      post hypothesis_evaluations_run_path(hypothesis_id: hypothesis, format: :turbo_stream)
+      post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
       assert_response :success
       assert_equal "Evaluations queued to submit", flash[:notice]
@@ -22,9 +22,9 @@ module Submissions
     test "owner of the model run evaluations with failure" do
       model = create(:model)
       hypothesis = create(:hypothesis, model:)
-      Hypothesis.any_instance.stubs(:evaluate!).returns(false)
+      Hypothesis.any_instance.stubs(:evaluate!).raises(ActiveRecord::RecordInvalid)
 
-      post hypothesis_evaluations_run_path(hypothesis_id: hypothesis, format: :turbo_stream)
+      post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
       assert_response :bad_request
       assert_equal "Unable to create evaluations", flash[:alert]
@@ -35,7 +35,7 @@ module Submissions
       hypothesis = create(:hypothesis, model:)
       hypothesis.stubs(:evaluate!).returns(:false)
 
-      post hypothesis_evaluations_run_path(hypothesis_id: hypothesis, format: :turbo_stream)
+      post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
       assert_response :not_found
     end

@@ -53,7 +53,7 @@ Now you can point your browser into `http://localhost:3000`.
 
 ## ngrok
 While you're developing locally, there still needs to be a way for the cluster to contact the server.
-This is because `evaluations` contacts cluster to download/upload files.
+This is because `evaluations` contacts cluster to download hypotheses, ground truth files, and upload metrics scores.
 To achieve it, we're using ngrok. It enables you to get `localhost` out in the world.
 
 First you have to [install and setup ngrok](https://ngrok.com/download)
@@ -69,7 +69,7 @@ We are automatically discover ngrok URL and extract host from it. If you want to
 override you can set `HOST` environment variable:
 
 ```bash
-export HOST=mee.public.host
+export HOST=mltop.public.host
 ```
 
 ## ENV variables

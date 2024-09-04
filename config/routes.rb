@@ -12,8 +12,6 @@ Rails.application.routes.draw do
   resources :models, only: [ :index, :show ]
   resources :evaluators, only: [ :show ]
 
-  # post "evaluations/run/:hypothesis_id", to: "evaluations#run", as: "evaluations_run"
-
   resources :test_set, only: [ :show ]
 
   resources :evaluations, only: [] do
@@ -23,8 +21,7 @@ Rails.application.routes.draw do
   resources :submissions do
     resources :tasks, only: [ :index, :show ], module: :submissions
     resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
-      # resource :evaluations, only: [ :create ]
-      post "evaluations/run", to: "evaluations#run"
+      resource :evaluations, only: [ :create ]
     end
   end
 

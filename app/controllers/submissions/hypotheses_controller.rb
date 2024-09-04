@@ -4,7 +4,6 @@ class Submissions::HypothesesController < ApplicationController
     @hypothesis = @model.hypothesis.new(hypothesis_params)
     @test_set_entry = @hypothesis.test_set_entry
     if @hypothesis.save
-      @has_evaluations = false
       flash.now[:notice] = "Hypothesis succesfully created"
     else
       @submission_id = @model.id
