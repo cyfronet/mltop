@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["evaluator_id"], name: "index_evaluations_on_evaluator_id"
+    t.index ["hypothesis_id", "evaluator_id"], name: "index_evaluations_on_hypothesis_id_and_evaluator_id", unique: true
     t.index ["hypothesis_id"], name: "index_evaluations_on_hypothesis_id"
   end
 

@@ -9,6 +9,8 @@ class Evaluation < ApplicationRecord
   has_many :metrics, through: :evaluator
   has_many :scores, dependent: :destroy
 
+  validates :hypothesis, uniqueness: { scope: :evaluator_id }
+
   enum :status, {
     created: 0,
     pending: 1,

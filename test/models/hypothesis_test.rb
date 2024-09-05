@@ -17,6 +17,22 @@ class HypothesisTest < ActiveSupport::TestCase
     assert_not Hypothesis.new(model:, test_set_entry:, input: upload_file).valid?
   end
 
+  test "cannot start evaluations twice" do
+    model = create(:model)
+    test_set_entry = test_set_entries("flores_st_en_pl")
+    hypothesis = create(:hypothesis, model:, test_set_entry:)
+
+    assert_changes "Evaluation.count", to: +2 do
+      hypothesis.evaluate!
+    end
+
+    assert_no_changes "Evaluation.count" do
+      assert_raises ActiveRecord::RecordInvalid do
+        hypothesis.evaluate!
+      end
+    end
+  end
+
   private
     def upload_file
       { io: StringIO.new("input"), filename: "input.txt" }
