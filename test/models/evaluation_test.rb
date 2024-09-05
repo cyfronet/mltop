@@ -6,7 +6,7 @@ class EvaluationTest < ActiveSupport::TestCase
   end
 
   test "can record all scores" do
-    assert_changes -> { Score.count }, +3 do
+    assert_changes -> { Score.count }, to: +3 do
       @evaluation.record_scores! valid_scores
     end
   end
