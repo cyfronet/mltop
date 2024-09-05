@@ -33,6 +33,19 @@ class HypothesisTest < ActiveSupport::TestCase
     end
   end
 
+  test "no evaluation is created when any error occur" do
+    model = create(:model)
+    test_set_entry = test_set_entries("flores_st_en_pl")
+    hypothesis = create(:hypothesis, model:, test_set_entry:)
+    create(:evaluation, hypothesis:, evaluator: test_set_entry.task.evaluators.first)
+
+    assert_no_changes "Evaluation.count" do
+      assert_raises ActiveRecord::RecordInvalid do
+        hypothesis.evaluate!
+      end
+    end
+  end
+
   private
     def upload_file
       { io: StringIO.new("input"), filename: "input.txt" }

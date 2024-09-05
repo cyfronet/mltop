@@ -10,10 +10,12 @@ class Hypothesis < ApplicationRecord
   validates :test_set_entry, uniqueness: { scope: :model }
 
   def evaluate!
-    evaluations = test_set_entry.task.evaluators.map do |evaluator|
-      evaluator.evaluations.build(hypothesis: self).tap { |evaluation| evaluation.save! }
-    end.compact
-    Evaluations::RunJob.perform_later(evaluations:, user: Current.user)
+    transaction do
+      evaluations = test_set_entry.task.evaluators.map do |evaluator|
+        evaluator.evaluations.build(hypothesis: self).tap { |evaluation| evaluation.save! }
+      end.compact
+      Evaluations::RunJob.perform_later(evaluations:, user: Current.user)
+    end
   end
 
   def self.owned_by(user)
