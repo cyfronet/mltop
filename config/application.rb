@@ -27,5 +27,3 @@ module Mltop
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
-
-ENV["REDIRECT_URI"] = "#{Rails.application.credentials.dig(:sso, :redirect_uri_base)}/auth/sso/callback"

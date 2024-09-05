@@ -1,4 +1,3 @@
-
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :openid_connect,
     name: :sso,
@@ -13,7 +12,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       realm: Rails.application.credentials.dig(:sso, :realm),
       identifier: Rails.application.credentials.dig(:sso, :identifier),
       secret: Rails.application.credentials.dig(:sso, :secret),
-      redirect_uri: ENV.fetch("REDIRECT_URI")
+      redirect_uri: "#{Rails.application.credentials.dig(:sso, :redirect_uri_base)}/auth/sso/callback"
     }
 end
 
