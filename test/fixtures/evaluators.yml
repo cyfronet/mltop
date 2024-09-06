@@ -1,5 +1,9 @@
 sacrebleu:
   name: Sacrebleu
+  script: dummy script
+  host: ares.cyfronet.pl
 
 blueurt:
   name: Blueurt
+  script: dummy script
+  host: ares.cyfronet.pl

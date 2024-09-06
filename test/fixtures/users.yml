@@ -4,6 +4,8 @@ marek:
   plgrid_login: plgmarek
   uid: uid-marek
   roles_mask: <%= User.new(roles: [:admin]).roles_mask %>
+  ssh_key: "abc"
+  ssh_certificate: "def"
 
 szymon:
   name: Szymon Szymkowski
@@ -11,3 +13,5 @@ szymon:
   plgrid_login: plgszymon
   uid: uid-szymon
   roles_mask: <%= User.new(roles: []).roles_mask %>
+  ssh_key: "abc"
+  ssh_certificate: "def"

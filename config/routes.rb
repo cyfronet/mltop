@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
   resources :models, only: [ :index, :show ]
   resources :evaluators, only: [ :show ]
+
   resources :test_set, only: [ :show ]
 
   resources :evaluations, only: [] do
@@ -19,7 +20,9 @@ Rails.application.routes.draw do
 
   resources :submissions do
     resources :tasks, only: [ :index, :show ], module: :submissions
-    resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true
+    resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
+      resource :evaluations, only: [ :create ]
+    end
   end
 
   namespace :admin do

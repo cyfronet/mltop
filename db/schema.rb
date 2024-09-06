@@ -60,14 +60,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_02_090746) do
     t.string "token_digest"
     t.bigint "hypothesis_id", null: false
     t.bigint "evaluator_id", null: false
+    t.integer "status", default: 0, null: false
+    t.string "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["evaluator_id"], name: "index_evaluations_on_evaluator_id"
+    t.index ["hypothesis_id", "evaluator_id"], name: "index_evaluations_on_hypothesis_id_and_evaluator_id", unique: true
     t.index ["hypothesis_id"], name: "index_evaluations_on_hypothesis_id"
   end
 
   create_table "evaluators", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.text "script", null: false
+    t.string "host", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

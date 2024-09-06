@@ -1,4 +1,5 @@
 <div class="p-3 bg-white sm:rounded-lg sm:shadow mx-3 my-4 flex items-center justify-between">
   <%= entry %>
-  <%= render "actions", entry:, hypothesis_id: entries_with_hypotheses[entry.id], submission_id:%>
+  <%= render "actions", entry:, hypothesis_id: entries_with_hypotheses.dig(entry.id, :hypothesis_id),
+    has_evaluations: entries_with_hypotheses.dig(entry.id, :has_evaluations), submission_id:%>
 </div>

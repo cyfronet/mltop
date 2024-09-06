@@ -28,6 +28,7 @@ gem "active_link_to"
 gem "rack-attack"
 
 gem "bcrypt", "~> 3.1.7"
+gem "hpckit", github: "cyfronet/hpckit", branch: "slurm-client"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
@@ -49,6 +50,7 @@ group :test do
   gem "selenium-webdriver"
   gem "fixture_factory"
   gem "webmock", "~> 3.10"
+  gem "mocha"
 end
 
 group :production do
