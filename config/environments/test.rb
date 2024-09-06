@@ -64,4 +64,6 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.active_record.encryption.encrypt_fixtures = true
+
+  config.hpc_client = "::Hpc::ClientMock"
 end
