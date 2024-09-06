@@ -11,7 +11,7 @@ module Submissions
     test "owner of the model can run evaluations" do
       model = create(:model)
       hypothesis = create(:hypothesis, model:)
-      Hypothesis.any_instance.stubs(:evaluate!).returns(true)
+      Hypothesis.any_instance.stubs(:evaluate!)
 
       post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
@@ -22,7 +22,7 @@ module Submissions
     test "owner of the model run evaluations with failure" do
       model = create(:model)
       hypothesis = create(:hypothesis, model:)
-      Hypothesis.any_instance.stubs(:evaluate!).raises(ActiveRecord::RecordInvalid)
+      create(:evaluation, hypothesis:)
 
       post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
@@ -33,7 +33,6 @@ module Submissions
     test "non-owner of the model cannot run evaluations" do
       model =  create(:model, owner: users("szymon"))
       hypothesis = create(:hypothesis, model:)
-      hypothesis.stubs(:evaluate!).returns(:false)
 
       post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
