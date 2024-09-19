@@ -55,7 +55,7 @@ if Rails.env.local?
       sacrebleu.metrics.create!(name: "chrf")
       sacrebleu.metrics.create!(name: "ter")
 
-      bleurt = Evaluator.create!(name: "bleurt", script: dummy_script([ "bluert" ]), host: "ares.cyfronet.pl")
+      bleurt = Evaluator.create!(name: "bleurt", script: dummy_script([ "bleurt" ]), host: "ares.cyfronet.pl")
       bleurt.metrics.create!(name: "bleurt")
 
       st.task_evaluators.create!(evaluator: sacrebleu)
@@ -115,16 +115,18 @@ if Rails.env.local?
     }
     <<~SCR
       #SBATCH -A plgmeetween2004-cpu
-      #SBATCH -p plgrid-now
+      #SBATCH -p plgrid
       #SBATCH --ntasks-per-node=1
       #SBATCH --time=00:01:00
       #!/bin/bash -l
 
       echo $GROUNDTRUTH_URL
-      curl -X POST $RESULTS_URL \
-      -H "Content-Type: application/json" \
-      -H "Authorization: Token $TOKEN"
-      -d "#{scores.to_json}"
+
+      curl -X POST $RESULTS_URL \\
+      -L --location-trusted \\
+      -H "Content-Type:application/json" \\
+      -H "Authorization:Token $TOKEN" \\
+      -d '#{scores.to_json}'
     SCR
   end
 end
