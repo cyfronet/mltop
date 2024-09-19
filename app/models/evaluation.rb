@@ -30,6 +30,7 @@ class Evaluation < ApplicationRecord
   def submit(user)
     new_token = reset_token!
     request = submit_script(user, new_token)
+
     if request.success?
       update(status: :pending, job_id: request.job_id)
     else
@@ -59,14 +60,14 @@ class Evaluation < ApplicationRecord
   def options(new_token)
     {
       current_working_directory: GROUP_DIR,
-      environment: {
-        GROUNDTRUTH_URL: url_for(hypothesis.test_set_entry.groundtruth),
-        HYPOTHESIS_URL: url_for(hypothesis.input),
-        RESULTS_URL: evaluation_scores_url(self),
-        SOURCE_LANGUAGE: hypothesis.test_set_entry.source_language,
-        TARGET_LANGUAGE: hypothesis.test_set_entry.target_language,
-        TOKEN: new_token
-      }
+      environment: [
+        "GROUNDTRUTH_URL=#{url_for(hypothesis.test_set_entry.groundtruth)}",
+        "HYPOTHESIS_URL=#{url_for(hypothesis.input)}",
+        "RESULTS_URL=#{evaluation_scores_url(self)}",
+        "SOURCE_LANGUAGE=#{hypothesis.test_set_entry.source_language}",
+        "TARGET_LANGUAGE=#{hypothesis.test_set_entry.target_language}",
+        "TOKEN=#{new_token}"
+      ]
     }
   end
 end
