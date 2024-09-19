@@ -26,7 +26,7 @@ class Hypothesis < ApplicationRecord
     left_joins(:evaluations)
     .pluck("test_set_entry_id, hypotheses.id, evaluations.id")
     .group_by(&:first).transform_values do |data|
-      { hypothesis_id: data[0][1], has_evaluations: data.many? }
+      { hypothesis_id: data[0][1], has_evaluations: data.present? }
     end
   end
 end
