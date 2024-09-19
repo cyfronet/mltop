@@ -46,4 +46,6 @@ Rails.application.routes.draw do
   get "auth/:provider/callback", to: "sessions#create"
   get "auth/failure", to: redirect("/")
   delete "auth", to: "sessions#destroy", as: "sign_out"
+
+  mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 end

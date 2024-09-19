@@ -18,6 +18,7 @@
               <%- links.add "My submissions", submissions_path, /submissions.*/ %>
               <% if Current.user.admin? %>
                 <%- links.add "Adminland", admin_tasks_path, /admin\/.*/ %>
+                <%- links.add "Jobs", mission_control_jobs_path, /jobs\/.*/ %>
               <% end %>
             <% end %>
           <% end %>

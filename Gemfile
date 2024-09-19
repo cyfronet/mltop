@@ -10,6 +10,9 @@ gem "redis", ">= 4.0.1"
 gem "propshaft"
 gem "importmap-rails"
 
+gem "solid_queue"
+gem "mission_control-jobs"
+
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails"

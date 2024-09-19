@@ -1,0 +1,4 @@
+periodic_job_update:
+  class: "Evaluations::TriggerUpdateStatusJob"
+  args: []
+  schedule: every 30 seconds
