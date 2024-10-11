@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 gem "rails", "~> 7.2.0"
 
+# Get ready for ruby 3.4 - freeze all strings
+gem "freezolite"
+
 gem "puma", ">= 5.0"
 
 gem "pg", "~> 1.1"
