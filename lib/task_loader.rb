@@ -2,50 +2,39 @@
 class TaskLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
   TASKS_DIR = File.join(Rails.root, "tmp/tasks")
-
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
 
-  include SSHKit::DSL
-
-  def initialize(username:, hostname: HOSTNAME)
+  def initialize(username:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR)
     @username = username
     @hostname = hostname
-  end
-
-  def cleanup!
-    Pathname.new(TASKS_DIR).rmtree
-  end
-
-  def tasks_downloaded?
-    File.exist?(TASKS_DIR)
+    @remote_tasks_dir = remote_tasks_dir
   end
 
   def import!
-    puts "Importing tasks started"
+    note "Importing tasks started"
     Task.transaction do
       Pathname.new(TASKS_DIR).children.select(&:directory?).each do |dir|
         loader = TaskLoader::Processor.for(dir)
-        puts "Importing #{dir.basename} using #{loader.class}"
+        note "Importing #{dir.basename} using #{loader.class}"
 
         loader.import!
       end
     end
-    puts "Importing tasks finished"
+    note "Importing tasks finished"
   end
 
-  def fetch_tasks!
-    on host do
-      download! REMOTE_TASKS_DIR, File.join(Rails.root, "tmp"), recursive: true
-    end
+  def synchronize_with_remote!
+    note "Synchronizing with #{@username}@#{@hostname}:#{@remote_tasks_dir}"
+    system "rsync -avzh #{@username}@#{@hostname}:#{@remote_tasks_dir} #{File.join(Rails.root, "tmp")}"
   end
 
   private
-    def host
-      SSHKit::Host.new(hostname: @hostname, ssh_options: { user: @username })
-    end
-
     def path(local)
       File.join Rails.root, local
+    end
+
+    def note(msg)
+      puts "\e[#{34}m#{msg}\e[0m"
     end
 end
 
