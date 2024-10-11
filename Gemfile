@@ -41,6 +41,10 @@ gem "hpckit", github: "cyfronet/hpckit", branch: "slurm-client"
 gem "kamal", ">= 2.0.0.rc2", require: false
 gem "thruster", require: false
 
+gem "sshkit"
+gem "ed25519"
+gem "bcrypt_pbkdf"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
