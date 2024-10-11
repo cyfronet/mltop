@@ -3,7 +3,7 @@ if Rails.env.local?
 
   namespace :dev do
     task :populate, [ :user_login ] => [ :environment ] do |t, args|
-      loader = TaskLoader.new(username: "plgkasztelnik")
+      loader = TaskLoader.new(username: args.fetch(:user_login))
 
       loader.synchronize_with_remote!
 
