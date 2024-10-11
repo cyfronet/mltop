@@ -67,7 +67,7 @@ class TaskLoader::Processor
     end
 
     def create_entry_when_missing(test_set, source_language, target_language, &block)
-      if test_set.entries.exists?(source_language:, target_language:)
+      if test_set.entries.exists?(source_language:, target_language:, task:)
         warning "Entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language} already exists."
       else
         info "Creating entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language}"
