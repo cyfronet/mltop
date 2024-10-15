@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 7.2.0"
+gem "rails", github: "rails/rails"
 
 # Get ready for ruby 3.4 - freeze all strings
 gem "freezolite"
@@ -13,6 +13,8 @@ gem "redis", ">= 4.0.1"
 gem "propshaft"
 gem "importmap-rails"
 
+gem "solid_cache"
+gem "solid_cable"
 gem "solid_queue"
 gem "mission_control-jobs"
 
@@ -36,8 +38,11 @@ gem "rack-attack"
 gem "bcrypt", "~> 3.1.7"
 gem "hpckit", github: "cyfronet/hpckit", branch: "slurm-client"
 
+gem "kamal", ">= 2.0.0.rc2", require: false
+gem "thruster", require: false
+
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ]
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
   gem "faker"
