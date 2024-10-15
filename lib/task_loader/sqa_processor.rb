@@ -10,8 +10,6 @@ class TaskLoader::SqaProcessor < TaskLoader::Processor
       single_language_process(dir) do |entry, _name, _lang|
         [
           child_with_extension(entry, "tar.gz"),
-          # TODO: need to ask @szmazurek about this
-          # ssh_connection.exec!("ls #{root_path}/en/Spoken-SQUAD.dev.en.json| xargs cat").to_s
           child_with_extension(entry, "json")
         ]
       end
