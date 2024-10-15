@@ -19,7 +19,7 @@ class TaskLoader::Processor
   end
 
   def import!
-    puts self.class
+    raise "Should be implemented by descendent class"
   end
 
   private

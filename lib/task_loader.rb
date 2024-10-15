@@ -1,4 +1,3 @@
-
 class TaskLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
   TASKS_DIR = File.join(Rails.root, "tmp/tasks")
@@ -43,5 +42,4 @@ require "task_loader/mt_processor"
 require "task_loader/asr_processor"
 require "task_loader/sqa_processor"
 require "task_loader/st_processor"
-require "task_loader/unknown_processor"
 require "task_loader/unknown_processor"
