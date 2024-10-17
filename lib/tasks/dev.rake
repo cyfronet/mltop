@@ -1,7 +1,7 @@
 if Rails.env.local?
   namespace :dev do
     desc "Sample data for local development environment"
-    task recreate: %w[ db:drop db:create db:migrate db:seed ] do
+    task recreate: %w[ db:reset ] do
       include ActionView::Helpers::TextHelper
 
       # text to text
@@ -22,7 +22,7 @@ if Rails.env.local?
       Task.create!(name: "Text-to-Speech", slug: "TTS", from: :text, to: :audio)
 
       # text to video
-      Task.create!(name: "Lep Generation", slug: "LIPGEN", from: :text, to: :audio)
+      Task.create!(name: "Lip Generation", slug: "LIPGEN", from: :text, to: :audio)
 
       Task.all.each do |task|
         task.update(
@@ -31,24 +31,6 @@ if Rails.env.local?
         )
       end
 
-      languages = %w[ pl it de fr es pr th ]
-
-      mustc = TestSet.create!(name: "MUSTC", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
-      flores = TestSet.create!(name: "FLORES", description: simple_format(Faker::Lorem.paragraphs(number: 10).join(" ")))
-
-      [ mustc, flores ].each do |test_set|
-        languages
-          .product(languages)
-          .map do |source_language, target_language|
-            test_set.entries.create!(
-              task: st,
-              source_language:,
-              target_language:,
-              input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{source_language}.txt" },
-              groundtruth: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "#{target_language}.txt" }
-            ) unless source_language == target_language
-          end
-      end
 
       sacrebleu = Evaluator.create!(name: "Sacrebleu", script: dummy_script([ "blue", "chrf", "ter" ]), host: "ares.cyfronet.pl")
       sacrebleu.metrics.create!(name: "blue")

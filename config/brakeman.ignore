@@ -1,6 +1,52 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "b1b21885015e30e767355429f0df8eb84b27453980937067f3bea3aa448e01ea",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/task_loader.rb",
+      "line": 28,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TaskLoader",
+        "method": "synchronize_with_remote!"
+      },
+      "user_input": "username",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "ccb8084f0795e44c8467339771d608633608a1d1e1d1659aff7335c63e7c5bc5",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/task_loader/processor.rb",
+      "line": 99,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TaskLoader::Processor",
+        "method": "archive_with_extensions"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "File Access",
       "warning_code": 16,
       "fingerprint": "ef7e7a982f3ec825ce39063440a691f0fb46b023f931660f63218b7cc78117be",
@@ -24,6 +70,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-05-22 15:22:24 +0200",
-  "brakeman_version": "6.1.2"
+  "updated": "2024-10-11 14:35:02 +0200",
+  "brakeman_version": "6.2.1"
 }
