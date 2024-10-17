@@ -1,7 +1,7 @@
 if Rails.env.local?
   namespace :dev do
     desc "Sample data for local development environment"
-    task recreate: %w[ db:drop db:create db:migrate db:seed ] do
+    task recreate: %w[ db:reset ] do
       include ActionView::Helpers::TextHelper
 
       # text to text
