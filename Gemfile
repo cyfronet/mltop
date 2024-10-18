@@ -10,6 +10,9 @@ gem "puma", ">= 5.0"
 gem "pg", "~> 1.1"
 gem "redis", ">= 4.0.1"
 
+# active storage drivers
+gem "aws-sdk-s3"
+
 gem "propshaft"
 gem "importmap-rails"
 
