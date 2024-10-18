@@ -62,7 +62,7 @@ class TaskLoader::Processor
 
     def test_sets(name)
       TestSet.find_or_create_by!(name:) do |ts|
-        ts.description = Faker::Lorem.paragraphs(number: 10).join(" ")
+        ts.description = "TODO: please update test set description"
       end
     end
 
