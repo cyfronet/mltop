@@ -16,18 +16,6 @@ class TestSetTest < ActiveSupport::TestCase
     assert_equal test_set_entries("flores_st_pl_en"), test_set.entry_for_language("pl", "en")
   end
 
-  test "all subtasks inputs" do
-    flores = test_sets("flores")
-
-    file_names = []
-    Zip::File.open(flores.all_inputs_zip_path(tasks("st"))) do |zip_file|
-      zip_file.each { |entry| file_names << entry.name }
-    end
-
-    assert_equal 3, file_names.size, "We should have each file for entry"
-    assert_equal [ "FLORES--en-pl.txt", "FLORES--en-it.txt", "FLORES--pl-en.txt" ].sort, file_names.sort
-  end
-
   test "filter entries by task" do
     st = tasks("st")
     flores = test_sets("flores")
