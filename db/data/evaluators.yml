@@ -1,0 +1,45 @@
+screbleu:
+  name: Sacrebleu
+  script: |
+    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -p plgrid
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --time=00:01:00
+    #!/bin/bash -l
+
+    echo $GROUNDTRUTH_URL
+
+    curl -X POST $RESULTS_URL \\
+    -L --location-trusted \\
+    -H "Content-Type:application/json" \\
+    -H "Authorization:Token $TOKEN" \\
+    -d '{ "scores": ["blue": 12, "chrf": 13, "ter": 14]}'
+  host: ares.cyfronet.pl
+  metrics:
+    - blue
+    - chrf
+    - ter
+  tasks:
+    - ST
+
+blueurt:
+  name: bleurt
+  script: |
+    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -p plgrid
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --time=00:01:00
+    #!/bin/bash -l
+
+    echo $GROUNDTRUTH_URL
+
+    curl -X POST $RESULTS_URL \\
+    -L --location-trusted \\
+    -H "Content-Type:application/json" \\
+    -H "Authorization:Token $TOKEN" \\
+    -d '{ "scores": ["blueurt": 12]}'
+  host: ares.cyfronet.pl
+  metrics:
+    - bleurt
+  tasks:
+    - ST

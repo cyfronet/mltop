@@ -1,0 +1,306 @@
+# text to text
+MT:
+  name: Machine translation
+  info: |
+    Machine Translation (MT) refers to conversion of text from one language into 
+    another, maintaining the original meaning and ensuring grammatical correctness 
+    in the target language.
+  description: |
+    Modern MT solutions are mostly based on neural network models. These models are based 
+    on various nerual network architectures, such as transformers. 
+    Neural MT models have replaced earlier statistical and rule-based approaches 
+    by offering more fluent translations.
+
+    Neural MT systems, besides general language translation, can be adapted to specialized 
+    fields like legal or medical content, enabling more precise translations. 
+    A key challenge lies in handling idiomatic expressions, ambiguous terms, and cultural 
+    nuances while maintaining the style of the original text.
+
+    MT models today support low-resource languages and multilingual translation. 
+    They are also reaching impressive generalization capabilities, showing zero-shot 
+    translation capabilites, meaning that they are able to translate between language pairs 
+    that they have not been explicitly trained on. These systems have become essential for 
+    global communication, e-commerce, and customer support.
+
+    MT continues to evolve, with research focusing on real-time applications, better 
+    handling of domain-specific terms, and multimodal translation that considers both 
+    text and visual data.
+  from: text
+  to: text
+
+SUM:
+  name: Sumarization
+  info: |
+    Summarization is the task of generating concise versions of longer texts while 
+    preserving the most important information and main ideas. It can be either 
+    extractive (selecting key sentences) or abstractive (creating new sentences).
+  description: |
+    Summarization techniques aim to condense lengthy texts into shorter, more digestible 
+    versions while retaining the essential content. There are two primary approaches to 
+    summarization: extractive and abstractive.
+
+    Extractive summarization involves selecting and arranging key sentences from the 
+    original text. This method relies on statistical and machine learning techniques to 
+    identify the most relevant sentences. Abstractive summarization, on the other hand, 
+    generates new sentences that capture the core meaning of the input text. Abstractive 
+    methods typically employ advanced neural network models, such as transformers, to 
+    produce more natural-sounding summaries.
+
+    Applications include summarizing news articles, research papers, and business 
+    reports, helping users quickly digest large amounts of information. Some systems 
+    also allow querying content with focused question-answering features.
+
+    Future improvements aim to enhance the accuracy of abstractive models and enable 
+    real-time summarization. This capability is useful for managing information in 
+    journalism, education, and professional environments.
+  from: text
+  io: text
+
+# audio to text
+ASR:
+  name: Automatic Speech Recognition
+  info: |
+    Automatic Speech Recognition (ASR) is the process of converting spoken language 
+    into written text by analyzing audio inputs. It enables machines to understand 
+    and transcribe human speech, facilitating various applications in human-computer 
+    interaction.
+  description: |
+    ASR is a technology transforms spoken language into written text by processing audio inputs. 
+    This capability allows users to interact with devices and systems using voice commands, 
+    enhancing accessibility and efficiency in various domains.
+
+    Historically, ASR systems relied on Hidden Markov Models (HMMs) and Gaussian 
+    Mixture Models (GMMs) for acoustic modeling. However,modern ASR has seen a shift 
+    towards deep learning architectures. Recurrent Neural Networks (RNNs), particularly 
+    Long Short-Term Memory (LSTM) networks, and more recently, transformer models, 
+    have significantly improved ASR accuracy, especially in challenging real-world 
+    environments.
+
+    ASR technology finds applications in numerous fields. It powers virtual assistants, 
+    enabling voice-controlled smart home devices. In professional settings, ASR 
+    facilitates automatic transcription of meetings, interviews, and lectures. 
+    Call centers use ASR for customer service automation and quality 
+    monitoring. Additionally, ASR plays a crucial role in accessibility solutions, 
+    such as real-time captioning for videos and live events.
+
+    Ongoing research explores multilingual ASR and end-to-end systems that process 
+    raw audio directly, expanding the scope of ASR in diverse applications.
+  from: audio
+  to: text
+
+ST:
+  name: Speech Translation
+  info: |
+    Speech Translation (ST) is a complex task that converts spoken language from one 
+    language into spoken or written output in another language. It combines 
+    Automatic Speech Recognition (ASR), Machine Translation (MT), and often 
+    Text-to-Speech (TTS) technologies to enable real-time or offline communication 
+    across language barriers.
+  description: |
+    ST enables real-time or offline communication across language 
+    barriers by integrating ASR, MT, and optionally TTS technologies. It faces 
+    unique challenges in handling spontaneous speech, accents, and preserving 
+    speaker intent and tone.
+
+    Early systems used separate components for ASR, MT, and TTS. Current approaches 
+    leverage deep learning, particularly transformer models, for improved fluency 
+    and accuracy. Some advanced systems aim for end-to-end speech-to-speech 
+    translation without intermediate text representations, using a single neural
+    network to process audio inputs directly.
+
+    Applications include international conferences, live broadcasting, travel 
+    assistance, multilingual customer service, and diplomatic communications. 
+    The technology plays a crucial role in breaking down language barriers in 
+    various global contexts.
+
+    Future research focuses on end-to-end models to reduce latency and error 
+    propagation, improved handling of paralinguistic features, expanded language 
+    coverage for low-resource languages, and multimodal translation incorporating 
+    visual cues. These advancements aim to enhance translation quality and broaden 
+    the technology's applicability in diverse communication scenarios.
+  from: audio
+  to: text
+
+SSUM:
+  name: Speech Sumarization
+  info: |
+    Speech Summarization (SSUM) produces concise summaries directly from spoken content, 
+    such as meetings or lectures, capturing key points without requiring full 
+    transcription.
+  description: |
+    SSUM condenses spoken content into brief summaries, enabling users to quickly grasp 
+    main ideas from audio sources. It faces unique challenges in handling spontaneous 
+    speech, including disfluencies, background noise, and speaker variability.
+
+    Similairly to pure text summarization, there are two main methods: extractive, which 
+    selects important segments from audio, and abstractive, which generates concise summaries. 
+    Some models employ two step approaches, first transcribing audio to text and then summarizing
+    the text, while others aim to summarize audio directly.
+
+    Applications span various domains, including business (meeting summaries), 
+    education (lecture highlights), media (news briefings), and legal (court 
+    proceeding summaries). The technology helps users efficiently manage and extract 
+    insights from large volumes of audio data.
+
+    Future research focuses on improving real-time summarization capabilities, 
+    enhancing multi-speaker handling, and developing more accurate abstractive 
+    summarization techniques. There's also interest in multimodal summarization, 
+    incorporating visual cues from video content to provide richer context-aware 
+    summaries.
+  from: audio
+  to: text
+
+SQA:
+  name: Speech Question-Anwering
+  info: |
+    Speech Question-Answering (SQA) enables interactive systems to answer questions 
+    based on spoken inputs or audio sources, combining Automatic Speech Recognition 
+    (ASR) with natural language understanding to deliver accurate, real-time responses.
+  description: |
+    SQA systems process spoken queries and provide relevant answers, facilitating natural
+    language interactions between users and machines. These systems face challenges in 
+    handling speech disfluencies, accents, background noise, and maintaining context in 
+    multi-turn conversations.
+
+    Early SQA systems relied on pipeline approaches, combining ASR, natural language 
+    understanding, and information retrieval components. Modern systems 
+    leverage end-to-end deep learning models, particularly transformer-based 
+    architectures, to improve accuracy and reduce latency.
+
+    SQA technology powers voice assistants, interactive voice response systems, 
+    hands-free navigation aids, and educational tools. It enhances accessibility 
+    for users with visual impairments or in hands-busy environments, and improves 
+    efficiency in information retrieval tasks across various domains.
+
+    Future research focuses on improving context understanding in multi-turn 
+    dialogues, enhancing robustness to diverse speech patterns and acoustic 
+    conditions, and developing more efficient models for real-time applications. 
+    There's also growing interest in multimodal SQA systems that can incorporate 
+    visual and textual information alongside speech inputs.
+  from: audio
+  to: text
+
+SLU:
+  name: Spoken Language Understanding
+  info: |
+    Spoken Language Understanding (SLU) analyzes spoken language to extract meaning, 
+    intents, or commands. It is a broad task that focuses on interpreting speech 
+    in a general sense.
+  description: |
+    SLU enables systems to interpret user speech by identifying intents and extracting key 
+    information. SLU faces challenges in handling colloquial language, ambiguous phrases, 
+    noisy inputs, and maintaining context in multi-turn interactions.
+
+    Some SLU systems use a pipeline approach, combining Automatic Speech 
+    Recognition for speech-to-text conversion with Natural Language Processing techniques for
+    obtaining semantic meaning from the transcribed text. Some advanced systems aim for 
+    end-to-end SLU, processing speech directly into intents without intermediate text 
+    representation. Modern approaches employ deep learning models, particularly 
+    transformer architectures, for improved accuracy and performance. 
+
+    SLU powers various applications, including voice assistants (e.g., Siri, Alexa), 
+    smart home devices, automotive infotainment systems, and automated customer 
+    service platforms. It enables natural and intuitive user interactions with 
+    technology, enhancing accessibility and user experience.
+
+    Future research focuses on developing more robust multilingual SLU models, 
+    improving context management for complex dialogues, and enhancing performance 
+    in noisy environments. There's also growing interest in multimodal SLU, 
+    integrating speech with other input modalities like gestures or facial 
+    expressions for more comprehensive understanding.
+  from: audio
+  to: text
+
+# video to text
+LIPREAD:
+  name: Lip Reading
+  info: |
+    Lip Reading recognizes spoken words by analyzing lip movements in video inputs. 
+    It's particularly useful in noisy environments or for accessibility purposes, 
+    such as assisting hearing-impaired individuals.
+  description: |
+    Lip Reading, or visual speech recognition, decodes speech by interpreting visual 
+    cues from lip movements. It faces challenges in handling variations in speaker 
+    accents, co-articulation effects, and visually similar phonemes. Environmental 
+    factors like lighting and camera angle also impact performance.
+
+    Modern systems use deep learning techniques, particularly Convolutional Neural 
+    Networks (CNNs) and Recurrent Neural Networks (RNNs), trained on large 
+    audio-visual datasets. Some advanced models incorporate 3D CNNs or 
+    transformer architectures for improved temporal modeling.
+
+    Lip Reading finds applications in assistive technology for hearing-impaired 
+    individuals, enhancing speech recognition in noisy environments, security and 
+    surveillance systems, and silent speech interfaces. It also supports 
+    speech enhancement in video conferencing and broadcasting.
+
+    Future research aims to improve robustness across diverse speakers and 
+    languages, develop real-time lip reading capabilities, and integrate lip 
+    reading more seamlessly with acoustic speech recognition for multimodal 
+    speech understanding. There's also interest in exploring lip reading for 
+    non-frontal face angles and in challenging real-world conditions.
+  from: video
+  to: text
+
+# text to audio
+TTS:
+  name: Text-to-Speech
+  info: |
+    Text-to-Speech (TTS) converts written text into natural-sounding speech. It is
+    a challenging task, as it requires generating human-like intonation, rhythm,
+    and pronunciation from text inputs, which are by nature devoid of prosodic
+    information.
+  description: |
+    TTS technology transforms text into spoken output, enabling  machines to communicate 
+    verbally. TTS is widely used in virtual assistants, audiobooks, and accessibility tools.
+
+    Modern TTS systems are based on neural network models due to their ability to
+    capture complex, multimodal relationships in data learnt automatically from the data.
+    These systems can mimic natural prosody, including intonation and rhythm.
+
+    Challenges in TTS include handling complex names, multiple languages, and 
+    generating emotionally expressive speech. Personalized voices are also an area 
+    of active research. Most of these challenges are induced by nuanced linguistic
+    features and cultural variations, making obtaining high-quality training data
+    difficult.
+
+    TTS is widely used in various applications, including assistive technologies,
+    language learning tools, and entertainment media. It plays a crucial role in
+    enhancing accessibility for visually impaired individuals and providing
+    natural-sounding voice interfaces.
+
+    Research aims to improve the expressiveness and naturalness of synthesized
+    speech, expand language coverage, and develop more efficient models for
+    real-time applications. There is also interest in creating more diverse and
+    inclusive voice options to cater to a broader range of users.
+  from: text
+  to: audio
+
+# text to video
+LIPGEN:
+  name: Lip Generation
+  info: |
+    Lip Generation is a task aiming to synthetize realistic lip movements synchronized 
+    with audio. It is a complex problem, as it requirest the integration of audio
+    and visual information to create natural-looking lip motion.
+  description: |
+    Lip Generation creates realistic lip movements aligned with speech, enhancing 
+    virtual avatars, animated characters, and dubbing quality. This task ensures 
+    that visual cues match spoken audio, improving the realism of interactions.
+
+    Modern Lip Generation systems rely mostly on deep learning techniques, such as
+    Generative Adversarial Networks (GANs) and recurrent neural networks, to
+    generate accurate lip movements. These systems are trained on large datasets
+    of audio-visual recordings to learn the correspondence between speech and lip
+    motion.
+
+    Lip Generation finds its applications every domain, where realistic lip movements
+    are required, such as in animated movies, virtual reality environments, and
+    dubbing for foreign language films.
+
+    Lip Generation is an active area of research, with ongoing efforts to improve
+    realism, accuracy, and generalization across diverse speakers and languages, as well as
+    integrating it with other multimodal tasks for more comprehensive human-computer
+    interaction.
+  from: text
+  to: audio
