@@ -19,6 +19,13 @@ class EvaluationTest < ActiveSupport::TestCase
     end
   end
 
+  test "nillify token after scores are recorded" do
+    @evaluation.update(token: "secret")
+    @evaluation.record_scores! valid_scores
+
+    assert_nil @evaluation.reload.token
+  end
+
   test "cannot record with missing scores" do
     assert_no_changes -> { Score.count }  do
       assert_raise ActiveRecord::RecordInvalid do
@@ -29,7 +36,6 @@ class EvaluationTest < ActiveSupport::TestCase
 
   test "cannot create duplicated scores" do
     @evaluation.record_scores! valid_scores
-
 
     assert_no_changes -> { Score.count }  do
       assert_raise ActiveRecord::RecordInvalid do
@@ -69,15 +75,15 @@ class EvaluationTest < ActiveSupport::TestCase
 
   test "nillify token after status updated to completed or failed" do
     %w[ completed failed ].each do |status|
-      @evaluation.update(status: :created, token: "secrete")
-      @evaluation.update(status:)
+      @evaluation.update(status: :created, token: "secret")
+      @evaluation.update_status(status)
 
       assert_nil @evaluation.token
     end
 
+    @evaluation.update(status: :created, token: "secret")
     %w[ pending running ].each do |status|
-      @evaluation.update(status: :created, token: "secrete")
-      @evaluation.update(status:)
+      @evaluation.update_status(status)
 
       assert_not_nil @evaluation.token
     end
