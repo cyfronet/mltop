@@ -27,7 +27,7 @@ module Evaluations
 
     def update_evaluations(statuses)
       submitted_evaluations.each do |evaluation|
-        evaluation.update_status(statuses[evaluation.job_id])
+        evaluation.update job_status: statuses[evaluation.job_id]
       end
     end
 

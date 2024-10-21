@@ -2,7 +2,8 @@ require "test_helper"
 
 class Evaluations::SubmitScoresTest < ActionDispatch::IntegrationTest
   def setup
-    @evaluation = create(:evaluation, evaluator: evaluators(:sacrebleu))
+    @evaluation = create(:evaluation, status: :running,
+                         evaluator: evaluators(:sacrebleu))
   end
 
   test "can submit scores for running evaluation" do
@@ -13,6 +14,31 @@ class Evaluations::SubmitScoresTest < ActionDispatch::IntegrationTest
       headers: headers(token)
 
     assert_response :success
+  end
+
+  test "cannot submit scores for not submitted evaluation" do
+    token = @evaluation.reset_token!
+    @evaluation.update(status: :created)
+
+    post evaluation_scores_path(@evaluation),
+      params: valid_scores,
+      headers: headers(token)
+
+    assert_response :unauthorized
+  end
+
+  test "cannot submit scores for finished evaluation" do
+    token = @evaluation.reset_token!
+
+    %i[ completed failed ].each do |status|
+      @evaluation.update(status:)
+
+      post evaluation_scores_path(@evaluation),
+        params: valid_scores,
+        headers: headers(token)
+
+      assert_response :unauthorized
+    end
   end
 
   test "all scores needs to be given" do

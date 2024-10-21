@@ -24,6 +24,7 @@ class Evaluation < ApplicationRecord
       metrics.each do |metric|
         scores.create! metric:, value: values[metric.name]&.to_f
       end
+      update! status: :completed, token: nil
     end
   end
 
@@ -39,35 +40,48 @@ class Evaluation < ApplicationRecord
     request
   end
 
-  def update_status(new_status)
-    update(status: (new_status || "failed").downcase)
+  def job_status=(new_status)
+    status = new_status&.downcase.presence_in(self.class.statuses.keys) || "failed"
+    status = "failed" if status == "completed" && scores.size.zero?
+
+    # attrs =  finished_status?(status) ? { status:, token: nil } : { status: }
+
+    self.status = status
+    self.token = nil if finished_status?(status)
+  end
+
+  def active?
+    pending? || running?
   end
 
   private
+    def finished_status?(status)
+      %w[ completed failed ].include?(status.to_s)
+    end
 
-  def submit_script(user, new_token)
-    Hpc::Response.new(request: client(user).submit(script(new_token)))
-  end
+    def submit_script(user, new_token)
+      Hpc::Response.new(request: client(user).submit(script(new_token)))
+    end
 
-  def client(user)
-    @client ||= Mltop.hpc_client(user, evaluator.host)
-  end
+    def client(user)
+      @client ||= Mltop.hpc_client(user, evaluator.host)
+    end
 
-  def script(new_token)
-    HPCKit::Slurm::Script.new(evaluator.script, options(new_token))
-  end
+    def script(new_token)
+      HPCKit::Slurm::Script.new(evaluator.script, options(new_token))
+    end
 
-  def options(new_token)
-    {
-      current_working_directory: GROUP_DIR,
-      environment: [
-        "GROUNDTRUTH_URL=#{url_for(hypothesis.test_set_entry.groundtruth)}",
-        "HYPOTHESIS_URL=#{url_for(hypothesis.input)}",
-        "RESULTS_URL=#{evaluation_scores_url(self)}",
-        "SOURCE_LANGUAGE=#{hypothesis.test_set_entry.source_language}",
-        "TARGET_LANGUAGE=#{hypothesis.test_set_entry.target_language}",
-        "TOKEN=#{new_token}"
-      ]
-    }
-  end
+    def options(new_token)
+      {
+        current_working_directory: GROUP_DIR,
+        environment: [
+          "GROUNDTRUTH_URL=#{url_for(hypothesis.test_set_entry.groundtruth)}",
+          "HYPOTHESIS_URL=#{url_for(hypothesis.input)}",
+          "RESULTS_URL=#{evaluation_scores_url(self)}",
+          "SOURCE_LANGUAGE=#{hypothesis.test_set_entry.source_language}",
+          "TARGET_LANGUAGE=#{hypothesis.test_set_entry.target_language}",
+          "TOKEN=#{new_token}"
+        ]
+      }
+    end
 end
