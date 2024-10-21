@@ -41,7 +41,10 @@ class Evaluation < ApplicationRecord
   end
 
   def update_status(new_status)
-    update(status: (new_status || "failed").downcase)
+    status = new_status&.downcase.presence_in(self.class.statuses.keys) || "failed"
+    status = "failed" if status == "completed" && scores.size.zero?
+
+    update status:
   end
 
   def active?

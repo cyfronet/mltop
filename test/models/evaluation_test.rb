@@ -83,6 +83,13 @@ class EvaluationTest < ActiveSupport::TestCase
     end
   end
 
+  test "evaluation failed when finished and no scores" do
+    @evaluation.update_status("COMPLETED")
+
+    assert @evaluation.failed?,
+      "Evaluation should fail when finished and no results but it is #{@evaluation.status}"
+  end
+
   private
     def valid_scores   = { blue: 1, chrf: 2, ter: 3.3 }.with_indifferent_access
     def invalid_scores = { blue: 1, chrf: 2 }.with_indifferent_access
