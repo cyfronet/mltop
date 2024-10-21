@@ -44,6 +44,10 @@ class Evaluation < ApplicationRecord
     update(status: (new_status || "failed").downcase)
   end
 
+  def active?
+    pending? || running?
+  end
+
   private
 
   def submit_script(user, new_token)

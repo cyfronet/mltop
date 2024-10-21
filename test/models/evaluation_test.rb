@@ -38,6 +38,18 @@ class EvaluationTest < ActiveSupport::TestCase
     end
   end
 
+  test "#active? when evaluation is running" do
+    %i[ pending running ].each do |status|
+      @evaluation.status = status
+      assert @evaluation.active?, "Evaluation shoud be active for #{status} status"
+    end
+
+    %i[ created completed failed ].each do |status|
+      @evaluation.status = status
+      assert_not @evaluation.active?, "Evaluation shoudn't be active for #{status} status"
+    end
+  end
+
 
   test "successful submit changes status to running" do
     Hpc::ClientMock.stub_submit
