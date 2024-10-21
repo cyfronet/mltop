@@ -20,11 +20,9 @@ module Plgrid
     end
 
     test "nil proxy when openid connect token is not valid" do
-      user = User.from_omniauth(auth("plgnewuser", token: "invalid"))
-
-      attrs = user.attributes
-      assert_nil attrs[:ssh_key]
-      assert_nil attrs[:ssh_certificate]
+      assert_raise Plgrid::Ccm::FetchError do
+        User.from_omniauth(auth("plgnewuser", token: "invalid"))
+      end
     end
 
     private

@@ -7,6 +7,10 @@ module Sentryable
     before_action :set_sentry_context, if: :sentry_enabled?
   end
 
+  def external_error_log(message)
+    Sentry.capture_message(message) if sentry_enabled?
+  end
+
   private
     def set_sentry_context
       if user = Current.user

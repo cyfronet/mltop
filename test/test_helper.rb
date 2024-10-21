@@ -33,7 +33,7 @@ module ActiveSupport
           nickname: user.plgrid_login
         },
         credentials: {
-          token: "some_token"
+          token: CcmHelpers::VALID_TOKEN
         },
         extra: {
           raw_info: {

@@ -38,8 +38,6 @@ module Plgrid
 
       @ssh_key =  ccm.key
       @ssh_certificate = ccm.certificate
-    rescue
-      Rails.logger.warn "Unable to fetch user ssh credentials"
     end
   end
 end
