@@ -6,6 +6,8 @@ class Plgrid::Ccm
   CCM_URI = URI.parse(Rails.application.credentials.dig(:ccm, :uri))
   LIFETIME = 24 * 60
 
+  class FetchError < StandardError; end
+
   attr_reader :certificate, :key
 
   def initialize(token)
@@ -20,13 +22,17 @@ class Plgrid::Ccm
       @key = json_response["private"]
     in _ => response
       Rails.logger.warn <<~ERROR
-        Error while fetching short lived ssh key with correct user token
+        Error while fetching short lived ssh key
           - status code: #{response.code}
           - error body: #{response.body}
       ERROR
 
-      raise "Cannot fetch short lived ssh key"
+      raise FetchError, "Cannot fetch short lived ssh key (#{response.code} response code)"
     end
+  rescue Net::ReadTimeout
+    raise FetchError, "Cannot fetch short lived ssh key (read timeout)"
+  rescue StandardError
+    raise FetchError, "Cannot fetch short lived ssh key"
   end
 
   private
