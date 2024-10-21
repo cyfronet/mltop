@@ -48,6 +48,11 @@ class Evaluation < ApplicationRecord
     pending? || running?
   end
 
+  def status=(status)
+    super(status)
+    self.token = nil if %w[ completed failed ].include?(status.to_s)
+  end
+
   private
 
   def submit_script(user, new_token)

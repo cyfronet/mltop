@@ -67,6 +67,22 @@ class EvaluationTest < ActiveSupport::TestCase
     end
   end
 
+  test "nillify token after status updated to completed or failed" do
+    %w[ completed failed ].each do |status|
+      @evaluation.update(status: :created, token: "secrete")
+      @evaluation.update(status:)
+
+      assert_nil @evaluation.token
+    end
+
+    %w[ pending running ].each do |status|
+      @evaluation.update(status: :created, token: "secrete")
+      @evaluation.update(status:)
+
+      assert_not_nil @evaluation.token
+    end
+  end
+
   private
     def valid_scores   = { blue: 1, chrf: 2, ter: 3.3 }.with_indifferent_access
     def invalid_scores = { blue: 1, chrf: 2 }.with_indifferent_access
