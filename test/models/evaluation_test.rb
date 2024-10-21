@@ -75,22 +75,22 @@ class EvaluationTest < ActiveSupport::TestCase
 
   test "nillify token after status updated to completed or failed" do
     %w[ completed failed ].each do |status|
-      @evaluation.update(status: :created, token: "secret")
-      @evaluation.update_status(status)
+      @evaluation.update status: :created, token: "secret"
+      @evaluation.update job_status: status
 
       assert_nil @evaluation.token
     end
 
-    @evaluation.update(status: :created, token: "secret")
+    @evaluation.update status: :created, token: "secret"
     %w[ pending running ].each do |status|
-      @evaluation.update_status(status)
+      @evaluation.update job_status: status
 
       assert_not_nil @evaluation.token
     end
   end
 
   test "evaluation failed when finished and no scores" do
-    @evaluation.update_status("COMPLETED")
+    @evaluation.update job_status: "COMPLETED"
 
     assert @evaluation.failed?,
       "Evaluation should fail when finished and no results but it is #{@evaluation.status}"

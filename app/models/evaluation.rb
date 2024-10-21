@@ -40,13 +40,14 @@ class Evaluation < ApplicationRecord
     request
   end
 
-  def update_status(new_status)
+  def job_status=(new_status)
     status = new_status&.downcase.presence_in(self.class.statuses.keys) || "failed"
     status = "failed" if status == "completed" && scores.size.zero?
 
-    attrs =  finished_status?(status) ? { status:, token: nil } : { status: }
+    # attrs =  finished_status?(status) ? { status:, token: nil } : { status: }
 
-    update attrs
+    self.status = status
+    self.token = nil if finished_status?(status)
   end
 
   def active?
