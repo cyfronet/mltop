@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", github: "rails/rails"
+gem "rails", github: "rails/rails", branch: "8-0-stable"
 
 # Get ready for ruby 3.4 - freeze all strings
 gem "freezolite"
