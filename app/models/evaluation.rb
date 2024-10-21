@@ -24,6 +24,7 @@ class Evaluation < ApplicationRecord
       metrics.each do |metric|
         scores.create! metric:, value: values[metric.name]&.to_f
       end
+      update! status: :completed
     end
   end
 

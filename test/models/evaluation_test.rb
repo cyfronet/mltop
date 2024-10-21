@@ -13,6 +13,12 @@ class EvaluationTest < ActiveSupport::TestCase
     end
   end
 
+  test "change status to completed when scores are recorded" do
+    assert_changes -> { @evaluation.status }, to: "completed" do
+      @evaluation.record_scores! valid_scores
+    end
+  end
+
   test "cannot record with missing scores" do
     assert_no_changes -> { Score.count }  do
       assert_raise ActiveRecord::RecordInvalid do
