@@ -1,7 +1,7 @@
 if Rails.env.local?
   namespace :dev do
     desc "Sample data for local development environment"
-    task recreate: %w[ db:reset ] do
+    task recreate: %w[ db:drop db:create db:schema:load db:migrate db:seed ] do
       include ActionView::Helpers::TextHelper
 
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
