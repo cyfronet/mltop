@@ -6,7 +6,7 @@ tasks =
   data_yaml("tasks").map do |slug, data|
     Task.find_or_initialize_by(slug:) do |task|
       if task.new_record?
-        task.update(
+        task.update!(
           name:        data["name"],
           info:        data["info"],
           description: data["description"],
@@ -19,7 +19,7 @@ tasks =
 
 data_yaml("evaluators").each do |_, data|
   Evaluator.find_or_initialize_by(name: data["name"]) do |evaluator|
-    evaluator.update(
+    evaluator.update!(
       script:          data["script"],
       host:            data["host"],
       metrics:         data["metrics"].map { |name| Metric.build(name:) },
