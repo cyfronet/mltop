@@ -54,7 +54,7 @@ SUM:
     real-time summarization. This capability is useful for managing information in 
     journalism, education, and professional environments.
   from: text
-  io: text
+  to: text
 
 # audio to text
 ASR:

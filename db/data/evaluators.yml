@@ -1,26 +1,42 @@
 screbleu:
   name: Sacrebleu
   script: |
-    #SBATCH -A plgmeetween2004-cpu
-    #SBATCH -p plgrid
-    #SBATCH --ntasks-per-node=1
-    #SBATCH --time=00:01:00
     #!/bin/bash -l
 
-    echo $GROUNDTRUTH_URL
+    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -p plgrid
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=512M
+    #SBATCH --job-name=sacrebleu
+    #SBATCH --time=00:02:00
 
-    curl -X POST $RESULTS_URL \\
-    -L --location-trusted \\
-    -H "Content-Type:application/json" \\
-    -H "Authorization:Token $TOKEN" \\
-    -d '{ "scores": ["blue": 12, "chrf": 13, "ter": 14]}'
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-sacrebleu__ares.sh
+
+    output=$(bash $calculator_script $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
   host: ares.cyfronet.pl
   metrics:
-    - blue
+    - bleu
     - chrf
     - ter
   tasks:
+    - MT
+    - SUM
     - ST
+    - SSUM
+    - SQA
+    - SLU
+    - LIPREAD
 
 blueurt:
   name: bleurt
