@@ -26,6 +26,7 @@ module Evaluations
     end
 
     def update_evaluations(statuses)
+      statuses = statuses.transform_keys(&:to_s)
       submitted_evaluations.each do |evaluation|
         evaluation.update job_status: statuses[evaluation.job_id]
       end

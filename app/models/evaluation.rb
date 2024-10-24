@@ -44,8 +44,6 @@ class Evaluation < ApplicationRecord
     status = new_status&.downcase.presence_in(self.class.statuses.keys) || "failed"
     status = "failed" if status == "completed" && scores.size.zero?
 
-    # attrs =  finished_status?(status) ? { status:, token: nil } : { status: }
-
     self.status = status
     self.token = nil if finished_status?(status)
   end
