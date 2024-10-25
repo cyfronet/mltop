@@ -41,20 +41,31 @@ screbleu:
 blueurt:
   name: bleurt
   script: |
-    #SBATCH -A plgmeetween2004-cpu
-    #SBATCH -p plgrid
-    #SBATCH --ntasks-per-node=1
-    #SBATCH --time=00:01:00
     #!/bin/bash -l
 
-    echo $GROUNDTRUTH_URL
+    #SBATCH -A plgmeetween2004-gpu-a100
+    #SBATCH -p plgrid-gpu-a100
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --gres=gpu:1
+    #SBATCH --mem=50G
+    #SBATCH --job-name=BLEURT
+    #SBATCH --time=00:10:00
 
-    curl -X POST $RESULTS_URL \\
-    -L --location-trusted \\
-    -H "Content-Type:application/json" \\
-    -H "Authorization:Token $TOKEN" \\
-    -d '{ "scores": ["blueurt": 12]}'
-  host: ares.cyfronet.pl
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-bleurt__athena.sh
+
+    output=$(bash $calculator_script $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: athena.cyfronet.pl
   metrics:
     - bleurt
   tasks:
