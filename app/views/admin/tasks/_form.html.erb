@@ -17,7 +17,7 @@
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "sm:col-span-4" %>
       <%= form.text_field :slug, wrapper: "sm:col-span-2" %>
-      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
       <%= form.select :from, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
       <%= form.select :to, Task::TYPES, include_blank: false, wrapper: "sm:col-span-1" %>
     </div>
