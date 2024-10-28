@@ -31,9 +31,22 @@ for rights to create databases.
 For example:
 `sudo -u postgres createuser name -s`
 
+## Synchronizing test sets
+
+We are storing test sets on the Ares HPC system. To fetch it from the cluster
+and upload it to the application runn following command:
+
+```
+./bin/rails test_sets:synchronize
+```
+
+At the beginning it will synchronize your test sets files with the one stored on
+the cluster (by using `rsync` command). Next, test sets will be imported to the
+application (files are stored in active storage).
+
 ## Running in development mode
 
-You need to have `config/master.key` file to run an application in development
+You need to have `config/credentials/development.key` file to run an application in development
 mode. Contact @mkasztelnik for details.
 
 To make database preparation and dependencies you can use:
@@ -112,16 +125,6 @@ admin you need to user rails console (`./bin/rails c`) and then:
 User.find_by(email: "user@email").update(roles: [:admin])
 ```
 
-## Contributing
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`).
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new pull request
-6. When feature is ready add reviewers and wait for feedback (at least one
-   approve should be given and all review comments should be resolved)
-
 ## Populating database with fake data
 
 To setup development database and populate it with generated data run:
@@ -146,3 +149,13 @@ following command in the rails console:
 ```ruby
 User.first.uid
 ```
+
+## Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new pull request
+6. When feature is ready add reviewers and wait for feedback (at least one
+   approve should be given and all review comments should be resolved)
