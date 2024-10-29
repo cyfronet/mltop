@@ -12,16 +12,16 @@ class TestSet < ApplicationRecord
 
   validates :name, presence: true
 
-  def source_languages
-    @source_languages = entries.map(&:source_language).uniq.sort
+  def source_languages_for(task:)
+    entries.where(task:).pluck(:source_language).uniq.sort
   end
 
-  def target_languages
-    @target_languages = entries.map(&:target_language).uniq.sort
+  def target_languages_for(task:)
+    entries.where(task:).pluck(:target_language).uniq.sort
   end
 
-  def entry_for_language(source, target)
-    entries.detect { |e| e.source_language == source && e.target_language == target }
+  def entry_language_for(source:, target:, task:)
+    entries.detect { |e| e.source_language == source && e.target_language == target && e.task == task }
   end
 
   def to_s
