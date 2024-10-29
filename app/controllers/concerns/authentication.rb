@@ -23,7 +23,9 @@ module Authentication
     end
 
     def restore_authentication
-      if user = User.find_by(id: cookies.signed[:user_id])
+      user = User.find_by(id: cookies.signed[:user_id])
+
+      if user && user.credentials_valid?
         authenticated_as(user)
       end
     end
