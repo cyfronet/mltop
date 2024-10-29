@@ -3,6 +3,8 @@ if Rails.env.local?
     desc "Sample data for local development environment"
     task :recreate, [ "user_login" ] => [ :environment ] do |t, args|
       task("db:drop").invoke
+      system "rm -rf #{File.join(Rails.root, "storage", "*/")}"
+
       task("db:create").invoke
       task("db:schema:load").invoke
       task("db:migrate").invoke
