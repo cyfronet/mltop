@@ -13,7 +13,7 @@ if Rails.env.local?
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
       User.create!(uid:, plgrid_login: "will-be-updated",
                         email: "will@be.updated",
-                        roles_mask: 1)
+                        roles: [ :admin ])
 
 
       puts "DB set up complete, initializing test sets.."
