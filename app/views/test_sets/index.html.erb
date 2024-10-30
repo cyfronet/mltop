@@ -2,6 +2,17 @@
 
 <%= mltop_title "Test sets" %>
 
-<ul role="list" class="divide-y divide-gray-100">
+<div class="text-center">
+  <p>
+    <%= "A test set is a dataset used to evaluate a model’s
+    performance on new, unseen data."%>
+ <br/>
+    <%= "It helps measure
+    how well the model generalizes and performs
+    across different tasks and language pairs."%>
+  </p>
+</div>
+
+<ul role="list"">
   <%= render @test_sets %>
 </ul>

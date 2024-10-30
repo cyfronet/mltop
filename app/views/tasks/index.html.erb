@@ -12,7 +12,9 @@
       like real-time translation and speech recognition — ensuring seamless, global collaboration for everyone.
     </h2>
 
-    <%= link_to "Join us", sign_in_path, type:"button", class: "btn text-white bg-fuchsia-600 border-0 mt-5", "data-turbo-prefetch": false %>
+    <% if !signed_in? %>
+      <%= link_to "Join us", sign_in_path, type:"button", class: "btn text-white bg-fuchsia-600 border-0 mt-5", "data-turbo-prefetch": false %>
+    <% end %>
   </div>
 
   <div class="bg-home-img bg-cover bg-left mt-10">
