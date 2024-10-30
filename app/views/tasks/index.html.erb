@@ -1,22 +1,83 @@
 <% breadcrumb :dashboard %>
 
 <div class="w-full">
-  <p class="mx-14 mt-10 text-gray-400 text-justify">
-    Et aspernatur consequatur. In culpa velit. Voluptatem voluptate minima. Quo atque qui. Veniam magnam possimus.
-    Dolores quos eum. Hic et quo. Sed optio et. Est officia accusantium. Cupiditate aut sed. Corporis ad libero.
-    Itaque hic error. Repellendus aut quos. Velit quasi asperiores. Debitis quis ut. Dolorum sint at. Nesciunt maxime
-    facilis. Est unde aliquam. Esse est assumenda. Quis ipsam ut. Unde nihil accusantium. Vero architecto sunt.
-    Commodi dolor magni. Et tempore sed. Architecto et et. Sunt ullam nihil. Dolore quasi saepe. Voluptatum tenetur
-    ipsum. Vitae dicta labore. Minima nostrum sint. Perferendis dolorum vel. Consectetur non sed. Aspernatur
-    eligendi quaerat. Natus sunt magnam. Et sunt explicabo. Exercitationem consectetur nesciunt. Voluptatem aperiam
-    vitae. Dignissimos aut ullam. Rerum nihil ullam. Placeat rerum qui. Animi sint qui. Voluptates repellendus porro.
-    Fugit eum sit. Ut dignissimos eius. Et alias placeat. Sed quas voluptas. Et aliquid illum. Dolore reprehenderit
-    inventore. Quia fuga incidunt.
-  </p>
+  <div class="w-1/2 mx-14">
+    <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
+      A suite of AI metrics that can be used to measure and track the performance of the task-specific models.
+    </h1>
+
+    <h2 class="mt-5 text-zinc-700 text-justify">
+      Join a community shaping the future of multilingual communication.
+      With Speechm, you can test cutting-edge AI models, contribute to innovation through leaderboards, and help refine solutions
+      like real-time translation and speech recognition — ensuring seamless, global collaboration for everyone.
+    </h2>
+
+    <%= link_to "Join us", sign_in_path, type:"button", class: "btn text-white bg-fuchsia-600 border-0 mt-5", "data-turbo-prefetch": false %>
+  </div>
+
+  <div class="bg-home-img bg-cover bg-left mt-10">
+    <div class="bg-gradient-to-r from-transparent to-black to-60% flex">
+      <div class="w-1/2">
+      </div>
+      <div class="w-1/2 m-5 text-white">
+        <h1 class="font-bold text-2xl text-justify">
+          Unlock the Future of Speech Technology
+        </h1>
+        <h2 class="mt-5 text-justify">
+          Explore our innovative AI solutions that empower seamless communication and drive progress in the field of speech technology.
+        </h2>
+        <div class="flex divide-x">
+          <div></div>
+          <div class="w-1/3 pl-5">
+            <p class="text-orange text-2xl font-bold"> 10 </p>
+            <p> models </p>
+          </div>
+          <div class="w-1/3 pl-5">
+            <p class="text-orange text-2xl font-bold"> 3 </p>
+            <p> test sets </p>
+          </div>
+          <div class="w-1/3 pl-5">
+            <p class="text-orange text-2xl font-bold"> 15 </p>
+            <p> metrics </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="mx-14 mt-10 text-gradient text-center font-bold text-2xl">
+    Key Tasks in NLP and Speech Technology
+  </h2>
+
+  <h3 class="mx-14 mt-5 text-zinc-700 text-center">
+    Explore the core functions that enhance communication through language
+    understanding, translation, and speech recognition.
+  </h3>
 
   <div id="tasks" class="min-w-full">
     <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <%= render @tasks %>
     </ul>
+  </div>
+
+  <div class="mt-4 flex bg-gradient-to-r from-fuchsia-100 to-text-orange-100 py-4">
+    <div class="w-1/2">
+    </div>
+    <div class="w-1/2 p-4">
+      <h1 class="text-zinc-700 font-bold text-2xl text-justify">
+        Discover the Best Model Tailored to Your Needs
+      </h1>
+      <p class="pt-2">
+        Our leaderboards cover a wide range of tasks,
+        from speech translation to text generation and beyond,
+        offering detailed comparisons of models tested across various datasets and language pairs.
+         With rankings based on performance metrics like BLEU, CHRF, TER, and more,
+         you can easily find the model that meets your specific requirements.
+      </p>
+      <p>
+        Explore, compare, and select the best solution for your task.
+      </p>
+    </div>
+
   </div>
 </div>

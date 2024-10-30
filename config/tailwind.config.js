@@ -7,6 +7,7 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*.{erb,haml,html,slim}',
     './lib/form_builders/**/*.rb',
+    './app/assets/images/**/*'
   ],
   theme: {
     extend: {
@@ -22,6 +23,9 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        'home-img': "url('/home_page.png')",
+      }
     },
   },
   plugins: [

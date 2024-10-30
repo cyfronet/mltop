@@ -11,7 +11,7 @@
       <div class="flex items-center">
         <div class="hidden md:ml-6 md:flex md:space-x-8">
           <%= mltop_navlinks do |links| %>
-            <%- links.add "Dashboard", root_path, [[ "tasks", "tasks/leaderboards" ]] %>
+            <%- links.add "Home", root_path, [[ "tasks", "tasks/leaderboards" ]] %>
             <%- links.add "Models", models_path, [ "models" ] %>
             <%- links.add "Test sets", test_sets_path, [[ "test_sets", "test_sets/leaderboards" ]] %>
             <% if signed_in? %>
@@ -27,9 +27,9 @@
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <% if signed_in? %>
-            <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-primary" %>
+            <%= button_to "Log out", sign_out_path, method: :delete, class: "btn text-white bg-fuchsia-600" %>
           <% else %>
-            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-primary", "data-turbo": false %>
+            <%= link_to "Log in", sign_in_path, type:"button", class: "btn text-white bg-fuchsia-600", "data-turbo": false %>
           <% end %>
         </div>
       </div>
