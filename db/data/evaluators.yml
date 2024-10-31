@@ -16,7 +16,7 @@ screbleu:
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-sacrebleu__ares.sh
 
-    output=$(bash $calculator_script $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
       curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
@@ -52,7 +52,7 @@ blueurt:
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-bleurt__athena.sh
 
-    output=$(bash $calculator_script $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
       curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
@@ -101,7 +101,6 @@ wer:
    - ST
    - ASR
    - LIPREAD
-
 
 rogue:
   name: ROGUE
@@ -185,7 +184,7 @@ exact-match:
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
 
-    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-exact-match__ares.sh
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-exact_match__ares.sh
 
     output=$(bash $calculator_script $SOURCE_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
 
@@ -202,8 +201,6 @@ exact-match:
   tasks:
     - ASR
     - LIPREAD
-
-
 
 f1-score:
   name: F1 Score
