@@ -8,7 +8,7 @@
         <h3 class="text-base font-semibold leading-7 text-gray-900"><%= @test_set.name%></h3>
       </div>
       <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
-        <%= link_to "Edit", [:edit, :admin, @test_set], type:"button", class: "btn btn-warning" %>
+        <%= link_to "Edit", [:edit, :admin, @test_set], type:"button", class: "btn btn-secondary-outline" %>
         <%= button_to "Delete", [:admin, @test_set], method: :delete, class: "btn btn-danger",
           form: { "data-turbo-confirm": "Are you sure you want to remove this test set? All related elements (test set entries, evalutions, scores) will be removed as well!" } %>
       </div>
@@ -30,13 +30,13 @@
         <dt class="text-sm font-medium leading-6 text-gray-900">Test set entries</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
         <%= turbo_frame_tag dom_id(@test_set, "entries_table") do %>
-          <%= render partial: "entry", collection: @test_set.entries, as: :entry %>         
+          <%= render partial: "entry", collection: @test_set.entries, as: :entry %>
         <% end %>
         </dd>
       </div>
       <%= turbo_frame_tag dom_id(@test_set, "add_entry") do %>
         <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
-          <%= link_to "Add entry", new_admin_test_set_entry_path(@test_set), class: "btn btn-warning" %>
+          <%= link_to "Add entry", new_admin_test_set_entry_path(@test_set), class: "btn btn-secondary-outline" %>
         </div>
       <% end %>
     </dl>

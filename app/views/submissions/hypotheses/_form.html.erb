@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(entry, "hypothesis_form") do %>
     <%= form_with model: Hypothesis.new, url: submission_hypotheses_path(submission_id:), local: true do |f| %>
-      <label class="btn btn-success cursor-pointer">
+      <label class="btn btn-primary cursor-pointer">
         Upload hypothesis
         <%= f.file_field :input, class: "hidden" ,onchange: 'this.form.requestSubmit();' %>
       </label>

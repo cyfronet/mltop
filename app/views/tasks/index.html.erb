@@ -13,7 +13,7 @@
     </h2>
 
     <% if !signed_in? %>
-      <%= link_to "Join us", sign_in_path, type:"button", class: "btn text-white bg-fuchsia-600 border-0 mt-5", "data-turbo-prefetch": false %>
+      <%= link_to "Join us", sign_in_path, class: "btn btn-primary mt-5", "data-turbo-prefetch": false %>
     <% end %>
   </div>
 
