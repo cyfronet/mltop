@@ -29,7 +29,7 @@
           <% if signed_in? %>
             <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-primary" %>
           <% else %>
-            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-primary", "data-turbo-prefetch": false %>
+            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-primary", "data-turbo": false %>
           <% end %>
         </div>
       </div>
