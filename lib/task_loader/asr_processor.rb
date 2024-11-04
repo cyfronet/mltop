@@ -4,7 +4,7 @@ class TaskLoader::AsrProcessor < TaskLoader::Processor
       next if entry.file?
 
       case entry.basename.to_s
-      when "ACL60600" then process_acl6060(entry)
+      when "ACL6060" then process_acl6060(entry)
       when "MTEDX"    then process_mtedx(entry)
       when "MUSTC"    then process_mustc(entry)
       when "DIPCO"    then process_dipco(entry)
