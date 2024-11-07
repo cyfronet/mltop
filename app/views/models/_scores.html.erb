@@ -16,11 +16,13 @@
   <table class="table-auto border-collapse w-full border text-sm shadow-sm text-zinc-900 border-zinc-400 bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-200">
     <thead class="sticky top-0">
       <tr>
-        <th colspan="1" rowspan="2" class="border font-semibold p-4 text-left">
+        <th colspan="1" rowspan="2" class="leaderboard-item">
           From\To
         </th>
         <% @model_row.target_languages.each do |target_language| %>
-          <th> <%= target_language %> </th>
+          <th class="leaderboard-item">
+            <%= target_language %>
+          </th>
         <% end %>
       </tr>
     </thead>
@@ -28,12 +30,12 @@
     <tbody>
       <% @model_row.source_languages.each do |source_language| %>
         <tr>
-          <td class="border p-4 text-center">
-          <%= source_language %>
+          <td class="leaderboard-item">
+            <%= source_language %>
           </td>
           <% @model_row.target_languages.each do |target_language| %>
-              <%- score = @model_row.score(source_language, target_language) -%>
-              <td class="border p-4 text-center text-zinc-900 font-bold"
+            <%- score = @model_row.score(source_language, target_language) -%>
+              <td class="score-cell"
                 style="background-color: <%= interpolate_color(score) unless score.nil? %>">
               <%= score && number_with_precision(score, precision: 2) %>
             </td>
