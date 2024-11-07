@@ -4,27 +4,27 @@
   <h1 class="font-bold text-center mt-2 text-gray-900">
     Entries for <%= task.name %>
   </h1>
-  <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm mt-5">
-    <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+  <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-600 bg-white dark:bg-zinc-700 text-sm shadow-sm mt-5">
+    <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-200">
       <tr>
-        <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left bg-white">
+        <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-left">
           Language
         </th>
 
         <% test_set.source_languages_for(task:).each do |language| %>
-          <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center">
+          <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-center">
             <%= language %>
           </th>
         <% end %>
     </thead>
-    <tbody>
+    <tbody class="bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-200">
         <% test_set.target_languages_for(task:).each do |target| %>
           <tr>
-            <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left text-center bg-zinc-50 dark:bg-zinc-700">
+            <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-center ">
               <%= target %>
             </td>
             <% test_set.source_languages_for(task:).each do |source| %>
-              <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400">
+              <td class="border border-zinc-300 dark:border-zinc-600 p-4 text-zinc-500">
                 <%- if entry = test_set.entry_language_for(source:, target:, task:) %>
                   <%= link_to entry.input, class: "flex justify-center hover:text-black" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
