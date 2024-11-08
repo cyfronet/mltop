@@ -28,6 +28,11 @@ class Evaluation < ApplicationRecord
     end
   end
 
+  def score_for_metric(metric)
+    scores.detect { |s| s.metric_id == metric.id } || Score.new(evaluation: self)
+  end
+
+
   def submit(user)
     new_token = reset_token!
     request = submit_script(user, new_token)

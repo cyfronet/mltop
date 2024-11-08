@@ -29,3 +29,11 @@
 
 en:
   hello: "Hello world"
+
+  statuses:
+    created: Queued
+    pending: Queued
+    running: Running
+    completed: Executed sucessfully
+    failed: Finished with errors
+    unknown: Status unknown

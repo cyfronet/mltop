@@ -18,15 +18,16 @@ class Hypothesis < ApplicationRecord
     end
   end
 
-  def self.owned_by(user)
-    joins(:model).where(models: { owner: Current.user })
+  def evaluation_for(evaluator)
+    evaluations.detect { |e| e.evaluator_id == evaluator.id } ||
+      Evaluation.new(evaluator:, hypothesis: self)
   end
 
-  def self.has_evaluations_by_entry
-    left_joins(:evaluations)
-    .pluck("test_set_entry_id, hypotheses.id, evaluations.id")
-    .group_by(&:first).transform_values do |data|
-      { hypothesis_id: data[0][1], has_evaluations: data.present? }
-    end
+  def with_evaluations?
+    evaluations.size.positive?
+  end
+
+  def self.owned_by(user)
+    joins(:model).where(models: { owner: user })
   end
 end

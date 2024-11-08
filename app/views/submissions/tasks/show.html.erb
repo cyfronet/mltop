@@ -2,19 +2,17 @@
 
 <%= render "submissions/header", model: @model %>
 
-<% @task.test_sets.each do |test_set| %>
+<% Model::TaskEvaluation.new(model: @model, task: @task).test_set_evaluations.each do |test_set_evaluation| %>
   <div class="overflow-hidden bg-gray-50 sm:rounded-lg sm:shadow mb-8">
     <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
       <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
         <div class="ml-4 mt-2">
-          <h3 class="text-base font-semibold leading-6 text-gray-900"><%= test_set.name %></h3>
+          <h3 class="text-base font-semibold leading-6 text-gray-900"><%= test_set_evaluation.name %></h3>
         </div>
       </div>
     </div>
     <div role="list">
-      <%= render partial: "entry", collection: entries_for_test_set(test_set),
-          as: :entry, locals: { entries_with_hypotheses: @entries_with_hypotheses,
-          submission_id: @model.id } %>
+      <%= render test_set_evaluation.hypothesis %>
     </div>
   </div>
 <% end %>
