@@ -12,6 +12,8 @@ class TaskLoader::Processor
       when "ASR" then TaskLoader::AsrProcessor
       when "SQA" then TaskLoader::SqaProcessor
       when "ST"  then TaskLoader::StProcessor
+      when "SUM" then TaskLoader::SumProcessor
+      when "SSUM" then TaskLoader::SsumProcessor
       else            TaskLoader::UnknownProcessor
       end
 
