@@ -29,7 +29,7 @@ module Components::NavHelper
           @links.map do |link|
             css = [
               "inline-flex items-center px-1 pt-1 text-sm font-medium",
-              link[:active] ? "text-gray-900" : "text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              link[:active] ? "text-orange-600" : "text-gray-500 hover:border-gray-300 hover:text-gray-700"
             ].join(" ")
 
             @view.concat @view.link_to(link[:name], link[:url], class: css)

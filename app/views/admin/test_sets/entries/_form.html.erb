@@ -15,11 +15,17 @@
       <%= form.select :source_language, Mltop::LANGUAGES, wrapper: "sm:col-span-1" %>
       <%= form.select :target_language, Mltop::LANGUAGES, wrapper: "sm:col-span-1" %>
       <%= form.collection_select :task_id, Task.all, :id, :name, {}, class: "sm:col-span-1" %>
-      <%= form.file_field :input %>
-      <%= form.file_field :groundtruth %>
-      <div>
-        <%= link_to "Cancel", [:admin, test_set], class: "btn btn-primary"%>
-        <%= form.submit%>
+      <div class="mt-2">
+        <label for="test_set_entry_input"> Input </label>
+        <%= form.file_field :input %>
+      </div>
+      <div class="mt-2">
+        <label for="test_set_entry_groundtruth"> Groundtruth </label>
+        <%= form.file_field :groundtruth %>
+      </div>
+      <div class="m-2">
+        <%= link_to "Cancel", [:admin, test_set], class: "btn btn-secondary-outline"%>
+        <%= form.submit %>
       </div>
   <% end %>
 

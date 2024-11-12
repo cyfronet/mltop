@@ -1,11 +1,11 @@
-<table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-800 text-sm shadow-sm">
-  <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+<table class="table-auto border-collapse w-full border text-zinc-900 border-zinc-400 bg-zinc-50 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200 text-sm shadow-sm">
+  <thead class="sticky top-0">
     <tr>
-      <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
+      <th colspan="1" rowspan="2" class="leaderboard-item">
         Models
       </th>
       <% task.metrics.each do |metric| %>
-        <th rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
+        <th rowspan="2" class="leaderboard-item">
           <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, o: aggregated_metric_order(metric)), class: "flex items-center justify-center" do %>
             <span class="mr-3"><%= metric.name %></span>
             <%= aggregated_metric_sort_chevron(metric) %>
@@ -13,7 +13,7 @@
         </th>
       <% end %>
       <% @test_set_entries.each do |test_set_entry| %>
-        <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center font-black">
+        <th colspan="<%= task.metrics.size %>" class="leaderboard-item">
           <%= test_set_entry %>
         </th>
       <% end %>
@@ -21,7 +21,7 @@
     <tr>
       <% @test_set_entries.each do |test_set_entry| %>
         <% task.metrics.each do |metric| %>
-          <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
+          <th class="leaderboard-item">
             <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, sid: test_set_entry.id, o: test_set_metric_order(test_set_entry, metric)), class: "flex items-center justify-center" do %>
               <span class="mr-3"><%= metric.name %></span>
               <%= test_set_sort_chevron(test_set_entry, metric) %>
@@ -34,14 +34,13 @@
   <tbody>
     <% rows.each do |row| %>
       <tr>
-        <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 font-bold">
+        <td class="leaderboard-item">
           <%= link_to row.name, row.model %>
         </td>
 
         <% task.metrics.each do |metric| %>
           <%- value = row.score(test_set: test_set, metric:).value %>
-          <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center"
-              style="background-color: <%= interpolate_color(value) %>">
+          <td class="score-cell" style="background-color: <%= interpolate_color(value) %>">
             <%= number_with_precision value, precision: 2 %>
           </td>
         <% end %>
@@ -49,9 +48,7 @@
         <% @test_set_entries.each do |test_set_entry| %>
           <% task.metrics.each do |metric| %>
             <%- value = row.score(test_set: test_set, metric:, test_set_entry:).value %>
-
-            <td class="border border-zinc-300 dark:border-zinc-700 p-4 text-zinc-500 dark:text-zinc-400 text-center"
-                style="background-color: <%= interpolate_color(value) %>">
+            <td class="score-cell" style="background-color: <%= interpolate_color(value) %>">
               <%= number_with_precision value, precision: 2 %>
             </td>
           <% end %>
