@@ -32,10 +32,6 @@
     @apply btn-primary
   }
 
-  .checkbox {
-    @apply h-4 w-4 rounded border-zinc-300 text-fuchsia-600 hover:border-fuchsia-400 focus:border-fuchsia-600 focus:ring-0 focus:ring-offset-0 disabled:bg-zinc-200 disabled:border-0
-  }
-
   .flash-container {
     @apply text-center animate-appear-then-fade;
   }

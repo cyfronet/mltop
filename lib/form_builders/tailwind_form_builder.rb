@@ -1,13 +1,13 @@
 module FormBuilders
   class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     class_attribute :text_field_helpers,
-      default: field_helpers - [ :label, :check_box, :radio_button, :fields_for, :fields, :hidden_field, :file_field ] + [ :rich_text_area, :text_area ]
+      default: field_helpers - [ :label, :radio_button, :fields_for, :fields, :hidden_field, :file_field ] + [ :rich_text_area, :text_area ]
 
     TEXT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2".freeze
     SELECT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 mt-2".freeze
     SUBMIT_BUTTON_STYLE = "btn btn-primary".freeze
     LABEL_STYLE = "block text-sm font-medium leading-6 text-gray-900".freeze
-    CHECKBOX_STYLE = "checkbox".freeze
+    CHECKBOX_STYLE = "h-4 w-4 rounded border-zinc-300 text-fuchsia-600 hover:border-fuchsia-400 focus:border-fuchsia-600 focus:ring-0 focus:ring-offset-0 disabled:bg-zinc-200 disabled:border-0".freeze
 
     text_field_helpers.each do |field_method|
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
@@ -52,6 +52,18 @@ module FormBuilders
 
       labels = labels(method, custom_opts[:label], options)
       field = super(method, collection, value_method, text_method, opts, html_options.merge(class: classes))
+
+      @template.content_tag "div", class: custom_opts[:wrapper] do
+        labels + field
+      end
+    end
+
+    def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {}, &block)
+      custom_opts, opts = partition_custom_opts(options)
+      classes = apply_style_classes(CHECKBOX_STYLE, custom_opts, method)
+
+      labels = labels(method, custom_opts[:label], options)
+      field = super(method, collection, value_method, text_method, opts, html_options.merge(class: classes), &block)
 
       @template.content_tag "div", class: custom_opts[:wrapper] do
         labels + field
