@@ -71,7 +71,7 @@ module Components::NavHelper
 
           def menu
             tag.div class: "block" do
-              tag.nav class: "isolate flex divide-x divide-gray-200 rounded-lg shadow", "aria-label" => "Tabs" do
+              tag.nav class: "flex items-center justify-center gap-x-16", "aria-label" => "Tabs" do
                 @sections.map do |title, link|
                   concat menu_link(title, **link)
                 end
@@ -82,12 +82,12 @@ module Components::NavHelper
           def menu_link(title, link:, active:, condition:)
             active = @manual ? active : @view.is_active_link?(@view.url_for(link), condition)
 
-            options = { class: "text-gray-#{active ? 900 : 500} group relative min-w-0 flex-1 overflow-hidden bg-gray-50 py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10" }
+            options = { class: "#{active ? "text-fuchsia-600 bg-fuchsia-100 hover:bg-fuchsia-200 font-bold" : "text-zinc-500 bg-transparent hover:bg-gray-50 font-medium"} flex-none rounded-md group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10" }
             options["aria-current"] = "page" if active
 
             @view.link_to link, options do
               concat tag.span title
-              concat tag.span class: "#{active ? "bg-indigo-500" : "bg-transparent"} absolute inset-x-0 bottom-0 h-0.5", "aria-hidden": true
+              concat tag.span class: " absolute inset-x-0 ", "aria-hidden": true
             end
           end
     end
