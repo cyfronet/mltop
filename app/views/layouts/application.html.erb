@@ -21,7 +21,9 @@
     <%= render "layouts/navbar" %>
     <main class="container mx-auto mt-5">
       <%= render "layouts/breadcrumbs" %>
-      <%= render "layouts/flash" %>
+      <div id="flash" aria-live="assertive" class="text-center pointer-events-none px-4 py-4 space-y-4 fixed inset-0 items-end">
+        <%= render "layouts/flash" %>
+      </div>
       <%= yield %>
     </main>
     <%= render "layouts/footer" %>
