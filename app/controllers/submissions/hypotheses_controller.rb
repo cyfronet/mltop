@@ -2,21 +2,20 @@ class Submissions::HypothesesController < ApplicationController
   def create
     @model = Current.user.models.find(params[:submission_id])
     @hypothesis = @model.hypothesis.new(hypothesis_params)
-    @test_set_entry = @hypothesis.test_set_entry
+
     if @hypothesis.save
       flash.now[:notice] = "Hypothesis succesfully created"
     else
-      @submission_id = @model.id
       flash.now[:alert] = "Unable to create hypothesis"
       render(:create, status: :bad_request)
     end
   end
 
   def destroy
-    @hypothesis = Hypothesis.joins(:model).where(models: { owner: Current.user }).find(params[:id])
-    @submission_id = @hypothesis.model_id
-    @test_set_entry = @hypothesis.test_set_entry
+    @hypothesis = Hypothesis.owned_by(Current.user).find(params[:id])
+
     if @hypothesis.destroy
+      @empty_hypothesis = Hypothesis::Empty.new(@hypothesis.model, @hypothesis.test_set_entry)
       flash.now[:notice] = "Hypothesis succesfully deleted"
     else
       flash.now[:alert] = "Unable to delete hypothesis #{@hypothesis.test_set_entry}"

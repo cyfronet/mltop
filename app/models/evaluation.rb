@@ -11,6 +11,9 @@ class Evaluation < ApplicationRecord
 
   validates :hypothesis, uniqueness: { scope: :evaluator_id }
 
+  broadcasts_to ->(ev) { [ ev.hypothesis.model, ev.hypothesis.test_set_entry.task ] },
+                partial: "submissions/evaluations/evaluation"
+
   enum :status, {
     created: 0,
     pending: 1,
@@ -27,6 +30,12 @@ class Evaluation < ApplicationRecord
       update! status: :completed, token: nil
     end
   end
+
+  def score_for_metric(metric)
+    scores.detect { |s| s.metric_id == metric.id } ||
+      Score.new(evaluation: self, metric:)
+  end
+
 
   def submit(user)
     new_token = reset_token!

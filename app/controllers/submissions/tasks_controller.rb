@@ -9,7 +9,7 @@ class Submissions::TasksController < ApplicationController
   def show
     @model = Current.user.models.find(params[:submission_id])
     @task = @model.tasks.find(params[:id])
-    @entries_with_hypotheses = Hypothesis.where(model: @model, test_set_entry: @task.test_set_entries).has_evaluations_by_entry
+    @evaluators = @task.evaluators
   end
 
   private

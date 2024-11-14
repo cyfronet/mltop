@@ -1,5 +1,5 @@
 <%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
-<%= turbo_stream.update dom_id(@test_set_entry, "hypothesis_form"),
-    partial: "submissions/tasks/actions",
-    locals: { entry: @test_set_entry, hypothesis_id: false, submission_id: @submission_id } %>
+<% if @empty_hypothesis %>
+  <%= turbo_stream.replace dom_id(@hypothesis.test_set_entry), partial: @empty_hypothesis %>
+<% end %>
 
