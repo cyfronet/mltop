@@ -1,4 +1,4 @@
 <%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
 <% if @hypothesis.persisted? %>
-  <%= turbo_stream.update dom_id(@hypothesis.test_set_entry), partial: @hypothesis %>
+  <%= turbo_stream.replace dom_id(@hypothesis.test_set_entry), partial: @hypothesis %>
 <% end %>
