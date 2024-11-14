@@ -2,6 +2,8 @@
 
 <%= render "submissions/header", model: @model %>
 
+<%= turbo_stream_from [@model, @task] %>
+
 <% Model::TaskEvaluation.new(model: @model, task: @task).test_set_evaluations.each do |test_set_evaluation| %>
   <div class="overflow-hidden bg-gray-50 sm:rounded-lg sm:shadow mb-8">
     <div class="border-b border-gray-200 px-4 py-5 sm:px-6">

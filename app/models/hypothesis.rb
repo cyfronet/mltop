@@ -18,12 +18,16 @@ class Hypothesis < ApplicationRecord
     end
   end
 
+  def evaluators
+    @evaluators ||= test_set_entry.task.evaluators
+  end
+
   def evaluation_for(evaluator)
     evaluations.detect { |e| e.evaluator_id == evaluator.id } ||
       Evaluation.new(evaluator:, hypothesis: self)
   end
 
-  def with_evaluations?
+  def evaluations?
     evaluations.size.positive?
   end
 

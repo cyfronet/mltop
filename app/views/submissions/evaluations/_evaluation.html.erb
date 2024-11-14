@@ -1,5 +1,5 @@
 <% cache_if evaluation.persisted?, evaluation do %>
-  <li>
+  <li id="<%= dom_id(evaluation) %>">
     <div class="px-4 py-4 sm:px-6">
       <div class="flex items-center justify-between">
         <div class="truncate text-sm font-medium text-indigo-600"><%= evaluation.evaluator.name %></div>
