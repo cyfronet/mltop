@@ -1,18 +1,6 @@
 <%# locals: (test_set:) %>
 
 <%= form_with(model: test_set, url: [:admin, test_set], class: "contents") do |form| %>
-
-  <% if test_set.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(test_set.errors.count, "error") %> prohibited this test_set from being saved:</h2>
-      <ul>
-        <% test_set.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "sm:col-span-4" %>
