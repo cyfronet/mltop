@@ -1,7 +1,7 @@
 module FormBuilders
   class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     class_attribute :text_field_helpers,
-      default: field_helpers - [ :label, :radio_button, :fields_for, :fields, :hidden_field, :file_field ] + [ :rich_text_area, :text_area ]
+      default: field_helpers - [ :label, :radio_button, :fields_for, :fields, :hidden_field ] + [ :rich_text_area, :text_area ]
 
     TEXT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2".freeze
     SELECT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 mt-2".freeze
@@ -32,11 +32,11 @@ module FormBuilders
       custom_opts, opts = partition_custom_opts(options)
       classes = apply_style_classes(SELECT_FIELD_STYLE, custom_opts, method)
 
-      labels = labels(method, custom_opts[:label], options)
+      label = item_label(method, custom_opts[:label], options)
       field = super(method, choices, opts, html_options.merge(class: classes), &block)
 
       @template.content_tag "div", class: custom_opts[:wrapper] do
-        labels + field
+        label + field + error_label(method)
       end
     end
 
@@ -46,15 +46,22 @@ module FormBuilders
       super(method, text, options.merge(class: css), &block)
     end
 
+    def file_field(name, *args)
+      field = super(name, *args)
+      @template.content_tag "div" do
+        field + error_label(name)
+      end
+    end
+
     def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
       custom_opts, opts = partition_custom_opts(options)
       classes = apply_style_classes(SELECT_FIELD_STYLE, custom_opts, method)
 
-      labels = labels(method, custom_opts[:label], options)
+      label = item_label(method, custom_opts[:label], options)
       field = super(method, collection, value_method, text_method, opts, html_options.merge(class: classes))
 
       @template.content_tag "div", class: custom_opts[:wrapper] do
-        labels + field
+        label + field + error_label(method)
       end
     end
 
@@ -62,11 +69,11 @@ module FormBuilders
       custom_opts, opts = partition_custom_opts(options)
       classes = apply_style_classes(CHECKBOX_STYLE, custom_opts, method)
 
-      labels = labels(method, custom_opts[:label], options)
+      label = item_label(method, custom_opts[:label], options)
       field = super(method, collection, value_method, text_method, opts, html_options.merge(class: classes), &block)
 
       @template.content_tag "div", class: custom_opts[:wrapper] do
-        labels + field
+        label + error_label(method) + field
       end
     end
 
@@ -79,11 +86,11 @@ module FormBuilders
       end
 
       label = @template.content_tag "div", class: "text-sm leading-6" do
-        labels(method, custom_opts[:label], options)
+        item_label(method, custom_opts[:label], options)
       end
 
       @template.content_tag "div", class: custom_opts[:wrapper] do
-        check + label
+        check + label + error_label(method)
       end
     end
 
@@ -91,11 +98,11 @@ module FormBuilders
     #   custom_opts, opts = partition_custom_opts(options)
     #   classes = apply_style_classes(SELECT_FIELD_STYLE, custom_opts, method)
     #
-    #   labels = labels(method, custom_opts[:label], options)
+    #   label = item_label(method, custom_opts[:label], options)
     #   field = super(method, collection, value_method, text_method, opts, html_options.merge(class: classes))
     #
     #   @template.content_tag "div", class: custom_opts[:wrapper] do
-    #     labels + field
+    #     label + field + error_label()
     #   end
     # end
 
@@ -111,19 +118,16 @@ module FormBuilders
         title: errors_for(object_method)&.join(" ")
       }.compact.merge(opts).merge(tailwindified: true))
 
-      # labels = labels(object_method, custom_opts[:label], options)
+      label = item_label(object_method, custom_opts[:label], options)
 
-      # labels + field
       @template.content_tag "div", class: custom_opts[:wrapper] do
-        label(object_method) + field
+        label + field + error_label(object_method)
       end
     end
 
-    def labels(object_method, label_options, field_options)
+    def item_label(object_method, label_options, field_options)
       label = tailwind_label(object_method, label_options, field_options)
-      error_label = error_label(object_method, field_options)
-
-      @template.content_tag("div", label + error_label, class: "flex flex-col items-start")
+      @template.content_tag("div", label, class: "flex flex-col items-start")
     end
 
     def tailwind_label(object_method, label_options, field_options)
@@ -140,7 +144,7 @@ module FormBuilders
       }.merge(label_opts.except(:class)))
     end
 
-    def error_label(object_method, options)
+    def error_label(object_method, options = {})
       if errors_for(object_method).present?
         error_message = @object.errors[object_method].collect(&:titleize).join(", ")
         tailwind_label(object_method, { text: error_message, class: " font-bold text-red-500" }, options)
