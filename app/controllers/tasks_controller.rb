@@ -5,6 +5,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    @stats = Statistics.new
   end
 
   def show
