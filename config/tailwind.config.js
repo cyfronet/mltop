@@ -24,7 +24,7 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       backgroundImage: {
-        'home-img': "url('/home_page.png')",
+        'home-img': "url('/home_page_section2.png')",
       }
     },
   },

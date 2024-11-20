@@ -1,20 +1,26 @@
 <% breadcrumb :dashboard %>
 
 <div class="w-full">
-  <div class="w-1/2 mx-14">
-    <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
-      A suite of AI metrics that can be used to measure and track the performance of the task-specific models.
-    </h1>
+  <div class="flex mx-14 space-x-10">
+    <div class="w-1/2">
+      <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
+        A suite of AI metrics that can be used to measure and track the performance of the task-specific models.
+      </h1>
 
-    <h2 class="mt-5 text-zinc-700 text-justify">
-      Join a community shaping the future of multilingual communication.
-      With Speechm, you can test cutting-edge AI models, contribute to innovation through leaderboards, and help refine solutions
-      like real-time translation and speech recognition — ensuring seamless, global collaboration for everyone.
-    </h2>
+      <h2 class="mt-5 text-zinc-700 text-justify">
+        Join a community shaping the future of multilingual communication.
+        With Speechm, you can test cutting-edge AI models, contribute to innovation through leaderboards, and help refine solutions
+        like real-time translation and speech recognition — ensuring seamless, global collaboration for everyone.
+      </h2>
 
-    <% if !signed_in? %>
-      <%= link_to "Join us", sign_in_path, class: "btn btn-primary mt-5", "data-turbo-prefetch": false %>
-    <% end %>
+      <% if !signed_in? %>
+        <%= link_to "Join us", sign_in_path, class: "btn btn-primary mt-5", "data-turbo-prefetch": false %>
+      <% end %>
+    </div>
+
+    <div class="w-1/2">
+      <%= image_tag("home_page_section1.png", class: "grayscale")%>
+    </div>
   </div>
 
   <div class="bg-home-img bg-cover bg-left mt-10">
@@ -62,8 +68,9 @@
     </ul>
   </div>
 
-  <div class="mt-4 flex bg-gradient-to-r from-fuchsia-100 to-text-orange-100 py-4">
+  <div class="mt-4 flex bg-gradient-to-r from-fuchsia-100 to-orange-50 pt-10 space-x-10">
     <div class="w-1/2">
+      <%= image_tag("home_page_section3.png", class: "grayscale") %>
     </div>
     <div class="w-1/2 p-4">
       <h1 class="text-zinc-700 font-bold text-2xl text-justify">
