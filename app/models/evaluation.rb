@@ -4,7 +4,7 @@ class Evaluation < ApplicationRecord
   GROUP_DIR = "/net/pr2/projects/plgrid/plggmeetween/mltop"
 
   belongs_to :evaluator
-  belongs_to :hypothesis
+  belongs_to :hypothesis, touch: true
 
   has_many :metrics, through: :evaluator
   has_many :scores, dependent: :destroy
