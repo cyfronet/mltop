@@ -11,4 +11,8 @@ class Model < ApplicationRecord
 
   validates :name, presence: true
   validates :task_models, presence: true
+
+  def to_s
+    name
+  end
 end

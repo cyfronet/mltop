@@ -36,7 +36,7 @@ crumb :models do |model|
 end
 
 crumb :model do |model|
-  link model.name, model
+  link model, model
   parent :models
 end
 
@@ -45,7 +45,7 @@ crumb :submissions do
 end
 
 crumb :submission do |model|
-  link model.name, submission_path(model)
+  link model, submission_path(model)
   parent :submissions
 end
 
@@ -63,22 +63,22 @@ crumb :admin_tasks do
   link "Manage tasks", admin_tasks_path
 end
 
-crumb :admin_task do |task|
-  link task, admin_task_path(task)
+crumb :admin_task do |task, name|
+  link name || task, admin_task_path(task)
   parent :admin_tasks
 end
 
 crumb :edit_admin_task do |task|
   link "Edit", edit_admin_task_path(task)
-  parent :admin_task, task
+  parent :admin_task, task, "#{task.name.presence || task.name_was} (#{task.slug.presence || task.slug_was})"
 end
 
 crumb :admin_test_sets do
   link "Manage test sets", admin_test_sets_path
 end
 
-crumb :admin_test_set do |test_set|
-  link test_set, admin_test_set_path(test_set)
+crumb :admin_test_set do |test_set, name|
+  link name || test_set, admin_test_set_path(test_set)
   parent :admin_test_sets
 end
 
@@ -89,15 +89,15 @@ end
 
 crumb :edit_admin_test_set do |test_set|
   link "Edit", edit_admin_test_set_path(test_set)
-  parent :admin_test_set, test_set
+  parent :admin_test_set, test_set, test_set.name.presence || test_set.name_was
 end
 
 crumb :admin_evaluators do
   link "Manage evaluators", admin_evaluators_path
 end
 
-crumb :admin_evaluator do |evaluator|
-  link evaluator, admin_evaluator_path(evaluator)
+crumb :admin_evaluator do |evaluator, name|
+  link name || evaluator, admin_evaluator_path(evaluator)
   parent :admin_evaluators
 end
 
@@ -108,5 +108,5 @@ end
 
 crumb :edit_admin_evaluator do |evaluator|
   link "Edit", edit_admin_evaluator_path(evaluator)
-  parent :admin_evaluator, evaluator
+  parent :admin_evaluator, evaluator, evaluator.name.presence || evaluator.name_was
 end
