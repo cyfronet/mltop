@@ -27,3 +27,7 @@ data_yaml("evaluators").each do |_, data|
     )
   end
 end
+
+# Update all metrics that inversed sccoring
+inversed_metric_names = %w[wer ter]
+Metric.where(name: inversed_metric_names).update(inversed_scoring: true)

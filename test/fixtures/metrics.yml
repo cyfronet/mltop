@@ -9,6 +9,7 @@ chrf:
 ter:
   name: ter
   evaluator: sacrebleu
+  inversed_scoring: true
 
 blueurt:
   name: blueurt
