@@ -25,6 +25,6 @@ class TestSet < ApplicationRecord
   end
 
   def to_s
-    "#{name}"
+    name
   end
 end
