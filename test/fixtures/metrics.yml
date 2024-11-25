@@ -1,15 +1,19 @@
 blue:
   name: blue
+  order: desc
   evaluator: sacrebleu
 
 chrf:
   name: chrf
+  order: desc
   evaluator: sacrebleu
 
 ter:
   name: ter
+  order: asc
   evaluator: sacrebleu
 
 blueurt:
   name: blueurt
+  order: desc
   evaluator: blueurt

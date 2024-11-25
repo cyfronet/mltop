@@ -9,6 +9,8 @@ class Top::Rows
     if test_set && metric
       rows = @rows.sort do |a, b|
         a, b = b, a if order == "desc"
+        a, b = b, a if metric.asc?
+
         a.score(test_set:, metric:, test_set_entry:).value <=>
           b.score(test_set:, metric:, test_set_entry:).value
       end

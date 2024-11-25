@@ -16,9 +16,9 @@ module TasksHelper
       metric == selected_metric && test_set == selected_test_set
     end
 
-  def interpolate_color(metric_value)
+  def interpolate_color(metric_value, metric)
       value = metric_value ? [ 0, [ 100, metric_value ].min ].max : 0
-
+      value = 100 - value if metric.asc?
       red = [ 255, 0, 0 ]
       yellow = [ 255, 255, 0 ]
       green = [ 0, 255, 0 ]
