@@ -92,7 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_131301) do
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "inversed_scoring", default: false, null: false
+    t.integer "order", default: 1, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 

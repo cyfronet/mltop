@@ -85,12 +85,31 @@ class Top::RowTest < ActiveSupport::TestCase
                                             test_set_entry: test_set_entries(:flores_st_en_pl), order: :asc).map(&:model)
   end
 
+  test "order with metric asc order" do
+    m1 = create(:model, name: "model 1", tasks: [ tasks(:st) ])
+    m2 = create(:model, name: "model 2", tasks: [ tasks(:st) ])
+    m3 = create(:model, name: "model 3", tasks: [ tasks(:st) ])
+
+    new_evaluation(m1, :flores_st_en_pl, 1, evaluator: evaluators(:sacrebleu), metric: metrics(:ter))
+    new_evaluation(m2, :flores_st_en_pl, 3, evaluator: evaluators(:sacrebleu), metric: metrics(:ter))
+    new_evaluation(m3, :flores_st_en_pl, 2, evaluator: evaluators(:sacrebleu), metric: metrics(:ter))
+
+    rows = Top::Row.where(task: tasks(:st))
+
+    assert_equal [ m1, m3, m2 ], rows.order(test_set: test_sets(:flores),
+                                            metric: metrics(:ter),
+                                            test_set_entry: test_set_entries(:flores_st_en_pl)).map(&:model)
+
+    assert_equal [ m2, m3, m1 ], rows.order(test_set: test_sets(:flores),
+                                            metric: metrics(:ter),
+                                            test_set_entry: test_set_entries(:flores_st_en_pl), order: :asc).map(&:model)
+  end
+
   private
-    def new_evaluation(model, test_set_entry_fixture_name, value)
+    def new_evaluation(model, test_set_entry_fixture_name, value, evaluator: evaluators(:blueurt), metric: metrics(:blueurt))
       hypothesis = create(:hypothesis, model:,
                           test_set_entry: test_set_entries(test_set_entry_fixture_name))
-      evaluation = create(:evaluation, hypothesis:,
-                          evaluator: evaluators(:blueurt))
-      create(:score, evaluation:, metric: metrics(:blueurt), value:)
+      evaluation = create(:evaluation, hypothesis:, evaluator:)
+      create(:score, evaluation:, metric:, value:)
     end
 end

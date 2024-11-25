@@ -5,29 +5,23 @@ end
 tasks =
   data_yaml("tasks").map do |slug, data|
     Task.find_or_initialize_by(slug:) do |task|
-      if task.new_record?
-        task.update!(
-          name:        data["name"],
-          info:        data["info"],
-          description: data["description"],
-          from:        data["from"],
-          to:          data["to"]
-        )
-      end
+      task.update!(
+        name:        data["name"],
+        info:        data["info"],
+        description: data["description"],
+        from:        data["from"],
+        to:          data["to"]
+      )
     end
   end.to_h { |t| [ t.slug, t ] }
 
 data_yaml("evaluators").each do |_, data|
-  Evaluator.find_or_initialize_by(name: data["name"]) do |evaluator|
-    evaluator.update!(
-      script:          data["script"],
-      host:            data["host"],
-      metrics:         data["metrics"].map { |name| Metric.build(name:) },
-      task_evaluators: data["tasks"].map { |slug| TaskEvaluator.new(task: tasks[slug]) }
-    )
+  evaluator = Evaluator.find_or_initialize_by(name: data["name"])
+  evaluator.update!(script: data["script"], host: data["host"])
+
+  data["tasks"].each { |slug| evaluator.task_evaluators.find_or_create_by(task: tasks[slug]) }
+  data["metrics"].each do |hsh|
+    metric = evaluator.metrics.find_or_initialize_by(name: hsh["name"])
+    metric.update!(order: hsh["order"])
   end
 end
-
-# Update all metrics that inversed sccoring
-inversed_metric_names = %w[wer ter]
-Metric.where(name: inversed_metric_names).update(inversed_scoring: true)

@@ -33,7 +33,7 @@
         <% task.test_sets.each do |test_set| %>
           <% task.metrics.each do |metric| %>
             <%- value = row.score(test_set:, metric:).value %>
-            <td class="score-cell" style="background-color: <%= interpolate_color(value, metric.inversed_scoring) %>">
+            <td class="score-cell" style="background-color: <%= interpolate_color(value, metric) %>">
               <%= number_with_precision value, precision: 2 %>
             </td>
           <% end %>

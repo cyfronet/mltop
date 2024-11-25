@@ -1,5 +1,5 @@
 class AddInversedScoringToMetric < ActiveRecord::Migration[8.0]
   def change
-    add_column :metrics, :inversed_scoring, :boolean, default: false, null: false
+    add_column :metrics, :order, :integer, default: 1, null: false
   end
 end

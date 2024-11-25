@@ -26,9 +26,12 @@ screbleu:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - bleu
-    - chrf
-    - ter
+    - name: bleu
+      order: desc
+    - name: chrf
+      order: desc
+    - name: ter
+      order: asc
   tasks:
     - MT
     - ST
@@ -62,7 +65,8 @@ blueurt:
     fi
   host: athena.cyfronet.pl
   metrics:
-    - bleurt
+    - name: bleurt
+      order: desc
   tasks:
     - MT
     - ST
@@ -95,7 +99,8 @@ wer:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - wer
+    - name: wer
+      order: asc
   tasks:
    - MT
    - ST
@@ -130,7 +135,8 @@ rogue:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - rouge
+    - name: rouge
+      order: desc
   tasks:
     - SUM
     - SSUM
@@ -164,7 +170,8 @@ accuracy:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - accuracy
+    - name: accuracy
+      order: desc
   tasks:
     - SQA
 
@@ -197,7 +204,8 @@ exact-match:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - exact-match
+    - name: exact-match
+      order: desc
   tasks:
     - ASR
     - LIPREAD
@@ -231,6 +239,7 @@ f1-score:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - f1-score
+    - name: f1-score
+      order: desc
   tasks:
     - SQA
