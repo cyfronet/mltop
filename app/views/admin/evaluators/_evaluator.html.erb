@@ -8,9 +8,7 @@
     </p>
     <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
       <p>created at: <time datetime="<%= evaluator.created_at %>"><%= time_ago_in_words evaluator.created_at %> ago</time></p>
-      <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
-        <circle cx="1" cy="1" r="1" />
-      </svg>
+      <%= dot %>
       <p>updated at:<time datetime="<%= evaluator.updated_at %>"><%= time_ago_in_words evaluator.updated_at %> ago</time></p>
     </div>
   </div>
