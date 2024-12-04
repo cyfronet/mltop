@@ -6,12 +6,12 @@
       </div>
       <div class="ml-4 mt-2 flex-shrink-0">
         <%= link_to empty_hypothesis.test_set_entry.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
-          <%= download_icon("text-blue-600") %>
+          <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
           <span>Test input</span>
         <% end %>
         <%= form_with model: Hypothesis.new, url: submission_hypotheses_path(submission_id: empty_hypothesis.model_id), class: "relative inline-flex" do |f| %>
           <label class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">
-            <%= upload_icon %>
+            <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
             Upload hypothesis
             <%= f.file_field :input, class: "hidden" ,onchange: 'this.form.requestSubmit();' %>
           </label>
