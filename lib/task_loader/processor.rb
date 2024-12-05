@@ -1,4 +1,6 @@
 class TaskLoader::Processor
+  RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS2 LRS3 ].freeze
+
   attr_reader :dir
 
   def initialize(dir)
@@ -45,7 +47,7 @@ class TaskLoader::Processor
 
     def language_process(dir, &block)
       name = dir.basename.to_s
-      test_set = test_sets(name)
+      test_set = test_sets(name, published: !RESTRICTED_TEST_SETS.include?(name.upcase))
 
       dir.each_child do |entry|
         next if entry.file?
@@ -62,9 +64,12 @@ class TaskLoader::Processor
       error "Test set #{entry.basename} not supported yet for #{slug}"
     end
 
-    def test_sets(name)
+    def test_sets(name, published:)
       TestSet.find_or_create_by!(name:) do |ts|
-        ts.description = "TODO: please update test set description"
+        ts.assign_attributes(
+          description: "TODO: please update test set description",
+          published:
+        )
       end
     end
 

@@ -16,6 +16,12 @@ flores_st_pl_en:
   source_language: pl
   target_language: en
 
+unpublished_st_pl_en:
+  task: st
+  test_set: unpublished
+  source_language: pl
+  target_language: en
+
 
 flores_asr_en_pl:
   task: asr

@@ -30,6 +30,16 @@ flores_st_pl_en_groundtruth:
   record: flores_st_pl_en (TestSetEntry)
   blob: flores_st_pl_en_groundtruth_blob
 
+unpublished_st_pl_en_input:
+  name: input
+  record: unpublished_st_pl_en (TestSetEntry)
+  blob: unpublished_st_pl_en_input_blob
+
+unpublished_st_pl_en_groundtruth:
+  name: groundtruth
+  record: unpublished_st_pl_en (TestSetEntry)
+  blob: unpublished_st_pl_en_groundtruth_blob
+
 
 flores_asr_en_pl_input:
   name: input

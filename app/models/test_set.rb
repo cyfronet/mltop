@@ -12,6 +12,8 @@ class TestSet < ApplicationRecord
 
   validates :name, presence: true
 
+  scope :published, -> { where(published: true) }
+
   def source_languages_for(task:)
     entries.where(task:).pluck(:source_language).uniq.sort
   end

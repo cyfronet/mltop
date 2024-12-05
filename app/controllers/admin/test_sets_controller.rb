@@ -48,7 +48,7 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   private
     def test_set_params
-      params.required(:test_set).permit(:name, :description)
+      params.required(:test_set).permit(:name, :description, :published)
     end
 
     def find_test_set
