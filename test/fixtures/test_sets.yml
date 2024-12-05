@@ -1,5 +1,11 @@
 flores:
   name: FLORES
+  published: true
 
 mustc:
   name: MUSTC
+  published: true
+
+unpublished:
+  name: Unpublished - should not be visible
+  published: false

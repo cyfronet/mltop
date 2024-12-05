@@ -9,7 +9,7 @@
       <fieldset>
         <legend class="text-sm font-semibold leading-6">Compatibility map</legend>
         <div class="mt-6 space-y-6">
-          <%= form.collection_check_boxes :task_models, @tasks, :id, :to_s do |b| %>
+          <%= form.collection_check_boxes :task_ids, @tasks, :id, :to_s do |b| %>
             <div class="relative flex gap-x-3">
               <div class="flex h-6 items-center">
                 <%= b.check_box %>

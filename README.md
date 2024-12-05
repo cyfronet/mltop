@@ -37,12 +37,12 @@ We are storing test sets on the Ares HPC system. To fetch it from the cluster
 and upload it to the application runn following command:
 
 ```
-./bin/rails test_sets:synchronize
+./bin/rails test_sets:synchronize[plgusername]
 ```
 
 At the beginning it will synchronize your test sets files with the one stored on
-the cluster (by using `rsync` command). Next, test sets will be imported to the
-application (files are stored in active storage).
+the Ares cluster (by using `rsync` command and your PLGrid user name). Next, test
+sets will be imported to the application (files are stored in active storage).
 
 ## Running in development mode
 
@@ -55,7 +55,8 @@ To make database preparation and dependencies you can use:
 ./bin/setup
 ```
 
-To start only web application run:
+To start only web application run (it will start web server, delayed jobs and
+tailwind css build):
 
 ```
 bin/dev
@@ -63,23 +64,26 @@ bin/dev
 
 Now you can point your browser into `http://localhost:3000`.
 
-
 ## ngrok
-While you're developing locally, there still needs to be a way for the cluster to contact the server.
-This is because `evaluations` contacts cluster to download hypotheses, ground truth files, and upload metrics scores.
-To achieve it, we're using ngrok. It enables you to get `localhost` out in the world.
+While you're developing locally, there still needs to be a way for the cluster
+to contact the application web server. This is because `evaluations` mltop to
+download hypotheses, ground truth files, and upload metrics scores. To achieve
+it, we're using ngrok. It enables you to get `localhost` out in the world.
 
 First you have to [install and setup ngrok](https://ngrok.com/download)
 
-Then, open terminal and run this command - your local server should be running!
+Then, open terminal and run this command (this should be done before
+starting mltop application!):
+
 ```
 ngrok http 3000
 ```
+
 After you make a request to your localhost server, ngrok server should start working.
 You can find the url to it in the terminal where you ran the command above.
 
-We are automatically discover ngrok URL and extract host from it. If you want to
-override you can set `HOST` environment variable:
+mltop automatically discover ngrok URL and extract host from it. If you want to
+override public host you can set `HOST` environment variable:
 
 ```bash
 export HOST=mltop.public.host
@@ -90,7 +94,7 @@ export HOST=mltop.public.host
 To customize the application you can set the following ENV variables:
 
   * `HOST` - Application host used in `*_url` helpers.
-    Default is set to `127.0.0.1`.
+    Default is set to discovered ngrok public url in development environment.
   * `SENTRY_DN` - if present Portal will sent error and performance
     information to Sentry
 
@@ -114,6 +118,9 @@ To execute all tests run:
 ```
 ./bin/rails test
 ./bin/rails test:system
+
+#or
+./bin/rails test:all
 ```
 
 ## Becoming an admin
@@ -130,7 +137,7 @@ User.find_by(email: "user@email").update(roles: [:admin])
 To setup development database and populate it with generated data run:
 
 ```
-./bin/rails dev:recreate
+./bin/rails dev:recreate[plgkasztelnik]
 ```
 
 It will drop existing database, create a new one and populate with generated
@@ -139,7 +146,7 @@ create user entry in advance. To link created user entry with you account please
 add following entry into `.env` file.
 
 ```
-UID=your-user-uid-from-keycloa
+UID=your-user-uid-from-keycloak
 ```
 
 The simples way to discover your PLGrid SSO UID is to start the application with

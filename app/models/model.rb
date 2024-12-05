@@ -10,7 +10,7 @@ class Model < ApplicationRecord
   has_rich_text :description
 
   validates :name, presence: true
-  validates :task_models, presence: true
+  validates :task_ids, presence: true
 
   def to_s
     name

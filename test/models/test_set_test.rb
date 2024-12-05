@@ -27,4 +27,10 @@ class TestSetTest < ActiveSupport::TestCase
     assert_equal 3, entries.size
     assert_equal test_set_entries("flores_st_en_pl", "flores_st_en_it", "flores_st_pl_en"), entries
   end
+
+  test "get all published test sets" do
+    published = TestSet.published
+
+    assert_equal test_sets(:flores, :mustc).sort, published
+  end
 end
