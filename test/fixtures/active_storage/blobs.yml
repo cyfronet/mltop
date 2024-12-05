@@ -7,6 +7,9 @@ flores_st_en_it_groundtruth_blob: <%= ActiveStorage::FixtureSet.blob filename: "
 flores_st_pl_en_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
 flores_st_pl_en_groundtruth_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
 
+unpublished_st_pl_en_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
+unpublished_st_pl_en_groundtruth_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
+
 flores_asr_en_pl_input_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
 flores_asr_en_pl_groundtruth_blob: <%= ActiveStorage::FixtureSet.blob filename: "input.txt" %>
 

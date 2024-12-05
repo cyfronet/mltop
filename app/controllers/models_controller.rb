@@ -11,7 +11,7 @@ class ModelsController < ApplicationController
     @tasks = @model.tasks
     @task = find_by_query_param(@tasks, :tid)
 
-    @test_sets = @task.test_sets
+    @test_sets = @task.test_sets.published
     @metrics = @task.metrics
 
     @test_set = find_by_query_param(@test_sets, :tsid)

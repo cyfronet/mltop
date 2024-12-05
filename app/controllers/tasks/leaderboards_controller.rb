@@ -9,7 +9,7 @@ class Tasks::LeaderboardsController < ApplicationController
   end
 
   def show
-    @task = Task.includes(:test_sets, :metrics).find(params[:task_id])
+    @task = Task.with_published_test_sets.includes(:metrics).find(params[:task_id])
     @rows = Top::Row
       .where(task: @task)
       .order(test_set: selected_test_set, metric: selected_metric, order: selected_order)
@@ -25,6 +25,6 @@ class Tasks::LeaderboardsController < ApplicationController
     end
 
     def selected_test_set
-      @test_set ||= TestSet.find_by(id: params[:tsid]) if params[:tsid].present?
+      @test_set ||= TestSet.published.find_by(id: params[:tsid]) if params[:tsid].present?
     end
 end

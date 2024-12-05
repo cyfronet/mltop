@@ -22,6 +22,9 @@ class Task < ApplicationRecord
   enum :from, TYPES, prefix: true
   enum :to, TYPES, prefix: true
 
+  scope :with_published_test_sets,
+        -> { includes(:test_sets).where(test_sets: { published: true }) }
+
   def to_s
     "#{name} (#{slug})"
   end

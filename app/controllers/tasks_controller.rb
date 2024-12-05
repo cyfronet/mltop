@@ -9,6 +9,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.includes(:test_sets).find(params[:id])
+    @task = Task.with_published_test_sets.find(params[:id])
   end
 end
