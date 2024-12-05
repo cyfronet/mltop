@@ -438,3 +438,9 @@ trix-editor .attachment__metadata {
   padding: 0 !important;
   max-width: 100% !important;
 }
+
+@media (prefers-color-scheme: dark) {
+  .trix-button--icon {
+    filter: invert(1);
+  }
+}

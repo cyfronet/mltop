@@ -3,10 +3,10 @@ module FormBuilders
     class_attribute :text_field_helpers,
       default: field_helpers - [ :label, :radio_button, :fields_for, :fields, :hidden_field ] + [ :rich_text_area, :text_area ]
 
-    TEXT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2".freeze
-    SELECT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 mt-2".freeze
+    TEXT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2 dark:text-white dark:bg-inherit".freeze
+    SELECT_FIELD_STYLE = "block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 mt-2 dark:text-white dark:bg-inherit".freeze
     SUBMIT_BUTTON_STYLE = "btn btn-primary".freeze
-    LABEL_STYLE = "block text-sm font-medium leading-6 text-gray-900".freeze
+    LABEL_STYLE = "block text-sm font-medium leading-6".freeze
     CHECKBOX_STYLE = "h-4 w-4 rounded border-zinc-300 text-fuchsia-600 hover:border-fuchsia-400 focus:border-fuchsia-600 focus:ring-0 focus:ring-offset-0 disabled:bg-zinc-200 disabled:border-0".freeze
 
     text_field_helpers.each do |field_method|
