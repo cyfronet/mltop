@@ -12,7 +12,7 @@ module Components::HeadingsHelper
 
       def render
         @view.tag.h1 @title,
-          class: "mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8 text-center"
+          class: "mt-2 text-3xl font-bold tracking-tight sm:text-4xl mb-8 text-center"
       end
     end
 end

@@ -7,7 +7,7 @@
       <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
 
       <fieldset>
-        <legend class="text-sm font-semibold leading-6 text-gray-900">Compatibility map</legend>
+        <legend class="text-sm font-semibold leading-6">Compatibility map</legend>
         <div class="mt-6 space-y-6">
           <%= form.collection_check_boxes :task_models, @tasks, :id, :to_s do |b| %>
             <div class="relative flex gap-x-3">
@@ -15,7 +15,7 @@
                 <%= b.check_box %>
               </div>
               <div class="text-sm leading-6">
-                <%= b.label(class: "font-medium text-gray-900") %>
+                <%= b.label(class: "font-medium") %>
               </div>
             </div>
           <% end %>

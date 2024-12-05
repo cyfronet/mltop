@@ -11,7 +11,7 @@
 <%= @task.description %>
 
 <% @task.test_sets.each do |test_set| %>
-  <h2 class="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8 mt-8 text-center">
+  <h2 class="mt-2 text-2xl font-bold tracking-tight sm:text-4xl mb-8 mt-8 text-center">
     <%= link_to "#{test_set.name} test set", test_set_path(test_set) %>
   </h2>
 
