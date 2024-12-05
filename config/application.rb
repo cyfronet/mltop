@@ -25,6 +25,7 @@ module Mltop
     config.autoload_lib(ignore: %w[assets tasks])
 
     config.mission_control.jobs.base_controller_class = "Admin::ApplicationController"
+    config.mission_control.jobs.http_basic_auth_enabled = false
 
     # Configuration for the application, engines, and railties goes here.
     #
