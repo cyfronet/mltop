@@ -6,7 +6,7 @@ require "ostruct"
 module Plgrid
   class UserTest < ActiveSupport::TestCase
     test "plgrid login uses auth info and CCM to populate user data for meetween members" do
-      user = User.from_omniauth(auth("plgnewuser",
+      plgrid_user = User.from_omniauth(auth("plgnewuser",
         token: CcmHelpers::VALID_TOKEN,
         groups: [ "plggmeetween", "other", "group" ]))
 
@@ -14,16 +14,16 @@ module Plgrid
         name: "plgnewuser Last Name",
         email: "plgnewuser@b.c",
         plgrid_login: "plgnewuser",
+        roles_mask: ::User.new(roles: [ :meetween_member ]).roles_mask,
         ssh_key: CredentialsProvider.key,
         ssh_certificate: CredentialsProvider.cert
       }
 
-      assert_equal attrs, user.attributes
-      assert user.meetween_member?
+      assert_user_attrs_equal attrs, plgrid_user
     end
 
     test "plgrid login uses only auth info to populate user data for not meetween members" do
-      user = User.from_omniauth(auth("plgnewuser",
+      plgrid_user = User.from_omniauth(auth("plgnewuser",
         token: CcmHelpers::VALID_TOKEN,
         groups: [ "other", "group" ]))
 
@@ -31,12 +31,12 @@ module Plgrid
         name: "plgnewuser Last Name",
         email: "plgnewuser@b.c",
         plgrid_login: "plgnewuser",
+        roles_mask: ::User.new(roles: []).roles_mask,
         ssh_key: nil,
         ssh_certificate: nil
       }
 
-      assert_equal attrs, user.attributes
-      assert_not user.meetween_member?
+      assert_user_attrs_equal attrs, plgrid_user
     end
 
     test "nil proxy when openid connect token is not valid" do
@@ -68,6 +68,13 @@ module Plgrid
     end
 
     private
+      def assert_user_attrs_equal(attrs, plgrid_user)
+        user_attrs = plgrid_user.to_user.attributes
+          .with_indifferent_access.slice(*attrs.keys)
+
+        assert_equal attrs.with_indifferent_access, user_attrs
+      end
+
       def auth(plglogin, token:, groups: [])
         OpenStruct.new(
           uid: plglogin,
@@ -81,7 +88,6 @@ module Plgrid
           ),
           extra: OpenStruct.new(
             raw_info: OpenStruct.new(groups:)
-
           )
         )
       end
