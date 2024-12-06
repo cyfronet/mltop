@@ -12,17 +12,11 @@ class SessionsController < ApplicationController
 
   def create
     plgrid_user = Plgrid::User.from_omniauth(auth)
-    if plgrid_user.uid
-      if plgrid_user.meetween_member?
-        user = User.find_or_initialize_by(uid: plgrid_user.uid)
-        user.update(plgrid_user.attributes)
 
-        authenticated_as(user)
+    if user = plgrid_user.to_user
+      authenticated_as(user)
 
-        redirect_to post_authenticating_url, info: "Welcome back #{user.name}"
-      else
-        redirect_to root_path, alert: "Only Meetween project members can login right now"
-      end
+      redirect_to post_authenticating_url, info: "Welcome back #{user.name}"
     else
       redirect_to root_path, alert: "Unable to authenticate"
     end
