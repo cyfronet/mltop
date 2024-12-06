@@ -4,10 +4,10 @@ class User < ApplicationRecord
   encrypts :ssh_key, :ssh_certificate
   has_many :models, inverse_of: :owner, dependent: :destroy
 
-  roles :admin
+  roles :admin, :meetween_member
 
   def credentials_valid?
-    ssh_credentials.valid?
+    !meetween_member? || ssh_credentials.valid?
   end
 
   private
