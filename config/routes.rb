@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :external_submissions, only: :index
+
   namespace :admin do
     resources :tasks
     resources :test_sets do

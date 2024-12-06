@@ -3,7 +3,7 @@ marek:
   email: marek@mltop.local
   plgrid_login: plgmarek
   uid: uid-marek
-  roles_mask: <%= User.new(roles: [:admin]).roles_mask %>
+  roles_mask: <%= User.new(roles: [:admin, :meetween_member]).roles_mask %>
   ssh_key: "abc"
   ssh_certificate: "def"
 
@@ -12,6 +12,13 @@ szymon:
   email: szymon@mltop.local
   plgrid_login: plgszymon
   uid: uid-szymon
-  roles_mask: <%= User.new(roles: []).roles_mask %>
+  roles_mask: <%= User.new(roles: [:meetween_member]).roles_mask %>
   ssh_key: "abc"
   ssh_certificate: "def"
+
+external:
+  name: External User
+  email: external@mltop.local
+  plgrid_login: plgexternal
+  uid: uid-external
+  roles_mask: <%= User.new(roles: []).roles_mask %>

@@ -7,7 +7,7 @@ class User < ApplicationRecord
   roles :admin, :meetween_member
 
   def credentials_valid?
-    ssh_credentials.valid?
+    !meetween_member? || ssh_credentials.valid?
   end
 
   private

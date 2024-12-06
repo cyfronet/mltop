@@ -14,7 +14,7 @@
             <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
             <span>Hypothesis</span>
           <% end %>
-          <% unless hypothesis.evaluations? %>
+          <% if Current.user.meetween_member? && !hypothesis.evaluations? %>
             <%= button_to hypothesis_evaluations_path(hypothesis), class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3" do %>
               <%= run_icon("ml-0.5 mr-1.5 h-5 w-5 text-green-600") %>
               <span>Evaluate</span>
@@ -33,6 +33,20 @@
           <%= render hypothesis.evaluation_for(evaluator) %>
         <% end %>
       </ul>
+    <% elsif !Current.user.meetween_member? %>
+      <div class="rounded-md bg-yellow-50 p-4">
+        <div class="flex">
+          <div class="shrink-0">
+            <%= alert_icon("size-5 text-yellow-400") %>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-yellow-800">Submission will be reviewed by Meetween members</h3>
+            <div class="mt-2 text-sm text-yellow-700">
+              <p>Your submission need to be approved by one the Meetween membmber. Once reviewed the hypothesis scores will be calculated.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
 <% end %>
