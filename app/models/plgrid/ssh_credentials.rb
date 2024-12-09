@@ -11,5 +11,7 @@ class Plgrid::SshCredentials
 
     pk = Net::SSH::KeyFactory.load_data_public_key(@certificate)
     pk.valid_after.past? && pk.valid_before.future?
+  rescue Net::SSH::Exception
+    false
   end
 end

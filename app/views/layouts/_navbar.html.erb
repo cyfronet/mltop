@@ -15,10 +15,13 @@
             <%- links.add "Models", models_path, [ "models" ] %>
             <%- links.add "Test sets", test_sets_path, [[ "test_sets", "test_sets/leaderboards" ]] %>
             <% if signed_in? %>
-              <%- links.add "My submissions", submissions_path, /submissions.*/ %>
+              <%- links.add "My submissions", submissions_path, /\A\/submissions.*/ %>
+              <% if Current.user.meetween_member? %>
+                <%- links.add "External submissions", external_submissions_path, /\A\/external_submissions.*/ %>
+              <% end %>
               <% if Current.user.admin? %>
-                <%- links.add "Adminland", admin_tasks_path, /admin\/.*/ %>
-                <%- links.add "Jobs", mission_control_jobs_path, /jobs\/.*/ %>
+                <%- links.add "Adminland", admin_tasks_path, /\A\/admin\/.*/ %>
+                <%- links.add "Jobs", mission_control_jobs_path, /\A\/jobs\/.*/ %>
               <% end %>
             <% end %>
           <% end %>

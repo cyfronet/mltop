@@ -5,6 +5,15 @@ class ActiveSupport::TestCase
   include FixtureFactory::Methods
 
   define_factories do
+    factory(:user) do |count|
+      {
+        name: "User#{count}",
+        email: "user#{count}@mltop.local",
+        plgrid_login: "plguser#{count}",
+        uid: "uid-user#{count}"
+      }
+    end
+
     factory(:model) do |count|
       {
         owner: users("marek"),
