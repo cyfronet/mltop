@@ -10,7 +10,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
     assert_match "External submissions", response.body
   end
 
-  test "other plgrid users cannot login" do
+  test "other plgrid users can log in, but do not see external submissions" do
     sign_in_as("marek", teams: [ "plggother" ])
 
     assert_response :redirect

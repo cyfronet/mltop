@@ -22,7 +22,7 @@ module Plgrid
       assert_user_attrs_equal attrs, plgrid_user
     end
 
-    test "plgrid login uses only auth info to populate user data for not meetween members" do
+    test "plgrid login uses only auth info to populate user data for non-meetween members" do
       plgrid_user = User.from_omniauth(auth("plgnewuser",
         token: CcmHelpers::VALID_TOKEN,
         groups: [ "other", "group" ]))
