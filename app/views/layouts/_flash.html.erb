@@ -1,6 +1,16 @@
-<% if notice.present? %>
-  <%= render "layouts/flash/message", text: notice, type: "notice" %>
-<% end%>
-<% if alert.present? %>
-  <%= render "layouts/flash/message", text: alert, type: "alert" %>
+<% flash.each do |type, message| %>
+  <div class="flex w-full flex-col items-center sm:items-end animate-appear-then-fade" data-controller="autoremove" data-autoremove-interval-value="6">
+    <div class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+      <div class="p-4">
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <%= flash_icon(type) %>
+          </div>
+          <div class="ml-3 w-0 flex-1 pt-0.5">
+            <p class="text-sm font-medium text-gray-900"><%= message %><p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
