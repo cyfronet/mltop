@@ -1,10 +1,11 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  test "Meetween user needs to have valid ssh credentials" do
-    marek = create(:user, roles: [ :meetween_member ],
-      ssh_key: "invalid", ssh_certificate: "invalid")
+  test "check ssh credentials" do
+    valid = build(:user, ssh_key: CredentialsProvider.key, ssh_certificate: CredentialsProvider.cert)
+    assert valid.credentials_valid?
 
-    assert_not marek.credentials_valid?
+    invalid = build(:user, ssh_key: "invalid", ssh_certificate: "invalid")
+    assert_not invalid.credentials_valid?
   end
 end

@@ -29,4 +29,17 @@ class SessionsTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_no_match "My submissions", response.body
   end
+
+  test "Meetween members session is scoped to ssh certificate validation" do
+    sign_in_as("marek", teams: [ "plggmeetween" ])
+
+    get submissions_path
+    assert_response :success
+
+    users("marek").update(ssh_key: nil, ssh_certificate: nil)
+    get submissions_path
+    assert_response :redirect
+    follow_redirect!
+    assert_no_match "My submissions", response.body
+  end
 end
