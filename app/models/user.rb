@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   roles :admin, :meetween_member
 
+  scope :external, -> { where(without_role(:meetween_member)) }
+
   def credentials_valid?
     ssh_credentials.valid?
   end
@@ -13,5 +15,9 @@ class User < ApplicationRecord
   private
     def ssh_credentials
       Plgrid::SshCredentials.new(ssh_key, ssh_certificate)
+    end
+
+    def self.without_role(*roles)
+      (arel_table[:roles_mask] & mask_for(roles)).eq(0)
     end
 end
