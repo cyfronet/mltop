@@ -12,6 +12,14 @@ class Model < ApplicationRecord
   validates :name, presence: true
   validates :task_ids, presence: true
 
+  scope :external, -> { where(owner: User.external) }
+
+  scope :with_not_evaluated_hypothesis, -> do
+    includes(hypothesis: :evaluations)
+      .where.not(hypothesis: { id: nil })
+      .where(hypothesis: { evaluations: { id: nil } })
+  end
+
   def to_s
     name
   end

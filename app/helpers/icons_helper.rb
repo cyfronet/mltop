@@ -117,6 +117,15 @@ module IconsHelper
     .html_safe
   end
 
+  def ok_icon(css_classes = "")
+    <<~SVG
+      <svg class="size-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+      </svg>
+    SVG
+    .html_safe
+  end
+
   def error_icon(css_classes = "h-6 w-6 text-red-400")
     <<~SVG
       <svg class="#{css_classes}" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
