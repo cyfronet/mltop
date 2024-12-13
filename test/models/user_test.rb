@@ -8,4 +8,8 @@ class UserTest < ActiveSupport::TestCase
     invalid = build(:user, ssh_key: "invalid", ssh_certificate: "invalid")
     assert_not invalid.credentials_valid?
   end
+
+  test "external users" do
+    assert_equal [ users("external") ], User.external
+  end
 end
