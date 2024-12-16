@@ -28,7 +28,7 @@ module Submissions
       assert_equal "Only Meetween members can start this evaluation", flash[:alert]
     end
 
-    test "Meetween members cannot start other user model evaluation" do
+    test "Meetween members cannot start other meetween user model evaluation" do
       model =  create(:model, owner: users("szymon"))
       hypothesis = create(:hypothesis, model:)
 
@@ -36,6 +36,17 @@ module Submissions
       post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
       assert_response :not_found
+    end
+
+    test "Meetween members can start external users model evaluations" do
+      model =  create(:model, owner: users("external"))
+      hypothesis = create(:hypothesis, model:)
+
+      sign_in_as("marek")
+      post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
+
+      assert_response :success
+      assert_equal "Evaluations queued to submit", flash[:notice]
     end
   end
 end
