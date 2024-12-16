@@ -43,9 +43,11 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Authentication
-  direct(:sign_in) { "/auth/sso" }
+  direct(:plgrid_sign_in) { "/auth/plgrid" }
+  direct(:github_sign_in) { "/auth/github" }
   get "auth/:provider/callback", to: "sessions#create"
   get "auth/failure", to: redirect("/")
+  get "sign_in", to: "sessions#new", as: "sign_in"
   delete "auth", to: "sessions#destroy", as: "sign_out"
 
   mount MissionControl::Jobs::Engine, at: "/admin/jobs"

@@ -8,6 +8,11 @@ module Authentication
   end
 
   class_methods do
+    def require_unauthenticated_access(**options)
+      allow_unauthenticated_access(**options)
+      before_action(:redirect_signed_in_user_to_root, **options)
+    end
+
     def allow_unauthenticated_access(**options)
       skip_before_action :require_authentication, **options
     end
@@ -28,6 +33,10 @@ module Authentication
       if user && (!user.meetween_member? || user.credentials_valid?)
         authenticated_as(user)
       end
+    end
+
+    def redirect_signed_in_user_to_root
+      redirect_to root_url if signed_in?
     end
 
     def request_authentication

@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  allow_unauthenticated_access only: :create
+  require_unauthenticated_access only: [ :create, :new ]
 
   rescue_from Plgrid::Ccm::FetchError do
     external_error_log("Unable to fetch short ssh key for #{auth.info["nickname"]}")
@@ -10,10 +10,11 @@ class SessionsController < ApplicationController
     MSG
   end
 
-  def create
-    plgrid_user = Plgrid::User.from_omniauth(auth)
+  def new
+  end
 
-    if user = plgrid_user.to_user
+  def create
+    if user = user_provider.to_user
       authenticated_as(user)
 
       redirect_to post_authenticating_url, info: "Welcome back #{user.name}"
@@ -30,5 +31,13 @@ class SessionsController < ApplicationController
   private
     def auth
       request.env["omniauth.auth"]
+    end
+
+    def user_provider
+      case params[:provider].to_s
+      when "plgrid"; then Sso::Plgrid.from_omniauth(auth)
+      when "github"; then Sso::Github.from_omniauth(auth)
+      else                Sso::Unknown.new
+      end
     end
 end
