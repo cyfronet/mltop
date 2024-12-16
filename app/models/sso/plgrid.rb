@@ -1,12 +1,10 @@
 require "ostruct"
 
-module Plgrid
-  class User
+module Sso
+  class Plgrid
     def self.from_omniauth(auth)
       new(auth)
     end
-
-    attr_reader :uid
 
     def initialize(auth)
       @uid = auth.uid
@@ -21,8 +19,8 @@ module Plgrid
     end
 
     def to_user
-      if uid
-        ::User.find_or_initialize_by(uid:).tap do |user|
+      if @uid
+        User.find_or_initialize_by(provider: "plgrid", uid: @uid).tap do |user|
           meetween_member? ? user.roles.add(:meetween_member) : user.roles.delete(:meetween_member)
           user.assign_attributes(attributes)
           user.save
@@ -46,7 +44,7 @@ module Plgrid
       end
 
       def fetch_short_lived_ssh_credentials!(token)
-        ccm = Plgrid::Ccm.new(token)
+        ccm = ::Plgrid::Ccm.new(token)
         ccm.fetch!
 
         @ssh_key =  ccm.key

@@ -11,7 +11,7 @@ if Rails.env.local?
       task("db:seed").invoke
 
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
-      User.create!(uid:, plgrid_login: "will-be-updated",
+      User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
                         roles: [ :admin ])
 

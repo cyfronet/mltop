@@ -25,7 +25,7 @@ module ActiveSupport
     def sign_in_as(name, teams: [ "plggmeetween" ])
       user = users(name)
       OmniAuth.config.add_mock(
-        "sso",
+        "plgrid",
         uid: user.uid,
         info: {
           name: user.name,
@@ -41,7 +41,20 @@ module ActiveSupport
           }
         },
       )
-      get "/auth/sso/callback"
+      get "/auth/plgrid/callback"
+    end
+
+    def github_sign_in_as(user)
+      OmniAuth.config.add_mock(
+        "plgrid",
+        uid: user.uid,
+        info: {
+          name: user.name,
+          email: user.email
+        }
+      )
+
+      get "/auth/github/callback"
     end
   end
 

@@ -1,0 +1,22 @@
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+      <div class="mt-6 grid grid-cols-1 gap-4">
+        <%= button_to plgrid_sign_in_path, method: :post, class: "flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent", data: {turbo: false} do %>
+          <%= plgrid_icon("size-5 fill-[#334155]") %>
+          <span class="text-sm/6 font-semibold">PLGrid</span>
+        <% end %>
+
+        <%= button_to github_sign_in_path, method: :post, class: "flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent", data: {turbo: false} do %>
+          <%= github_icon("size-5 fill-[#24292F]") %>
+          <span class="text-sm/6 font-semibold">GitHub</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
