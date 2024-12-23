@@ -1,9 +1,16 @@
 <div id="<%= dom_id(empty_hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg sm:shadow">
   <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
     <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-      <div class="ml-4 mt-2">
-        <h3 class="text-base font-semibold text-gray-900"><%= empty_hypothesis %></h3>
-      </div>
+        <div class="flex items-center justify-start ml-2">
+          <button disabled
+            class="disabled px-4 btn btn-primary-outline">
+            +
+          </button>
+
+          <div class="ml-2">
+            <h3 class="text-base font-semibold text-gray-900"><%= empty_hypothesis %></h3>
+          </div>
+        </div>
       <div class="ml-4 mt-2 flex-shrink-0">
         <%= link_to empty_hypothesis.test_set_entry.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
           <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
