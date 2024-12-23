@@ -1,9 +1,18 @@
 <% cache hypothesis do %>
-  <div id="<%= dom_id(hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg sm:shadow">
+  <div id="<%= dom_id(hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg sm:shadow" data-controller="accordion">
     <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
       <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-        <div class="ml-4 mt-2">
-          <h3 class="text-base font-semibold text-gray-900"><%= hypothesis.test_set_entry %></h3>
+        <div class="flex items-center justify-start ml-2">
+          <button
+            data-action="click->accordion#toggle"
+            data-accordion-target="button"
+            class="px-4 btn btn-primary-outline">
+            +
+          </button>
+
+          <div class="ml-2">
+            <h3 class="text-base font-semibold text-gray-900"><%= hypothesis.test_set_entry %></h3>
+          </div>
         </div>
         <div class="ml-4 mt-4 flex shrink-0">
           <%= link_to hypothesis.test_set_entry.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
@@ -27,26 +36,29 @@
         </div>
       </div>
     </div>
-    <% if hypothesis.evaluations? %>
-      <ul role="list" class="divide-y divide-gray-200">
-        <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
-          <%= render hypothesis.evaluation_for(evaluator) %>
-        <% end %>
-      </ul>
-    <% elsif !Current.user.meetween_member? %>
-      <div class="rounded-md bg-yellow-50 p-4">
-        <div class="flex">
-          <div class="shrink-0">
-            <%= alert_icon("size-5 text-yellow-400") %>
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-yellow-800">Submission will be reviewed by Meetween members</h3>
-            <div class="mt-2 text-sm text-yellow-700">
-              <p>Your submission need to be approved by one the Meetween membmber. Once reviewed the hypothesis scores will be calculated.</p>
+    <div class="hidden" data-accordion-target="content">
+      <% if hypothesis.evaluations? %>
+        <ul role="list" class="divide-y divide-gray-200">
+          <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
+            <%= render hypothesis.evaluation_for(evaluator) %>
+          <% end %>
+        </ul>
+      <% elsif !Current.user.meetween_member? %>
+        <div class="rounded-md bg-yellow-50 p-4">
+          <div class="flex">
+            <div class="shrink-0">
+              <%= alert_icon("size-5 text-yellow-400") %>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-yellow-800">Submission will be reviewed by Meetween members</h3>
+              <div class="mt-2 text-sm text-yellow-700">
+                <p>Your submission need to be approved by one the Meetween membmber. Once reviewed the hypothesis scores will be calculated.</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+
   </div>
 <% end %>
