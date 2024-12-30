@@ -27,5 +27,5 @@ class TestSetEntry < ApplicationRecord
     soruce_language.concat(test_set.name)
   end
 
-  def to_s = "#{source_language} -> #{target_language}"
+  def to_s = "#{source_language} → #{target_language}"
 end

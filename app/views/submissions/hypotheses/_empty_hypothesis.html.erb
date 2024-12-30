@@ -1,24 +1,24 @@
-<div id="<%= dom_id(empty_hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg sm:shadow">
-  <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+<div id="<%= dom_id(empty_hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg">
+  <div class="border border-zinc-200 bg-zinc-50  px-4 py-5 sm:px-6 rounded-lg">
     <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
         <div class="flex items-center justify-start ml-2">
           <button disabled
-            class="disabled px-4 btn btn-primary-outline">
+            class="px-4 btn btn-primary-outline w-8 h-8 justify-center">
             +
           </button>
 
           <div class="ml-2">
-            <h3 class="text-base font-semibold text-gray-900"><%= empty_hypothesis %></h3>
+            <h3 class="text-base"><%= empty_hypothesis %></h3>
           </div>
         </div>
-      <div class="ml-4 mt-2 flex-shrink-0">
-        <%= link_to empty_hypothesis.test_set_entry.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
-          <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
+      <div class="ml-4 mt-2 flex-shrink-0 space-x-2">
+        <%= link_to empty_hypothesis.test_set_entry.input, class: "btn btn-secondary-outline relative inline-flex items-center cursor-pointer", "data-turbo-prefetch": false do %>
+          <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
           <span>Test input</span>
         <% end %>
         <%= form_with model: Hypothesis.new, url: submission_hypotheses_path(submission_id: empty_hypothesis.model_id), class: "relative inline-flex" do |f| %>
-          <label class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">
-            <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
+          <label class="btn btn-secondary relative inline-flex items-center cursor-pointer">
+            <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5") %>
             Upload hypothesis
             <%= f.file_field :input, class: "hidden" ,onchange: 'this.form.requestSubmit();' %>
           </label>

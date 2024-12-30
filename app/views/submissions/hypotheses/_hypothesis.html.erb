@@ -1,42 +1,80 @@
 <% cache hypothesis do %>
-  <div id="<%= dom_id(hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg sm:shadow" data-controller="accordion">
-    <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+  <div id="<%= dom_id(hypothesis.test_set_entry) %>" class="mx-3 my-4 bg-white sm:rounded-lg" data-controller="accordion">
+    <div class="border border-zinc-200 bg-zinc-50 px-4 py-5 sm:px-6 rounded-lg", data-accordion-target="header">
       <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-        <div class="flex items-center justify-start ml-2">
-          <button
-            data-action="click->accordion#toggle"
-            data-accordion-target="button"
-            class="px-4 btn btn-primary-outline">
-            +
-          </button>
+        <div class="flex space-x-10">
+          <div class="flex items-center justify-start ml-2">
+            <button
+              data-action="click->accordion#toggle"
+              data-accordion-target="button"
+              class="px-4 btn btn-primary-outline w-8 h-8 justify-center"
+              <%= "disabled" if !hypothesis.evaluations? %>
+              >
+              +
+            </button>
 
-          <div class="ml-2">
-            <h3 class="text-base font-semibold text-gray-900"><%= hypothesis.test_set_entry %></h3>
+            <div class="ml-2">
+              <h3 class="text-base"><%= hypothesis.test_set_entry %></h3>
+            </div>
           </div>
+          <% if hypothesis.evaluations? %>
+            <div class="hidden sm:flex space-x-4">
+                  <% hypothesis.evaluations.each do |evaluation| %>
+                    <%= render "submissions/evaluations/scores", evaluation: , metrics: evaluation.evaluator.metrics %>
+                  <% end %>
+            </div>
+          <% end %>
         </div>
         <div class="ml-4 mt-4 flex shrink-0">
-          <%= link_to hypothesis.test_set_entry.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
-            <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
-            <span>Test input</span>
-          <% end %>
-          <%= link_to hypothesis.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
-            <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
-            <span>Hypothesis</span>
-          <% end %>
           <% if Current.user.meetween_member? && !hypothesis.evaluations? %>
             <%= button_to hypothesis_evaluations_path(hypothesis), class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3" do %>
               <%= run_icon("ml-0.5 mr-1.5 h-5 w-5 text-green-600") %>
               <span>Evaluate</span>
             <% end %>
           <% end %>
-          <%= button_to hypothesis_path(hypothesis), method: :delete, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", form: { "data-turbo-confirm": "Are you sure you want to remove this hypothesis?" } do %>
-            <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5 text-red-600") %>
-            <span>Remove</span>
-          <% end %>
+          <div class="relative">
+            <button
+              onclick="document.getElementById('<%= dom_id(hypothesis, 'actions') %>').classList.toggle('hidden')"
+              type="button" class="py-2"
+              aria-expanded="false">
+              <%= hamburger_icon %>
+            </button>
+
+            <div id="<%= dom_id(hypothesis, 'actions') %>" class="hidden bg-white absolute z-50 top-full right-0 rounded-lg border border-gray-300 dark:text-gray-900" >
+              <div class="py-4 gap-4">
+                <div class="relative flex hover:bg-gray-50">
+                  <div>
+                    <%= link_to hypothesis.test_set_entry.input, class: "relative inline-flex items-center px-3 py-2 text-sm hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
+                      <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                      <span>Test input</span>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class=" relative flex hover:bg-gray-50">
+                  <div>
+                    <%= link_to hypothesis.input, class: "relative inline-flex items-center px-3 py-2 text-sm hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
+                      <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                      <span>Hypothesis</span>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class=" relative flex hover:bg-gray-50">
+                  <div>
+                    <%= button_to hypothesis_path(hypothesis), method: :delete, class: "relative inline-flex items-center px-3 py-2 text-sm hover:bg-gray-50", form: { "data-turbo-confirm": "Are you sure you want to remove this hypothesis?" } do %>
+                      <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                      <span>Remove</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="hidden" data-accordion-target="content">
+    <div class="hidden border radius-lg" data-accordion-target="content">
       <% if hypothesis.evaluations? %>
         <ul role="list" class="divide-y divide-gray-200">
           <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
