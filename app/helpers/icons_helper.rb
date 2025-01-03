@@ -163,4 +163,45 @@ module IconsHelper
     SVG
     .html_safe
   end
+
+  def evaluation_created_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 4V8H11.5M14.5 8C14.5 11.3137 11.8137 14 8.5 14C5.18629 14 2.5 11.3137 2.5 8C2.5 4.68629 5.18629 2 8.5 2C11.8137 2 14.5 4.68629 14.5 8Z" stroke="#1D4ED8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def evaluation_pending_icon(css_classes = "")
+    evaluation_created_icon
+  end
+
+  def evaluation_running_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.5 8C14.5 11.3137 11.8137 14 8.5 14C5.18629 14 2.5 11.3137 2.5 8C2.5 4.68629 5.18629 2 8.5 2C11.8137 2 14.5 4.68629 14.5 8Z" stroke="#4D7C0F" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.1066 7.78146C11.2781 7.87671 11.2781 8.12329 11.1066 8.21854L7.37141 10.2937C7.20478 10.3862 7 10.2657 7 10.0751V5.92488C7 5.73426 7.20478 5.61377 7.37141 5.70634L11.1066 7.78146Z" stroke="#4D7C0F" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def evaluation_completed_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.916 3.37597C13.2607 3.60573 13.3538 4.07138 13.124 4.41603L8.12404 11.916C7.9994 12.103 7.7975 12.2242 7.5739 12.2464C7.3503 12.2685 7.12855 12.1892 6.96967 12.0303L3.96967 9.03033C3.67678 8.73744 3.67678 8.26257 3.96967 7.96967C4.26256 7.67678 4.73744 7.67678 5.03033 7.96967L7.38343 10.3228L11.876 3.58398C12.1057 3.23933 12.5714 3.1462 12.916 3.37597Z" fill="#15803D"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def evaluation_failed_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.49985 6.00004V8.50004M2.29768 10.7505C1.72076 11.7505 2.44248 13 3.59696 13H13.4027C14.5572 13 15.2789 11.7505 14.702 10.7505L9.79913 2.25213C9.22188 1.25157 7.77781 1.25157 7.20057 2.25213L2.29768 10.7505ZM8.49985 10.5H8.50485V10.505H8.49985V10.5Z" stroke="#BE123C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
 end
