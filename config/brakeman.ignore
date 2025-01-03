@@ -1,13 +1,37 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "6c24766c9545783ad0a2995f4294b7c439f6f76c8a9c47237685e34266b3887a",
+      "check_name": "Evaluation",
+      "message": "Dynamic string evaluated as code",
+      "file": "lib/form_builders/tailwind_form_builder.rb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "class_eval(\"          def #{field_method}(method, options = {})\\n            if options.delete(:tailwindified)\\n              super\\n            else\\n              text_like_field(#{field_method.inspect}, method, options)\\n            end\\n          end\\n\", \"lib/form_builders/tailwind_form_builder.rb\", (13 + 1))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TailwindFormBuilder",
+        "method": null
+      },
+      "user_input": null,
+      "confidence": "Weak",
+      "cwe_id": [
+        913,
+        95
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Command Injection",
       "warning_code": 14,
       "fingerprint": "b1b21885015e30e767355429f0df8eb84b27453980937067f3bea3aa448e01ea",
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/task_loader.rb",
-      "line": 28,
+      "line": 27,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
       "render_path": null,
@@ -30,7 +54,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/task_loader/processor.rb",
-      "line": 99,
+      "line": 106,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
       "render_path": null,
@@ -45,31 +69,7 @@
         77
       ],
       "note": ""
-    },
-    {
-      "warning_type": "File Access",
-      "warning_code": 16,
-      "fingerprint": "ef7e7a982f3ec825ce39063440a691f0fb46b023f931660f63218b7cc78117be",
-      "check_name": "SendFile",
-      "message": "Model attribute used in file name",
-      "file": "app/controllers/test_sets/downloads_controller.rb",
-      "line": 7,
-      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "send_file(TestSet.find(params[:test_set_id]).all_inputs_zip_path, :type => \"application/zip\", :filename => (\"#{TestSet.find(params[:test_set_id]).name}.zip\"))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TestSets::DownloadsController",
-        "method": "show"
-      },
-      "user_input": "TestSet.find(params[:test_set_id]).all_inputs_zip_path",
-      "confidence": "Medium",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
     }
   ],
-  "updated": "2024-10-11 14:35:02 +0200",
-  "brakeman_version": "6.2.1"
+  "brakeman_version": "7.0.0"
 }
