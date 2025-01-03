@@ -1,0 +1,10 @@
+<div class="flex justify-left items-center gap-x-2">
+  <% metrics.each do |metric| %>
+    <span class="text-xs">
+      <%= metric.name%>:
+    </span>
+    <span class="rounded bg-sky-700 px-2 py-1 text-xs font-medium text-white border border-slate-600">
+      <%= evaluation.score_for_metric(metric).value || "-" %>
+    </span>
+  <% end %>
+</div>

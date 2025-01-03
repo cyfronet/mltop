@@ -13,7 +13,7 @@
   }
 
   .btn-primary-outline {
-    @apply border-fuchsia-600 text-fuchsia-600 hover:bg-fuchsia-700 hover:border-fuchsia-700 hover:text-white focus-visible:bg-white focus-visible:outline-fuchsia-200 disabled:text-zinc-400
+    @apply border-fuchsia-600 text-fuchsia-600 hover:bg-fuchsia-700 hover:border-fuchsia-700 hover:text-white focus-visible:bg-white focus-visible:outline-fuchsia-200 disabled:bg-zinc-100 disabled:text-zinc-400 disabled:border-zinc-400
   }
 
   .btn-secondary {

@@ -50,5 +50,9 @@ Rails.application.routes.draw do
   get "sign_in", to: "sessions#new", as: "sign_in"
   delete "auth", to: "sessions#destroy", as: "sign_out"
 
+  # errors
+  get "/404", to: "errors#not_found", via: :all
+  get "/500", to: "errors#server_error", via: :all
+
   mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 end

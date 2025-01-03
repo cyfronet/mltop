@@ -3,14 +3,16 @@
 <%= mltop_title "External submissions" %>
 
 <% @models.each do |model| %>
-  <div class="overflow-hidden bg-gray-50 sm:rounded-lg sm:shadow mb-8">
-    <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
-      <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+  <div class="rounded-lg border-zinc-200 border mb-12 pt-2">
+    <div class="px-4 py-2 sm:px-6">
+            <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
         <div class="ml-4 mt-2">
           <h3 class="text-base font-semibold leading-6"><%= model %></h3>
         </div>
       </div>
     </div>
+    <hr class="mx-4">
+
     <div role="list">
       <%= render partial: "hypothesis", collection: model.hypothesis, as: :hypothesis %>
     </div>

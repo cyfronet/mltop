@@ -1,26 +1,26 @@
 <%# locals: (test_set:) %>
 
-<li class="border-2 rounded-md mt-5">
-  <div class="flex flex-wrap items-center justify-between mx-3 px-3 gap-x-6 gap-y-4 py-5 sm:flex-nowrap">
+<li class="border-2 rounded-md mt-5 mb-5">
+  <div class="flex flex-wrap items-center justify-between mx-3 py-2 sm:flex-nowrap">
     <div>
-      <p class="text-sm font-semibold leading-6 text-zinc-700">
+      <p class="text-base font-semibold leading-6">
         <%= link_to test_set.name, test_set, class: "hover:unerline" %>
       </p>
-      <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+      <div class="flex items-center gap-x-2 text-xs leading-5 text-gray-500">
         <p>Created <time class="font-bold" datetime="<%= test_set.created_at %>"><%= time_ago_in_words test_set.created_at %> ago</time></p>
       </div>
     </div>
-    <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto text-sm font-semibold">
+    <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto text-bae font-semibold">
       Score
     </dl>
 
   </div>
-  <hr>
-  <div class="p-2 mb-4">
+  <hr class="mx-4">
+  <div class="p-2 pl-4">
     <div class="my-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
       <%= link_icon("size-5") %>
       <% test_set.tasks.map do |task|%>
-        <%= link_to task.name, task_path(task), type:"button", class: "btn font-medium text-zinc-700 border-zinc-200 bg-zinc-50" %>
+        <%= link_to task.name, task_path(task), type:"button", class: "btn font-medium text-zinc-700 border-zinc-100 rounded-xl bg-zinc-50" %>
       <% end %>
     </div>
   </div>
