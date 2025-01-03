@@ -10,9 +10,15 @@
         </div>
       </div>
       <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
-        <%= link_to "Edit", [:edit, :admin, @task], type:"button", class: "btn btn-secondary-outline" %>
-        <%= button_to "Delete", [:admin, @task], method: :delete, class: "btn btn-danger",
-          form: { "data-turbo-confirm": "Are you sure you want to remove this task? All related elements (groundtruths, evalutions, scores) will be removed as well" } %>
+        <%= link_to [:edit, :admin, @task], type:"button", class: "btn btn-secondary-outline" do %>
+            <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+          <span> Edit </span>
+        <% end %>
+        <%= button_to [:admin, @task], method: :delete, class: "btn btn-danger",
+          form: { "data-turbo-confirm": "Are you sure you want to remove this task? All related elements (groundtruths, evalutions, scores) will be removed as well" } do %>
+          <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+          <span> Delete </span>
+        <% end %>
       </div>
     </div>
   </div>

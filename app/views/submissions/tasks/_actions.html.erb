@@ -3,8 +3,11 @@
     <% unless has_evaluations %>
       <%= button_to "Run Evaluations", hypothesis_evaluations_path(hypothesis_id:), class: "btn btn-primary mb-2"%>
     <% end %>
-    <%= button_to "Delete hypothesis", hypothesis_path(id: hypothesis_id), method: :delete, class: "btn btn-danger",
-    form: { "data-turbo-confirm": "Are you sure you want to remove this hypothesis?" } %>
+    <%= button_to hypothesis_path(id: hypothesis_id), method: :delete, class: "btn btn-danger",
+    form: { "data-turbo-confirm": "Are you sure you want to remove this hypothesis?" } do %>
+      <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      <span> Delete hypothesis </span>
+    <% end %>
   <% else %>
     <%= render "/submissions/hypotheses/form", entry:, submission_id: %>
   <% end %>
