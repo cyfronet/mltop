@@ -5,12 +5,14 @@ module Components::StatusHelper
 
   private
     class RunStatus
+      include IconsHelper
+
       COLORS = {
-        "created" =>   "bg-sky-50 text-sky-700 ring-sky-600/20",
-        "pending" =>   "bg-sky-50 text-sky-700 ring-sky-600/20",
-        "running" =>   "bg-blue-50 text-blue-700 ring-blue-600/20",
-        "completed" => "bg-green-50 text-green-700 ring-green-600/20",
-        "failed" =>    "bg-red-50 text-red-700 ring-red-600/20"
+        "created" => "bg-sky-50 text-sky-700 border-sky-200",
+        "pending" => "bg-sky-50 text-sky-700 border-sky-200",
+        "running" => "bg-lime-50 text-lime-700 border-lime-200",
+        "completed" => "bg-green-50 text-green-700 border-green-200",
+        "failed" => "bg-red-50 text-red-700 border-red-200"
       }
 
       def initialize(view, status)
@@ -19,11 +21,17 @@ module Components::StatusHelper
       end
 
       def render
-      @view.tag.span I18n.t("statuses.#{@status}", default: I18n.t("statuses.unknown")),
+        @view.tag.div(
           class: [
-            "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset",
+            "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium border",
             COLORS.fetch(@status, COLORS["failed"])
           ]
+        ) do
+          @view.safe_join([
+            @view.tag.span(send("evaluation_#{@status}_icon"), class: "mr-1"),
+            @view.tag.span(I18n.t("statuses.#{@status}", default: I18n.t("statuses.unknown")))
+          ])
+        end
       end
     end
 end
