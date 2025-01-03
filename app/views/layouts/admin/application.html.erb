@@ -10,7 +10,9 @@
     <%= yield :head %>
 
     <%= favicon_link_tag %>
-    <%= stylesheet_link_tag :all, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :application, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :tailwind, media: "all", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :trix, :actiontext, media: "all", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
