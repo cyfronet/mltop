@@ -1,24 +1,57 @@
 <% cache hypothesis do %>
-  <div id="<%= dom_id(hypothesis, "external-submission") %>" class="mx-3 my-4 bg-white sm:rounded-lg sm:shadow">
-    <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+  <div id="<%= dom_id(hypothesis, "external-submission") %>" class="mx-3 my-4 sm:rounded-lg">
+    <div class="border border-zinc-200 bg-zinc-50 dark:bg-gray-800 px-4 py-5 sm:px-6 rounded-lg">
       <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
         <div class="ml-4 mt-2">
           <h3 class="text-base font-semibold"><%= hypothesis.test_set_entry.task.slug %>: <%= hypothesis.test_set_entry %></h3>
         </div>
-        <div class="ml-4 mt-4 flex shrink-0">
-          <%= link_to hypothesis.test_set_entry.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
-            <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
-            <span>Test input</span>
+        <div class="ml-4 mt-2 flex shrink-0">
+          <% if Current.user.meetween_member? && !hypothesis.evaluations? %>
+            <%= button_to hypothesis_evaluations_path(hypothesis), class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3" do %>
+              <%= run_icon("ml-0.5 mr-1.5 h-5 w-5 text-green-600") %>
+              <span>Evaluate</span>
+            <% end %>
           <% end %>
-          <%= link_to hypothesis.input, class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3", "data-turbo-prefetch": false do %>
-            <%= download_icon("ml-0.5 mr-1.5 h-5 w-5 text-blue-600") %>
-            <span>Hypothesis</span>
-          <% end %>
-          <%= button_to hypothesis_evaluations_path(hypothesis), class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3" do %>
-            <%= run_icon("ml-0.5 mr-1.5 h-5 w-5 text-green-600") %>
-            <span>Evaluate</span>
-          <% end %>
-        </div>
+          <div class="relative">
+              <button
+                onclick="document.getElementById('<%= dom_id(hypothesis, 'actions') %>').classList.toggle('hidden')"
+                type="button" class="py-2"
+                aria-expanded="false">
+                <%= hamburger_icon("dark:text-white") %>
+              </button>
+
+              <div id="<%= dom_id(hypothesis, 'actions') %>" class="hidden bg-white absolute z-50 top-full right-0 rounded-lg border border-gray-300 dark:text-gray-900" >
+                <div class="py-4 gap-4 px-2">
+                  <div class="relative flex hover:bg-fuchsia-600 hover:text-white rounded-md">
+                    <div>
+                      <%= link_to hypothesis.test_set_entry.input, class: "relative inline-flex items-center px-3 py-2 text-sm mr-3", "data-turbo-prefetch": false do %>
+                        <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                        <span>Test input</span>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class="relative flex hover:bg-fuchsia-600 hover:text-white rounded-md">
+                    <div>
+                      <%= link_to hypothesis.input, class: "relative inline-flex items-center px-3 py-2 text-sm mr-3", "data-turbo-prefetch": false do %>
+                        <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                        <span>Hypothesis</span>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class=" relative flex hover:bg-fuchsia-600 hover:text-white rounded-md">
+                    <div>
+                      <%= button_to hypothesis_path(hypothesis), method: :delete, class: "relative inline-flex items-center px-3 py-2 text-sm", form: { "data-turbo-confirm": "Are you sure you want to remove this hypothesis?" } do %>
+                        <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                        <span>Remove</span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </div>

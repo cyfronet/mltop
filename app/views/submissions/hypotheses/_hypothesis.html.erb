@@ -25,7 +25,7 @@
             </div>
           <% end %>
         </div>
-        <div class="ml-4 mt-4 flex shrink-0">
+        <div class="ml-4 mt-2 flex shrink-0">
           <% if Current.user.meetween_member? && !hypothesis.evaluations? %>
             <%= button_to hypothesis_evaluations_path(hypothesis), class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-3" do %>
               <%= run_icon("ml-0.5 mr-1.5 h-5 w-5 text-green-600") %>
@@ -74,15 +74,17 @@
         </div>
       </div>
     </div>
-    <div class="hidden border radius-lg" data-accordion-target="content">
-      <% if hypothesis.evaluations? %>
-        <ul role="list" class="divide-y divide-gray-200">
-          <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
-            <%= render hypothesis.evaluation_for(evaluator) %>
-          <% end %>
-        </ul>
-      <% elsif !Current.user.meetween_member? %>
-        <div class="rounded-md bg-yellow-50 p-4">
+    <% if hypothesis.evaluations? %>
+      <div class="hidden border radius-lg" data-accordion-target="content">
+          <ul role="list" class="divide-y divide-gray-200">
+            <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
+              <%= render hypothesis.evaluation_for(evaluator) %>
+            <% end %>
+          </ul>
+      </div>
+    <% elsif !Current.user.meetween_member? %>
+      <div class="radius-lg">
+        <div class="rounded-md bg-yellow-50 p-4 mt-2">
           <div class="flex">
             <div class="shrink-0">
               <%= alert_icon("size-5 text-yellow-400") %>
@@ -95,8 +97,8 @@
             </div>
           </div>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
   </div>
 <% end %>
