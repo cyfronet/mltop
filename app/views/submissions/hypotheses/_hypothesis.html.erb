@@ -32,15 +32,18 @@
               <span>Evaluate</span>
             <% end %>
           <% end %>
-          <div class="relative">
+          <div data-controller="dropdown" class="relative">
             <button
-              onclick="document.getElementById('<%= dom_id(hypothesis, 'actions') %>').classList.toggle('hidden')"
-              type="button" class="py-2"
+              data-action="click->dropdown#toggle"
+              type="button"
+              class="py-2"
               aria-expanded="false">
               <%= hamburger_icon("dark:text-white") %>
             </button>
 
-            <div id="<%= dom_id(hypothesis, 'actions') %>" class="hidden bg-white absolute z-50 top-full right-0 rounded-lg border border-gray-300 dark:text-gray-900" >
+            <div
+              data-dropdown-target="menu"
+              class="hidden bg-white absolute z-50 top-full right-0 rounded-lg border border-gray-300 dark:text-gray-900">
               <div class="py-4 gap-4 px-2">
                 <div class="relative flex hover:bg-fuchsia-600 hover:text-white rounded-md">
                   <div>
