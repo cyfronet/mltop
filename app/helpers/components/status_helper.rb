@@ -15,6 +15,14 @@ module Components::StatusHelper
         "failed" => "bg-red-50 text-red-700 border-red-200"
       }
 
+      ICONS = {
+        "created" => "clock_icon",
+        "pending" => "clock_icon",
+        "running" => "play_icon",
+        "completed" => "checked_icon",
+        "failed" => "error_icon"
+      }
+
       def initialize(view, status)
         @view = view
         @status = status
@@ -28,7 +36,7 @@ module Components::StatusHelper
           ]
         ) do
           @view.safe_join([
-            @view.tag.span(send("evaluation_#{@status}_icon"), class: "mr-1"),
+            @view.tag.span(send(ICONS.fetch(@status, "failed"), "h-4 w-4"), class: "mr-1"),
             @view.tag.span(I18n.t("statuses.#{@status}", default: I18n.t("statuses.unknown")))
           ])
         end
