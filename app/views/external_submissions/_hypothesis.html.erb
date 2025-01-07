@@ -1,11 +1,11 @@
 <% cache hypothesis do %>
   <div id="<%= dom_id(hypothesis, "external-submission") %>" class="mx-3 my-4 sm:rounded-lg">
-    <div class="border border-zinc-200 bg-zinc-50 dark:bg-gray-800 px-4 py-5 sm:px-6 rounded-lg">
-      <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-        <div class="ml-4 mt-2">
+    <div class="border border-zinc-200 bg-zinc-50 dark:bg-gray-800 px-2 py-5 rounded-lg">
+      <div class="flex flex-wrap items-center justify-between sm:flex-nowrap">
+        <div class="ml-4">
           <h3 class="text-base font-semibold"><%= hypothesis.test_set_entry.task.slug %>: <%= hypothesis.test_set_entry %></h3>
         </div>
-        <div class="ml-4 mt-2 flex shrink-0">
+        <div class="ml-4 flex shrink-0">
           <% if Current.user.meetween_member? && !hypothesis.evaluations? %>
             <%= button_to hypothesis_evaluations_path(hypothesis), class: "text-emerald-600 hover:text-white hover:bg-emerald-600 relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium ring-1 ring-inset ring-gray-300 mr-3" do %>
               <%= run_icon("ml-0.5 mr-1.5 h-5 w-5") %>
