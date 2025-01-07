@@ -71,6 +71,15 @@ module IconsHelper
     .html_safe
   end
 
+  def edit_icon(css_classes = nil)
+    <<~SVG
+      <svg class="#{css_classes}" stroke="currentColor" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.0514 3.73889L15.4576 2.33265C16.0678 1.72245 17.0572 1.72245 17.6674 2.33265C18.2775 2.94284 18.2775 3.93216 17.6674 4.54235L8.81849 13.3912C8.37792 13.8318 7.83453 14.1556 7.23741 14.3335L5 15L5.66648 12.7626C5.84435 12.1655 6.1682 11.6221 6.60877 11.1815L14.0514 3.73889ZM14.0514 3.73889L16.25 5.93749M15 11.6667V15.625C15 16.6605 14.1605 17.5 13.125 17.5H4.375C3.33947 17.5 2.5 16.6605 2.5 15.625V6.87499C2.5 5.83946 3.33947 4.99999 4.375 4.99999H8.33333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
   def trash_icon(css_classes = nil)
     <<~SVG
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="#{css_classes}">
@@ -148,6 +157,45 @@ module IconsHelper
     <<~SVG
       <svg class="#{css_classes}" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd" />
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def hamburger_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 3C10.8284 3 11.5 3.67157 11.5 4.5C11.5 5.32843 10.8284 6 10 6C9.17157 6 8.5 5.32843 8.5 4.5C8.5 3.67157 9.17157 3 10 3Z" fill="#0F172A"/>
+        <path d="M10 8.5C10.8284 8.5 11.5 9.17157 11.5 10C11.5 10.8284 10.8284 11.5 10 11.5C9.17157 11.5 8.5 10.8284 8.5 10C8.5 9.17157 9.17157 8.5 10 8.5Z" fill="#0F172A"/>
+        <path d="M11.5 15.5C11.5 14.6716 10.8284 14 10 14C9.17157 14 8.5 14.6716 8.5 15.5C8.5 16.3284 9.17157 17 10 17C10.8284 17 11.5 16.3284 11.5 15.5Z" fill="#0F172A"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def clock_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 4V8H11.5M14.5 8C14.5 11.3137 11.8137 14 8.5 14C5.18629 14 2.5 11.3137 2.5 8C2.5 4.68629 5.18629 2 8.5 2C11.8137 2 14.5 4.68629 14.5 8Z" stroke="#1D4ED8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def play_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.5 8C14.5 11.3137 11.8137 14 8.5 14C5.18629 14 2.5 11.3137 2.5 8C2.5 4.68629 5.18629 2 8.5 2C11.8137 2 14.5 4.68629 14.5 8Z" stroke="#4D7C0F" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.1066 7.78146C11.2781 7.87671 11.2781 8.12329 11.1066 8.21854L7.37141 10.2937C7.20478 10.3862 7 10.2657 7 10.0751V5.92488C7 5.73426 7.20478 5.61377 7.37141 5.70634L11.1066 7.78146Z" stroke="#4D7C0F" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def checked_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.916 3.37597C13.2607 3.60573 13.3538 4.07138 13.124 4.41603L8.12404 11.916C7.9994 12.103 7.7975 12.2242 7.5739 12.2464C7.3503 12.2685 7.12855 12.1892 6.96967 12.0303L3.96967 9.03033C3.67678 8.73744 3.67678 8.26257 3.96967 7.96967C4.26256 7.67678 4.73744 7.67678 5.03033 7.96967L7.38343 10.3228L11.876 3.58398C12.1057 3.23933 12.5714 3.1462 12.916 3.37597Z" fill="#15803D"/>
       </svg>
     SVG
     .html_safe
