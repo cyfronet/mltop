@@ -30,9 +30,9 @@
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <% if signed_in? %>
-            <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-primary" %>
+            <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-navbar-outline" %>
           <% else %>
-            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-primary", "data-turbo": false %>
+            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-navbar-outline", "data-turbo": false %>
           <% end %>
         </div>
       </div>
