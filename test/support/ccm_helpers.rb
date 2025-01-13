@@ -4,7 +4,7 @@ module CcmHelpers
   VALID_TOKEN = "valid-token"
 
   def self.default_ccm_stubs!
-    ccm = WebMock::RequestPattern.new(:post, "#{Plgrid::Ccm::CCM_URI}")
+    ccm = WebMock::RequestPattern.new(:post, "#{Plgrid::Ccm::CCM_URI}?lifetime=#{Plgrid::Ccm::LIFETIME}")
 
     WebMock.globally_stub_request(:after_local_stubs) do |req|
       if ccm.matches?(req)
