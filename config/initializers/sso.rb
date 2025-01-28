@@ -18,4 +18,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :github,
     Rails.application.credentials.dig(:sso, :github, :key),
     Rails.application.credentials.dig(:sso, :github, :secret)
+
+  provider :google_oauth2,
+    Rails.application.credentials.dig(:sso, :google, :key),
+    Rails.application.credentials.dig(:sso, :google, :secret)
 end

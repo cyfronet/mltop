@@ -31,6 +31,7 @@ gem "bootsnap", require: false
 gem "omniauth-rails_csrf_protection"
 gem "omniauth_openid_connect"
 gem "omniauth-github", "~> 2.0.0"
+gem "omniauth-google-oauth2"
 gem "pundit"
 gem "role_model"
 

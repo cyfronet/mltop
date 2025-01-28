@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   # Authentication
   direct(:plgrid_sign_in) { "/auth/plgrid" }
   direct(:github_sign_in) { "/auth/github" }
+  direct(:google_sign_in) { "/auth/google_oauth2" }
   get "auth/:provider/callback", to: "sessions#create"
   get "auth/failure", to: redirect("/")
   get "sign_in", to: "sessions#new", as: "sign_in"
