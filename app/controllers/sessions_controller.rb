@@ -35,9 +35,10 @@ class SessionsController < ApplicationController
 
     def user_provider
       case params[:provider].to_s
-      when "plgrid"; then Sso::Plgrid.from_omniauth(auth)
-      when "github"; then Sso::Github.from_omniauth(auth)
-      else                Sso::Unknown.new
+      when "plgrid";        then Sso::Plgrid.from_omniauth(auth)
+      when "github";        then Sso::Github.from_omniauth(auth)
+      when "google_oauth2"; then Sso::Google.from_omniauth(auth)
+      else                  Sso::Unknown.new
       end
     end
 end
