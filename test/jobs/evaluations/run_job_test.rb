@@ -8,7 +8,7 @@ module Evaluations
     end
 
     test "submits evaluations" do
-      @evaluation.expect(:submit, true, [ @user ])
+      @evaluation.expect(:run, true, [ @user ])
       RunJob.perform_now(evaluations: [ @evaluation ], user: @user)
       assert @evaluation.verify
     end
