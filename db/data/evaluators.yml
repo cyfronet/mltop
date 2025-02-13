@@ -3,7 +3,7 @@ screbleu:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -A plgmeetween2025-cpu
     #SBATCH -p plgrid
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
@@ -41,7 +41,7 @@ blueurt:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-gpu-a100
+    #SBATCH -A plgmeetween2025-gpu-a100
     #SBATCH -p plgrid-gpu-a100
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
@@ -76,7 +76,7 @@ wer:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -A plgmeetween2025-cpu
     #SBATCH -p plgrid
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
@@ -112,7 +112,7 @@ rogue:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -A plgmeetween2025-cpu
     #SBATCH -p plgrid
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
@@ -146,7 +146,7 @@ accuracy:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -A plgmeetween2025-cpu
     #SBATCH -p plgrid
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
@@ -180,7 +180,7 @@ exact-match:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -A plgmeetween2025-cpu
     #SBATCH -p plgrid
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
@@ -215,7 +215,7 @@ f1-score:
   script: |
     #!/bin/bash -l
 
-    #SBATCH -A plgmeetween2004-cpu
+    #SBATCH -A plgmeetween2025-cpu
     #SBATCH -p plgrid
     #SBATCH -N 1
     #SBATCH --ntasks-per-node=1
