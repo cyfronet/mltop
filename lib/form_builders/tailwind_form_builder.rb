@@ -23,7 +23,8 @@ module FormBuilders
 
     def submit(value = nil, options = {})
       custom_opts, opts = partition_custom_opts(options)
-      classes = join_classes(SUBMIT_BUTTON_STYLE, custom_opts[:class])
+      default_styles = opts[:without_default_styles] ? "" : SUBMIT_BUTTON_STYLE
+      classes = join_classes(default_styles, custom_opts[:class])
 
       super(value, { class: classes }.merge(opts))
     end

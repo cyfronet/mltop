@@ -1,0 +1,5 @@
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
+<%= turbo_stream.replace dom_id(@hypothesis.test_set_entry),
+  partial: "submissions/hypotheses/hypothesis", locals: { hypothesis: @hypothesis, open: true } %>%>
+<%= turbo_stream.replace dom_id(@hypothesis, "external-submission"),
+  partial: "external_submissions/evaluation_started", locals: { hypothesis: @hypothesis } %>
