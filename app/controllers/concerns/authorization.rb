@@ -10,7 +10,21 @@ module Authorization
     end
   end
 
+  class_methods do
+    def meetween_members_only(**options)
+      before_action(:require_meetween_member, **options)
+    end
+  end
+
   def current_user
     Current.user
   end
+
+  private
+    def require_meetween_member
+      unless Current.user.meetween_member?
+        flash.now[:alert] = "Only Meetween members can perform this action"
+        render status: :forbidden
+      end
+    end
 end

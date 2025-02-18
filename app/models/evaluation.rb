@@ -36,8 +36,11 @@ class Evaluation < ApplicationRecord
       Score.new(evaluation: self, metric:)
   end
 
+  def run_later(user)
+    Evaluations::RunJob.perform_later(evaluations: [ self ], user:)
+  end
 
-  def submit(user)
+  def run(user)
     new_token = reset_token!
     request = submit_script(user, new_token)
 
