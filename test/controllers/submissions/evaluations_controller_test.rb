@@ -25,7 +25,7 @@ module Submissions
       post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
       assert_response :forbidden
-      assert_equal "Only Meetween members can start this evaluation", flash[:alert]
+      assert_equal "Only Meetween members can perform this action", flash[:alert]
     end
 
     test "Meetween members cannot start other meetween user model evaluation" do

@@ -9,13 +9,22 @@ class Hypothesis < ApplicationRecord
   validates :input, presence: true
   validates :test_set_entry, uniqueness: { scope: :model }
 
-  def evaluate!
+  def evaluate_missing!
     transaction do
-      evaluations = test_set_entry.task.evaluators.map do |evaluator|
-        evaluator.evaluations.build(hypothesis: self).tap { |evaluation| evaluation.save! }
-      end.compact
-      Evaluations::RunJob.perform_later(evaluations:, user: Current.user)
+      run_evaluators = evaluations.map(&:evaluator_id)
+      missing_evaluations = evaluators
+        .reject { |e| run_evaluators.include?(e.id) }
+        .map do |evaluator|
+          evaluations.build(evaluator:).tap { it.save! }
+        end.compact
+
+      Evaluations::RunJob
+        .perform_later(evaluations: missing_evaluations, user: Current.user)
     end
+  end
+
+  def fully_evaluated?
+    evaluations.size == evaluators.size
   end
 
   def evaluators

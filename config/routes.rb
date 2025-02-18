@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :test_set, only: [ :show ]
 
-  resources :evaluations, only: [] do
+  resources :evaluations, only: [ :create ] do
     resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
   end
 

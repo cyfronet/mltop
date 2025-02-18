@@ -57,19 +57,19 @@ class EvaluationTest < ActiveSupport::TestCase
   end
 
 
-  test "successful submit changes status to running" do
+  test "successful started evaluation changes status to running" do
     Hpc::ClientMock.stub_submit
 
     assert_changes "@evaluation.status", from: "created", to: "pending" do
-      @evaluation.submit(@user)
+      @evaluation.run(@user)
     end
   end
 
-  test "unsuccessful submit changes status to error" do
+  test "unsuccessful started evaluation changes status to error" do
     Hpc::ClientMock.stub_submit(code: 500)
 
     assert_changes "@evaluation.status", from: "created", to: "failed" do
-      @evaluation.submit(@user)
+      @evaluation.run(@user)
     end
   end
 

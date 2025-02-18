@@ -1,4 +1,5 @@
 <% cache hypothesis do %>
+  <%- open = local_assigns[:open] -%>
   <div id="<%= dom_id(hypothesis.test_set_entry) %>" class="mx-3 my-4 sm:rounded-lg" data-controller="accordion">
     <div class="border border-zinc-200 bg-zinc-50 dark:bg-gray-800 px-2 py-5 rounded-lg", data-accordion-target="header">
       <div class="flex flex-wrap items-center justify-between sm:flex-nowrap">
@@ -7,10 +8,8 @@
             <button
               data-action="click->accordion#toggle"
               data-accordion-target="button"
-              class="px-4 btn btn-primary-outline w-8 h-8 justify-center"
-              <%= "disabled" if !hypothesis.evaluations? %>
-              >
-              +
+              class="px-4 btn btn-primary-outline w-8 h-8 justify-center" >
+              <%= open ? "-" : "+" %>
             </button>
 
             <div class="ml-2">
@@ -26,10 +25,10 @@
           <% end %>
         </div>
         <div class="ml-4 mt-2 flex shrink-0">
-          <% if Current.user.meetween_member? && !hypothesis.evaluations? %>
+          <% if Current.user.meetween_member? && !hypothesis.fully_evaluated? %>
             <%= button_to hypothesis_evaluations_path(hypothesis), class: "text-emerald-600 hover:text-white hover:bg-emerald-600 relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium ring-1 ring-inset ring-gray-300 mr-3" do %>
               <%= run_icon("ml-0.5 mr-1.5 h-5 w-5") %>
-              <span>Evaluate</span>
+              <span>Evaluate all</span>
             <% end %>
           <% end %>
           <div data-controller="dropdown" class="relative">
@@ -77,15 +76,16 @@
         </div>
       </div>
     </div>
-    <% if hypothesis.evaluations? %>
-      <div class="hidden border radius-lg" data-accordion-target="content">
+    <% if Current.user.meetween_member? %>
+      <div class="<%= "hidden" unless open %> border radius-lg" data-accordion-target="content">
           <ul role="list" class="divide-y divide-gray-200">
             <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
-              <%= render hypothesis.evaluation_for(evaluator) %>
+              <%= render partial: "submissions/evaluations/evaluation",
+                         locals: { evaluation: hypothesis.evaluation_for(evaluator) } %>
             <% end %>
           </ul>
       </div>
-    <% elsif !Current.user.meetween_member? %>
+    <% else %>
       <div class="radius-lg">
         <div class="rounded-md bg-yellow-50 p-4 mt-2">
           <div class="flex">
@@ -102,6 +102,5 @@
         </div>
       </div>
     <% end %>
-
   </div>
 <% end %>
