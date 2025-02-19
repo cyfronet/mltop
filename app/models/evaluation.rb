@@ -31,6 +31,10 @@ class Evaluation < ApplicationRecord
     end
   end
 
+  def record_error!(error_message)
+    update! status: :failed, error_message:, token: nil
+  end
+
   def score_for_metric(metric)
     scores.detect { |s| s.metric_id == metric.id } ||
       Score.new(evaluation: self, metric:)

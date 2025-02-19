@@ -1,6 +1,10 @@
 class Evaluations::ScoresController < Evaluations::ApplicationController
   def create
-    @evaluation.record_scores!(scores_params)
+    if params[:state] == "OK"
+      @evaluation.record_scores!(scores_params)
+    else
+      @evaluation.record_error!(params[:message])
+    end
 
     head :created
   end
