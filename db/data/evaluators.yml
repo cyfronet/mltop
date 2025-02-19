@@ -19,7 +19,7 @@ screbleu:
     output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
@@ -58,7 +58,7 @@ blueurt:
     output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
@@ -92,7 +92,7 @@ wer:
     output=$(bash $calculator_script $SOURCE_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
@@ -128,7 +128,7 @@ rogue:
     output=$(bash $calculator_script $SOURCE_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
@@ -163,7 +163,7 @@ accuracy:
 
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
@@ -197,7 +197,7 @@ exact-match:
 
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
@@ -232,7 +232,7 @@ f1-score:
 
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
-      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "{ \"scores\": $output}"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
     else
       echo "Error while calculating scores"
       exit 1
