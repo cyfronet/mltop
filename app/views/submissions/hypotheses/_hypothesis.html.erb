@@ -18,9 +18,10 @@
           </div>
           <% if hypothesis.evaluations? %>
             <div class="hidden sm:flex space-x-4">
-                  <% hypothesis.evaluations.each do |evaluation| %>
-                    <%= render "submissions/evaluations/scores", evaluation: , metrics: evaluation.evaluator.metrics %>
-                  <% end %>
+              <% hypothesis.evaluations.each do |evaluation| %>
+                <%= render "submissions/evaluations/scores",
+                  evaluation:, metrics: evaluation.evaluator.metrics %>
+              <% end %>
             </div>
           <% end %>
         </div>

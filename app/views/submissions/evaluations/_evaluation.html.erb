@@ -29,7 +29,12 @@
           </div>
         </div>
         <div class="mt-2">
-          <%= render "submissions/evaluations/scores", evaluation: , metrics: evaluation.evaluator.metrics %>
+          <% if evaluation.failed? %>
+            <div class="text-sm text-red-600"><%= evaluation.error_message %></div>
+          <% else %>
+            <%= render "submissions/evaluations/scores",
+              evaluation: , metrics: evaluation.evaluator.metrics %>
+          <% end %>
         </div>
       </div>
     </li>

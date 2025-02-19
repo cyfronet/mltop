@@ -1,10 +1,22 @@
 <div class="flex justify-left items-center gap-x-2">
-  <% metrics.each do |metric| %>
-    <span class="text-xs">
-      <%= metric.name%>:
-    </span>
-    <span class="rounded-sm bg-sky-700 px-2 py-1 text-xs font-medium text-white border border-slate-600">
-      <%= evaluation.score_for_metric(metric).value || "-" %>
-    </span>
+  <% if evaluation.failed? %>
+    <% metrics.each do |metric| %>
+      <span class="text-xs">
+        <%= metric.name%>:
+      </span>
+      <span title="<%= evaluation.error_message %>"
+        class="rounded-sm bg-red-700 px-2 py-1 text-xs font-medium text-white border border-red-600">
+        Error
+      </span>
+    <% end %>
+  <% else %>
+    <% metrics.each do |metric| %>
+      <span class="text-xs">
+        <%= metric.name%>:
+      </span>
+      <span class="rounded-sm bg-sky-700 px-2 py-1 text-xs font-medium text-white border border-slate-600">
+        <%= evaluation.score_for_metric(metric).value || "-" %>
+      </span>
+    <% end %>
   <% end %>
 </div>
