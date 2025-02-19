@@ -23,7 +23,7 @@ gem "mission_control-jobs"
 
 gem "turbo-rails"
 gem "stimulus-rails"
-gem "tailwindcss-rails"
+gem "tailwindcss-rails", "~> 4.0"
 gem "image_processing", "~> 1.12"
 
 gem "bootsnap", require: false

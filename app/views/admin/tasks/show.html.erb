@@ -9,7 +9,7 @@
           <p class="mt-1 leading-6 text-gray-500"><%= @task.info %></p>
         </div>
       </div>
-      <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center space-x-2">
+      <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
         <%= link_to [:edit, :admin, @task], type:"button", class: "btn btn-secondary-outline" do %>
             <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>
           <span> Edit </span>

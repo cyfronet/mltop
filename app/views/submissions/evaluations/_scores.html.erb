@@ -3,7 +3,7 @@
     <span class="text-xs">
       <%= metric.name%>:
     </span>
-    <span class="rounded bg-sky-700 px-2 py-1 text-xs font-medium text-white border border-slate-600">
+    <span class="rounded-sm bg-sky-700 px-2 py-1 text-xs font-medium text-white border border-slate-600">
       <%= evaluation.score_for_metric(metric).value || "-" %>
     </span>
   <% end %>
