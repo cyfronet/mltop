@@ -221,7 +221,7 @@ f1-score:
     #SBATCH --ntasks-per-node=1
     #SBATCH --mem=512M
     #SBATCH --job-name=f1-score
-    #SBATCH --time
+    #SBATCH --time=00:10:00
 
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
@@ -243,3 +243,189 @@ f1-score:
       order: desc
   tasks:
     - SQA
+
+# NEW need to be tested!!!
+comet:
+  name: Comet
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-gpu-a100
+    #SBATCH -p plgrid-gpu-a100
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=50G
+    #SBATCH --job-name=comet
+    #SBATCH --time=00:10:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/input $INPUT_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-comet__athena.sh
+
+    output=$(bash $calculator_script $SCRATCHDIR/input $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: athena.cyfronet.pl
+  metrics:
+    - name: comet
+      order: desc
+  tasks:
+    - SQA
+
+# run-characTER__ares.sh
+characTER:
+  name: Charac TER
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-cpu
+    #SBATCH -p plgrid
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=512M
+    #SBATCH --job-name=characTER
+    #SBATCH --time=00:10:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-characTER__ares.sh
+
+    output=$(bash $calculator_script $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: ares.cyfronet.pl
+  metrics:
+    - name: characTER
+      order: desc
+  tasks:
+    - SQA
+
+# run-SLU-metrics__ares.sh
+slu:
+  name: SLU Metrics
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-cpu
+    #SBATCH -p plgrid
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=1G
+    #SBATCH --job-name=slu
+    #SBATCH --time=01:00:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-f1__ares.sh
+
+    output=$(bash $calculator_script $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: ares.cyfronet.pl
+  metrics:
+    - name: slot_type_f1
+      order: desc
+    - name: slot_value_cer
+      order: desc
+    # "intent_accuracy": {
+    #     "mean": 0.7841291190316073,
+    #     "standard_error": 0.007544324162844738
+    # }
+  tasks:
+    - SQA
+
+# run-SQA-HF-metrics__ares.sh
+sqa-hf:
+  name: SQA HF Metrics
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-cpu
+    #SBATCH -p plgrid
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=1G
+    #SBATCH --job-name=sqaHF
+    #SBATCH --time=01:00:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-SQA-HF-metrics__ares.sh
+
+    output=$(bash $calculator_script $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: ares.cyfronet.pl
+  metrics:
+    - name: exact_match
+      order: desc
+    - name: f1
+      order: desc
+  tasks:
+    - SQA
+
+# run-TTS-wer-utmos__athena.sh
+# wer-utmos:
+#   name: WER Utmos
+#   script: |
+#     #!/bin/bash -l
+#
+#     #SBATCH -A plgmeetween2025-gpu-a100
+#     #SBATCH -p plgrid-gpu-a100
+#     #SBATCH -N 1
+#     #SBATCH --ntasks-per-node=1
+#     #SBATCH --gres=gpu:1
+#     #SBATCH --mem=10G
+#     #SBATCH --job-name=tts
+#     #SBATCH --time 24:00:00
+#
+#
+#     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+#     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+#
+#     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-TTS-wer-utmos__athena.sh
+#
+#     output=$(bash $calculator_script $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+#
+#     if [ "$?" -eq 0 ]; then
+#       echo "Submitting output: $output"
+#       curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+#     else
+#       echo "Error while calculating scores"
+#       exit 1
+#     fi
+#   host: athena.cyfronet.pl
+#   metrics:
+#     - name: f1-score
+#       order: desc
+#   tasks:
+#     - SQA

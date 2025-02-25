@@ -89,6 +89,7 @@ class Evaluation < ApplicationRecord
       {
         current_working_directory: GROUP_DIR,
         environment: [
+          "INPUT_URL=#{url_for(hypothesis.test_set_entry.input)}",
           "GROUNDTRUTH_URL=#{url_for(hypothesis.test_set_entry.groundtruth)}",
           "HYPOTHESIS_URL=#{url_for(hypothesis.input)}",
           "RESULTS_URL=#{evaluation_scores_url(self)}",
