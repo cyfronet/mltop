@@ -69,5 +69,13 @@ class ActiveSupport::TestCase
         input: Rack::Test::UploadedFile.new(StringIO.new("input"), "text/plain", original_filename: "input.txt")
     }
     end
+
+    factory(:evaluator) do |i|
+      {
+        name: "Evaluator #{i}",
+        host: "host",
+        script: "script"
+      }
+    end
   end
 end
