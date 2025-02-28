@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_03_124705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,6 +56,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "challenge_test_set_entries", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "test_set_entry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_challenge_test_set_entries_on_challenge_id"
+    t.index ["test_set_entry_id"], name: "index_challenge_test_set_entries_on_test_set_entry_id"
+  end
+
+  create_table "challenges", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "owner_id", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_challenges_on_owner_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.string "token_digest"
     t.bigint "hypothesis_id", null: false
@@ -76,6 +95,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.string "host", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "from", enum_type: "format"
+    t.enum "to", enum_type: "format"
   end
 
   create_table "hypotheses", force: :cascade do |t|
@@ -93,7 +114,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order", default: 0, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 
@@ -134,6 +155,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.index ["model_id"], name: "index_task_models_on_model_id"
     t.index ["task_id", "model_id"], name: "index_task_models_on_task_id_and_model_id", unique: true
     t.index ["task_id"], name: "index_task_models_on_task_id"
+  end
+
+  create_table "task_test_sets", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "test_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_test_sets_on_task_id"
+    t.index ["test_set_id"], name: "index_task_test_sets_on_test_set_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -180,6 +210,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "challenges", "users", column: "owner_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"
   add_foreign_key "hypotheses", "models"

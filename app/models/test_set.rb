@@ -7,12 +7,15 @@ class TestSet < ApplicationRecord
     end
   end
   has_many :tasks, -> { distinct }, through: :entries
+  has_many :task_test_sets
 
   has_rich_text :description
 
   validates :name, presence: true
 
   scope :published, -> { where(published: true) }
+
+  accepts_nested_attributes_for :task_test_sets
 
   def source_languages_for(task:)
     entries.where(task:).pluck(:source_language).uniq.sort

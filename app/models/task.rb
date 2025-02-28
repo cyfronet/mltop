@@ -4,6 +4,7 @@ class Task < ApplicationRecord
 
   has_many :test_set_entries, dependent: :destroy
   has_many :test_sets, -> { distinct }, through: :test_set_entries
+  has_many :task_test_sets, dependent: :destroy
 
   has_many :task_evaluators
   has_many :evaluators, through: :task_evaluators
