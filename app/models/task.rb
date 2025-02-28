@@ -18,6 +18,8 @@ class Task < ApplicationRecord
     validates :to
   end
 
+  validates_associated :task_evaluators
+
   TYPES = { video: "video", audio: "audio", text: "text" }
   enum :from, TYPES, prefix: true
   enum :to, TYPES, prefix: true
