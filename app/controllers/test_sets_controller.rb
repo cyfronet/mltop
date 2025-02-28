@@ -6,7 +6,7 @@ class TestSetsController < ApplicationController
   end
 
   def show
-    @test_set = TestSet.published.find(params[:id])
-    @tasks = @test_set.tasks
+    @test_set = TestSet.published.preload(test_set_tasks: { task: :test_set_entries }).find(params[:id])
+    @test_set_tasks = @test_set.test_set_tasks
   end
 end
