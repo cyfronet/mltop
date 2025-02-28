@@ -12,4 +12,8 @@ class Evaluator < ApplicationRecord
   enum :output_modality, Task::TYPES, prefix: true
 
   def to_s = name
+
+  def self.matching_task(task)
+    Evaluator.where(input_modality: [ task.from, nil ], output_modality: task.to)
+  end
 end
