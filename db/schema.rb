@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_28_121834) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,6 +76,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.string "host", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "input_modality", enum_type: "format"
+    t.enum "output_modality", enum_type: "format"
   end
 
   create_table "hypotheses", force: :cascade do |t|
@@ -93,7 +95,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order", default: 0, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 
@@ -156,6 +158,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_113521) do
     t.index ["source_language", "target_language", "test_set_id", "task_id"], name: "idx_on_source_language_target_language_test_set_id__e10c5b6230", unique: true
     t.index ["task_id"], name: "index_test_set_entries_on_task_id"
     t.index ["test_set_id"], name: "index_test_set_entries_on_test_set_id"
+  end
+
+  create_table "test_set_tasks", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "test_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_test_set_tasks_on_task_id"
+    t.index ["test_set_id"], name: "index_test_set_tasks_on_test_set_id"
   end
 
   create_table "test_sets", force: :cascade do |t|

@@ -10,12 +10,12 @@
 
 <%= @task.description %>
 
-<% @task.test_sets.each do |test_set| %>
+<% @test_set_tasks.each do |test_set_task| %>
   <h2 class="mt-2 text-2xl font-bold tracking-tight sm:text-4xl mb-8 mt-8 text-center">
-    <%= link_to "#{test_set.name} test set", test_set_path(test_set) %>
+    <%= link_to "#{test_set_task.test_set.name} test set", test_set_path(test_set_task.test_set) %>
   </h2>
 
-  <%= render "test_sets/show", test_set:, tasks: [@task] %>
+  <%= render "test_sets/show", test_set: test_set_task.test_set, test_set_tasks: [test_set_task] %>
 <% end %>
 
 

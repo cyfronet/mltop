@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.with_published_test_sets.find(params[:id])
+    @task = Task.with_published_test_sets.preload(:test_set_tasks).find(params[:id])
+    @test_set_tasks = @task.test_set_tasks
   end
 end

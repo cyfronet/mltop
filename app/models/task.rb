@@ -4,6 +4,7 @@ class Task < ApplicationRecord
 
   has_many :test_set_entries, dependent: :destroy
   has_many :test_sets, -> { distinct }, through: :test_set_entries
+  has_many :test_set_tasks, dependent: :destroy
 
   has_many :task_evaluators
   has_many :evaluators, through: :task_evaluators
@@ -17,6 +18,8 @@ class Task < ApplicationRecord
     validates :from
     validates :to
   end
+
+  accepts_nested_attributes_for :test_set_tasks
 
   TYPES = { video: "video", audio: "audio", text: "text" }
   enum :from, TYPES, prefix: true
