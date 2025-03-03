@@ -19,6 +19,8 @@ class Task < ApplicationRecord
     validates :to
   end
 
+  accepts_nested_attributes_for :task_test_sets
+
   TYPES = { video: "video", audio: "audio", text: "text" }
   enum :from, TYPES, prefix: true
   enum :to, TYPES, prefix: true
