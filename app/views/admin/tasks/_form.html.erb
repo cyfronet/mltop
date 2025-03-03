@@ -13,6 +13,14 @@
     </div>
   </div>
 
+  <ul>
+    <%= form.fields_for :test_set_tasks do |tsts_form| %>
+      <li>
+        <%= tsts_form.rich_text_area :description, label: {text:"Description for #{tsts_form.object.test_set.name}" }, value: tsts_form.object.description%>
+      </li>
+    <% end%>
+  </ul>
+
   <div class="mt-6 mb-2 flex items-center justify-end gap-x-6">
     <%= link_to "Cancel", [:admin, task], class: "btn btn-secondary-outline" %>
     <%= form.submit %>
