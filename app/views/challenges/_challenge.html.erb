@@ -1,0 +1,17 @@
+<%# locals: (challenge:) %>
+
+<li class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:flex-nowrap">
+  <div>
+    <p class="text-sm font-semibold leading-6 ">
+      <%= link_to challenge.name, challenge_path(challenge), class: "hover:unerline" %>
+    </p>
+    <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+      <p><%= challenge.owner.name %> </p>
+      <%= dot %>
+      <p><time datetime="<%= challenge.created_at %>"><%= time_ago_in_words challenge.created_at %> ago</time></p>
+    </div>
+  </div>
+  <span class="flex w-full flex-none gap-x-1 sm:w-auto">
+     <%= challenge.starts_at %> - <%= challenge.ends_at %>
+  </span>
+</li>

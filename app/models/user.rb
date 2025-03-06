@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   encrypts :ssh_key, :ssh_certificate
   has_many :models, inverse_of: :owner, dependent: :destroy
+  has_many :challenges, inverse_of: :owner, dependent: :destroy
 
   roles :admin, :meetween_member
 

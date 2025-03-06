@@ -1,14 +1,6 @@
 <% breadcrumb :dashboard %>
 
 <div class="w-full">
-  <% if Current.challenge %>
-    <h2>
-      Welcome to <%= Current.challenge.name %> challenge
-    </h2>
-    <div class="mx-14 my-4">
-      <%= Current.challenge.description%>
-    </div>
-  <% end %>
   <div class="flex ms-14 space-x-10">
     <div class="w-1/2">
       <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
@@ -62,7 +54,7 @@
   </div>
 
   <h2 class="mx-14 mt-10 bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-2xl">
-    Key Tasks in NLP and Speech Technology
+    Challenges:
   </h2>
 
   <h3 class="mx-14 mt-5 text-zinc-700 text-center">
@@ -70,11 +62,13 @@
     understanding, translation, and speech recognition.
   </h3>
 
-  <div id="tasks" class="min-w-full">
-    <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <%= render @tasks %>
-    </ul>
-  </div>
+  <% if @challenges.any? %>
+    <div id="challenges" class="min-w-full">
+      <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <%= render partial: "home/challenge", collection: @challenges %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="mt-4 flex bg-linear-to-r from-fuchsia-100 to-orange-50 pt-10 space-x-10">
     <div class="w-1/2">

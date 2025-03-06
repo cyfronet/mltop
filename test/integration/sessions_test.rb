@@ -2,6 +2,7 @@ require "test_helper"
 
 class SessionsTest < ActionDispatch::IntegrationTest
   test "meetween user can log in through PLGrid and see external users submissions" do
+    in_challenge!
     sign_in_as("marek", teams: [ "plggmeetween", "plgother" ])
     get root_path
 
@@ -12,9 +13,9 @@ class SessionsTest < ActionDispatch::IntegrationTest
 
   test "other plgrid users can log in through PLGrid, but do not see external submissions" do
     sign_in_as("marek", teams: [ "plggother" ])
+    in_challenge!
 
-    assert_response :redirect
-    follow_redirect!
+    get root_path
 
     assert_match "My submissions", response.body
     assert_no_match "External submissions", response.body
@@ -22,6 +23,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
 
   test "Meetween members session is scoped to ssh certificate validation" do
     sign_in_as("marek", teams: [ "plggmeetween" ])
+    in_challenge!
 
     get submissions_path
     assert_response :success
@@ -39,9 +41,11 @@ class SessionsTest < ActionDispatch::IntegrationTest
 
     assert_response :redirect
     follow_redirect!
+    assert_match challenges(:global).name, response.body
 
+    in_challenge!
+    get root_path
     assert_match "My submissions", response.body
-    assert_no_match "External submissions", response.body
   end
 
   test "user can log out" do
@@ -51,6 +55,10 @@ class SessionsTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
 
     follow_redirect!
+    assert_match "Log in", response.body
+
+    in_challenge!
+    get root_path
     assert_no_match "My submissions", response.body
   end
 end
