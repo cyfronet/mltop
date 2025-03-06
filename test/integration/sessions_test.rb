@@ -1,6 +1,10 @@
 require "test_helper"
 
 class SessionsTest < ActionDispatch::IntegrationTest
+  def setup
+    in_challenge!(challenges(:global))
+  end
+
   test "meetween user can log in through PLGrid and see external users submissions" do
     in_challenge!
     sign_in_as("marek", teams: [ "plggmeetween", "plgother" ])
