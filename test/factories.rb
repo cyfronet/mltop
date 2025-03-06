@@ -63,11 +63,23 @@ class ActiveSupport::TestCase
     factory(:test_set_entry) do |i|
       {
         test_set: TestSet.last,
+        task: tasks(:st),
         source_language: "en",
         target_language: "pl",
         groundtruth: Rack::Test::UploadedFile.new(StringIO.new("input"), "text/plain", original_filename: "input.txt"),
         input: Rack::Test::UploadedFile.new(StringIO.new("input"), "text/plain", original_filename: "input.txt")
     }
+    end
+
+    factory(:challenge) do |i|
+      {
+        name: "Challenge #{i}",
+        test_set_entries: [ test_set_entries(:flores_st_en_pl) ],
+        start_date: 5.days.ago,
+        end_date: 5.days.from_now,
+        description: "some description",
+        owner: users(:marek)
+      }
     end
   end
 end
