@@ -56,6 +56,11 @@ module ActiveSupport
 
       get "/auth/github/callback"
     end
+
+    def in_challenge!(challenge = challenges(:global))
+      self.default_url_options =
+        { script_name: "/#{ChallengeSlug.encode(challenge.id)}" }
+    end
   end
 
   WebMock.disable_net_connect!(allow_localhost: true)

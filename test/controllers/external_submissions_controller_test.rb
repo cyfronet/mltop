@@ -1,6 +1,10 @@
 require "test_helper"
 
 class ExternalSubmissionsControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    in_challenge!
+  end
+
   test "Meetween member can manage external users submissions" do
     sign_in_as("marek")
 

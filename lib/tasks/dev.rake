@@ -17,9 +17,16 @@ if Rails.env.local?
 
 
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
-      User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
+      user = User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
                         roles: [ :admin ])
+      Challenge.create!(name: "Global",
+                        starts_at: 5.days.ago,
+                        ends_at: 1.month.from_now,
+                        owner: user
+                        ).tap do |challenge|
+                          challenge.description = "This is a global challenge"
+                        end
 
 
       puts "DB set up complete, initializing test sets.."
