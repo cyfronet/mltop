@@ -77,5 +77,15 @@ class ActiveSupport::TestCase
         script: "script"
       }
     end
+
+    factory(:challenge) do |i|
+      {
+        name: "Challenge #{i}",
+        starts_at: 5.days.ago,
+        ends_at: 5.days.from_now,
+        description: "some description",
+        owner: users(:marek)
+      }
+    end
   end
 end

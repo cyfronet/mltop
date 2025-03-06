@@ -3,6 +3,10 @@ require "test_helper"
 
 module TestSets
   class LeaderboardsControllerTest < ActionDispatch::IntegrationTest
+    def setup
+      in_challenge!
+    end
+
     test "should get index" do
       get test_set_leaderboard_path(test_set_id: test_sets("flores"))
       assert_response :success

@@ -56,6 +56,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "challenges", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "owner_id", null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_challenges_on_owner_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.string "token_digest"
     t.bigint "hypothesis_id", null: false
@@ -192,6 +202,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "challenges", "users", column: "owner_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"
   add_foreign_key "evaluations", "users", column: "creator_id"

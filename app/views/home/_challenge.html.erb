@@ -1,0 +1,13 @@
+<li class="col-span-2 divide-y divide-gray-200 rounded-lg shadow-sm m-5 p-5">
+  <%= link_to "/#{ChallengeSlug.encode(challenge.id)}", class: "flex items-center justify-between gap-4 no-underline" do %>
+    <h3 class="truncate font-bold">
+      <%= challenge.name %>
+    </h3>
+    <span class="text-sm whitespace-nowrap">
+      <%= l(challenge.starts_at, format: :short) %> - <%= l(challenge.ends_at, format: :short) %>
+    </span>
+  <% end %>
+  <div class="mt-2 line-clamp-5">
+    <%= challenge.description %>
+  </div>
+</li>
