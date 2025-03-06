@@ -2,6 +2,7 @@ class Challenge < ApplicationRecord
   belongs_to :owner, required: true, class_name: "User"
 
   has_many :models, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 
   has_rich_text :description
 
