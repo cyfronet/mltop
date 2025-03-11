@@ -1,6 +1,7 @@
 class TestSetEntry < ApplicationRecord
-  belongs_to :test_set
-  belongs_to :task
+  belongs_to :task_test_set
+  has_one :test_set, through: :task_test_set
+  has_one :task, through: :task_test_set
 
   has_many :hypotheses, dependent: :destroy
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_124705) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_10_123030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -179,13 +179,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_124705) do
   create_table "test_set_entries", force: :cascade do |t|
     t.string "source_language", null: false
     t.string "target_language", null: false
-    t.bigint "test_set_id", null: false
-    t.bigint "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_language", "target_language", "test_set_id", "task_id"], name: "idx_on_source_language_target_language_test_set_id__e10c5b6230", unique: true
-    t.index ["task_id"], name: "index_test_set_entries_on_task_id"
-    t.index ["test_set_id"], name: "index_test_set_entries_on_test_set_id"
+    t.bigint "task_test_set_id", null: false
+    t.index ["task_test_set_id"], name: "index_test_set_entries_on_task_test_set_id"
   end
 
   create_table "test_sets", force: :cascade do |t|
@@ -221,6 +218,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_124705) do
   add_foreign_key "scores", "metrics"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
-  add_foreign_key "test_set_entries", "tasks"
-  add_foreign_key "test_set_entries", "test_sets"
 end
