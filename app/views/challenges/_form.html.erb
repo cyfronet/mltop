@@ -1,0 +1,30 @@
+<%# locals: (challenge:, tasks:) %>
+
+<%= form_with(model: challenge, class: "contents") do |form| %>
+  <div class="space-y-12">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <%= form.text_field :name, wrapper: "sm:col-span-4" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
+      <%= form.date_field :start_date, wrapper: "sm:col-span-1" %>
+      <%= form.date_field :end_date, wrapper: "sm:col-span-1" %>
+      <%= form.hidden_field :owner_id, value: Current.user.id %>
+      <div class="w-80">
+        <%= form.grouped_collection_select :test_set_entry_ids, @tasks, :test_set_entries, :name, :id, :full_name, {label: { text: "Test set entries"} }, multiple: true, include_blank: false do |b| %>
+          <div class="relative flex gap-x-3">
+            <div class="flex h-6 items-center">
+              <%= b.check_box %>
+            </div>
+            <div class="text-sm leading-6">
+              <%= b.label(class: "font-medium") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 mb-2 flex items-center justify-end gap-x-6">
+    <%= link_to "Cancel", challenges_path, class: "btn btn-secondary-outline" %>
+    <%= form.submit %>
+  </div>
+<% end %>

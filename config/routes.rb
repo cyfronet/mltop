@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   end
 
   resources :external_submissions, only: :index
+  resources :challenges
 
   namespace :admin do
     resources :tasks
