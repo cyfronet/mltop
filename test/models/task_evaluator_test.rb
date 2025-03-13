@@ -1,7 +1,7 @@
 require "test_helper"
 
-class TaskTest < ActiveSupport::TestCase
-  test "#matching_task_evaluator validation" do
+class TaskEvaluatorTest < ActiveSupport::TestCase
+  test "#evaluator_compatibility validation" do
     task = tasks(:st) # audio, text
 
     wrong_input = build(:evaluator, from: "video")

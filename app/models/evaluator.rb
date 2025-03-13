@@ -12,8 +12,4 @@ class Evaluator < ApplicationRecord
   enum :to, Task::TYPES, prefix: true
 
   def to_s = name
-
-  def self.matching_task(task)
-    Evaluator.where(from: [ task.from, nil ], to: task.to)
-  end
 end

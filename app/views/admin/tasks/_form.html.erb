@@ -1,4 +1,4 @@
-<%# locals: (task:, matching_evaluators:) %>
+<%# locals: (task:, evaluators:) %>
 
 <%= form_with(model: task, url: [:admin, task], class: "contents", data: { controller: "update-evaluators" }) do |form| %>
   <div class="space-y-12">
@@ -16,7 +16,7 @@
         { include_blank: true, wrapper: "sm:col-span-1" },
         { data: { action: "change->update-evaluators#updateEvaluators", update_evaluators_target: "to" } }
       %>
-      <%= form.collection_select :evaluator_ids, matching_evaluators || [], :id, :name,
+      <%= form.collection_select :evaluator_ids, evaluators || [], :id, :name,
         { multiple: true, wrapper: "sm:col-span-2" },
         { data: { update_evaluators_target: "evaluators" } } %>
     </div>

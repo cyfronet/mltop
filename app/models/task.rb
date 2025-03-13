@@ -30,4 +30,8 @@ class Task < ApplicationRecord
   def to_s
     "#{name} (#{slug})"
   end
+
+  def compatible_evaluators
+    Evaluator.where(from: [ from, nil ], to:)
+  end
 end

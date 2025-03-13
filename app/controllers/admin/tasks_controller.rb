@@ -12,7 +12,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   def new
     @task = Task.new
-    @matching_evaluator = Evaluator.all
+    @evaluators = Evaluator.all
   end
 
   def create
@@ -26,7 +26,7 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def edit
-    @matching_evaluator = Evaluator.matching_task(@task)
+    @evaluators = @task.compatible_evaluators
   end
 
   def update

@@ -3,9 +3,9 @@ class TaskEvaluator < ApplicationRecord
   belongs_to :evaluator
 
   validates :evaluator, uniqueness: { scope: :task_id }
-  validate :matching_task_evaluator
+  validate :evaluator_compatibility
 
-  def matching_task_evaluator
+  def evaluator_compatibility
     if evaluator.from && evaluator.from != task.from
       errors.add(:evaluator, "Input modality of evaluator does not match task")
     end
