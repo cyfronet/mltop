@@ -108,3 +108,20 @@ production:
     <<: *primary_production
     database: mltop_production_cable
     migrations_paths: db/cable_migrate
+
+iwslt:
+  primary: &primary_iwslt
+    <<: *default
+    database: mltop_iwslt
+  cache:
+    <<: *primary_iwslt
+    database: mltop_iwslt_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_iwslt
+    database: mltop_iwslt_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_iwslt
+    database: mltop_iwslt_cable
+    migrations_paths: db/cable_migrate
