@@ -35,6 +35,11 @@ screbleu:
   tasks:
     - MT
     - ST
+  input_modality:
+    - text
+  output_modality:
+    - text
+  
 
 blueurt:
   name: BLEURT
@@ -70,6 +75,10 @@ blueurt:
   tasks:
     - MT
     - ST
+  input_modality:
+    - text
+  output_modality:
+    - text
 
 wer:
   name: WER
@@ -102,10 +111,20 @@ wer:
     - name: wer
       order: asc
   tasks:
-   - MT
-   - ST
+  #  - MT # not sure if it should be here - check Gdrive table
+  #  - ST
    - ASR
+   - TTS
    - LIPREAD
+  
+  input_modality:
+    - audio
+    - video
+    - text
+  output_modality:
+    - text
+    - audio
+
 
 rogue:
   name: ROGUE
@@ -140,6 +159,11 @@ rogue:
   tasks:
     - SUM
     - SSUM
+  input_modality:
+    - text
+    - audio
+  output_modality:
+    - text
 
 accuracy:
   name: Accuracy
@@ -174,6 +198,10 @@ accuracy:
       order: desc
   tasks:
     - SQA
+  input_modality:
+    - audio
+  output_modality:
+    - text
 
 exact-match:
   name: Exact Match
@@ -207,8 +235,11 @@ exact-match:
     - name: exact-match
       order: desc
   tasks:
-    - ASR
-    - LIPREAD
+    - SQA
+  input_modality:
+    - audio
+  output_modality:
+    - text
 
 f1-score:
   name: F1 Score
@@ -243,6 +274,11 @@ f1-score:
       order: desc
   tasks:
     - SQA
+  input_modality:
+    - audio
+  output_modality:
+    - text
+
 
 # NEW need to be tested!!!
 comet:
@@ -278,7 +314,13 @@ comet:
     - name: comet
       order: desc
   tasks:
-    - SQA
+    - MT
+    - ST
+  input_modality:
+    - text
+    - audio
+  output_modality:
+    - text
 
 # run-characTER__ares.sh
 characTER:
@@ -313,7 +355,13 @@ characTER:
     - name: characTER
       order: desc
   tasks:
-    - SQA
+    - ST
+    - MT
+  input_modality:
+    - text
+    - audio
+  output_modality:
+    - text
 
 # run-SLU-metrics__ares.sh
 slu:
@@ -354,7 +402,11 @@ slu:
     #     "standard_error": 0.007544324162844738
     # }
   tasks:
-    - SQA
+    - SLU
+  input_modality:
+    - audio
+  output_modality:
+    - text
 
 # run-SQA-HF-metrics__ares.sh
 sqa-hf:
@@ -392,6 +444,11 @@ sqa-hf:
       order: desc
   tasks:
     - SQA
+  
+  input_modality:
+    - audio
+  output_modality:
+    - text
 
 # run-TTS-wer-utmos__athena.sh
 # wer-utmos:

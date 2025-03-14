@@ -76,6 +76,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_102025) do
     t.string "host", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "from", enum_type: "format"
+    t.enum "to", enum_type: "format"
   end
 
   create_table "hypotheses", force: :cascade do |t|
@@ -93,7 +95,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_102025) do
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order", default: 0, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 

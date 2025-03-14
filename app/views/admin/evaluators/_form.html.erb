@@ -5,6 +5,8 @@
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "sm:col-span-4" %>
       <%= form.text_field :host, wrapper: "sm:col-span-4" %>
+      <%= form.select :from, Task::TYPES, include_blank: true, wrapper: "sm:col-span-4" %>
+      <%= form.select :to, Task::TYPES, include_blank: true, wrapper: "sm:col-span-4" %>
       <%= form.text_area :script, wrapper: "sm:col-span-4", class: "h-96" %>
     </div>
   </div>
