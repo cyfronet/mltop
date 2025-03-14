@@ -3,6 +3,8 @@ class Submissions::HypothesesController < ApplicationController
     @model = Current.user.models.find(params[:submission_id])
     @hypothesis = @model.hypothesis.new(hypothesis_params)
 
+    authorize(@hypothesis)
+
     if @hypothesis.save
       flash.now[:notice] = "Hypothesis succesfully created"
     else
@@ -13,6 +15,8 @@ class Submissions::HypothesesController < ApplicationController
 
   def destroy
     @hypothesis = Hypothesis.owned_by(Current.user).find(params[:id])
+
+    authorize(@hypothesis)
 
     if @hypothesis.destroy
       @empty_hypothesis = Hypothesis::Empty.new(@hypothesis.model, @hypothesis.test_set_entry)

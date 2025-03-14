@@ -16,7 +16,17 @@ module Mltop
   end
 
   def self.ranking_released?
-    Current.user&.meetween_member?
+    Current.user&.meetween_member? ||
+      Rails.configuration.ranking_released
+  end
+
+  def self.challenge_open?
+    Time.now.between?(Rails.configuration.challange_open_time,
+                      Rails.configuration.challange_close_time)
+  end
+
+  def self.challange_closed?
+    !Mltop.challange_open?
   end
 
   class Application < Rails::Application
@@ -39,5 +49,9 @@ module Mltop
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.hpc_client = "::Hpc::Client"
+
+    config.ranking_released = ENV["RANKING_RELEASED"] == "true"
+    config.challange_open_time = Time.parse(ENV["CHALLANGE_OPEN_TIME"]) rescue Time.now
+    config.challange_close_time = Time.parse(ENV["CHALLANGE_CLOSE_TIME"]) rescue Time.now  + 1.day
   end
 end
