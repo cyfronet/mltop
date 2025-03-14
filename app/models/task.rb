@@ -20,15 +20,20 @@ class Task < ApplicationRecord
   end
 
   accepts_nested_attributes_for :task_test_sets
+  validates_associated :task_evaluators
 
   TYPES = { video: "video", audio: "audio", text: "text" }
   enum :from, TYPES, prefix: true
   enum :to, TYPES, prefix: true
 
   scope :with_published_test_sets,
-        -> { includes(:test_sets).where(test_sets: { published: true }) }
+        -> { includes(:test_sets).where(test_sets: { published: [ true, nil ] }) }
 
   def to_s
     "#{name} (#{slug})"
+  end
+
+  def compatible_evaluators
+    Evaluator.where(from: [ from, nil ], to:)
   end
 end

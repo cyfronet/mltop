@@ -12,6 +12,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   def new
     @task = Task.new
+    @evaluators = Evaluator.all
   end
 
   def create
@@ -25,6 +26,7 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def edit
+    @evaluators = @task.compatible_evaluators
   end
 
   def update

@@ -8,5 +8,8 @@ class Evaluator < ApplicationRecord
 
   validates :name, :script, :host, presence: true
 
+  enum :from, Task::TYPES, prefix: true
+  enum :to, Task::TYPES, prefix: true
+
   def to_s = name
 end

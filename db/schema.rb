@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_10_123030) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_13_102025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -185,11 +185,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_123030) do
     t.index ["task_test_set_id"], name: "index_test_set_entries_on_task_test_set_id"
   end
 
+  create_table "test_set_tasks", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "test_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_test_set_tasks_on_task_id"
+    t.index ["test_set_id"], name: "index_test_set_tasks_on_test_set_id"
+  end
+
   create_table "test_sets", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "published", default: false
+    t.boolean "published", default: false, null: false
   end
 
   create_table "users", force: :cascade do |t|
