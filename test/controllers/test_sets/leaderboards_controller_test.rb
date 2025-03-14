@@ -3,6 +3,11 @@ require "test_helper"
 
 module TestSets
   class LeaderboardsControllerTest < ActionDispatch::IntegrationTest
+    setup do
+      # leaderboard is visible only for meetween members right now
+      sign_in_as("marek")
+    end
+
     test "should get index" do
       get test_set_leaderboard_path(test_set_id: test_sets("flores"))
       assert_response :success

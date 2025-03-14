@@ -2,6 +2,10 @@
 
 <%= mltop_title "Models" %>
 
+<% if @models.size.positive? %>
 <ul role="list" class="divide-y divide-gray-100">
   <%= render @models %>
 </ul>
+<% else %>
+  <%= render "layouts/empty", message: "Challange models rakings will be visible after submission deadline." %>
+<% end %>

@@ -8,10 +8,14 @@ class TestSets::LeaderboardsController < ApplicationController
     @tasks = @test_set.tasks
     @test_set_entries = @test_set.entries.for_task(selected_task)
 
-    @rows = Top::Row
-      .where(task: selected_task, test_set: @test_set)
-      .order(test_set: @test_set, metric: selected_metric, order: selected_order, test_set_entry: selected_test_set_entry)
+    if Mltop.ranking_released?
+      @rows = Top::Row
+        .where(task: selected_task, test_set: @test_set)
+        .order(test_set: @test_set, metric: selected_metric, order: selected_order, test_set_entry: selected_test_set_entry)
+    else
+      @rows = []
     end
+  end
 
   private
     def selected_task

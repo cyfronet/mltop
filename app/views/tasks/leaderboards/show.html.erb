@@ -11,5 +11,5 @@
 <% if @rows.size.positive? %>
   <%= render "leaderboard", task: @task, rows: @rows %>
 <% else %>
-  <%= render "layouts/empty", message: "No models selected for #{@task.name} task" %>
+  <%= render "layouts/empty", message: "Raking list will be released after challange submittion deadline." %>
 <% end %>

@@ -15,6 +15,10 @@ module Mltop
     Rails.configuration.hpc_client.constantize.for(user, host)
   end
 
+  def self.ranking_released?
+    Current.user&.meetween_member?
+  end
+
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0

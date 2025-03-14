@@ -2,10 +2,12 @@ class ModelsController < ApplicationController
   allow_unauthenticated_access
 
   def index
-    @models = Model.all
+    @models = Mltop.ranking_released? ? Model.all : []
   end
 
   def show
+    render_404 unless Mltop.ranking_released?
+
     @model = Model.includes(:tasks).find(params[:id])
 
     @tasks = @model.tasks
