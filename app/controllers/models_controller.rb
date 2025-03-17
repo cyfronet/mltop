@@ -2,13 +2,13 @@ class ModelsController < ApplicationController
   allow_unauthenticated_access
 
   def index
-    @models = Mltop.ranking_released? ? Model.all : []
+    @models = policy_scope(Model)
   end
 
   def show
-    render_404 unless Mltop.ranking_released?
-
     @model = Model.includes(:tasks).find(params[:id])
+
+    authorize(@model)
 
     @tasks = @model.tasks
     @task = find_by_query_param(@tasks, :tid)
