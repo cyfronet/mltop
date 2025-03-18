@@ -12,8 +12,8 @@ comet:
     #SBATCH --time=00:10:00
 
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/input $INPUT_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-comet__athena.sh
 
@@ -48,8 +48,8 @@ screbleu:
     #SBATCH --job-name=sacrebleu
     #SBATCH --time=00:02:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-sacrebleu__ares.sh
 
@@ -88,8 +88,8 @@ bleurt:
     #SBATCH --job-name=bleurt
     #SBATCH --time=00:10:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-bleurt__athena.sh
 
@@ -123,8 +123,8 @@ characTER:
     #SBATCH --job-name=characTER
     #SBATCH --time=00:10:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-characTER__ares.sh
 
