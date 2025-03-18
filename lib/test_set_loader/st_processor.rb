@@ -1,4 +1,4 @@
-class TaskLoader::StProcessor < TaskLoader::Processor
+class TestSetLoader::StProcessor < TestSetLoader::Processor
   def import!
     dir.each_child do |entry|
       next if entry.file?

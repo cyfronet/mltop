@@ -1,4 +1,4 @@
-class TaskLoader::Processor
+class TestSetLoader::Processor
   RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS2 LRS3 ].freeze
 
   attr_reader :dir
@@ -10,13 +10,13 @@ class TaskLoader::Processor
   def self.for(dir)
     clazz =
       case dir.basename.to_s
-      when "MT"  then TaskLoader::MtProcessor
-      when "ASR" then TaskLoader::AsrProcessor
-      when "SQA" then TaskLoader::SqaProcessor
-      when "ST"  then TaskLoader::StProcessor
-      when "SUM" then TaskLoader::SumProcessor
-      when "SSUM" then TaskLoader::SsumProcessor
-      else            TaskLoader::UnknownProcessor
+      when "MT"  then  TestSetLoader::MtProcessor
+      when "ASR" then  TestSetLoader::AsrProcessor
+      when "SQA" then  TestSetLoader::SqaProcessor
+      when "ST"  then  TestSetLoader::StProcessor
+      when "SUM" then  TestSetLoader::SumProcessor
+      when "SSUM" then TestSetLoader::SsumProcessor
+      else             TestSetLoader::UnknownProcessor
       end
 
     clazz.new(dir)

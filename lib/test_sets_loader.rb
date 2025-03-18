@@ -1,19 +1,20 @@
-class TaskLoader
+class TestSetsLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
   TASKS_DIR = File.join(Rails.root, "tmp/tasks")
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
 
-  def initialize(username:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR)
+  def initialize(username:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
     @username = username
     @hostname = hostname
     @remote_tasks_dir = remote_tasks_dir
+    @tasks_dir = tasks_dir
   end
 
   def import!
     note "Importing tasks started"
     Task.transaction do
-      Pathname.new(TASKS_DIR).children.select(&:directory?).each do |dir|
-        loader = TaskLoader::Processor.for(dir)
+      Pathname.new(@tasks_dir).children.select(&:directory?).each do |dir|
+        loader = TestSetLoader::Processor.for(dir)
         note "Importing #{dir.basename} using #{loader.class}"
 
         loader.import!
@@ -37,11 +38,11 @@ class TaskLoader
     end
 end
 
-require "task_loader/processor"
-require "task_loader/mt_processor"
-require "task_loader/asr_processor"
-require "task_loader/sqa_processor"
-require "task_loader/st_processor"
-require "task_loader/sum_processor"
-require "task_loader/ssum_processor"
-require "task_loader/unknown_processor"
+require "test_set_loader/processor"
+require "test_set_loader/mt_processor"
+require "test_set_loader/asr_processor"
+require "test_set_loader/sqa_processor"
+require "test_set_loader/st_processor"
+require "test_set_loader/sum_processor"
+require "test_set_loader/ssum_processor"
+require "test_set_loader/unknown_processor"

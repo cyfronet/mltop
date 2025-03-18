@@ -10,6 +10,12 @@ if Rails.env.local?
       task("db:migrate").invoke
       task("db:seed").invoke
 
+      TasksLoader.new(
+         File.join(Rails.root, "db", "data", "tasks.yml"),
+         File.join(Rails.root, "db", "data", "evaluators.yml")
+      ).import!
+
+
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
       User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",

@@ -1,4 +1,4 @@
-class TaskLoader::SqaProcessor < TaskLoader::Processor
+class TestSetLoader::SqaProcessor < TestSetLoader::Processor
   def import!
     dir.each_child do |entry|
       entry.basename.to_s == "SPOKENSQUAD" ? process_spokensquad(entry) : not_supported(entry)
