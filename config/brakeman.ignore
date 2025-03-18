@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "5ebb468cb47d184cffd1566379d4dcb1414d8aedf9726b12b4ba86dbec7017c9",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/test_set_loader/processor.rb",
+      "line": 106,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TestSetLoader::Processor",
+        "method": "archive_with_extensions"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Dangerous Eval",
       "warning_code": 13,
       "fingerprint": "6c24766c9545783ad0a2995f4294b7c439f6f76c8a9c47237685e34266b3887a",
@@ -27,43 +50,20 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "b1b21885015e30e767355429f0df8eb84b27453980937067f3bea3aa448e01ea",
+      "fingerprint": "eaf56e295a4b8afb31e3dcb77e7523924f6d1137bb2a0a74e062c134718c83d8",
       "check_name": "Execute",
       "message": "Possible command injection",
-      "file": "lib/task_loader.rb",
-      "line": 27,
+      "file": "lib/test_sets_loader.rb",
+      "line": 28,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "TaskLoader",
+        "class": "TestSetsLoader",
         "method": "synchronize_with_remote!"
       },
       "user_input": "username",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "ccb8084f0795e44c8467339771d608633608a1d1e1d1659aff7335c63e7c5bc5",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/task_loader/processor.rb",
-      "line": 106,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TaskLoader::Processor",
-        "method": "archive_with_extensions"
-      },
-      "user_input": "dir",
       "confidence": "Medium",
       "cwe_id": [
         77
