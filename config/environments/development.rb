@@ -9,6 +9,12 @@ end
 ENV["HOST"] ||= ENV.fetch("NGROK_HOST").blank? ? "localhost" : ENV.fetch("NGROK_HOST")
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = true
+    Bullet.bullet_logger = true
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
