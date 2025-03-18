@@ -7,8 +7,8 @@ class Submissions::TasksController < ApplicationController
   end
 
   def show
-    @model = Current.user.models.find(params[:submission_id])
-    @task = @model.tasks.with_published_test_sets.find(params[:id])
+    @model = Current.user.models.includes(hypothesis: [ :input_attachment, :test_set_entry, evaluations: [ :scores, evaluator: :metrics ] ]).find(params[:submission_id])
+    @task = @model.tasks.with_published_test_sets.includes(test_sets: [ entries: :input_attachment ]).find(params[:id])
     @evaluators = @task.evaluators
   end
 

@@ -6,7 +6,7 @@ class TestSetsController < ApplicationController
   end
 
   def show
-    @test_set = TestSet.published.find(params[:id])
+    @test_set = TestSet.published.preload(entries: [ :input_attachment, :task ]).find(params[:id])
     @tasks = @test_set.tasks
   end
 end

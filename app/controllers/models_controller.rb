@@ -2,7 +2,7 @@ class ModelsController < ApplicationController
   allow_unauthenticated_access
 
   def index
-    @models = Model.all
+    @models = Model.includes(:owner).all
   end
 
   def show

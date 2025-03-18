@@ -1,11 +1,12 @@
 class Admin::TestSetsController < Admin::ApplicationController
-  before_action :find_test_set, only: %i[edit update destroy show]
+  before_action :find_test_set, only: %i[edit update destroy]
 
   def index
     @test_sets = TestSet.all
   end
 
   def show
+    @test_set = TestSet.includes(entries: [ :input_attachment, :groundtruth_attachment ]).find(params[:id])
   end
 
   def new

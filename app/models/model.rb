@@ -15,7 +15,7 @@ class Model < ApplicationRecord
   scope :external, -> { where(owner: User.external) }
 
   scope :with_not_evaluated_hypothesis, -> do
-    includes(hypothesis: :evaluations)
+    includes(hypothesis: [ :evaluations, :input_attachment, test_set_entry: [ :task, :input_attachment ] ])
       .where.not(hypothesis: { id: nil })
       .where(hypothesis: { evaluations: { id: nil } })
   end
