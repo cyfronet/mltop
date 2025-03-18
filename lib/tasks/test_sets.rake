@@ -1,8 +1,8 @@
 namespace :test_sets do
   task :synchronize, [ :user_login ] => [ :environment ] do |t, args|
-    require "task_loader"
+    require "test_sets_loader"
 
-    loader = TaskLoader.new(username: args.fetch(:user_login))
+    loader = TestSetsLoader.new(username: args.fetch(:user_login))
 
     loader.synchronize_with_remote!
 
