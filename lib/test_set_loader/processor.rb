@@ -16,6 +16,7 @@ class TestSetLoader::Processor
       when "ST"  then  TestSetLoader::StProcessor
       when "SUM" then  TestSetLoader::SumProcessor
       when "SSUM" then TestSetLoader::SsumProcessor
+      when "OFFLINE" then TestSetLoader::OfflineProcessor
       else             TestSetLoader::UnknownProcessor
       end
 

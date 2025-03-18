@@ -1,0 +1,147 @@
+comet:
+  name: Comet
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-gpu-a100
+    #SBATCH -p plgrid-gpu-a100
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=50G
+    #SBATCH --job-name=comet
+    #SBATCH --time=00:10:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/input $INPUT_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-comet__athena.sh
+
+    output=$(bash $calculator_script $SCRATCHDIR/input $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: athena.cyfronet.pl
+  metrics:
+    - name: comet
+      order: desc
+  tasks:
+    - OFFLINE
+  from: text
+  to: text
+
+screbleu:
+  name: SacreBLEU
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-cpu
+    #SBATCH -p plgrid
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=512M
+    #SBATCH --job-name=sacrebleu
+    #SBATCH --time=00:02:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-sacrebleu__ares.sh
+
+    output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: ares.cyfronet.pl
+  metrics:
+    - name: bleu
+      order: desc
+    - name: chrf
+      order: desc
+    - name: ter
+      order: asc
+  tasks:
+    - OFFLINE
+  from: text
+  to: text
+
+bleurt:
+  name: BLEURT
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-gpu-a100
+    #SBATCH -p plgrid-gpu-a100
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --gres=gpu:1
+    #SBATCH --mem=50G
+    #SBATCH --job-name=bleurt
+    #SBATCH --time=00:10:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-bleurt__athena.sh
+
+    output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: athena.cyfronet.pl
+  metrics:
+    - name: bleurt
+      order: desc
+  tasks:
+    - OFFLINE
+  from: text
+  to: text
+
+characTER:
+  name: CharacTER
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-cpu
+    #SBATCH -p plgrid
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --mem=512M
+    #SBATCH --job-name=characTER
+    #SBATCH --time=00:10:00
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-characTER__ares.sh
+
+    output=$(bash $calculator_script $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: ares.cyfronet.pl
+  metrics:
+    - name: characTER
+      order: desc
+  tasks:
+    - OFFLINE
+  from: text
+  to: text
