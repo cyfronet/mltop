@@ -62,7 +62,6 @@ class ActiveSupport::TestCase
 
     factory(:test_set_entry) do |i|
       {
-        test_set: TestSet.last,
         source_language: "en",
         target_language: "pl",
         groundtruth: Rack::Test::UploadedFile.new(StringIO.new("input"), "text/plain", original_filename: "input.txt"),

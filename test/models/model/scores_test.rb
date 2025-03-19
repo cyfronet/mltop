@@ -7,7 +7,7 @@ class Model::ScoresTest < ActiveSupport::TestCase
     hypothesis_pl = create(:hypothesis, model:, test_set_entry: test_set_entries("flores_st_en_pl"))
     hypothesis_it = create(:hypothesis, model:, test_set_entry: test_set_entries("flores_st_en_it"))
     other_hypothesis = create(:hypothesis, model: other_model)
-    asr_test_entry = create(:test_set_entry, task: tasks(:asr), test_set: test_sets(:flores), source_language: "be", target_language: "bg")
+    asr_test_entry = create(:test_set_entry, task_test_set: task_test_sets(:flores_asr), source_language: "be", target_language: "bg")
     asr_hypothesis = create(:hypothesis, model:, test_set_entry: asr_test_entry)
 
     evaluation = create(:evaluation, hypothesis: hypothesis_pl,

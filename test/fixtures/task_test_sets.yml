@@ -1,0 +1,23 @@
+flores_st:
+  task: st
+  test_set: flores
+
+flores_st_en_it:
+  task: st
+  test_set: flores
+
+flores_st_pl_en:
+  task: st
+  test_set: flores
+
+unpublished_st:
+  task: st
+  test_set: unpublished
+
+flores_asr:
+  task: asr
+  test_set: flores
+
+mustc_st:
+  task: st
+  test_set: mustc
