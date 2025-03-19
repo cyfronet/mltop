@@ -11,8 +11,8 @@ screbleu:
     #SBATCH --job-name=sacrebleu
     #SBATCH --time=00:02:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-sacrebleu__ares.sh
 
@@ -39,7 +39,7 @@ screbleu:
     - text
   output_modality:
     - text
-  
+
 
 blueurt:
   name: BLEURT
@@ -55,8 +55,8 @@ blueurt:
     #SBATCH --job-name=bleurt
     #SBATCH --time=00:10:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-bleurt__athena.sh
 
@@ -93,8 +93,8 @@ wer:
     #SBATCH --job-name=wer
     #SBATCH --time=00:02:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-wer__ares.sh
 
@@ -116,7 +116,7 @@ wer:
    - ASR
    - TTS
    - LIPREAD
-  
+
   input_modality:
     - audio
     - video
@@ -139,8 +139,8 @@ rogue:
     #SBATCH --job-name=rourge
     #SBATCH --time=00:02:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-SUM-rouge__ares.sh
 
@@ -178,8 +178,8 @@ accuracy:
     #SBATCH --job-name=rourge
     #SBATCH --time=00:02:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-SQA-accuracy__ares.sh
 
@@ -216,8 +216,8 @@ exact-match:
     #SBATCH --job-name=exact-match
     #SBATCH --time
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-exact_match__ares.sh
 
@@ -254,8 +254,8 @@ f1-score:
     #SBATCH --job-name=f1-score
     #SBATCH --time=00:10:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-f1__ares.sh
 
@@ -295,8 +295,8 @@ comet:
     #SBATCH --time=00:10:00
 
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/input $INPUT_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-comet__athena.sh
 
@@ -336,8 +336,8 @@ characTER:
     #SBATCH --job-name=characTER
     #SBATCH --time=00:10:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-characTER__ares.sh
 
@@ -377,8 +377,8 @@ slu:
     #SBATCH --job-name=slu
     #SBATCH --time=01:00:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-f1__ares.sh
 
@@ -422,8 +422,8 @@ sqa-hf:
     #SBATCH --job-name=sqaHF
     #SBATCH --time=01:00:00
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-SQA-HF-metrics__ares.sh
 
@@ -444,7 +444,7 @@ sqa-hf:
       order: desc
   tasks:
     - SQA
-  
+
   input_modality:
     - audio
   output_modality:
@@ -466,8 +466,8 @@ sqa-hf:
 #     #SBATCH --time 24:00:00
 #
 #
-#     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $GROUNDTRUTH_URL
-#     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $HYPOTHESIS_URL
+#    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+#    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 #
 #     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-TTS-wer-utmos__athena.sh
 #
