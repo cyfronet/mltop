@@ -93,7 +93,7 @@ bleurt:
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-bleurt__athena.sh
 
-    output=$(bash $calculator_script -n $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    output=$(bash $calculator_script $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
       curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
