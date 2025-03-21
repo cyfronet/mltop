@@ -300,7 +300,7 @@ comet:
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-comet__athena.sh
 
-    output=$(bash $calculator_script $SCRATCHDIR/input $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    output=$(bash $calculator_script $SCRATCHDIR/input $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
 
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"
