@@ -6,7 +6,7 @@ class ModelPolicy < ApplicationPolicy
 
     private
       def models_visible_for_user?
-        Mltop.challenge_open? || user&.meetween_member?
+        Mltop.ranking_released? || user&.meetween_member?
       end
   end
 
@@ -20,6 +20,6 @@ class ModelPolicy < ApplicationPolicy
 
   protected
     def models_visible_for_user?
-      Mltop.challenge_open? || user&.meetween_member?
+      Mltop.ranking_released? || user&.meetween_member?
     end
 end
