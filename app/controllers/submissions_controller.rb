@@ -38,7 +38,7 @@ class SubmissionsController < ApplicationController
     end
 
     def model_params
-      params.required(:model).permit(:name, :description, task_ids: [])
+      params.required(:model).permit(:name, :description, :data_consent, task_ids: [])
     end
 
     def set_model

@@ -122,6 +122,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.datetime "updated_at", null: false
     t.bigint "challenge_id"
     t.index ["challenge_id"], name: "index_models_on_challenge_id"
+    t.boolean "data_consent", default: false, null: false
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
 
