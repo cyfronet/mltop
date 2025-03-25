@@ -1,0 +1,11 @@
+<div class="border border-gray-400 rounded-lg items-center mb-2 overflow-hidden bg-gray-100 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+  <p class="text-sm/6 text-gray-900 font-bold">
+    <% if Mltop.challenge_open? %>
+      The challenge is open. Time left: <%= challenge_time_left %> (<%= challenge_end_date %>)
+    <% elsif Mltop.challenge_finished? %>
+      The challenge is closed. Challenge dates are: <%= challenge_dates %>
+    <% else %>
+      The challenge has not yet started. It will start in <%= challenge_starts_at %>
+    <% end %>
+  </p>
+</div>
