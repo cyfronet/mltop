@@ -49,5 +49,15 @@ class ApplicationPolicy
     private
 
     attr_reader :user, :scope
+
+    def challenge_open_for_user?
+      Mltop.challenge_open? || user&.force_challenge_open
+    end
+  end
+
+  private
+
+  def challenge_open_for_user?
+    Mltop.challenge_open? || user&.force_challenge_open
   end
 end
