@@ -2,10 +2,10 @@
 
 <%= mltop_title "Models" %>
 
-<% if @models.size.positive? %>
+<% if @models.any? %>
 <ul role="list" class="divide-y divide-gray-100">
   <%= render @models %>
 </ul>
 <% else %>
-  <%= render "layouts/empty", message: "Challange models rakings will be visible after submission deadline." %>
+  <%= render "layouts/empty", message: "Challenge models rankings will be visible after submission deadline." %>
 <% end %>

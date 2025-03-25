@@ -21,12 +21,16 @@ module Mltop
   end
 
   def self.challenge_open?
-    Time.now.between?(Rails.configuration.challenge_open_time,
+    Time.current.between?(Rails.configuration.challenge_open_time,
                       Rails.configuration.challenge_close_time)
   end
 
   def self.challenge_closed?
     !Mltop.challenge_open?
+  end
+
+  def self.challenge_finished?
+    Time.current.after?(Rails.configuration.challenge_close_time)
   end
 
   class Application < Rails::Application
@@ -51,7 +55,7 @@ module Mltop
     config.hpc_client = "::Hpc::Client"
 
     config.ranking_released = ENV["RANKING_RELEASED"] == "true"
-    config.challenge_open_time = Time.parse(ENV["CHALLENGE_OPEN_TIME"]) rescue Time.now
-    config.challenge_close_time = Time.parse(ENV["CHALLENGE_CLOSE_TIME"]) rescue Time.now  + 1.day
+    config.challenge_open_time = Time.parse(ENV["CHALLENGE_OPEN_TIME"]) rescue Time.current
+    config.challenge_close_time = Time.parse(ENV["CHALLENGE_CLOSE_TIME"]) rescue Time.current + 1.day
   end
 end

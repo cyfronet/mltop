@@ -18,6 +18,26 @@ class ModelPolicy < ApplicationPolicy
     models_visible_for_user?
   end
 
+  def new?
+    challenge_open_for_user?
+  end
+
+  def create?
+    challenge_open_for_user?
+  end
+
+  def edit?
+    challenge_open_for_user?
+  end
+
+  def update?
+    challenge_open_for_user?
+  end
+
+  def destroy?
+    challenge_open_for_user?
+  end
+
   protected
     def models_visible_for_user?
       Mltop.ranking_released? || user&.meetween_member?

@@ -4,7 +4,7 @@
   <div class="flex flex-wrap items-center justify-between mx-3 py-2 sm:flex-nowrap">
     <div>
       <p class="text-base font-semibold leading-6">
-        <%= link_to test_set.name, test_set, class: "hover:unerline" %>
+        <%= link_to_if policy(test_set).show?, test_set.name, test_set, class: "hover:unerline" %>
       </p>
       <div class="flex items-center gap-x-2 text-xs leading-5 text-gray-500">
         <p>Created <time class="font-bold" datetime="<%= test_set.created_at %>"><%= time_ago_in_words test_set.created_at %> ago</time></p>
