@@ -13,6 +13,10 @@
   </p>
 </div>
 
-<ul role="list">
-  <%= render @test_sets %>
-</ul>
+<% if @test_sets.any? %>
+  <ul role="list">
+    <%= render @test_sets %>
+  </ul>
+<% else %>
+  <%= render "layouts/empty", message: "Test sets list will be released after challenge submition deadline." %>
+<% end %>
