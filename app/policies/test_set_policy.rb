@@ -6,6 +6,6 @@ class TestSetPolicy < ApplicationPolicy
   end
 
   def show?
-    challenge_open_for_user? || user&.meetween_member?
+    challenge_open_for_user?
   end
 end

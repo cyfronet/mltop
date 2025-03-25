@@ -2,7 +2,7 @@ class SubmissionsController < ApplicationController
   before_action :set_and_authorize_model, only: [ :show, :update ]
 
   def index
-    @models = policy(Model).show? ? Current.user.models : Model.none
+    @models = Current.user.models
   end
 
   def show

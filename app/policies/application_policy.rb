@@ -51,13 +51,13 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def challenge_open_for_user?
-      Mltop.challenge_open? || user&.force_challenge_open
+      Mltop.challenge_open? || user&.force_challenge_open || user&.meetween_member?
     end
   end
 
   private
 
   def challenge_open_for_user?
-    Mltop.challenge_open? || user&.force_challenge_open
+    Mltop.challenge_open? || user&.force_challenge_open || user&.meetween_member?
   end
 end

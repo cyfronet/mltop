@@ -15,5 +15,5 @@
     <%= render partial: "submission", collection: @models, as: :model %>
   </ul>
 <% else %>
-  <%= render "layouts/empty", message: "You do not have any submissions or the challenge is not open." %>
+  <%= render "layouts/empty", message: "You do not have any submissions for this challenge." %>
 <% end %>
