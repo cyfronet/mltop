@@ -1,8 +1,8 @@
 class SubmissionsController < ApplicationController
-  before_action :set_model, only: [ :show, :update ]
+  before_action :set_and_authorize_model, only: [ :show, :update ]
 
   def index
-    @models = Current.user.models
+    @models = policy(Model).show? ? Current.user.models : Model.none
   end
 
   def show
@@ -11,11 +11,13 @@ class SubmissionsController < ApplicationController
 
   def new
     @model = Current.user.models.new
+    authorize(@model)
     @tasks = Task.all
   end
 
   def create
     @model = Current.user.models.new(model_params)
+    authorize(@model)
 
     if @model.save
       redirect_to submission_path(@model), notice: "Model created"
@@ -41,7 +43,8 @@ class SubmissionsController < ApplicationController
       params.required(:model).permit(:name, :description, task_ids: [])
     end
 
-    def set_model
+    def set_and_authorize_model
       @model = Current.user.models.find(params[:id])
+      authorize(@model)
     end
 end
