@@ -39,12 +39,13 @@ class SubmissionsController < ApplicationController
       @tasks = Task.all
       render view, status: :unprocessable_entity
     end
+
     def model_params
-      params.required(:model).permit(:name, :description, task_ids: [])
+      params.required(:model).permit(:name, :description, :data_consent, task_ids: [])
     end
 
     def set_and_authorize_model
       @model = Current.user.models.find(params[:id])
-      authorize(@model)
+      authorize(@model, :edit?)
     end
 end

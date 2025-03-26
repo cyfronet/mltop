@@ -82,16 +82,16 @@ module FormBuilders
       custom_opts, opts = partition_custom_opts(options)
       classes = apply_style_classes(CHECKBOX_STYLE, custom_opts, method)
 
-      check = @template.content_tag "div", class: "flex h-6 items-center" do
-        super(method, opts.merge(class: classes), checked_value, unchecked_value)
-      end
-
-      label = @template.content_tag "div", class: "text-sm leading-6" do
+      label = @template.content_tag "span" do
         item_label(method, custom_opts[:label], options)
       end
 
+      check = @template.content_tag "div", class: "flex items-center space-x-2" do
+        super(method, opts.merge(class: classes), checked_value, unchecked_value) + label
+      end
+
       @template.content_tag "div", class: custom_opts[:wrapper] do
-        check + label + error_label(method)
+        check + error_label(method)
       end
     end
 

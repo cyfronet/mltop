@@ -1,10 +1,16 @@
 <%# locals: (model:) %>
 
-<%= form_with(model:, url:model.new_record? ? submissions_path : submission_path(@model), class: "contents") do |form| %>
+<%= form_with(model:, url: model.new_record? ? submissions_path : submission_path(model), class: "contents") do |form| %>
   <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "col-span-full" %>
       <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
+
+
+      <h3 class="text-sm font-semibold leading-6">Consents</h3>
+      <div class="col-span-full">
+        <%= form.check_box :data_consent, label: { text: data_consent_description, class: "text-sm leading-6 font-medium"}, wrapper: "mt-2" %>
+      </div>
 
       <fieldset>
         <legend class="text-sm font-semibold leading-6">Compatibility map</legend>
