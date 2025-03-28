@@ -39,5 +39,18 @@ if Rails.env.local?
       end
       loader.import!
     end
+
+    task :synchronize, [ "user_login" ] => [ :environment ] do |t, args|
+      require "test_sets_loader"
+
+      loader = TestSetsLoader.new(
+        username: args.fetch(:user_login),
+        remote_tasks_dir: "/net/pr2/projects/plgrid/plggmeetween/IWSLT25",
+        tasks_dir: File.join(Rails.root, "tmp/IWSLT25/tasks")
+      )
+
+      loader.synchronize_with_remote!
+      loader.import!
+    end
   end
 end
