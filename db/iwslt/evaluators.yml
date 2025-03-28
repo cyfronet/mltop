@@ -10,14 +10,16 @@ comet:
     #SBATCH --mem=50G
     #SBATCH --job-name=comet
     #SBATCH --time=00:10:00
+    #SBATCH --output /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/comet-%j.out
+    #SBATCH --error /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/comet-%j.err
 
-    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/input $INPUT_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/internal $INTERNAL_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
 
     calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-comet__athena.sh
 
-    output=$(bash $calculator_script $SCRATCHDIR/input $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+    output=$(bash $calculator_script $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/internal $SCRATCHDIR/hyp $SCRATCHDIR/ref)
 
     if [ "$?" -eq 0 ]; then
       echo "Submitting output: $output"

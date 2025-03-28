@@ -79,14 +79,21 @@ class TestSetLoader::Processor
         warning "Entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language} already exists."
       else
         info "Creating entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language}"
-        input, groundtruth = block.call
+        input, groundtruth, internal = block.call
 
-        test_set.entries.create!(
+        hsh = {
           task:,
           source_language:,
           target_language:,
           input: { io: input.open, filename: input.basename },
-          groundtruth: { io: groundtruth.open, filename: groundtruth.basename })
+          groundtruth: { io: groundtruth.open, filename: groundtruth.basename }
+        }
+
+        if internal
+          hsh[:internal] = { io: internal.open, filename: internal.basename }
+        end
+
+        test_set.entries.create!(hsh)
       end
     end
 
