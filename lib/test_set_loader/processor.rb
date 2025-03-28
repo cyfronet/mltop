@@ -46,11 +46,11 @@ class TestSetLoader::Processor
     end
 
     def language_process(dir, &block)
-      name = dir.basename.to_s
-      test_set = test_sets(name, published: !RESTRICTED_TEST_SETS.include?(name.upcase))
+      test_set = test_sets(dir)
 
       dir.each_child do |entry|
         next if entry.file?
+        name = dir.basename.to_s
 
         block.call(test_set, name, entry)
       end
@@ -64,11 +64,14 @@ class TestSetLoader::Processor
       error "Test set #{entry.basename} not supported yet for #{slug}"
     end
 
-    def test_sets(name, published:)
+    def test_sets(dir)
+      name = dir.basename.to_s
+      description = child_with_extension(dir, "_description.txt")&.read
+
       TestSet.find_or_create_by!(name:) do |ts|
         ts.assign_attributes(
-          description: "TODO: please update test set description",
-          published:
+          description: description || "TODO: please update test set description",
+          published: !RESTRICTED_TEST_SETS.include?(name.upcase)
         )
       end
     end
