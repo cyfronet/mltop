@@ -6,6 +6,7 @@ class TestSetEntry < ApplicationRecord
   has_many :hypotheses, dependent: :destroy
 
   has_one_attached :input
+  has_one_attached :internal
   has_one_attached :groundtruth
 
   validates :input, presence: true

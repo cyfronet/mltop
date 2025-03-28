@@ -93,11 +93,12 @@ class Evaluation < ApplicationRecord
           "INPUT_URL=#{url_for(hypothesis.test_set_entry.input)}",
           "GROUNDTRUTH_URL=#{url_for(hypothesis.test_set_entry.groundtruth)}",
           "HYPOTHESIS_URL=#{url_for(hypothesis.input)}",
+          hypothesis.test_set_entry.internal.attached? ? "INTERNAL_URL=#{url_for(hypothesis.test_set_entry.internal)}" : nil,
           "RESULTS_URL=#{evaluation_scores_url(self)}",
           "SOURCE_LANGUAGE=#{hypothesis.test_set_entry.source_language}",
           "TARGET_LANGUAGE=#{hypothesis.test_set_entry.target_language}",
           "TOKEN=#{new_token}"
-        ]
+        ].compact
       }
     end
 end
