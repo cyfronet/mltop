@@ -1,5 +1,6 @@
 class Model::TaskEvaluation::TestSetEvaluation
-  def initialize(model, test_set)
+  def initialize(task, model, test_set)
+    @task = task
     @model = model
     @test_set = test_set
   end
@@ -12,7 +13,9 @@ class Model::TaskEvaluation::TestSetEvaluation
       .map { |h| [ h.test_set_entry_id, h ] }
       .to_h
 
-    @test_set.entries.map { |e| hypothesis[e.id] || Hypothesis::Empty.new(@model, e) }
+    @test_set.entries
+      .select { |e| e.task_id == @task.id }
+      .map { |e| hypothesis[e.id] || Hypothesis::Empty.new(@model, e) }
   end
 
   private

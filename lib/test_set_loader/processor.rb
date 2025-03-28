@@ -17,6 +17,9 @@ class TestSetLoader::Processor
       when "SUM" then  TestSetLoader::SumProcessor
       when "SSUM" then TestSetLoader::SsumProcessor
       when "OFFLINE" then TestSetLoader::OfflineProcessor
+      when "IFLONG" then TestSetLoader::IflongProcessor
+      when "IFSHORT" then TestSetLoader::IfshortProcessor
+      when "MODELCOMPRESSION" then TestSetLoader::ModelCompressionProcessor
       else             TestSetLoader::UnknownProcessor
       end
 
@@ -62,7 +65,7 @@ class TestSetLoader::Processor
     end
 
     def not_supported(entry)
-      error "Test set #{entry.basename} not supported yet for #{slug}"
+      error "Test set #{entry.basename} not supported for #{slug}"
     end
 
     def test_sets(name, published:)

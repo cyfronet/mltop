@@ -1,3 +1,47 @@
+if:
+  name: Instruction-Following
+  script: |
+    #!/bin/bash -l
+
+    #SBATCH -A plgmeetween2025-gpu-a100
+    #SBATCH -p plgrid-gpu-a100
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --gres=gpu:1
+    #SBATCH --mem=50G
+    #SBATCH --job-name=IF
+    #SBATCH --output /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/if-%j.out
+    #SBATCH --error /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/if-%j.err
+
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
+    curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
+
+    calculator_script=/net/pr2/projects/plgrid/plggmeetween/evaluation/run-IWSLT25-IF__athena.sh
+
+    output=$(bash $calculator_script $SCRATCHDIR/input $SOURCE_LANGUAGE $TARGET_LANGUAGE $SCRATCHDIR/hyp $SCRATCHDIR/ref)
+
+    if [ "$?" -eq 0 ]; then
+      echo "Submitting output: $output"
+      curl -X POST $RESULTS_URL -L --location-trusted -H "Content-Type:application/json" -H "Authorization:Token $TOKEN" -d "$output"
+    else
+      echo "Error while calculating scores"
+      exit 1
+    fi
+  host: athena.cyfronet.pl
+  metrics:
+    - name: SQA-BERTScore
+      order: desc
+    - name: SSUM-BERTScore
+      order: desc
+    - name: ASR-WER
+      order: asc
+    - name: ST-COMET
+      order: asc
+  tasks:
+    - IFLONG
+    - IFSHORT
+  to: text
+
 comet:
   name: Comet
   script: |
@@ -31,10 +75,10 @@ comet:
   host: athena.cyfronet.pl
   metrics:
     - name: comet
-      order: desc
+      order: asc
   tasks:
     - OFFLINE
-  from: text
+    - MODELCOMPRESSION
   to: text
 
 screbleu:
@@ -49,6 +93,8 @@ screbleu:
     #SBATCH --mem=512M
     #SBATCH --job-name=sacrebleu
     #SBATCH --time=00:02:00
+    #SBATCH --output /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/sacrebleu-%j.out
+    #SBATCH --error /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/sacrebleu-%j.err
 
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
@@ -73,7 +119,6 @@ screbleu:
       order: asc
   tasks:
     - OFFLINE
-  from: text
   to: text
 
 bleurt:
@@ -89,6 +134,8 @@ bleurt:
     #SBATCH --mem=50G
     #SBATCH --job-name=bleurt
     #SBATCH --time=00:10:00
+    #SBATCH --output /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/bleurt-%j.out
+    #SBATCH --error /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/bleurt-%j.err
 
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
@@ -106,10 +153,9 @@ bleurt:
   host: athena.cyfronet.pl
   metrics:
     - name: bleurt
-      order: desc
+      order: asc
   tasks:
     - OFFLINE
-  from: text
   to: text
 
 characTER:
@@ -124,6 +170,8 @@ characTER:
     #SBATCH --mem=512M
     #SBATCH --job-name=characTER
     #SBATCH --time=00:10:00
+    #SBATCH --output /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/character-%j.out
+    #SBATCH --error /net/pr2/projects/plgrid/plggmeetween/mltop/iwslt/character-%j.err
 
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/ref $GROUNDTRUTH_URL
     curl --retry 5 --retry-max-time 600 --retry-connrefused -L -o $SCRATCHDIR/hyp $HYPOTHESIS_URL
@@ -142,8 +190,7 @@ characTER:
   host: ares.cyfronet.pl
   metrics:
     - name: characTER
-      order: desc
+      order: asc
   tasks:
     - OFFLINE
-  from: text
   to: text

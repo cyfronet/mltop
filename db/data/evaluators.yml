@@ -39,7 +39,7 @@ screbleu:
     - text
   output_modality:
     - text
-  
+
 
 blueurt:
   name: BLEURT
@@ -71,7 +71,7 @@ blueurt:
   host: athena.cyfronet.pl
   metrics:
     - name: bleurt
-      order: desc
+      order: asc
   tasks:
     - MT
     - ST
@@ -116,7 +116,7 @@ wer:
    - ASR
    - TTS
    - LIPREAD
-  
+
   input_modality:
     - audio
     - video
@@ -444,7 +444,7 @@ sqa-hf:
       order: desc
   tasks:
     - SQA
-  
+
   input_modality:
     - audio
   output_modality:
