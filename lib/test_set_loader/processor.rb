@@ -16,7 +16,7 @@ class TestSetLoader::Processor
       when "ST"  then  TestSetLoader::StProcessor
       when "SUM" then  TestSetLoader::SumProcessor
       when "SSUM" then TestSetLoader::SsumProcessor
-      else             TestSetLoader::UnknownProcessor
+      else TestSetLoader::UnknownProcessor
       end
 
     clazz.new(dir)
@@ -61,7 +61,7 @@ class TestSetLoader::Processor
     end
 
     def not_supported(entry)
-      error "Test set #{entry.basename} not supported yet for #{slug}"
+      error "Test set #{entry.basename} not supported for #{slug}"
     end
 
     def test_sets(dir)
