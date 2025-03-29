@@ -1,5 +1,5 @@
-if Rails.env.local?
-  namespace :iwslt do
+namespace :iwslt do
+  if Rails.env.local?
     task :recreate, [ "user_login" ] => [ :environment ] do |t, args|
       task("db:drop").invoke
       system "rm -rf #{File.join(Rails.root, "storage", "*/")}"
@@ -39,18 +39,18 @@ if Rails.env.local?
       end
       loader.import!
     end
+  end
 
-    task :synchronize, [ "user_login" ] => [ :environment ] do |t, args|
-      require "test_sets_loader"
+  task :synchronize, [ "user_login" ] => [ :environment ] do |t, args|
+    require "test_sets_loader"
 
-      loader = TestSetsLoader.new(
-        username: args.fetch(:user_login),
-        remote_tasks_dir: "/net/pr2/projects/plgrid/plggmeetween/IWSLT25",
-        tasks_dir: File.join(Rails.root, "tmp/IWSLT25/tasks")
-      )
+    loader = TestSetsLoader.new(
+      username: args.fetch(:user_login),
+      remote_tasks_dir: "/net/pr2/projects/plgrid/plggmeetween/IWSLT25",
+      tasks_dir: File.join(Rails.root, "tmp/IWSLT25/tasks")
+    )
 
-      loader.synchronize_with_remote!
-      loader.import!
-    end
+    loader.synchronize_with_remote!
+    loader.import!
   end
 end
