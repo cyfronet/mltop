@@ -2,21 +2,20 @@ class SubmissionsController < ApplicationController
   before_action :set_model, only: [ :show, :update ]
 
   def index
-    @models = Current.user.models
+    @models = policy_scope(Model).where(owner: Current.user)
   end
 
   def show
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
   end
 
   def new
     @model = Current.user.models.new
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
   end
 
   def create
-    @model = Current.user.models.new(model_params)
-
+    @model = Current.user.models.new(model_params.merge(challenge: Current.challenge))
     if @model.save
       redirect_to submission_path(@model), notice: "Model created"
     else
@@ -34,9 +33,10 @@ class SubmissionsController < ApplicationController
 
   private
     def render_error(view)
-      @tasks = Task.all
+      @tasks = policy_scope(Task).all
       render view, status: :unprocessable_entity
     end
+
     def model_params
       params.required(:model).permit(:name, :description, task_ids: [])
     end
