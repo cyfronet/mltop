@@ -3,6 +3,7 @@ class Challenge < ApplicationRecord
 
   has_many :models, dependent: :destroy
   has_many :tasks, dependent: :nullify
+  has_many :test_sets, dependent: :nullify
 
   has_rich_text :description
 

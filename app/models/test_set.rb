@@ -1,6 +1,8 @@
 require "zip"
 
 class TestSet < ApplicationRecord
+  belongs_to :challenge, required: false
+
   has_many :entries, class_name: "TestSetEntry", dependent: :destroy do
     def for_task(task)
       where(task:)
