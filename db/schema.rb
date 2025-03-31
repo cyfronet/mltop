@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_13_102025) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_27_095051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -114,6 +114,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_13_102025) do
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
 
