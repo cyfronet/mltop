@@ -77,7 +77,8 @@ class ActiveSupport::TestCase
       {
         name: "Evaluator #{i}",
         host: "host",
-        script: "script"
+        script: "script",
+        challenge: challenges(:global)
       }
     end
 

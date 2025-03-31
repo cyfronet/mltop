@@ -2,7 +2,7 @@ class Admin::EvaluatorsController < Admin::ApplicationController
   before_action :find_evaluator, only: %i[ show edit update destroy ]
 
   def index
-    @evaluators = Evaluator.all
+    @evaluators = Evaluator.includes(:challenge).all
   end
 
   def show
@@ -10,6 +10,7 @@ class Admin::EvaluatorsController < Admin::ApplicationController
 
   def new
     @evaluator = Evaluator.new
+    @challenges = Challenge.all
   end
 
   def create
@@ -23,6 +24,7 @@ class Admin::EvaluatorsController < Admin::ApplicationController
   end
 
   def edit
+    @challenges = Challenge.all
   end
 
   def update
@@ -43,7 +45,7 @@ class Admin::EvaluatorsController < Admin::ApplicationController
 
   private
     def evaluator_params
-      params.required(:evaluator).permit(:name, :script, :host, :from, :to)
+      params.required(:evaluator).permit(:name, :script, :host, :from, :to, :challenge_id)
     end
 
     def find_evaluator
