@@ -108,6 +108,10 @@ class TestSetLoader::Processor
         if to_update.empty?
           info " input, groundtruth and internal files are the same"
         else
+          entry.input.purge if to_update[:input]
+          entry.groundtruth.purge if to_update[:groundtruth]
+          entry.internal.purge if to_update[:internal]
+
           entry.update!(to_update)
         end
       else
