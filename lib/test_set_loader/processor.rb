@@ -130,7 +130,7 @@ class TestSetLoader::Processor
     end
 
     def file_changed?(blob, io)
-      blob.checksum != ActiveStorage::Blob.new.send(:compute_checksum_in_chunks, io.open)
+      blob&.checksum != ActiveStorage::Blob.new.send(:compute_checksum_in_chunks, io.open)
     end
 
 
