@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_27_095051) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_27_101430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -158,6 +158,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_095051) do
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
   end
 
   create_table "test_set_entries", force: :cascade do |t|
@@ -205,6 +207,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_095051) do
   add_foreign_key "scores", "metrics"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
+  add_foreign_key "tasks", "challenges"
   add_foreign_key "test_set_entries", "tasks"
   add_foreign_key "test_set_entries", "test_sets"
 end
