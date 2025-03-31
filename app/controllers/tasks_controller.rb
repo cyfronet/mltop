@@ -4,11 +4,11 @@ class TasksController < ApplicationController
   helper_method :selected_order, :selected_metric, :selected_test_set
 
   def index
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
     @stats = Statistics.new
   end
 
   def show
-    @task = Task.with_published_test_sets.find(params[:id])
+    @task = policy_scope(Task).with_published_test_sets.find(params[:id])
   end
 end
