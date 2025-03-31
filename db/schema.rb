@@ -179,6 +179,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_101430) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "published", default: false, null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_test_sets_on_challenge_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -210,4 +212,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_101430) do
   add_foreign_key "tasks", "challenges"
   add_foreign_key "test_set_entries", "tasks"
   add_foreign_key "test_set_entries", "test_sets"
+  add_foreign_key "test_sets", "challenges"
 end
