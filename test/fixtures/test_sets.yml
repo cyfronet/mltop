@@ -1,11 +1,14 @@
 flores:
   name: FLORES
   published: true
+  challenge: global
 
 mustc:
   name: MUSTC
   published: true
+  challenge: global
 
 unpublished:
   name: Unpublished - should not be visible
   published: false
+  challenge: global

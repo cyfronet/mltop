@@ -9,6 +9,8 @@
       <p>created at: <time datetime="<%= test_set.created_at %>"><%= time_ago_in_words test_set.created_at %> ago</time></p>
       <%= dot %>
       <p>updated at:<time datetime="<%= test_set.updated_at %>"><%= time_ago_in_words test_set.updated_at %> ago</time></p>
+      <%= dot %>
+      <p>Challenge: <%= test_set.challenge&.name %></p>
     </div>
   </div>
   <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto">

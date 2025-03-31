@@ -59,7 +59,8 @@ class ActiveSupport::TestCase
 
     factory(:test_set) do |i|
       {
-        name: "Test set #{i}"
+        name: "Test set #{i}",
+        challenge: challenges(:global)
       }
     end
 
