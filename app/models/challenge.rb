@@ -1,6 +1,8 @@
 class Challenge < ApplicationRecord
   belongs_to :owner, required: true, class_name: "User"
 
+  has_many :models, dependent: :destroy
+
   has_rich_text :description
 
   validates :name, :starts_at, :ends_at, presence: true

@@ -7,6 +7,6 @@ class ExternalSubmissionsController < ApplicationController
   end
 
   def index
-    @models = Model.external.with_not_evaluated_hypothesis
+    @models = policy_scope(Model).external.with_not_evaluated_hypothesis
   end
 end

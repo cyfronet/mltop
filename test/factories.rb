@@ -18,7 +18,8 @@ class ActiveSupport::TestCase
       {
         owner: users("marek"),
         name: "model#{count}",
-        tasks: [ tasks("st") ]
+        tasks: [ tasks("st") ],
+        challenge: challenges(:global)
       }
     end
 

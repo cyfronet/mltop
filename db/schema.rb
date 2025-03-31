@@ -118,6 +118,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
 
