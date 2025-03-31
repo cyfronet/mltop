@@ -52,7 +52,8 @@ class ActiveSupport::TestCase
         name: "Task #{i}",
         slug: "task#{i}",
         from: "video",
-        to: "text"
+        to: "text",
+        challenge: challenges(:global)
       }
     end
 

@@ -171,6 +171,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
   end
 
   create_table "test_set_entries", force: :cascade do |t|
@@ -216,4 +218,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
   add_foreign_key "scores", "metrics"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
+  add_foreign_key "tasks", "challenges"
 end
