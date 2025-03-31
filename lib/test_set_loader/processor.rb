@@ -92,7 +92,7 @@ class TestSetLoader::Processor
 
         if input && file_changed?(entry.input_blob, input)
           info "  - input will be updated"
-          to_update[:groundtruth] = { io: input.open, filename: input.basename }
+          to_update[:input] = { io: input.open, filename: input.basename }
         end
 
         if groundtruth && file_changed?(entry.groundtruth_blob, groundtruth)
@@ -108,10 +108,6 @@ class TestSetLoader::Processor
         if to_update.empty?
           info " input, groundtruth and internal files are the same"
         else
-          entry.input.purge if to_update[:input]
-          entry.groundtruth.purge if to_update[:groundtruth]
-          entry.internal.purge if to_update[:internal]
-
           entry.update!(to_update)
         end
       else
