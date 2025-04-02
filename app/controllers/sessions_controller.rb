@@ -14,12 +14,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = user_provider.to_user
+    user = user_provider.to_user
+    if user.persisted?
       authenticated_as(user)
 
-      redirect_to post_authenticating_url, info: "Welcome back #{user.name}"
+      redirect_to post_authenticating_url, notice: "Welcome back #{user.name}"
     else
-      redirect_to root_path, alert: "Unable to authenticate"
+      redirect_to root_path, alert: "Unable to authenticate: #{user.errors.full_messages.join}"
     end
   end
 

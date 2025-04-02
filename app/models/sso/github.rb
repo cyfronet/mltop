@@ -6,7 +6,7 @@ module Sso
 
     def initialize(auth)
       @uid = auth.uid
-      @name = auth.info["name"]
+      @name = auth.info["name"] || auth.info["nickname"]
       @email = auth.info["email"]
     end
 

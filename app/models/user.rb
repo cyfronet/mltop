@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   scope :external, -> { where(without_role(:meetween_member)) }
 
+  validates :email, presence: true
+
   def credentials_valid?
     ssh_credentials.valid?
   end
