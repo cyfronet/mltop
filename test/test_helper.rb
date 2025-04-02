@@ -46,7 +46,7 @@ module ActiveSupport
 
     def github_sign_in_as(user)
       OmniAuth.config.add_mock(
-        "plgrid",
+        "github",
         uid: user.uid,
         info: {
           name: user.name,
