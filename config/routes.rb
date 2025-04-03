@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     resources :evaluators do
       resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]
     end
+
+    resources :participants, only: :index do
+      resources :hypotheses, only: :index, module: :participants
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
