@@ -7,7 +7,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/test_set_loader/processor.rb",
-      "line": 151,
+      "line": 106,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
       "render_path": null,
@@ -17,99 +17,6 @@
         "method": "archive_with_extensions"
       },
       "user_input": "dir",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Dangerous Eval",
-      "warning_code": 13,
-      "fingerprint": "6c24766c9545783ad0a2995f4294b7c439f6f76c8a9c47237685e34266b3887a",
-      "check_name": "Evaluation",
-      "message": "Dynamic string evaluated as code",
-      "file": "lib/form_builders/tailwind_form_builder.rb",
-      "line": 13,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
-      "code": "class_eval(\"          def #{field_method}(method, options = {})\\n            if options.delete(:tailwindified)\\n              super\\n            else\\n              text_like_field(#{field_method.inspect}, method, options)\\n            end\\n          end\\n\", \"lib/form_builders/tailwind_form_builder.rb\", (13 + 1))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TailwindFormBuilder",
-        "method": null
-      },
-      "user_input": null,
-      "confidence": "Weak",
-      "cwe_id": [
-        913,
-        95
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "eaf56e295a4b8afb31e3dcb77e7523924f6d1137bb2a0a74e062c134718c83d8",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/test_sets_loader.rb",
-      "line": 28,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TestSetsLoader",
-        "method": "synchronize_with_remote!"
-      },
-      "user_input": "username",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "ccb8084f0795e44c8467339771d608633608a1d1e1d1659aff7335c63e7c5bc5",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/task_loader/processor.rb",
-      "line": 106,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TaskLoader::Processor",
-        "method": "archive_with_extensions"
-      },
-      "user_input": "dir",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "d30e567daf972f0c147a6f2eae9aa835ddc286878270d14d016a1d8d1a1be135",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/iwslt_loader.rb",
-      "line": 27,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "IwsltLoader",
-        "method": "synchronize_with_remote!"
-      },
-      "user_input": "username",
       "confidence": "Medium",
       "cwe_id": [
         77
@@ -159,6 +66,30 @@
       "confidence": "Medium",
       "cwe_id": [
         77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "eca286f354cdfa29a61b70e1b4e45aba5a25459865c3647253c08e3fe562ea7f",
+      "check_name": "Evaluation",
+      "message": "Dynamic string evaluated as code",
+      "file": "lib/form_builders/tailwind_form_builder.rb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "class_eval(\"          def #{field_method}(method, options = {})\\n            if options.delete(:tailwindified)\\n              super\\n            else\\n              text_like_field(#{field_method.inspect}, method, options)\\n            end\\n          end\\n\", \"lib/form_builders/tailwind_form_builder.rb\", (14 + 1))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TailwindFormBuilder",
+        "method": null
+      },
+      "user_input": null,
+      "confidence": "Weak",
+      "cwe_id": [
+        913,
+        95
       ],
       "note": ""
     }

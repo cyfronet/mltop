@@ -4,10 +4,9 @@ class Submissions::HypothesesController < ApplicationController
     @hypothesis = @model.hypothesis.new(hypothesis_params)
 
     if @hypothesis.save
-      flash.now[:notice] = "Hypothesis succesfully created"
+      redirect_back fallback_location: model_path(@model), notice: "Hypothesis succesfully created"
     else
-      flash.now[:alert] = "Unable to create hypothesis"
-      render(:create, status: :bad_request)
+      redirect_back fallback_location: model_path(@model), alert: "Unable to create hypothesis"
     end
   end
 
@@ -24,6 +23,7 @@ class Submissions::HypothesesController < ApplicationController
 
   private
   def hypothesis_params
-    params.require(:hypothesis).permit(:test_set_entry_id, :input)
+    input = ActiveStorage::Blob.find_signed(params[:hypothesis][:input])
+    params.require(:hypothesis).permit(:test_set_entry_id).merge(input:)
   end
 end
