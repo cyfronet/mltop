@@ -4,7 +4,7 @@
   <%= mltop_nav do |nav| %>
     <%- nav.section "Model info", submission_path(model), condition: [ "submissions" ] %>
     <% model.tasks.each do |task| %>
-      <%- nav.section "#{task.slug} Hyphoteses", submission_task_path(model, task), condition: :exclusive %>
+      <%- nav.section "#{task.slug} Hypotheses", submission_task_path(model, task), condition: :exclusive %>
     <% end %>
   <% end %>
 </div>
