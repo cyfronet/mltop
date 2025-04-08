@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include RoleModel
+  include Users::Contribution
 
   encrypts :ssh_key, :ssh_certificate
   has_many :models, inverse_of: :owner, dependent: :destroy
@@ -14,6 +15,9 @@ class User < ApplicationRecord
     ssh_credentials.valid?
   end
 
+  def has_hypotheses?
+    models.map(&:hypothesis).flatten.any?
+  end
   private
     def ssh_credentials
       Plgrid::SshCredentials.new(ssh_key, ssh_certificate)
