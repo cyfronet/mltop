@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "5ebb468cb47d184cffd1566379d4dcb1414d8aedf9726b12b4ba86dbec7017c9",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/test_set_loader/processor.rb",
+      "line": 151,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TestSetLoader::Processor",
+        "method": "archive_with_extensions"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Dangerous Eval",
       "warning_code": 13,
       "fingerprint": "6c24766c9545783ad0a2995f4294b7c439f6f76c8a9c47237685e34266b3887a",
@@ -69,7 +92,76 @@
         77
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "d30e567daf972f0c147a6f2eae9aa835ddc286878270d14d016a1d8d1a1be135",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/iwslt_loader.rb",
+      "line": 27,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "IwsltLoader",
+        "method": "synchronize_with_remote!"
+      },
+      "user_input": "username",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "ddfd6289b9be272e1e618c3f273e659d486ae8be3bee8db8b24afac89f9f1ccb",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/admin/participants/hypotheses_controller.rb",
+      "line": 5,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(User.find(params[:participant_id]).all_hypothesis, :type => \"application/zip\", :filename => (\"user-#{User.find(params[:participant_id]).id}-hypotheses.zip\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::Participants::HypothesesController",
+        "method": "index"
+      },
+      "user_input": "User.find(params[:participant_id]).all_hypothesis",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "eaf56e295a4b8afb31e3dcb77e7523924f6d1137bb2a0a74e062c134718c83d8",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/test_sets_loader.rb",
+      "line": 28,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TestSetsLoader",
+        "method": "synchronize_with_remote!"
+      },
+      "user_input": "username",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
     }
   ],
-  "brakeman_version": "7.0.0"
+  "brakeman_version": "7.0.2"
 }
