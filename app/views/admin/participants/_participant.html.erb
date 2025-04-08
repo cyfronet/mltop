@@ -11,7 +11,12 @@
       <p>last login at:<time datetime="<%= participant.updated_at %>"><%= time_ago_in_words participant.updated_at %> ago</time></p>
     </div>
   </div>
-  <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto">
-    <%= link_to "Download all submissions", admin_participant_hypotheses_path(participant), class: "btn btn-primary", "data-turbo": false %>
-  </dl>
+
+  <% if participant.has_hypotheses? %>
+    <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto">
+      <%= link_to "Download all submissions", admin_participant_hypotheses_path(participant), class: "btn btn-primary", "data-turbo": false %>
+    </dl>
+  <% else %>
+    No hypotheses submitted
+  <% end %>
 </li>
