@@ -16,8 +16,8 @@ class Users::ContributionTest < ActiveSupport::TestCase
         test_set_entry: test_set_entries(:flores_asr_en_pl),
         model: model2,
         input: fixture_file_upload("ref.txt"))
-    expected_filename1 = [ model1.tasks.first.name, model1.name, hypothesis1.test_set_entry.test_set.name, hypothesis1.test_set_entry.to_s ].join("/")
-    expected_filename2 = [ model2.tasks.first.name, model2.name, hypothesis2.test_set_entry.test_set.name, hypothesis2.test_set_entry.to_s ].join("/")
+    expected_filename1 = [ "user-#{user.id}", model1.tasks.first.name, model1.name, hypothesis1.test_set_entry.test_set.name, hypothesis1.test_set_entry.to_s ].join("/")
+    expected_filename2 = [ "user-#{user.id}", model2.tasks.first.name, model2.name, hypothesis2.test_set_entry.test_set.name, hypothesis2.test_set_entry.to_s ].join("/")
 
     zip_path = user.all_hypothesis
 
