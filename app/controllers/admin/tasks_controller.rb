@@ -6,13 +6,14 @@ class Admin::TasksController < Admin::ApplicationController
   end
 
   def show
-    @task = Task.includes(test_sets: { entries: { input_attachment: :blob } }).find(params[:id])
+    @task = Task.includes(:challenge, test_sets: { entries: { input_attachment: :blob } }).find(params[:id])
     @test_sets_left = (TestSet.count - @task.test_sets.count).positive?
   end
 
   def new
     @task = Task.new
     @evaluators = Evaluator.all
+    @challenges = Challenge.all
   end
 
   def create
@@ -27,6 +28,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   def edit
     @evaluators = @task.compatible_evaluators
+    @challenges = Challenge.all
   end
 
   def update
@@ -48,7 +50,7 @@ class Admin::TasksController < Admin::ApplicationController
   private
     def task_params
       params.expect(task: [
-        :name, :slug, :info, :description, :from, :to, evaluator_ids: []
+        :name, :slug, :info, :description, :from, :to, :challenge_id, evaluator_ids: []
       ])
     end
 

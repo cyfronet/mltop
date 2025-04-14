@@ -38,6 +38,12 @@
               <% if Current.user.meetween_member? %>
                 <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
               <% end %>
+          <% end %>
+
+            <% if signed_in? %>
+              <% if Current.user.meetween_member? %>
+                <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
+              <% end %>
               <% if Current.user.admin? %>
                 <%- links.add "Adminland", admin_tasks_path, /\A\/admin\/.*/ %>
                 <%- links.add "Jobs", mission_control_jobs_path, /\A\/jobs\/.*/ %>
