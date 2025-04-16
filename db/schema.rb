@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_27_140225) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_15_095941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,7 +88,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_140225) do
     t.datetime "updated_at", null: false
     t.enum "from", enum_type: "format"
     t.enum "to", enum_type: "format"
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
   end
 
@@ -116,7 +116,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_140225) do
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
@@ -160,7 +160,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_140225) do
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
   end
 
@@ -181,7 +181,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_140225) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "published", default: false, null: false
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_test_sets_on_challenge_id"
   end
 
