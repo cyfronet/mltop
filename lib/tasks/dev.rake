@@ -10,27 +10,26 @@ if Rails.env.local?
       task("db:migrate").invoke
       task("db:seed").invoke
 
-      TasksLoader.new(
-         File.join(Rails.root, "db", "data", "tasks.yml"),
-         File.join(Rails.root, "db", "data", "evaluators.yml")
-      ).import!
-
-
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
       user = User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
                         roles: [ :admin ])
-      Challenge.create!(name: "Global",
-                        starts_at: 5.days.ago,
-                        ends_at: 1.month.from_now,
-                        owner: user
-                        ).tap do |challenge|
-                          challenge.description = "This is a global challenge"
-                        end
+      challenge = Challenge.create!(name: "Global",
+                                    starts_at: 5.days.ago,
+                                    ends_at: 1.month.from_now,
+                                    owner: user
+                                    ).tap do |challenge|
+                                      challenge.description = "This is a global challenge"
+                                    end
 
+      TasksLoader.new(
+         File.join(Rails.root, "db", "data", "tasks.yml"),
+         File.join(Rails.root, "db", "data", "evaluators.yml"),
+         challenge.id
+      ).import!
 
       puts "DB set up complete, initializing test sets.."
-      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login))
+      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login), challenge.id)
 
       puts "Test sets created, mocking data for ST"
       Rake::Task["dev:faked_st_models"].invoke
@@ -40,13 +39,15 @@ if Rails.env.local?
       owner = User.first
 
       task = Task.find_by(slug: "ST")
+      challenge = Challenge.find_by(name: "Global")
       hypotheses_ids =
         (1..(ENV["MODELS_COUNT"]&.to_i || 10)).map do |i|
           model = Model.create!(
             owner:,
             name: "#{task.name} - Model #{i + 1}",
             description: Faker::Lorem.paragraphs(number: 25).join(" "),
-            task_ids: [ task.id ]
+            task_ids: [ task.id ],
+            challenge:
           )
 
           TestSetEntry.where(task:).map do |entry|

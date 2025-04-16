@@ -3,8 +3,9 @@ class TestSetsLoader
   TASKS_DIR = File.join(Rails.root, "tmp/tasks")
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
 
-  def initialize(username:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
+  def initialize(username:, challenge_id:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
     @username = username
+    @challenge_id = challenge_id
     @hostname = hostname
     @remote_tasks_dir = remote_tasks_dir
     @tasks_dir = tasks_dir
@@ -14,7 +15,7 @@ class TestSetsLoader
     note "Importing tasks started"
     Task.transaction do
       Pathname.new(@tasks_dir).children.select(&:directory?).each do |dir|
-        loader = TestSetLoader::Processor.for(dir)
+        loader = TestSetLoader::Processor.for(dir, @challenge_id)
         note "Importing #{dir.basename} using #{loader.class}"
 
         loader.import!
