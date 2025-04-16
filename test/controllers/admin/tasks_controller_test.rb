@@ -20,7 +20,7 @@ class Admin::TasksControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference("Task.count") do
       post admin_tasks_url, params: { task: {
-        name: task.name,  slug: task.slug, from: task.from, to: task.to
+        name: task.name,  slug: task.slug, from: task.from, to: task.to, challenge_id: challenges(:global).id
       } }
     end
 

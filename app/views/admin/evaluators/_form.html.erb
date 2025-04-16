@@ -6,7 +6,7 @@
       <%= form.text_field :name, wrapper: "sm:col-span-2" %>
       <%= form.text_field :host, wrapper: "sm:col-span-2" %>
       <%= form.select :challenge_id, challenges.map { |c| [ c.name, c.id ] },
-        { include_blank: true, wrapper: "sm:col-span-2" }
+        { wrapper: "sm:col-span-2" }
       %>
       <%= form.select :from, Task::TYPES, include_blank: true, wrapper: "sm:col-span-2" %>
       <%= form.select :to, Task::TYPES, include_blank: true, wrapper: "sm:col-span-2" %>

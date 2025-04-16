@@ -16,6 +16,6 @@ class Challenge < ApplicationRecord
   def to_s = name
 
   def meetween_owner
-    errors.add(:owner, "not a meetween member") unless owner.meetween_member?
+    errors.add(:owner, "not a meetween member") unless owner.meetween_member? || owner.admin?
   end
 end

@@ -1,13 +1,14 @@
 class TestSetLoader::Processor
   RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS2 LRS3 ].freeze
 
-  attr_reader :dir
+  attr_reader :dir, :challenge_id
 
-  def initialize(dir)
+  def initialize(dir, challenge_id)
     @dir = dir
+    @challenge_id = challenge_id
   end
 
-  def self.for(dir)
+  def self.for(dir, challenge_id)
     clazz =
       case dir.basename.to_s
       when "MT"  then  TestSetLoader::MtProcessor
@@ -19,7 +20,7 @@ class TestSetLoader::Processor
       else             TestSetLoader::UnknownProcessor
       end
 
-    clazz.new(dir)
+    clazz.new(dir, challenge_id)
   end
 
   def import!
@@ -65,7 +66,7 @@ class TestSetLoader::Processor
     end
 
     def test_sets(name, published:)
-      TestSet.find_or_create_by!(name:) do |ts|
+      TestSet.find_or_create_by!(name:, challenge_id:) do |ts|
         ts.assign_attributes(
           description: "TODO: please update test set description",
           published:
@@ -90,7 +91,7 @@ class TestSetLoader::Processor
     end
 
     def task
-      @task ||= Task.find_by!(slug:)
+      @task ||= Task.find_by!(slug:, challenge_id:)
     end
 
     def child_with_extension(dir, extension)
