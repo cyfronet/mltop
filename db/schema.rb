@@ -207,6 +207,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_140225) do
   add_foreign_key "hypotheses", "models"
   add_foreign_key "hypotheses", "test_set_entries"
   add_foreign_key "metrics", "evaluators"
+  add_foreign_key "models", "challenges"
   add_foreign_key "models", "users", column: "owner_id"
   add_foreign_key "scores", "evaluations"
   add_foreign_key "scores", "metrics"
