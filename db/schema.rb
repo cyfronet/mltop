@@ -112,7 +112,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
     t.datetime "updated_at", null: false
     t.enum "from", enum_type: "format"
     t.enum "to", enum_type: "format"
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
   end
 
@@ -152,7 +152,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "data_consent", default: false, null: false
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
@@ -205,7 +205,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
   end
 
@@ -223,7 +223,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "published", default: false, null: false
-    t.bigint "challenge_id"
+    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_test_sets_on_challenge_id"
   end
 
