@@ -12,10 +12,11 @@ class TestSetLoader::ModelCompressionProcessor < TestSetLoader::Processor
 
   private
     def process_shared_audio(dir)
-      from_to_language_process(dir) do |entry, _name, _source, target|
+      from_to_language_process(dir) do |entry, _name, source, target|
         [
           child_with_extension(dir, "_audios.tar.gz"),
-          child_with_extension(entry, ".#{target}")
+          child_with_extension(entry, ".#{target}"),
+          child_with_extension(entry, ".#{source}")
         ]
       end
     end
