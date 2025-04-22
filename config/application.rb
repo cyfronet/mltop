@@ -7,6 +7,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 require "freezolite/auto"
+require File.expand_path("lib/challenge_slug")
 
 module Mltop
   LANGUAGES = %w[be bg bs ca cs da de el en en es et fi fr ga gl hr hu is it lb lt lv mk mt nl no pl pr pt ro ru sk sl sr sv th tr uk]
@@ -34,6 +35,9 @@ module Mltop
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.middleware.use ChallengeSlug::Extractor
+    config.middleware.use ChallengeSlug::LimitSessionToAccountSlugPath
     config.hpc_client = "::Hpc::Client"
   end
 end

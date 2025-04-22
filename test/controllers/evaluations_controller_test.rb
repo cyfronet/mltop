@@ -3,6 +3,10 @@ require "test_helper"
 class EvaluationsControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
 
+  def setup
+    in_challenge!
+  end
+
   test "Meetween members can run owned model evaluations" do
     model = create(:model, owner: users("marek"))
     hypothesis = create(:hypothesis, model:)

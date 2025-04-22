@@ -1,6 +1,10 @@
 require "test_helper"
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    in_challenge!
+  end
+
   test "should get index" do
     get tasks_url
     assert_response :success

@@ -1,6 +1,10 @@
 require "test_helper"
 
 class ExternalSubmissionsControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    in_challenge!
+  end
+
   test "Meetween member can manage external users submissions" do
     sign_in_as("marek")
 
@@ -12,10 +16,7 @@ class ExternalSubmissionsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as("external", teams: [ "plggother" ])
 
     get external_submissions_path
-    assert_response :redirect
-
-    follow_redirect!
-    assert_includes response.body, "Only Meetween members can manage"
+    assert_redirected_to root_path
   end
 
   test "Meetween member can see only not evaluated external models" do

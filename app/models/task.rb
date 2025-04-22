@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  belongs_to :challenge, required: false
+
   has_many :task_models, dependent: :destroy
   has_many :models, through: :task_models
 

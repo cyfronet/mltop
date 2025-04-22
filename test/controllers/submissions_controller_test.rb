@@ -3,6 +3,7 @@ require "test_helper"
 class SubmissionsControllerTest < ActionDispatch::IntegrationTest
   def setup
     sign_in_as("marek")
+    in_challenge!
   end
 
   test "show user models" do

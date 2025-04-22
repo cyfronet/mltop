@@ -1,4 +1,6 @@
 class Evaluator < ApplicationRecord
+  belongs_to :challenge, required: false
+
   has_many :task_evaluators
   has_many :tasks, through: :task_evaluators
 

@@ -4,6 +4,10 @@ module Submissions
   class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     include ActiveJob::TestHelper
 
+    def setup
+      in_challenge!
+    end
+
     test "Meetween members can run owned model evaluations" do
       model = create(:model)
       hypothesis = create(:hypothesis, model:)

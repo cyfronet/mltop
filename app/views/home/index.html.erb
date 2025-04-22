@@ -1,0 +1,94 @@
+<% breadcrumb :dashboard %>
+
+<div class="w-full">
+  <div class="flex ms-14 space-x-10">
+    <div class="w-1/2">
+      <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
+        A suite of AI metrics that can be used to measure and track the performance of the task-specific models.
+      </h1>
+
+      <h2 class="mt-5 text-zinc-700 text-justify">
+        Join a community shaping the future of multilingual communication.
+        With Speechm, you can test cutting-edge AI models, contribute to innovation through leaderboards, and help refine solutions
+        like real-time translation and speech recognition — ensuring seamless, global collaboration for everyone.
+      </h2>
+
+      <% if !signed_in? %>
+        <%= link_to "Join us", sign_in_path, class: "btn btn-primary mt-5", "data-turbo-prefetch": false %>
+      <% end %>
+    </div>
+
+    <div class="w-1/2 border-y rounded-s-xl py-4 ps-4 bg-zinc-50">
+      <%= image_tag("home_page_section1.png", class: "grayscale")%>
+    </div>
+  </div>
+
+  <div class="bg-home-img bg-cover bg-left mt-10">
+    <div class="bg-linear-to-r from-transparent to-black to-60% flex">
+      <div class="w-1/2">
+      </div>
+      <div class="w-1/2 m-5 text-white">
+        <h1 class="font-bold text-2xl text-justify">
+          Unlock the Future of Speech Technology
+        </h1>
+        <h2 class="mt-5 text-justify">
+          Explore our innovative AI solutions that empower seamless communication and drive progress in the field of speech technology.
+        </h2>
+        <div class="flex divide-x">
+          <div></div>
+          <div class="w-1/3 pl-5">
+            <p class="text-orange-500 text-2xl font-bold"><%= @stats.models %></p>
+            <p> models </p>
+          </div>
+          <div class="w-1/3 pl-5">
+            <p class="text-orange-500 text-2xl font-bold"><%= @stats.test_sets %></p>
+            <p> test sets </p>
+          </div>
+          <div class="w-1/3 pl-5">
+            <p class="text-orange-500 text-2xl font-bold"><%= @stats.metrics %></p>
+            <p> metrics </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="mx-14 mt-10 bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-2xl">
+    Challenges:
+  </h2>
+
+  <h3 class="mx-14 mt-5 text-zinc-700 text-center">
+    Explore the core functions that enhance communication through language
+    understanding, translation, and speech recognition.
+  </h3>
+
+  <% if @challenges.any? %>
+    <div id="challenges" class="min-w-full">
+      <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <%= render partial: "home/challenge", collection: @challenges %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mt-4 flex bg-linear-to-r from-fuchsia-100 to-orange-50 pt-10 space-x-10">
+    <div class="w-1/2">
+      <%= image_tag("home_page_section3.png", class: "grayscale") %>
+    </div>
+    <div class="w-1/2 p-4">
+      <h1 class="text-zinc-700 font-bold text-2xl text-justify">
+        Discover the Best Model Tailored to Your Needs
+      </h1>
+      <p class="pt-2">
+        Our leaderboards cover a wide range of tasks,
+        from speech translation to text generation and beyond,
+        offering detailed comparisons of models tested across various datasets and language pairs.
+         With rankings based on performance metrics like BLEU, CHRF, TER, and more,
+         you can easily find the model that meets your specific requirements.
+      </p>
+      <p>
+        Explore, compare, and select the best solution for your task.
+      </p>
+    </div>
+
+  </div>
+</div>

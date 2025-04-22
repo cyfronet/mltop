@@ -1,0 +1,5 @@
+global:
+  name: global
+  starts_at: <%= Time.current %>
+  ends_at: <%= 1.day.from_now %>
+  owner: marek

@@ -18,7 +18,8 @@ class ActiveSupport::TestCase
       {
         owner: users("marek"),
         name: "model#{count}",
-        tasks: [ tasks("st") ]
+        tasks: [ tasks("st") ],
+        challenge: challenges(:global)
       }
     end
 
@@ -50,19 +51,22 @@ class ActiveSupport::TestCase
         name: "Task #{i}",
         slug: "task#{i}",
         from: "video",
-        to: "text"
+        to: "text",
+        challenge: challenges(:global)
       }
     end
 
     factory(:test_set) do |i|
       {
-        name: "Test set #{i}"
+        name: "Test set #{i}",
+        challenge: challenges(:global)
       }
     end
 
     factory(:test_set_entry) do |i|
       {
         test_set: TestSet.last,
+        task: tasks(:st),
         source_language: "en",
         target_language: "pl",
         groundtruth: Rack::Test::UploadedFile.new(StringIO.new("input"), "text/plain", original_filename: "input.txt"),
@@ -74,7 +78,18 @@ class ActiveSupport::TestCase
       {
         name: "Evaluator #{i}",
         host: "host",
-        script: "script"
+        script: "script",
+        challenge: challenges(:global)
+      }
+    end
+
+    factory(:challenge) do |i|
+      {
+        name: "Challenge #{i}",
+        starts_at: 5.days.ago,
+        ends_at: 5.days.from_now,
+        description: "some description",
+        owner: users(:marek)
       }
     end
   end

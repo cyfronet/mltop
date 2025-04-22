@@ -1,5 +1,6 @@
 class Model < ApplicationRecord
   belongs_to :owner, class_name: "User"
+  belongs_to :challenge
 
   has_many :task_models, dependent: :destroy
   has_many :tasks, through: :task_models

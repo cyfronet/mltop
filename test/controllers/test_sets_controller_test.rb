@@ -1,6 +1,10 @@
 require "test_helper"
 
 class TestSetsControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    in_challenge!
+  end
+
   test "should get index" do
     get test_sets_path
     assert_response :success

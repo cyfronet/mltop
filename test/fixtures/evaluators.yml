@@ -2,8 +2,10 @@ sacrebleu:
   name: Sacrebleu
   script: dummy script
   host: ares.cyfronet.pl
+  challenge: global
 
 blueurt:
   name: Blueurt
   script: dummy script
   host: ares.cyfronet.pl
+  challenge: global
