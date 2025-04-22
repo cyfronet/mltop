@@ -48,7 +48,7 @@ class Admin::TasksController < Admin::ApplicationController
   private
     def task_params
       params.expect(task: [
-        :name, :slug, :info, :description, :from, :to, evaluator_ids: [], task_test_sets_attributes: [ [ :description, :id ] ]
+        :name, :slug, :info, :description, :from, :to, evaluator_ids: []
       ])
     end
 
