@@ -17,12 +17,12 @@ class Top::Row
 
   def self.where(task:, test_set: nil)
     scores = Score
-      .joins(evaluation: { hypothesis: :test_set_entry })
-      .where(evaluation: { hypotheses: { test_set_entries: { task_id: task } } })
-    scores = scores.where(evaluation: { hypotheses: { test_set_entries: { test_set_id: test_set } } }) if test_set
+      .joins(evaluation: { hypothesis: { test_set_entry: :task_test_set } })
+      .where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { task_id: task } } } })
+    scores = scores.where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { test_set_id: test_set } } } }) if test_set
 
-    scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, test_set_entries.test_set_id, test_set_entries.id as test_set_entry_id")
-    entries_counts = task.test_set_entries.group("test_set_id").count
+    scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, task_test_sets.test_set_id, test_set_entries.id as test_set_entry_id")
+    entries_counts = task.test_set_entries.group("task_test_sets.test_set_id").count
     scores_by_model_id = scores.group_by { |score| score.model_id }
     models = Model.where(id: scores_by_model_id.keys).index_by(&:id)
     rows = scores_by_model_id.map { |model_id, scores| new(models[model_id], scores, entries_counts) }

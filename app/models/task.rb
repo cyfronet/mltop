@@ -2,8 +2,9 @@ class Task < ApplicationRecord
   has_many :task_models, dependent: :destroy
   has_many :models, through: :task_models
 
-  has_many :test_set_entries, dependent: :destroy
-  has_many :test_sets, -> { distinct }, through: :test_set_entries
+  has_many :task_test_sets, dependent: :destroy
+  has_many :test_sets, -> { distinct }, through: :task_test_sets
+  has_many :test_set_entries, through: :task_test_sets
 
   has_many :task_evaluators
   has_many :evaluators, through: :task_evaluators
@@ -18,6 +19,7 @@ class Task < ApplicationRecord
     validates :to
   end
 
+  accepts_nested_attributes_for :task_test_sets
   validates_associated :task_evaluators
 
   TYPES = { video: "video", audio: "audio", text: "text" }

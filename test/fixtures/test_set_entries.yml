@@ -1,42 +1,34 @@
 flores_st_en_pl:
-  task: st
-  test_set: flores
+  task_test_set: flores_st
   source_language: en
   target_language: pl
 
 flores_st_en_it:
-  task: st
-  test_set: flores
+  task_test_set: flores_st
   source_language: en
   target_language: it
 
 flores_st_pl_en:
-  task: st
-  test_set: flores
+  task_test_set: flores_st
   source_language: pl
   target_language: en
 
 unpublished_st_pl_en:
-  task: st
-  test_set: unpublished
+  task_test_set: unpublished_st
   source_language: pl
   target_language: en
 
-
 flores_asr_en_pl:
-  task: asr
-  test_set: flores
+  task_test_set: flores_asr
   source_language: en
   target_language: pl
 
 mustc_st_en_pl:
-  task: st
-  test_set: mustc
+  task_test_set: mustc_st
   source_language: en
-  target_language: pl 
+  target_language: pl
 
 mustc_st_pl_en:
-  task: st
-  test_set: mustc
+  task_test_set: mustc_st
   source_language: pl
   target_language: en
