@@ -36,7 +36,7 @@ if Rails.env.local?
             task_ids: [ task.id ]
           )
 
-          TestSetEntry.where(task:).map do |entry|
+          TestSetEntry.joins(:task_test_set).where(task_test_sets: { task: }).map do |entry|
             entry.hypotheses.create!(
               model:,
               input: { io: StringIO.new(Faker::Lorem.sentences(number: 100).join("\n")), filename: "hypothesis.txt" }

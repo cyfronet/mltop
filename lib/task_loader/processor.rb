@@ -74,14 +74,15 @@ class TaskLoader::Processor
     end
 
     def create_entry_when_missing(test_set, source_language, target_language, &block)
-      if test_set.entries.exists?(source_language:, target_language:, task:)
+      task_test_set = task.task_test_sets.find_or_create_by!(test_set:)
+
+      if task_test_set.test_set_entries.exists?(source_language:, target_language:)
         warning "Entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language} already exists."
       else
         info "Creating entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language}"
         input, groundtruth = block.call
 
-        test_set.entries.create!(
-          task:,
+        task_test_set.test_set_entries.create!(
           source_language:,
           target_language:,
           input: { io: input.open, filename: input.basename },
