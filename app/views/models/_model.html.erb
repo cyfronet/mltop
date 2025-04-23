@@ -13,5 +13,10 @@
   </div>
   <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto">
     <!-- Placeholder for score -->
+    <% if Current.user.meetween_member? && model.data_consent %>
+      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
+        Data consent
+      </span>
+    <% end %>
   </dl>
 </li>
