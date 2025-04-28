@@ -17,9 +17,9 @@ module Evaluations
 
     private
     def submitted_evaluations
-      @submitted_evaluations ||= Evaluation.joins(:evaluator, hypothesis: :model)
+      @submitted_evaluations ||= Evaluation.joins(:evaluator)
         .where(
-          hypothesis: { models: { owner: @user } },
+          creator: @user,
           evaluations: { status: [ :pending, :running ] },
           evaluator: { host: @host }
         )
