@@ -5,6 +5,7 @@ class Evaluation < ApplicationRecord
 
   belongs_to :evaluator
   belongs_to :hypothesis, touch: true
+  belongs_to :creator, class_name: "User", optional: true
 
   has_many :metrics, through: :evaluator
   has_many :scores, dependent: :destroy
@@ -49,7 +50,7 @@ class Evaluation < ApplicationRecord
     request = submit_script(user, new_token)
 
     if request.success?
-      update(status: :pending, job_id: request.job_id)
+      update(status: :pending, job_id: request.job_id, creator: user)
     else
       update(status: :failed)
     end
