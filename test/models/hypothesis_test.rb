@@ -23,11 +23,11 @@ class HypothesisTest < ActiveSupport::TestCase
     hypothesis = create(:hypothesis, model:, test_set_entry:)
 
     assert_changes "Evaluation.count", to: +2 do
-      hypothesis.evaluate_missing!
+      hypothesis.evaluate_missing!(users("marek"))
     end
 
     assert_no_changes "Evaluation.count" do
-      hypothesis.evaluate_missing!
+      hypothesis.evaluate_missing!(users("marek"))
     end
   end
 
@@ -39,7 +39,7 @@ class HypothesisTest < ActiveSupport::TestCase
     create(:evaluation, hypothesis:, evaluator: test_set_entry.task.evaluators.first)
 
     assert_difference "Evaluation.count", +1 do
-      hypothesis.evaluate_missing!
+      hypothesis.evaluate_missing!(users("marek"))
     end
 
     assert_equal evaluators.map(&:name).sort,
@@ -54,7 +54,7 @@ class HypothesisTest < ActiveSupport::TestCase
     create(:evaluation, hypothesis:, evaluator: test_set_entry.task.evaluators.second)
 
     assert_no_changes "Evaluation.count" do
-      hypothesis.evaluate_missing!
+      hypothesis.evaluate_missing!(users("marek"))
     end
   end
 

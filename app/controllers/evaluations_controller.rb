@@ -24,7 +24,9 @@ class EvaluationsController < ApplicationController
     end
 
     def evaluation_params
-      params.expect(evaluation: [ :evaluator_id ])
+      params
+        .expect(evaluation: [ :evaluator_id ])
+        .merge(creator: Current.user)
     end
 
     def my_or_external_models
