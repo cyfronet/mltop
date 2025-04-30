@@ -7,6 +7,11 @@
       <% task.test_sets.each do |test_set| %>
         <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
           <%= link_to test_set.name, test_set_leaderboard_path(test_set) %>
+            <% if rows.average? %>
+             <span class="text-gray-400 cursor-pointer" title="Presented score is an average for all matching languages. If both source and target languages are specified, the score reflects a specific value.">
+                <%= info_icon("h-4 w-4 inline") %>
+              </span>
+            <% end %>
         </th>
         <% end %>
     </tr>

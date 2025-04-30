@@ -8,6 +8,8 @@
 
 <%= render "tasks/menu", task: @task %>
 
+<%= render "filters", rows: @rows %>
+
 <% if @rows.size.positive? %>
   <%= render "leaderboard", task: @task, rows: @rows %>
 <% else %>

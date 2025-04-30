@@ -1,8 +1,13 @@
 class Top::Rows
   delegate_missing_to :@rows
+  attr_reader :source_languages, :target_languages
 
-  def initialize(rows)
+  def initialize(rows, source_languages, target_languages, source, target)
     @rows = rows
+    @source_languages = source_languages
+    @target_languages = target_languages
+    @source = source
+    @target = target
   end
 
   def order(test_set:, metric:, order: "desc", test_set_entry: nil)
@@ -22,9 +27,14 @@ class Top::Rows
         end
       end
 
-      Top::Rows.new(rows)
+      Top::Rows.new(rows, source_languages, target_languages, @source, @target)
     else
       self
     end
+  end
+
+  def average?
+    (@source.blank? && source_languages.size > 1) ||
+      (@target.blank? && target_languages.size > 1)
   end
 end

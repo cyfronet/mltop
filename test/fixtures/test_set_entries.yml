@@ -4,6 +4,12 @@ flores_st_en_pl:
   source_language: en
   target_language: pl
 
+flores_st_en_de:
+  task: st
+  test_set: flores
+  source_language: en
+  target_language: de
+
 flores_st_en_it:
   task: st
   test_set: flores
@@ -33,7 +39,7 @@ mustc_st_en_pl:
   task: st
   test_set: mustc
   source_language: en
-  target_language: pl 
+  target_language: pl
 
 mustc_st_pl_en:
   task: st
