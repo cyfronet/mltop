@@ -3,6 +3,11 @@ flores_st_en_pl:
   source_language: en
   target_language: pl
 
+flores_st_en_de:
+  task_test_set: flores_st
+  source_language: en
+  target_language: de
+
 flores_st_en_it:
   task_test_set: flores_st
   source_language: en

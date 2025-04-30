@@ -11,8 +11,13 @@ class Tasks::LeaderboardsController < ApplicationController
   def show
     @task = Task.with_published_test_sets.includes(:metrics).find(params[:task_id])
     @rows = Top::Row
-      .where(task: @task)
-      .order(test_set: selected_test_set, metric: selected_metric, order: selected_order)
+      .where(task: @task,
+        source: params[:source],
+        target: params[:target])
+      .order(test_set: selected_test_set,
+        metric: selected_metric,
+        order: selected_order
+        )
   end
 
   private

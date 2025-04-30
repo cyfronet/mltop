@@ -15,19 +15,37 @@ class Top::Row
     @cached_scores = {}
   end
 
-  def self.where(task:, test_set: nil)
+  def self.where(task:, test_set: nil, source: nil, target: nil)
     scores = Score
       .joins(:metric, evaluation: { hypothesis: { test_set_entry: :task_test_set } })
       .where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { task_id: task } } } })
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { test_set_id: test_set } } } }) if test_set
+    scores = scores.where(evaluation: { hypotheses: { test_set_entries: { source_language: source } } }) unless source.blank?
+    scores = scores.where(evaluation: { hypotheses: { test_set_entries: { target_language: target } } }) unless target.blank?
 
     scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, task_test_sets.test_set_id, test_set_entries.id as test_set_entry_id, metrics.worst_score as metric_worst_score")
-    entries_counts = task.test_set_entries.group("test_set_id").count
+
+    entries = task.test_set_entries
+    entries = entries.where(source_language: source) unless source.blank?
+    entries = entries.where(target_language: target) unless target.blank?
+    entries_counts = entries.group("test_set_id").count
+
     scores_by_model_id = scores.group_by { |score| score.model_id }
     models = Model.where(id: scores_by_model_id.keys).index_by(&:id)
     rows = scores_by_model_id.map { |model_id, scores| new(models[model_id], scores, entries_counts) }
 
-    Top::Rows.new(rows)
+    entries = task.test_set_entries
+    entries = entries.joins(:task_test_set).where(task_test_set: { test_set: }) if test_set
+
+    source_languages, target_languages = entries
+      .pluck(:source_language, :target_language)
+      .transpose.map(&:uniq)
+
+    Top::Rows.new(rows, source_languages, target_languages, source, target)
+  end
+
+  def self.none
+    Top::Rows.new([], [], [], nil, nil)
   end
 
   def score(test_set:, metric:, test_set_entry: nil)

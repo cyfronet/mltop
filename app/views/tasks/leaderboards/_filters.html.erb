@@ -1,0 +1,25 @@
+<% if rows.source_languages.present? || rows.target_languages.present? %>
+  <div class="mx-16 mt-5 mb-5">
+    <%= form_tag task_leaderboard_path(@task), method: :get, class: "flex place-content-center", data: { controller: "auto-submit" } do %>
+      <div class="mr-4">
+        <label for="source" class="block text-sm font-medium text-gray-700">Source language</label>
+        <%= select_tag "source", options_for_select([["", nil]] + rows.source_languages, params[:source]),
+            id: "source",
+            class: "mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
+            data: { action: "change->auto-submit#submit" } %>
+      </div>
+
+      <div>
+        <label for="target" class="block text-sm font-medium text-gray-700">Target language</label>
+        <%= select_tag "target", options_for_select([["", nil]] + rows.target_languages, params[:target]),
+            id: "target",
+            class: "mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
+            data: { action: "change->auto-submit#submit" } %>
+      </div>
+
+      <div class="ml-2 flex justify-center mt-4 pt-4">
+        <%= link_to "Reset", task_leaderboard_path(@task), class: "btn btn-secondary text-sm py-1 px-2" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
