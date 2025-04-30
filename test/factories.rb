@@ -32,6 +32,7 @@ class ActiveSupport::TestCase
 
     factory(:evaluation) do
       {
+        creator: users("marek"),
         hypothesis: build(:hypothesis),
         evaluator: evaluators(:blueurt)
       }

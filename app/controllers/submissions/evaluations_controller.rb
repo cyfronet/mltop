@@ -5,7 +5,7 @@ module Submissions
     meetween_members_only
 
     def create
-      @hypothesis.evaluate_missing!
+      @hypothesis.evaluate_missing!(Current.user)
       @evaluators = @hypothesis.evaluators
       flash.now[:notice] = "Evaluations queued to submit"
     rescue ActiveRecord::RecordInvalid

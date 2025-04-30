@@ -9,13 +9,13 @@ class Hypothesis < ApplicationRecord
   validates :input, presence: true
   validates :test_set_entry, uniqueness: { scope: :model }
 
-  def evaluate_missing!
+  def evaluate_missing!(creator)
     transaction do
       run_evaluators = evaluations.map(&:evaluator_id)
       missing_evaluations = evaluators
         .reject { |e| run_evaluators.include?(e.id) }
         .map do |evaluator|
-          evaluations.build(evaluator:).tap { it.save! }
+          evaluations.build(evaluator:, creator:).tap { it.save! }
         end.compact
 
       Evaluations::RunJob
