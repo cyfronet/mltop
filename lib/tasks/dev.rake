@@ -53,7 +53,7 @@ if Rails.env.local?
 
       evaluations_attrs =
         task.evaluators.pluck(:id).product(hypotheses_ids).map do |evaluator_id, hypothesis_id|
-          { evaluator_id:, hypothesis_id: }
+          { evaluator_id:, hypothesis_id:, creator_id: owner.id }
         end
       evaluations = Evaluation.insert_all!(evaluations_attrs, returning: %w[ id evaluator_id ]).rows
       metrics = Metric
