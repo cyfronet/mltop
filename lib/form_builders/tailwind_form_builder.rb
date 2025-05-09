@@ -1,5 +1,6 @@
 module FormBuilders
   class TailwindFormBuilder < ActionView::Helpers::FormBuilder
+    include IconsHelper
     class_attribute :text_field_helpers,
       default: field_helpers - [ :label, :radio_button, :fields_for, :fields, :hidden_field ] + [ :rich_text_area, :text_area ]
 
@@ -48,9 +49,21 @@ module FormBuilders
     end
 
     def file_field(name, *args)
+      dropzone_args = args.first.try(:[], :dropzone)
+      if dropzone_args
+        label = dropzone_args[:label]
+        args[0] = dropzone_args.merge({ direct_upload: true, include_hidden: false, data: { label:, dropzone_target: "input", max_files_upload_count_value: 1 } })
+      end
       field = super(name, *args)
-      @template.content_tag "div" do
-        field + error_label(name)
+      if dropzone_args
+        @template.content_tag "div", class: "dropzone dropzone-default dz-clickable " + dropzone_args[:wrapper_class], data: { controller: "dropzone" } do
+           upload_icon("ml-0.5 mr-1.5 h-5 w-5") +
+            field + error_label(name)
+        end
+      else
+        @template.content_tag "div" do
+          field + error_label(name)
+        end
       end
     end
 
