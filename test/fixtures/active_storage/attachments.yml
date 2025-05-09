@@ -8,6 +8,16 @@ flores_st_en_pl_groundtruth:
   record: flores_st_en_pl (TestSetEntry)
   blob: flores_st_en_pl_groundtruth_blob
 
+flores_st_en_de_input:
+  name: input
+  record: flores_st_en_de (TestSetEntry)
+  blob: flores_st_en_de_input_blob
+
+flores_st_en_de_groundtruth:
+  name: groundtruth
+  record: flores_st_en_de (TestSetEntry)
+  blob: flores_st_en_de_groundtruth_blob
+
 
 flores_st_en_it_input:
   name: input

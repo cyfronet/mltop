@@ -6,14 +6,14 @@ class TestSetTest < ActiveSupport::TestCase
     task = tasks("st")
 
     assert_equal [ "en", "pl" ].sort, test_set.source_languages_for(task:).sort
-    assert_equal [ "en", "pl", "it" ].sort, test_set.target_languages_for(task:).sort
+    assert_equal [ "de", "en", "pl", "it" ].sort, test_set.target_languages_for(task:).sort
   end
 
   test "get test set entry by language" do
     test_set = test_sets("flores")
     task = tasks("st")
 
-    assert_nil test_set.entry_language_for(source: "en", target: "de", task:), "Should return nil on non existing subtask test set"
+    assert_nil test_set.entry_language_for(source: "en", target: "fr", task:), "Should return nil on non existing subtask test set"
     assert_equal test_set_entries("flores_st_en_pl"), test_set.entry_language_for(source: "en", target: "pl", task:)
     assert_equal test_set_entries("flores_st_pl_en"), test_set.entry_language_for(source: "pl", target: "en", task:)
   end
@@ -24,8 +24,8 @@ class TestSetTest < ActiveSupport::TestCase
 
     entries = flores.entries.for_task(st)
 
-    assert_equal 3, entries.size
-    assert_equal test_set_entries("flores_st_en_pl", "flores_st_en_it", "flores_st_pl_en"), entries
+    assert_equal 4, entries.size
+    assert_equal test_set_entries("flores_st_en_pl", "flores_st_en_de", "flores_st_en_it", "flores_st_pl_en"), entries
   end
 
   test "get all published test sets" do

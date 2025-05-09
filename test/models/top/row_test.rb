@@ -21,20 +21,48 @@ class Top::RowTest < ActiveSupport::TestCase
   test "calculate aggregated score for all subtasks" do
     model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
 
-    new_evaluation(model, :flores_st_en_pl, 3)
+    new_evaluation(model, :flores_st_en_pl, 4)
     row = Top::Row.where(task: tasks(:st)).first
     assert_equal 1, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
       "Wrong score: agreegated score is calcualted for all subtask, when missing 0 is used"
 
-    new_evaluation(model, :flores_st_en_it, 1.5)
+    new_evaluation(model, :flores_st_en_it, 2)
     row = Top::Row.where(task: tasks(:st)).first
     assert_equal 1.5, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
-      "Wrong score: (2 (en->pl) + 1.5 (en->it) + 0 (pl->en)) / 3= 1.5"
+      "Wrong score: (4 (en->pl) + 2 (en->it) + 0 (pl->en) + 0 (en->de)) / 4= 1.5"
+
+    new_evaluation(model, :flores_st_pl_en, 4)
+    row = Top::Row.where(task: tasks(:st)).first
+    assert_equal 2.5, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: (4 (en->pl) + 2 (en->it) + 4 (pl->en) + 0 (en->de)) / 4 = 2.5"
+  end
+
+  test "filters and calculates aggregated score for specific source and target" do
+    model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
+
+    new_evaluation(model, :flores_st_en_pl, 4)
+    row = Top::Row.where(task: tasks(:st)).first
+    assert_equal 1, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: agreegated score is calcualted for all subtask, when missing 0 is used"
+
+    new_evaluation(model, :flores_st_en_it, 2)
+    row = Top::Row.where(task: tasks(:st), source: "en").first
+    assert_equal 2, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: (4 (en->pl) + 2 (en->it) + 0 (en->de)) / 3 = 2"
 
     new_evaluation(model, :flores_st_pl_en, 4.5)
-    row = Top::Row.where(task: tasks(:st)).first
-    assert_equal 3, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
-      "Wrong score: (2 (en->pl) + 1.5 (en->it) + 4.5 (pl->en)) / 3 = 3"
+    row = Top::Row.where(task: tasks(:st), source: "en").first
+        assert_equal 2, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: (4 (en->pl) + 2 (en->it) + 0 (en->de)) / 3 = 2, pl->en not included"
+
+    new_evaluation(model, :flores_st_en_de, 6)
+    row = Top::Row.where(task: tasks(:st), source: "en").first
+    assert_equal 4, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: (4 (en->pl) + 2 (en->it) + 6 (en->de)) / 3 = 4"
+
+    row = Top::Row.where(task: tasks(:st), source: "en", target: "de").first
+    assert_equal 6, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+      "Wrong score: 6 (en->de) / 1 = 6"
   end
 
   test "get model score" do
@@ -103,6 +131,25 @@ class Top::RowTest < ActiveSupport::TestCase
     assert_equal [ m2, m3, m1 ], rows.order(test_set: test_sets(:flores),
                                             metric: metrics(:ter),
                                             test_set_entry: test_set_entries(:flores_st_en_pl), order: :asc).map(&:model)
+  end
+
+  test "source and target languages for empty result" do
+    assert_equal [], Top::Row.none.source_languages
+    assert_equal [], Top::Row.none.target_languages
+  end
+
+  test "source and target languages for task" do
+    rows = Top::Row.where(task: tasks(:st))
+
+    assert_equal %w[en pl], rows.source_languages.sort
+    assert_equal %w[de en it pl], rows.target_languages.sort
+  end
+
+  test "source and target languages for task and test set" do
+    rows = Top::Row.where(task: tasks(:st), test_set: test_sets("mustc"))
+
+    assert_equal %w[en pl], rows.source_languages.sort
+    assert_equal %w[en pl], rows.target_languages.sort
   end
 
   private
