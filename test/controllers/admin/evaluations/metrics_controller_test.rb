@@ -14,7 +14,10 @@ class Admin::Evaluators::MetricsControllerTest < ActionDispatch::IntegrationTest
     evaluator = evaluators("sacrebleu")
     assert_difference("evaluator.metrics.count") do
       post admin_evaluator_metrics_path(evaluator, format: :turbo_stream), params: { metric: {
-        name: "new-metric"
+        name: "new-metric",
+        order: "desc",
+        worst_score: 20,
+        best_score: 120
       } }
     end
 

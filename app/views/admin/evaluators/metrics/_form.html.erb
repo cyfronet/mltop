@@ -5,6 +5,9 @@
   <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "sm:col-span-4" %>
+      <%= form.select :order, Metric.orders.keys, wrapper: "sm:col-span-4" %>
+      <%= form.number_field :worst_score, wrapper: "sm:col-span-4" %>
+      <%= form.number_field :best_score, wrapper: "sm:col-span-4" %>
     </div>
   </div>
 

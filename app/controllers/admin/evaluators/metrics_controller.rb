@@ -49,7 +49,7 @@ module Admin
         end
 
         def metric_params
-          params.require(:metric).permit(:name)
+          params.require(:metric).permit(:name, :order, :worst_score, :best_score)
         end
     end
   end

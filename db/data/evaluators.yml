@@ -28,10 +28,16 @@ screbleu:
   metrics:
     - name: bleu
       order: desc
+      worst_score: 0
+      best_score: 100
     - name: chrf
       order: desc
+      worst_score: 0
+      best_score: 100
     - name: ter
       order: asc
+      worst_score: 100
+      best_score: 0
   tasks:
     - MT
     - ST
@@ -71,7 +77,9 @@ blueurt:
   host: athena.cyfronet.pl
   metrics:
     - name: bleurt
-      order: desc
+      order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
     - MT
     - ST
@@ -110,6 +118,8 @@ wer:
   metrics:
     - name: wer
       order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
   #  - MT # not sure if it should be here - check Gdrive table
   #  - ST
@@ -156,6 +166,8 @@ rogue:
   metrics:
     - name: rouge
       order: desc
+      worst_score: 0
+      best_score: 100
   tasks:
     - SUM
     - SSUM
@@ -196,6 +208,8 @@ accuracy:
   metrics:
     - name: accuracy
       order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - SQA
   input_modality:
@@ -234,6 +248,8 @@ exact-match:
   metrics:
     - name: exact-match
       order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - SQA
   input_modality:
@@ -272,6 +288,8 @@ f1-score:
   metrics:
     - name: f1-score
       order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - SQA
   input_modality:
@@ -313,6 +331,8 @@ comet:
   metrics:
     - name: comet
       order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - MT
     - ST
@@ -353,7 +373,9 @@ characTER:
   host: ares.cyfronet.pl
   metrics:
     - name: characTER
-      order: desc
+      order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
     - ST
     - MT
@@ -395,8 +417,12 @@ slu:
   metrics:
     - name: slot_type_f1
       order: desc
+      worst_score: 0
+      best_score: 1
     - name: slot_value_cer
-      order: desc
+      order: asc
+      worst_score: 1
+      best_score: 0
     # "intent_accuracy": {
     #     "mean": 0.7841291190316073,
     #     "standard_error": 0.007544324162844738
@@ -440,8 +466,12 @@ sqa-hf:
   metrics:
     - name: exact_match
       order: desc
+      worst_score: 0
+      best_score: 100
     - name: f1
       order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - SQA
 

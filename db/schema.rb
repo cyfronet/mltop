@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_29_093424) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,7 +97,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_093424) do
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 0, null: false
+    t.integer "order", default: 1, null: false
+    t.float "best_score", null: false
+    t.float "worst_score", null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 

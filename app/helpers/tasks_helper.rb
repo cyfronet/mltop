@@ -17,26 +17,29 @@ module TasksHelper
     end
 
   def interpolate_color(metric_value, metric)
-      value = metric_value ? [ 0, [ 100, metric_value ].min ].max : 0
-      value = 100 - value if metric.asc?
-      red = [ 255, 0, 0 ]
-      yellow = [ 255, 255, 0 ]
-      green = [ 0, 255, 0 ]
+    worst = metric.worst_score
+    best = metric.best_score
+    value = metric_value || worst
 
-      # Interpolate between red and yellow
-      if value <= 50
-          ratio = value / 50.0
-          r = (red[0] + ratio * (yellow[0] - red[0])).to_i
-          g = (red[1] + ratio * (yellow[1] - red[1])).to_i
-          b = (red[2] + ratio * (yellow[2] - red[2])).to_i
-      # Interpolate between yellow and green
-      else
-          ratio = (value - 50) / 50.0
-          r = (yellow[0] + ratio * (green[0] - yellow[0])).to_i
-          g = (yellow[1] + ratio * (green[1] - yellow[1])).to_i
-          b = (yellow[2] + ratio * (green[2] - yellow[2])).to_i
-      end
+    normalized = (value - worst) / (best - worst)
+    normalized = 1.0 - normalized if metric.asc?
 
-      "rgb(#{r}, #{g}, #{b})"
+    red    = [ 255, 0, 0 ]
+    yellow = [ 255, 255, 0 ]
+    green  = [ 0, 255, 0 ]
+
+    if normalized <= 0.5
+      ratio = normalized / 0.5
+      r = (red[0] + ratio * (yellow[0] - red[0])).to_i
+      g = (red[1] + ratio * (yellow[1] - red[1])).to_i
+      b = (red[2] + ratio * (yellow[2] - red[2])).to_i
+    else
+      ratio = (normalized - 0.5) / 0.5
+      r = (yellow[0] + ratio * (green[0] - yellow[0])).to_i
+      g = (yellow[1] + ratio * (green[1] - yellow[1])).to_i
+      b = (yellow[2] + ratio * (green[2] - yellow[2])).to_i
+    end
+
+    "rgb(#{r}, #{g}, #{b})"
   end
 end
