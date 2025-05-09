@@ -209,4 +209,13 @@ module IconsHelper
     SVG
     .html_safe
   end
+
+  def info_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="17" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+      </svg>
+    SVG
+    .html_safe
+  end
 end

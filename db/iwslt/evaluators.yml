@@ -31,12 +31,20 @@ if:
   metrics:
     - name: SQA-BERTScore
       order: desc
+      worst_score: -1
+      best_score: 1
     - name: SSUM-BERTScore
       order: desc
+      worst_score: 0
+      best_score: 1
     - name: ASR-WER
       order: asc
+      worst_score: 1
+      best_score: 0
     - name: ST-COMET
-      order: asc
+      order: desc
+      worst_score: -1
+      best_score: 1
   tasks:
     - IFLONG
     - IFSHORT
@@ -75,7 +83,9 @@ comet:
   host: athena.cyfronet.pl
   metrics:
     - name: comet
-      order: asc
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - OFFLINE
     - MODELCOMPRESSION
@@ -113,10 +123,16 @@ screbleu:
   metrics:
     - name: bleu
       order: desc
+      worst_score: 0
+      best_score: 100
     - name: chrf
       order: desc
+      worst_score: 0
+      best_score: 100
     - name: ter
       order: asc
+      worst_score: 100
+      best_score: 0
   tasks:
     - OFFLINE
   to: text
@@ -154,6 +170,8 @@ bleurt:
   metrics:
     - name: bleurt
       order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
     - OFFLINE
   to: text
@@ -191,6 +209,8 @@ characTER:
   metrics:
     - name: characTER
       order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
     - OFFLINE
   to: text

@@ -26,7 +26,7 @@ class TasksLoader
       data["tasks"].each { |slug| evaluator.task_evaluators.find_or_create_by(task: tasks[slug]) }
       data["metrics"].each do |hsh|
         metric = evaluator.metrics.find_or_initialize_by(name: hsh["name"])
-        metric.update!(order: hsh["order"])
+        metric.update!(order: hsh["order"], worst_score: hsh["worst_score"], best_score: hsh["best_score"])
       end
     end
   end

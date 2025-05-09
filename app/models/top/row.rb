@@ -17,11 +17,11 @@ class Top::Row
 
   def self.where(task:, test_set: nil)
     scores = Score
-      .joins(evaluation: { hypothesis: :test_set_entry })
+      .joins([ :metric, evaluation: { hypothesis: :test_set_entry } ])
       .where(evaluation: { hypotheses: { test_set_entries: { task_id: task } } })
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { test_set_id: test_set } } }) if test_set
 
-    scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, test_set_entries.test_set_id, test_set_entries.id as test_set_entry_id")
+    scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, test_set_entries.test_set_id, test_set_entries.id as test_set_entry_id, metrics.worst_score as metric_worst_score")
     entries_counts = task.test_set_entries.group("test_set_id").count
     scores_by_model_id = scores.group_by { |score| score.model_id }
     models = Model.where(id: scores_by_model_id.keys).index_by(&:id)
@@ -43,7 +43,7 @@ class Top::Row
       scores
         .group_by { |score| [ score.metric_id, score.test_set_id ] }
         .values.map do |list|
-          Score.new(metric:, value: list.sum(&:value) / @entries_counts[test_set.id])
+          Score.new(metric:, value: list.sum { |item| item.value || item.metric_worst_score } / @entries_counts[test_set.id])
         end
     end
 
