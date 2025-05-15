@@ -45,9 +45,9 @@ class Evaluation < ApplicationRecord
     Evaluations::RunJob.perform_later(evaluations: [ self ], user:)
   end
 
-  def run(user)
+  def run(user, restd_runner = nil)
     new_token = reset_token!
-    request = submit_script(user, new_token)
+    request = submit_script(user, new_token, restd_runner)
 
     if request.success?
       update(status: :pending, job_id: request.job_id, creator: user)
@@ -74,12 +74,12 @@ class Evaluation < ApplicationRecord
       %w[ completed failed ].include?(status.to_s)
     end
 
-    def submit_script(user, new_token)
-      Hpc::Response.new(request: client(user).submit(script(new_token)))
+    def submit_script(user, new_token, restd_runner)
+      Hpc::Response.new(request: client(user, restd_runner).submit(script(new_token)))
     end
 
-    def client(user)
-      @client ||= Mltop.hpc_client(user, evaluator.host)
+    def client(user, restd_runner)
+      @client ||= Mltop.hpc_client(user, evaluator.host, restd_runner)
     end
 
     def script(new_token)
