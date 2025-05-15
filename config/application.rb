@@ -11,8 +11,8 @@ require "freezolite/auto"
 module Mltop
   LANGUAGES = %w[be bg bs ca cs da de el en es et fi fr ga gl hr hu is it lb lt lv mk mt nl no pl pr pt ro ru sk sl sr sv th tr uk ar zh]
 
-  def self.hpc_client(user, host)
-    Rails.configuration.hpc_client.constantize.for(user, host)
+  def self.hpc_client(user, host, restd_runner = nil)
+    Rails.configuration.hpc_client.constantize.for(user, host, restd_runner)
   end
 
   def self.ranking_released?

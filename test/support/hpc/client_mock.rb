@@ -1,5 +1,5 @@
 class Hpc::ClientMock
-  def self.for(user, host)
+  def self.for(user, host, restd_runner = nil)
     new()
   end
 
