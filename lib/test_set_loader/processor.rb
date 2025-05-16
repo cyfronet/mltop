@@ -16,7 +16,7 @@ class TestSetLoader::Processor
       when "ST"  then  TestSetLoader::StProcessor
       when "SUM" then  TestSetLoader::SumProcessor
       when "SSUM" then TestSetLoader::SsumProcessor
-      else             TestSetLoader::UnknownProcessor
+      else TestSetLoader::UnknownProcessor
       end
 
     clazz.new(dir)
@@ -30,7 +30,7 @@ class TestSetLoader::Processor
     def single_language_process(dir, &block)
       language_process(dir) do |test_set, name, entry|
         lang = entry.basename.to_s
-        create_entry_when_missing(test_set, lang, lang) do
+        create_or_update_entry(test_set, lang, lang) do
           block.call(entry, name, lang)
         end
       end
@@ -39,18 +39,18 @@ class TestSetLoader::Processor
     def from_to_language_process(dir, &block)
       language_process(dir) do |test_set, name, entry|
         source, target = entry.basename.to_s.split("-")
-        create_entry_when_missing(test_set, source, target) do
+        create_or_update_entry(test_set, source, target) do
           block.call(entry, name, source, target)
         end
       end
     end
 
     def language_process(dir, &block)
-      name = dir.basename.to_s
-      test_set = test_sets(name, published: !RESTRICTED_TEST_SETS.include?(name.upcase))
+      test_set = test_sets(dir)
 
       dir.each_child do |entry|
         next if entry.file?
+        name = dir.basename.to_s
 
         block.call(test_set, name, entry)
       end
@@ -61,34 +61,75 @@ class TestSetLoader::Processor
     end
 
     def not_supported(entry)
-      error "Test set #{entry.basename} not supported yet for #{slug}"
+      error "Test set #{entry.basename} not supported for #{slug}"
     end
 
-    def test_sets(name, published:)
-      TestSet.find_or_create_by!(name:) do |ts|
+    def test_sets(dir)
+      name = dir.basename.to_s
+      description = child_with_extension(dir, "_description.txt")&.read
+
+      ts = TestSet.find_or_create_by!(name:) do |ts|
         ts.assign_attributes(
-          description: "TODO: please update test set description",
-          published:
+          description: description || "TODO: please update test set description",
+          published: !RESTRICTED_TEST_SETS.include?(name.upcase)
         )
       end
+
+      TestSet.includes(entries: [ :input_blob, :groundtruth_blob, :internal_blob ]).find(ts.id)
     end
 
-    def create_entry_when_missing(test_set, source_language, target_language, &block)
+    def create_or_update_entry(test_set, source_language, target_language, &block)
+      input, groundtruth, internal = block.call
       task_test_set = task.task_test_sets.find_or_create_by!(test_set:)
 
-      if task_test_set.test_set_entries.exists?(source_language:, target_language:)
-        warning "Entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language} already exists."
+      if entry = task_test_set.test_set_entries.detect { |e| e.source_language == source_language && e.target_language == target_language && e.task_id == task.id }
+        warning "Entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language} already exists. Updating groundtruth and internal files."
+
+        to_update = {}
+
+        if input && file_changed?(entry.input_blob, input)
+          info "  - input will be updated"
+          to_update[:groundtruth] = { io: input.open, filename: input.basename }
+        end
+
+        if groundtruth && file_changed?(entry.groundtruth_blob, groundtruth)
+          info "  - groundtruth will be updated"
+          to_update[:groundtruth] = { io: groundtruth.open, filename: groundtruth.basename }
+        end
+
+        if internal && file_changed?(entry.internal_blob, internal)
+          info "  - internal will be updated"
+          to_update[:internal] = { io: internal.open, filename: internal.basename }
+        end
+
+        if to_update.empty?
+          info " input, groundtruth and internal files are the same"
+        else
+          entry.update!(to_update)
+        end
       else
         info "Creating entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language}"
-        input, groundtruth = block.call
 
-        task_test_set.test_set_entries.create!(
+        hsh = {
+          task:,
           source_language:,
           target_language:,
           input: { io: input.open, filename: input.basename },
-          groundtruth: { io: groundtruth.open, filename: groundtruth.basename })
+          groundtruth: { io: groundtruth.open, filename: groundtruth.basename }
+        }
+
+        if internal
+          hsh[:internal] = { io: internal.open, filename: internal.basename }
+        end
+
+        task_test_set.test_set_entries.create!(hsh)
       end
     end
+
+    def file_changed?(blob, io)
+      blob.checksum != ActiveStorage::Blob.new.send(:compute_checksum_in_chunks, io.open)
+    end
+
 
     def task
       @task ||= Task.find_by!(slug:)

@@ -6,6 +6,6 @@ class Model::TaskEvaluation
 
   def test_set_evaluations
     @task.test_sets.published.includes(:entries)
-      .map { |ts| TestSetEvaluation.new(@model, ts) }
+      .map { |ts| TestSetEvaluation.new(@task, @model, ts) }
   end
 end
