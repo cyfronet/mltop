@@ -25,4 +25,4 @@ blueurt:
   order: desc
   evaluator: blueurt
   worst_score: 0
-  best_score: 1
+  best_score: 100
