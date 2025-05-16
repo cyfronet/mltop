@@ -24,9 +24,9 @@ module TasksHelper
     normalized = (value - worst) / (best - worst)
     normalized = 1.0 - normalized if metric.asc?
 
-    red    = [ 255, 0, 0 ]
-    yellow = [ 255, 255, 0 ]
-    green  = [ 0, 255, 0 ]
+    red = [ 220, 38, 38 ] # red-600
+    yellow = [ 251, 191, 36 ] # yellow-400
+    green = [ 4, 120, 87 ] # green-700
 
     if normalized <= 0.5
       ratio = normalized / 0.5
