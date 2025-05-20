@@ -56,6 +56,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "challenges", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "owner_id", null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_challenges_on_owner_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.string "token_digest"
     t.bigint "hypothesis_id", null: false
@@ -80,6 +90,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.datetime "updated_at", null: false
     t.enum "from", enum_type: "format"
     t.enum "to", enum_type: "format"
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
   end
 
   create_table "hypotheses", force: :cascade do |t|
@@ -108,6 +120,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
 
@@ -159,6 +173,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.enum "to", null: false, enum_type: "format"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
   end
 
   create_table "test_set_entries", force: :cascade do |t|
@@ -175,6 +191,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "published", default: false, null: false
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_test_sets_on_challenge_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -192,15 +210,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "challenges", "users", column: "owner_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"
   add_foreign_key "evaluations", "users", column: "creator_id"
+  add_foreign_key "evaluators", "challenges"
   add_foreign_key "hypotheses", "models"
   add_foreign_key "hypotheses", "test_set_entries"
   add_foreign_key "metrics", "evaluators"
+  add_foreign_key "models", "challenges"
   add_foreign_key "models", "users", column: "owner_id"
   add_foreign_key "scores", "evaluations"
   add_foreign_key "scores", "metrics"
   add_foreign_key "task_models", "models"
   add_foreign_key "task_models", "tasks"
+  add_foreign_key "tasks", "challenges"
+  add_foreign_key "test_sets", "challenges"
 end

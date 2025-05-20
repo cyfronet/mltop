@@ -17,9 +17,16 @@ if Rails.env.local?
 
 
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
-      User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
+      user = User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
-                        roles: [ :admin ])
+                        roles: [ :admin, :meetween_member ])
+      Challenge.create!(name: "Global",
+                        starts_at: 5.days.ago,
+                        ends_at: 1.month.from_now,
+                        owner: user
+                        ).tap do |challenge|
+                          challenge.description = "This is a global challenge"
+                        end
 
 
       puts "DB set up complete, initializing test sets.."
@@ -31,11 +38,12 @@ if Rails.env.local?
 
     task faked_st_models: :environment do
       owner = User.first
+      challenge = Challenge.first
 
       task = Task.find_by(slug: "ST")
       hypotheses_ids =
         (1..(ENV["MODELS_COUNT"]&.to_i || 10)).map do |i|
-          model = Model.create!(
+          model = challenge.models.create!(
             owner:,
             name: "#{task.name} - Model #{i + 1}",
             description: Faker::Lorem.paragraphs(number: 25).join(" "),

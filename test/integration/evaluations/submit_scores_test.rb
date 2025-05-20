@@ -2,6 +2,7 @@ require "test_helper"
 
 class Evaluations::SubmitScoresTest < ActionDispatch::IntegrationTest
   def setup
+    in_challenge!
     @evaluation = create(:evaluation, status: :running,
                          evaluator: evaluators(:sacrebleu))
   end

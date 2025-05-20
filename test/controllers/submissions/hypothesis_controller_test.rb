@@ -2,6 +2,7 @@ require "test_helper"
 
 class Submissions::HypothesesControllerTest < ActionDispatch::IntegrationTest
   def setup
+    in_challenge!
     sign_in_as("marek")
     @model = create(:model, owner: users("marek"))
     @task = @model.tasks.first

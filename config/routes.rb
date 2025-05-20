@@ -1,30 +1,40 @@
 Rails.application.routes.draw do
   get "test_sets/show"
-  root "tasks#index"
 
-  resources :tasks do
-    resource :leaderboard, only: :show, module: :tasks
-  end
-  resources :test_sets, only: [ :show, :index ] do
-    resource :leaderboard, only: :show, module: :test_sets
-  end
-  resources :models, only: [ :index, :show ]
-  resources :evaluators, only: [ :show, :index ]
+  constraints(-> { !_1.env["mltop.challenge_id"] }) do
+    root to: "home#index"
 
-  resources :test_set, only: [ :show ]
-
-  resources :evaluations, only: [ :create ] do
-    resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
+    resources :challenges
   end
 
-  resources :submissions do
-    resources :tasks, only: [ :index, :show ], module: :submissions
-    resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
-      resource :evaluations, only: [ :create ]
+  constraints(-> { _1.env["mltop.challenge_id"] }) do
+    root to: "tasks#index", as: :challenge_root
+    resources :challenges
+
+    resources :tasks do
+      resource :leaderboard, only: :show, module: :tasks
     end
-  end
+    resources :test_sets, only: [ :show, :index ] do
+      resource :leaderboard, only: :show, module: :test_sets
+    end
+    resources :models, only: [ :index, :show ]
+    resources :evaluators, only: [ :show, :index ]
 
-  resources :external_submissions, only: :index
+    resources :test_set, only: [ :show ]
+
+    resources :evaluations, only: [ :create ] do
+      resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
+    end
+
+    resources :submissions do
+      resources :tasks, only: [ :index, :show ], module: :submissions
+      resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
+        resource :evaluations, only: [ :create ]
+      end
+    end
+
+    resources :external_submissions, only: :index
+  end
 
   namespace :admin do
     resources :tasks

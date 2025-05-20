@@ -2,7 +2,7 @@ class Admin::TestSetsController < Admin::ApplicationController
   before_action :find_test_set, only: %i[edit update destroy show]
 
   def index
-    @test_sets = TestSet.all
+    @test_sets = TestSet.includes(:challenge).all
   end
 
   def show
@@ -10,6 +10,7 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   def new
     @test_set = TestSet.new
+    @challenges = Challenge.all
   end
 
   def create
@@ -24,6 +25,7 @@ class Admin::TestSetsController < Admin::ApplicationController
   end
 
   def edit
+    @challenges = Challenge.all
   end
 
   def update
@@ -49,7 +51,7 @@ class Admin::TestSetsController < Admin::ApplicationController
   private
     def test_set_params
       params.expect(test_set: [
-        :name, :description, :published, task_test_sets_attributes: [ [ :description, :id ] ]
+        :name, :description, :published, :challenge_id, task_test_sets_attributes: [ [ :description, :id ] ]
       ])
     end
 

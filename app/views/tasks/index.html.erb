@@ -1,6 +1,14 @@
 <% breadcrumb :dashboard %>
 
 <div class="w-full">
+  <% if Current.challenge %>
+    <h2>
+      Welcome to <%= Current.challenge.name %> challenge
+    </h2>
+    <div class="mx-14 my-4">
+      <%= Current.challenge.description%>
+    </div>
+  <% end %>
   <div class="flex ms-14 space-x-10">
     <div class="w-1/2">
       <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
