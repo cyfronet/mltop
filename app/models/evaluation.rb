@@ -1,7 +1,5 @@
 class Evaluation < ApplicationRecord
   include Tokenable
-  include LinkHelper
-  GROUP_DIR = "/net/pr2/projects/plgrid/plggmeetween/mltop"
 
   belongs_to :evaluator
   belongs_to :hypothesis, touch: true
@@ -46,15 +44,7 @@ class Evaluation < ApplicationRecord
   end
 
   def run(user, restd_runner = nil)
-    new_token = reset_token!
-    request = submit_script(user, new_token, restd_runner)
-
-    if request.success?
-      update(status: :pending, job_id: request.job_id, creator: user)
-    else
-      update(status: :failed)
-    end
-    request
+    Evaluation::Job.new(self, user, restd_runner).submit
   end
 
   def job_status=(new_status)
@@ -72,33 +62,5 @@ class Evaluation < ApplicationRecord
   private
     def finished_status?(status)
       %w[ completed failed ].include?(status.to_s)
-    end
-
-    def submit_script(user, new_token, restd_runner)
-      Hpc::Response.new(request: client(user, restd_runner).submit(script(new_token)))
-    end
-
-    def client(user, restd_runner)
-      @client ||= Mltop.hpc_client(user, evaluator.host, restd_runner)
-    end
-
-    def script(new_token)
-      HPCKit::Slurm::Script.new(evaluator.script, options(new_token))
-    end
-
-    def options(new_token)
-      {
-        current_working_directory: GROUP_DIR,
-        environment: [
-          "INPUT_URL=#{url_for(hypothesis.test_set_entry.input)}",
-          "GROUNDTRUTH_URL=#{url_for(hypothesis.test_set_entry.groundtruth)}",
-          "HYPOTHESIS_URL=#{url_for(hypothesis.input)}",
-          hypothesis.test_set_entry.internal.attached? ? "INTERNAL_URL=#{url_for(hypothesis.test_set_entry.internal)}" : nil,
-          "RESULTS_URL=#{evaluation_scores_url(self)}",
-          "SOURCE_LANGUAGE=#{hypothesis.test_set_entry.source_language}",
-          "TARGET_LANGUAGE=#{hypothesis.test_set_entry.target_language}",
-          "TOKEN=#{new_token}"
-        ].compact
-      }
     end
 end
