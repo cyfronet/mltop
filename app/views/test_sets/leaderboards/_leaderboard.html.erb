@@ -47,7 +47,7 @@
         <% task.metrics.each do |metric| %>
           <%- value = row.score(test_set: test_set, metric:).value %>
           <td class="score-cell" style="background-color: <%= interpolate_color(value, metric) %>">
-            <%= number_with_precision value, precision: 2 %>
+            <%= number_with_precision value, precision: 3 %>
           </td>
         <% end %>
 
@@ -55,7 +55,7 @@
           <% task.metrics.each do |metric| %>
             <%- value = row.score(test_set: test_set, metric:, test_set_entry:).value %>
             <td class="score-cell" style="background-color: <%= interpolate_color(value, metric) %>">
-              <%= number_with_precision value, precision: 2 %>
+              <%= number_with_precision value, precision: 3 %>
             </td>
           <% end %>
         <% end %>
