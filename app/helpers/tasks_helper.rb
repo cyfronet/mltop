@@ -17,11 +17,11 @@ module TasksHelper
     end
 
   def interpolate_color(metric_value, metric)
+    return "rgb(156, 163, 175)" unless metric_value
+
     worst = metric.worst_score
     best = metric.best_score
-    value = metric_value || worst
-
-    normalized = (value - worst) / (best - worst)
+    normalized = (metric_value - worst) / (best - worst)
     normalized = 1.0 - normalized if metric.asc?
 
     red = [ 220, 38, 38 ] # red-600
