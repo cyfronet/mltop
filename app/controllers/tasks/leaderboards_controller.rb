@@ -2,13 +2,14 @@ class Tasks::LeaderboardsController < ApplicationController
   allow_unauthenticated_access only: [ :show ]
 
 
-  helper_method :selected_order, :selected_metric, :selected_test_set
+  helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params
 
   def index
     @tasks = Task.all
   end
 
   def show
+    @filtering_params = params.permit(:tsid, :mid, :o, :source, :target)
     @task = Task.with_published_test_sets.includes(:metrics).find(params[:task_id])
     if Mltop.ranking_released?
       @rows = Top::Row
@@ -35,5 +36,9 @@ class Tasks::LeaderboardsController < ApplicationController
 
     def selected_test_set
       @test_set ||= TestSet.published.find_by(id: params[:tsid]) if params[:tsid].present?
+    end
+
+    def filtering_params
+      @filtering_params
     end
 end

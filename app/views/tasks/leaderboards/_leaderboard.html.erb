@@ -19,7 +19,7 @@
       <% task.test_sets.each do |test_set| %>
         <% task.metrics.each do |metric| %>
           <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-            <%= link_to task_leaderboard_path(task, mid: metric.id, tsid: test_set.id, o: metric_order(test_set, metric)), class: "flex items-center justify-center" do %>
+            <%= link_to task_leaderboard_path(task, source: filtering_params[:source], target: filtering_params[:target], mid: metric.id, tsid: test_set.id, o: metric_order(test_set, metric)), class: "flex items-center justify-center" do %>
               <span class="cursor-pointer mr-1" title="<%="Score range: #{metric.worst_score} - #{metric.best_score}"%>">
                 <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
                 <span><%= metric.name %></span>

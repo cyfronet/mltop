@@ -1,6 +1,10 @@
 <% if rows.source_languages.present? || rows.target_languages.present? %>
   <div class="mx-16 mt-5 mb-5">
     <%= form_tag task_leaderboard_path(@task), method: :get, class: "flex place-content-center", data: { controller: "auto-submit" } do %>
+      <%= hidden_field_tag :mid, filtering_params[:mid].presence %>
+      <%= hidden_field_tag :tsid, filtering_params[:tsid].presence %>
+      <%= hidden_field_tag :o, filtering_params[:o].presence %>
+
       <div class="mr-4">
         <label for="source" class="block text-sm font-medium text-gray-700">Source language</label>
         <%= select_tag "source", options_for_select([["", nil]] + rows.source_languages, params[:source]),
