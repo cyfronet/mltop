@@ -14,7 +14,6 @@ class Submissions::HypothesesController < ApplicationController
     @hypothesis = Hypothesis.owned_by(Current.user).find(params[:id])
 
     if @hypothesis.destroy
-      @empty_hypothesis = Hypothesis::Empty.new(@hypothesis.model, @hypothesis.test_set_entry)
       flash.now[:notice] = "Hypothesis succesfully deleted"
     else
       flash.now[:alert] = "Unable to delete hypothesis #{@hypothesis.test_set_entry}"

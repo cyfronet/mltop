@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       resources :tasks, only: [ :index, :show ], module: :submissions
       resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
         resource :evaluations, only: [ :create ]
+        resource :starts, only: [ :show ]
       end
     end
 

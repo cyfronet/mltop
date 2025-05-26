@@ -9,6 +9,10 @@ class Hypothesis < ApplicationRecord
   validates :input, presence: true
   validates :test_set_entry, uniqueness: { scope: :model }
 
+  after_create_commit  { broadcaster.broadcast_change }
+  after_update_commit  { broadcaster.broadcast_change }
+  after_destroy_commit { broadcaster.broadcast_delete }
+
   def evaluate_missing!(creator)
     transaction do
       run_evaluators = evaluations.map(&:evaluator_id)
@@ -18,6 +22,7 @@ class Hypothesis < ApplicationRecord
           evaluations.build(evaluator:, creator:).tap { it.save! }
         end.compact
 
+      # broadcaster.broadcast_scores
       Evaluations::RunJob
         .perform_later(evaluations: missing_evaluations, user: Current.user)
     end
@@ -42,5 +47,9 @@ class Hypothesis < ApplicationRecord
 
   def self.owned_by(user)
     joins(:model).where(models: { owner: user })
+  end
+
+  def broadcaster
+    @broadcaster ||= Hypothesis::Broadcaster.new(self)
   end
 end

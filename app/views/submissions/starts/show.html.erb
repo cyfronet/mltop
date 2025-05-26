@@ -1,0 +1,8 @@
+<%= turbo_frame_tag dom_id(@hypothesis, "evaluate_all") do %>
+  <% if Current.user.meetween_member? && !@hypothesis.fully_evaluated? %>
+    <%= button_to hypothesis_evaluations_path(@hypothesis), class: "text-emerald-600 hover:text-white hover:bg-emerald-600 relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium ring-1 ring-inset ring-gray-300 mr-3" do %>
+      <%= run_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      <span>Evaluate all</span>
+    <% end %>
+  <% end %>
+<% end %>

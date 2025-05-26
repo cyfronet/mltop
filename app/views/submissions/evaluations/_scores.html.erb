@@ -1,6 +1,6 @@
-<div class="flex justify-left items-center gap-x-2">
+<div class="flex justify-left items-center gap-x-2" id="<%= dom_id(evaluation, "scores")%>">
   <% if evaluation.failed? %>
-    <% metrics.each do |metric| %>
+    <% evaluation.evaluator.metrics.each do |metric| %>
       <span class="text-xs">
         <%= metric.name%>:
       </span>
@@ -10,7 +10,7 @@
       </span>
     <% end %>
   <% else %>
-    <% metrics.each do |metric| %>
+    <% evaluation.evaluator.metrics.each do |metric| %>
       <span class="text-xs">
         <%= metric.name%>:
       </span>

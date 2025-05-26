@@ -15,6 +15,13 @@ class Evaluation < ApplicationRecord
   broadcasts_to ->(ev) { [ ev.hypothesis.model, ev.hypothesis.test_set_entry.task ] },
                 partial: "submissions/evaluations/evaluation"
 
+  after_update :broadcast_scores
+  after_create_commit :broadcast_scores
+
+  def broadcast_scores
+    broadcaster.broadcast_scores
+  end
+
   enum :status, {
     created: 0,
     pending: 1,
@@ -100,5 +107,9 @@ class Evaluation < ApplicationRecord
           "TOKEN=#{new_token}"
         ].compact
       }
+    end
+
+    def broadcaster
+      @broadcaster ||= Evaluations::Broadcaster.new(self)
     end
 end
