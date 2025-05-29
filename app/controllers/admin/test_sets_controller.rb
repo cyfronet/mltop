@@ -1,5 +1,5 @@
 class Admin::TestSetsController < Admin::ApplicationController
-  before_action :find_test_set, only: %i[edit update destroy show]
+  before_action :find_and_authorize_test_set, only: %i[edit update destroy show]
 
   def index
     @test_sets = TestSet.includes(:challenge).all
@@ -10,6 +10,7 @@ class Admin::TestSetsController < Admin::ApplicationController
 
   def new
     @test_set = TestSet.new
+    authorize(@test_set)
     @challenges = Challenge.all
   end
 
@@ -55,7 +56,8 @@ class Admin::TestSetsController < Admin::ApplicationController
       ])
     end
 
-    def find_test_set
-      @test_set = TestSet.find(params[:id])
+    def find_and_authorize_test_set
+      @test_set = policy_scope(TestSet).find(params[:id])
+      authorize(@test_set)
     end
 end
