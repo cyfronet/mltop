@@ -3,6 +3,7 @@ class EvaluationsController < ApplicationController
   meetween_members_only
 
   def create
+    authorize(Evaluation)
     evaluation = @hypothesis.evaluations.create!(evaluation_params)
     evaluation.run_later(Current.user)
 
