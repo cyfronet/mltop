@@ -36,6 +36,12 @@ class ApplicationPolicy
     false
   end
 
+  private
+
+  def challenge_open?
+    Time.current.between?(Current.challenge.starts_at, Current.challenge.ends_at)
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

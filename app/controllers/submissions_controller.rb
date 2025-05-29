@@ -16,6 +16,7 @@ class SubmissionsController < ApplicationController
 
   def create
     @model = Current.user.models.new(model_params.merge(challenge: Current.challenge))
+    authorize(@model)
     if @model.save
       redirect_to submission_path(@model), notice: "Model created"
     else
@@ -24,6 +25,7 @@ class SubmissionsController < ApplicationController
   end
 
   def update
+    authorize(@model)
     if @model.update(model_params)
       redirect_to submission_path(@model), notice: "Model updated"
     else
