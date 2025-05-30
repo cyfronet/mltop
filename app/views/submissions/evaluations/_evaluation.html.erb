@@ -1,23 +1,9 @@
 <% if evaluation.new_record? %>
-  <li>
-    <%= turbo_frame_tag dom_id(evaluation.hypothesis, evaluation.evaluator) do %>
-      <div class="px-4 py-4 sm:px-6">
-        <div class="flex items-center justify-between">
-          <div class="truncate text-sm font-medium"><%= evaluation.evaluator.name %></div>
-          <div class="ml-2 flex flex-shrink-0">
-            <%= form_with model: evaluation do |f| %>
-              <%= f.hidden_field :hypothesis_id %>
-              <%= f.hidden_field :evaluator_id %>
-              <%= f.button class: "text-emerald-600 hover:text-white hover:bg-emerald-600 relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium ring-1 ring-inset ring-gray-300 mr-3", without_default_styles: true do %>
-                <%= run_icon("ml-0.5 mr-1.5 h-5 w-5") %>
-                <span>Evaluate</span>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </li>
+  <% if Current.user.meetween_member? %>
+    <li>
+      <%= render "submissions/evaluations/evaluation_form", evaluation: evaluation %>
+    </li>
+  <% end %>
 <% else %>
   <% cache evaluation do %>
     <li id="<%= dom_id(evaluation) %>">
