@@ -3,35 +3,35 @@ class ModelPolicy < ApplicationPolicy
     def resolve
       Current.challenge.models
     end
+  end
 
-    def index?
-      true
-    end
+  def index?
+    true
+  end
 
-    def show?
-      true
-    end
+  def show?
+    true
+  end
 
-    def new?
-      challenge_open?
-    end
+  def new?
+    challenge_open?
+  end
 
-    def create?
-      challenge_open?
-    end
+  def create?
+    challenge_open?
+  end
 
-    def edit?
-      challenge_open? && owner?
-    end
+  def edit?
+    challenge_open? && owner?
+  end
 
-    def update?
-      challenge_open? && owner?
-    end
+  def update?
+    challenge_open? && owner?
+  end
 
-    private
+  private
 
-    def owner?
-      record.owner == user
-    end
+  def owner?
+    record.owner == user
   end
 end

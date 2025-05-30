@@ -1,5 +1,5 @@
 class SubmissionsController < ApplicationController
-  before_action :set_model, only: [ :show, :update ]
+  before_action :find_and_authorize_model, only: [ :show, :update ]
 
   def index
     @models = policy_scope(Model).where(owner: Current.user)
@@ -25,7 +25,6 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    authorize(@model)
     if @model.update(model_params)
       redirect_to submission_path(@model), notice: "Model updated"
     else
@@ -43,7 +42,8 @@ class SubmissionsController < ApplicationController
       params.required(:model).permit(:name, :description, task_ids: [])
     end
 
-    def set_model
-      @model = Current.user.models.find(params[:id])
+    def find_and_authorize_model
+      @model = policy_scope(Model).where(owner: Current.user).find(params[:id])
+      authorize(@model)
     end
 end
