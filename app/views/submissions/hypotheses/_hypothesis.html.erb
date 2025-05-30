@@ -16,7 +16,7 @@
               <h3 class="text-base"><%= hypothesis.test_set_entry %></h3>
             </div>
           </div>
-          <% if hypothesis.evaluations? && Mltop.ranking_released? %>
+          <% if hypothesis.evaluations? && (Mltop.ranking_released? || Current.user.meetween_member?) %>
             <div class="hidden sm:flex space-x-4">
               <% hypothesis.evaluations.each do |evaluation| %>
                 <%= render "submissions/evaluations/scores",
