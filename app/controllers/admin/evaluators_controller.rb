@@ -1,5 +1,5 @@
 class Admin::EvaluatorsController < Admin::ApplicationController
-  before_action :find_evaluator, only: %i[ show edit update destroy ]
+  before_action :find_and_authorize_evaluator, only: %i[ show edit update destroy ]
 
   def index
     @evaluators = Evaluator.includes(:challenge).all
@@ -10,6 +10,7 @@ class Admin::EvaluatorsController < Admin::ApplicationController
 
   def new
     @evaluator = Evaluator.new
+    authorize(@evaluator)
     @challenges = Challenge.all
   end
 
@@ -48,7 +49,8 @@ class Admin::EvaluatorsController < Admin::ApplicationController
       params.required(:evaluator).permit(:name, :script, :host, :from, :to, :challenge_id)
     end
 
-    def find_evaluator
-      @evaluator = Evaluator.find(params[:id])
+    def find_and_authorize_evaluator
+      @evaluator = policy_scope(Evaluator).find(params[:id])
+      authorize(@evaluator)
     end
 end

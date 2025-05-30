@@ -1,8 +1,12 @@
-class TaskPolicy < ApplicationPolicy
+class EvaluatorPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      Current.challenge ? Current.challenge.tasks : Task.all
+      Current.challenge ? Current.challenge.evaluators : Evaluator.all
     end
+  end
+
+  def show?
+    admin_or_challenge_editor?
   end
 
   def new?

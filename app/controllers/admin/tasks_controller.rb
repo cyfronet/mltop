@@ -1,5 +1,5 @@
 class Admin::TasksController < Admin::ApplicationController
-  before_action :find_task, only: %i[edit update destroy]
+  before_action :find_and_authorize_task, only: %i[edit update destroy]
 
   def index
     @tasks = Task.all
@@ -12,6 +12,7 @@ class Admin::TasksController < Admin::ApplicationController
 
   def new
     @task = Task.new
+    authorize(@task)
     @evaluators = Evaluator.all
     @challenges = Challenge.all
   end
@@ -54,7 +55,8 @@ class Admin::TasksController < Admin::ApplicationController
       ])
     end
 
-    def find_task
-      @task = Task.find(params[:id])
+    def find_and_authorize_task
+      @task = policy_scope(Task).find(params[:id])
+      authorize(@task)
     end
 end
