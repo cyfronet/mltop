@@ -45,6 +45,11 @@ class ApplicationPolicy
   def admin_or_challenge_editor?
     user.admin? || Current.challenge&.owner == user
   end
+
+  def challenge_participant?
+    Current.challenge_member?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

@@ -1,5 +1,5 @@
 class Admin::ParticipantsController < Admin::ApplicationController
   def index
-    @participants = User.preload(models: :hypothesis).all
+    @participants = policy_scope(User, policy_scope_class: MemberPolicy::Scope).preload(models: :hypothesis)
   end
 end

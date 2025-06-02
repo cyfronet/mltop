@@ -4,7 +4,7 @@
   <% if Current.challenge %>
     <h2>
       Welcome to <%= Current.challenge.name %> challenge
-      <% if !participant_of_challenge %>
+      <% if !challenge_participant? %>
         <%= button_to "Join challenge", membership_path, class: "btn btn-primary"%>
       <% end %>
     </h2>
