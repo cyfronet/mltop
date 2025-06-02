@@ -10,23 +10,36 @@ class Submissions::HypothesesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create hypotheses" do
+    file = fixture_file_upload("input.txt", "text/plain")
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: file,
+      filename: "input.txt",
+      content_type: "text/plain"
+    )
     assert_difference("Hypothesis.count") do
-      post submission_hypotheses_path(submission_id: @model.id, format: :turbo_stream),
-        params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
+      post submission_hypotheses_path(submission_id: @model.id),
+        params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: blob.signed_id } }
     end
 
-    assert_response :ok
+    assert_response :redirect
     assert_equal "Hypothesis succesfully created", flash[:notice]
   end
 
   test "it returns uprocessable for invalid params" do
+    file = fixture_file_upload("input.txt", "text/plain")
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: file,
+      filename: "input.txt",
+      content_type: "text/plain"
+    )
     @hypothesis = create(:hypothesis, model: @model, test_set_entry: @test_set_entry)
 
     assert_no_difference("Hypothesis.count") do
-      post submission_hypotheses_path(submission_id: @model.id, format: :turbo_stream),
-        params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
+      post submission_hypotheses_path(submission_id: @model.id),
+        params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: blob.signed_id } }
     end
 
+    assert_response :redirect
     assert_equal "Unable to create hypothesis", flash[:alert]
   end
 
