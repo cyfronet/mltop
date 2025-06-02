@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     root to: "tasks#index", as: :challenge_root
     resources :challenges
 
+    resource :membership, only: :create
     resources :tasks do
       resource :leaderboard, only: :show, module: :tasks
     end
