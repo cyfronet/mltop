@@ -5,7 +5,7 @@ class MembershipsController < ApplicationController
       return
     end
 
-    if Membership.create(user: Current.user, challenge: Current.challenge)
+    if Current.challenge.memberships.create(user: Current.user)
       redirect_to root_path, notice: "Successfully joined challenge."
     else
       redirect_back fallback_location: root_path, alert: "An error occurred while joining challenge."
