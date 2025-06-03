@@ -7,6 +7,7 @@ class Challenge < ApplicationRecord
   has_many :evaluators, dependent: :nullify
   has_many :memberships, dependent: :destroy
   has_many :members, class_name: "User", source: :user, through: :memberships
+  has_many :consents, dependent: :destroy
 
   has_rich_text :description
 
