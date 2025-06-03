@@ -14,19 +14,19 @@ class ModelPolicy < ApplicationPolicy
   end
 
   def new?
-    challenge_open?
+    challenge_open? && challenge_participant?
   end
 
   def create?
-    challenge_open?
+    challenge_open? && challenge_participant?
   end
 
   def edit?
-    challenge_open? && owner?
+    challenge_open? && owner? && challenge_participant?
   end
 
   def update?
-    challenge_open? && owner?
+    challenge_open? && owner? && challenge_participant?
   end
 
   private

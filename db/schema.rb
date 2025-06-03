@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_02_123114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -104,14 +104,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.index ["test_set_entry_id"], name: "index_hypotheses_on_test_set_entry_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_memberships_on_challenge_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "metrics", force: :cascade do |t|
     t.string "name"
     t.bigint "evaluator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 1, null: false
-    t.float "best_score", null: false
-    t.float "worst_score", null: false
+    t.integer "order", default: 0, null: false
+    t.float "best_score", default: 0.0, null: false
+    t.float "worst_score", default: 100.0, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 
@@ -120,6 +129,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "data_consent", default: false, null: false
     t.bigint "challenge_id"
     t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
@@ -206,6 +216,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_121929) do
     t.text "ssh_key"
     t.text "ssh_certificate"
     t.string "provider"
+    t.boolean "force_challenge_open", default: false, null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

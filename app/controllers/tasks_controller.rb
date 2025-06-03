@@ -1,8 +1,6 @@
 class TasksController < ApplicationController
   allow_unauthenticated_access only: [ :index, :show ]
 
-  helper_method :selected_order, :selected_metric, :selected_test_set
-
   def index
     @tasks = policy_scope(Task)
     @stats = Statistics.new

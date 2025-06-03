@@ -5,6 +5,8 @@ class Challenge < ApplicationRecord
   has_many :tasks, dependent: :nullify
   has_many :test_sets, dependent: :nullify
   has_many :evaluators, dependent: :nullify
+  has_many :memberships, dependent: :destroy
+  has_many :members, class_name: "User", source: :user, through: :memberships
 
   has_rich_text :description
 
