@@ -57,7 +57,10 @@ module ActiveSupport
       get "/auth/github/callback"
     end
 
-    def in_challenge!(challenge = challenges(:global))
+    def in_challenge!(user = nil, challenge = challenges(:global))
+      if user
+        Membership.create(user:, challenge:)
+      end
       self.default_url_options =
         { script_name: "/#{ChallengeSlug.encode(challenge.id)}" }
     end
