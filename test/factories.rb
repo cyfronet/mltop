@@ -91,5 +91,20 @@ class ActiveSupport::TestCase
         owner: users(:marek)
       }
     end
+
+    factory(:consent) do |i|
+      {
+        description: "some description",
+        challenge: challenges(:global),
+        target: "challenge"
+      }
+    end
+
+    factory(:membership) do |i|
+      {
+        user: users(:marek),
+        challenge: challenges(:global)
+      }
+    end
   end
 end
