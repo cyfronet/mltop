@@ -1,0 +1,5 @@
+<%# locals: (challenge:) %>
+
+<%= turbo_frame_tag "new_consent" do %>
+  <%= link_to "New consent", new_challenge_consent_path(challenge), class: "btn btn-primary" %>
+<% end %>

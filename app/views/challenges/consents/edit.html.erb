@@ -1,0 +1,3 @@
+<%= turbo_frame_tag @consent, target: "_top" do %>
+  <%= render "form", consent: @consent, url: consent_path(@consent) %>
+<% end %>
