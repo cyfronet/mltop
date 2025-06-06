@@ -28,4 +28,8 @@ class Challenge < ApplicationRecord
     return "closed"   if now.after?(ends_at)
     "ongoing"
   end
+
+  def challenge_consents
+    consents.where(target: :challenge)
+  end
 end

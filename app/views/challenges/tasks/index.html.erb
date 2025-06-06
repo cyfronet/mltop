@@ -7,8 +7,12 @@
       </h2>
       <div class="ms-14">
         <%= Current.challenge.description%>
-        <% if !challenge_participant? %>
-          <%= button_to "Join challenge", membership_path, class: "btn btn-primary block mx-auto"%>
+        <% if Current.user && !challenge_participant? %>
+          <%= turbo_frame_tag dom_id(Current.user, "membership_form") do %>
+            <div class="mt-2">
+              <%= link_to "Join challenge", new_membership_path, class: "btn btn-primary" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>

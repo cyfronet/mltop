@@ -1,0 +1,6 @@
+<%= turbo_frame_tag dom_id(Current.user, "membership_form") do %>
+  <%= form_with model: @membership, url: membership_path, local: true do |form| %>
+    <%= render "challenges/agreements/form", form:%>
+    <%= form.submit "Join challenge", class: "mt-2" %>
+  <% end %>
+<% end %>
