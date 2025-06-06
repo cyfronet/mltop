@@ -30,6 +30,10 @@ module Challenges
       challenge_open? && owner? && challenge_participant?
     end
 
+    def permitted_attributes
+      [ :name, :description, task_ids: [], agreements_attributes: [ :consent_id, :agreed, :id ] ]
+    end
+
     private
 
     def owner?
