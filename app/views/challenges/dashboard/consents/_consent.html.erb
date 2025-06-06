@@ -1,0 +1,22 @@
+<%# locals: (consent:) %>
+
+<div class="sm:flex sm:items-start sm:justify-between">
+  <span><%= consent.name %></span>
+  <span><%= consent.target %></span>
+  <span><%= consent.mandatory %></span>
+  <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
+    <%= link_to edit_dashboard_consent_path(consent), class: "btn btn-secondary-outline" do %>
+      <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      <span> Edit </span>
+    <% end %>
+
+    <%= button_to dashboard_consent_path(consent), class: "btn btn-danger", method: :delete,
+        form: { "data-turbo-confirm": "Are you sure you want to remove this consent?",
+                "data-turbo-frame": "_top" } do %>
+      <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      <span> Delete </span>
+    <% end %>
+  </div>
+</div>
+
+
