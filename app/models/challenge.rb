@@ -25,4 +25,8 @@ class Challenge < ApplicationRecord
   def challenge_consents
     consents.where(target: :challenge)
   end
+
+  def model_consents
+    consents.where(target: :model)
+  end
 end

@@ -1,4 +1,6 @@
 class Model < ApplicationRecord
+  include Agreementable
+
   belongs_to :owner, class_name: "User"
   belongs_to :challenge
 
