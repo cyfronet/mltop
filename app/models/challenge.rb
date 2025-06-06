@@ -21,4 +21,8 @@ class Challenge < ApplicationRecord
   def meetween_owner
     errors.add(:owner, "not a meetween member") unless owner.meetween_member?
   end
+
+  def challenge_consents
+    consents.where(target: :challenge)
+  end
 end

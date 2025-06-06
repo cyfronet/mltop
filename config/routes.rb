@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       resources :consents, module: :challenges, shallow: true, except: [ :index, :show ]
     end
 
-    resource :membership, only: :create
+    resource :membership, only: [ :new, :create ]
     resources :tasks do
       resource :leaderboard, only: :show, module: :tasks
     end
