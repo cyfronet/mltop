@@ -8,6 +8,10 @@ module Challenges
       def authorize(record, query = nil)
         super([ :challenges, :dashboard, record ], query)
       end
+
+      def permitted_attributes(record, **args)
+        super([ :challenges, :dashboard, record ], **args)
+      end
     end
   end
 end
