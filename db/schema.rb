@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_03_081400) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,6 +55,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_03_081400) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "agreements", force: :cascade do |t|
+    t.boolean "agreed", default: false, null: false
+    t.bigint "consent_id", null: false
+    t.string "agreementable_type", null: false
+    t.bigint "agreementable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agreementable_type", "agreementable_id"], name: "index_agreements_on_agreementable"
+    t.index ["consent_id"], name: "index_agreements_on_consent_id"
   end
 
   create_table "challenges", force: :cascade do |t|
@@ -232,6 +243,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_03_081400) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agreements", "consents"
   add_foreign_key "challenges", "users", column: "owner_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"
