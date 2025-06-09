@@ -46,6 +46,10 @@ class ApplicationPolicy
     user.admin? || Current.challenge&.owner == user
   end
 
+  def admin?
+    user.admin?
+  end
+
   def challenge_participant?
     Current.challenge_member?
   end

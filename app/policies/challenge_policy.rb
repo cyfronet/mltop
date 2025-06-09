@@ -1,39 +1,33 @@
 class ChallengePolicy < ApplicationPolicy
   def index?
-    user.meetween_member?
+    true
   end
 
   def show?
-    user.meetween_member?
+    true
   end
 
   def new?
-    user.meetween_member?
+    admin?
   end
 
   def create?
-    user.meetween_member?
+    admin?
   end
 
   def edit?
-    challenge_maintainer?
+    admin?
   end
 
   def update?
-    challenge_maintainer?
+    admin?
   end
 
   def destroy?
-    challenge_maintainer?
+    admin?
   end
 
   def permitted_attributes
     [ :name, :starts_at, :ends_at, :description ]
-  end
-
-  private
-
-  def challenge_maintainer?
-    user.admin? || (user == record.owner && user.meetween_member?)
   end
 end
