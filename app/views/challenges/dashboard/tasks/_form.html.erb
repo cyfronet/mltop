@@ -1,0 +1,32 @@
+<%# locals: (task:, evaluators:, challenges:) %>
+
+<%= form_with(model: task, url: [:dashboard, task], class: "contents", data: { controller: "update-evaluators" }) do |form| %>
+  <div class="space-y-12">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <%= form.text_field :name, wrapper: "sm:col-span-2" %>
+      <%= form.text_field :slug, wrapper: "sm:col-span-2" %>
+      <%= form.select :challenge_id, challenges.map { |c| [ c.name, c.id ] },
+        { include_blank: true, wrapper: "sm:col-span-2" }
+      %>
+      <%= form.text_area :info, wrapper: "col-span-full", class: "h-32" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
+      <%= form.select :from, Task::TYPES,
+        { include_blank: true, wrapper: "sm:col-span-1" },
+        { data: { action: "change->update-evaluators#updateEvaluators", update_evaluators_target: "from" } }
+      %>
+
+      <%= form.select :to, Task::TYPES,
+        { include_blank: true, wrapper: "sm:col-span-1" },
+        { data: { action: "change->update-evaluators#updateEvaluators", update_evaluators_target: "to" } }
+      %>
+      <%= form.collection_select :evaluator_ids, evaluators || [], :id, :name,
+        { multiple: true, wrapper: "sm:col-span-2" },
+        { data: { update_evaluators_target: "evaluators" } } %>
+    </div>
+  </div>
+
+  <div class="mt-6 mb-2 flex items-center justify-end gap-x-6">
+    <%= link_to "Cancel", [:dashboard, task], class: "btn btn-secondary-outline" %>
+    <%= form.submit %>
+  </div>
+<% end %>

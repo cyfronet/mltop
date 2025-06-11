@@ -1,0 +1,48 @@
+<% breadcrumb :dashboard_evaluator, @evaluator %>
+
+<div>
+  <div class="px-4 sm:px-0">
+    <div class="sm:flex sm:items-start sm:justify-between">
+      <div>
+        <h3 class="text-base font-semibold leading-7"><%= @evaluator %></h3>
+      </div>
+      <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
+        <%= link_to [:edit, :dashboard, @evaluator], type:"button", class: "btn btn-secondary-outline" do %>
+          <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+          <span> Edit </span>
+        <% end %>
+        <%= button_to [:dashboard, @evaluator], method: :delete, class: "btn btn-danger",
+          form: { "data-turbo-confirm": "Are you sure you want to remove this evaluator? All related evaluations and calculated scores will be removed" } do %>
+          <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+          <span> Delete </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <h3 class="text-base font-semibold leading-7"> Host: <%= @evaluator.host %></h3>
+  <h3 class="text-base font-semibold leading-7"> Challenge: <%= @evaluator.challenge %></h3>
+  <h4 class="text-base leading-7">From: <%= @evaluator.from %></h3>
+  <h4 class="text-base leading-7">To: <%= @evaluator.to %></h3>
+
+  <pre>
+    <code>
+      <%= @evaluator.script.prepend("\n") %>
+    </code>
+  </pre>
+
+  <div class="mt-6 border-t border-gray-100">
+    <dl class="divide-y divide-gray-100">
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6">
+          Metrics
+        </dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <div id="metrics">
+            <%= render partial: "metric", collection: @evaluator.metrics, as: :metric %>
+          </div>
+          <%= render "new_metric", evaluator: @evaluator %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>

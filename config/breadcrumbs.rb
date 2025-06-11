@@ -7,9 +7,9 @@ crumb :task do |task|
   parent :dashboard
 end
 
-crumb :new_admin_task do |task|
+crumb :new_dashboard_task do |task|
   link "New", new_task_path
-  parent :admin_tasks
+  parent :dashboard_tasks
 end
 
 crumb :task_leaderboard do |task|
@@ -78,54 +78,54 @@ crumb :new_challenge do |challenge|
   parent :challenges
 end
 
-crumb :admin_tasks do
-  link "Manage tasks", admin_tasks_path
+crumb :dashboard_tasks do
+  link "Manage tasks", dashboard_tasks_path
 end
 
-crumb :admin_task do |task, name|
-  link name || task, admin_task_path(task)
-  parent :admin_tasks
+crumb :dashboard_task do |task, name|
+  link name || task, dashboard_task_path(task)
+  parent :dashboard_tasks
 end
 
-crumb :edit_admin_task do |task|
-  link "Edit", edit_admin_task_path(task)
-  parent :admin_task, task, "#{task.name.presence || task.name_was} (#{task.slug.presence || task.slug_was})"
+crumb :edit_dashboard_task do |task|
+  link "Edit", edit_dashboard_task_path(task)
+  parent :dashboard_task, task, "#{task.name.presence || task.name_was} (#{task.slug.presence || task.slug_was})"
 end
 
-crumb :admin_test_sets do
-  link "Manage test sets", admin_test_sets_path
+crumb :dashboard_test_sets do
+  link "Manage test sets", dashboard_test_sets_path
 end
 
-crumb :admin_test_set do |test_set, name|
-  link name || test_set, admin_test_set_path(test_set)
-  parent :admin_test_sets
+crumb :dashboard_test_set do |test_set, name|
+  link name || test_set, dashboard_test_set_path(test_set)
+  parent :dashboard_test_sets
 end
 
-crumb :new_admin_test_set do |test_set|
-  link "New", new_admin_test_set_path
-  parent :admin_test_sets
+crumb :new_dashboard_test_set do |test_set|
+  link "New", new_dashboard_test_set_path
+  parent :dashboard_test_sets
 end
 
-crumb :edit_admin_test_set do |test_set|
-  link "Edit", edit_admin_test_set_path(test_set)
-  parent :admin_test_set, test_set, test_set.name.presence || test_set.name_was
+crumb :edit_dashboard_test_set do |test_set|
+  link "Edit", edit_dashboard_test_set_path(test_set)
+  parent :dashboard_test_set, test_set, test_set.name.presence || test_set.name_was
 end
 
-crumb :admin_evaluators do
-  link "Manage evaluators", admin_evaluators_path
+crumb :dashboard_evaluators do
+  link "Manage evaluators", dashboard_evaluators_path
 end
 
-crumb :admin_evaluator do |evaluator, name|
-  link name || evaluator, admin_evaluator_path(evaluator)
-  parent :admin_evaluators
+crumb :dashboard_evaluator do |evaluator, name|
+  link name || evaluator, dashboard_evaluator_path(evaluator)
+  parent :dashboard_evaluators
 end
 
-crumb :new_admin_evaluator do
-  link "New", new_admin_evaluator_path
-  parent :admin_evaluators
+crumb :new_dashboard_evaluator do
+  link "New", new_dashboard_evaluator_path
+  parent :dashboard_evaluators
 end
 
-crumb :edit_admin_evaluator do |evaluator|
-  link "Edit", edit_admin_evaluator_path(evaluator)
-  parent :admin_evaluator, evaluator, evaluator.name.presence || evaluator.name_was
+crumb :edit_dashboard_evaluator do |evaluator|
+  link "Edit", edit_dashboard_evaluator_path(evaluator)
+  parent :dashboard_evaluator, evaluator, evaluator.name.presence || evaluator.name_was
 end
