@@ -35,19 +35,21 @@ Rails.application.routes.draw do
     end
 
     resources :external_submissions, only: :index
-  end
 
-  namespace :admin do
-    resources :tasks
-    resources :test_sets do
-      resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]
-    end
-    resources :evaluators do
-      resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]
-    end
+    scope module: :challenges do
+      namespace :dashboard do
+        resources :tasks
+        resources :test_sets do
+          resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]
+        end
+        resources :evaluators do
+          resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]
+        end
 
-    resources :participants, only: :index do
-      resources :hypotheses, only: :index, module: :participants
+        resources :participants, only: :index do
+          resources :hypotheses, only: :index, module: :participants
+        end
+      end
     end
   end
 

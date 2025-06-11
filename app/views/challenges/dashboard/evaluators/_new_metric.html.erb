@@ -1,0 +1,5 @@
+<%# locals: (evaluator:) %>
+
+<%= turbo_frame_tag "new_metric" do %>
+  <%= link_to "New metric", new_dashboard_evaluator_metric_path(evaluator), class: "btn btn-primary" %>
+<% end %>
