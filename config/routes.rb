@@ -4,12 +4,11 @@ Rails.application.routes.draw do
   constraints(-> { !_1.env["mltop.challenge_id"] }) do
     root to: "home#index"
 
-    resources :challenges
+    resources :challenges, except: [ :edit, :update ]
   end
 
   constraints(-> { _1.env["mltop.challenge_id"] }) do
     root to: "tasks#index", as: :challenge_root
-    resources :challenges
 
     resource :membership, only: :create
     resources :tasks do
@@ -38,6 +37,7 @@ Rails.application.routes.draw do
 
     scope module: :challenges do
       namespace :dashboard do
+        resources :challenges, only: [ :edit, :update, :destroy ]
         resources :tasks
         resources :test_sets do
           resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]
