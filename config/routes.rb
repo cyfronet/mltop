@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   end
 
   constraints(-> { _1.env["mltop.challenge_id"] }) do
-    root to: "tasks#index", as: :challenge_root
-
     scope module: :challenges do
+      root to: "tasks#index", as: :challenge_root
+
       resources :evaluators, only: [ :index ]
       resource :membership, only: :create
 
