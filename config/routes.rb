@@ -11,16 +11,7 @@ Rails.application.routes.draw do
     root to: "tasks#index", as: :challenge_root
 
     resource :membership, only: :create
-    resources :tasks do
-      resource :leaderboard, only: :show, module: :tasks
-    end
-    resources :test_sets, only: [ :show, :index ] do
-      resource :leaderboard, only: :show, module: :test_sets
-    end
-    resources :models, only: [ :index, :show ]
     resources :evaluators, only: [ :index ]
-
-    resources :test_set, only: [ :show ]
 
     resources :evaluations, only: [ :create ] do
       resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
@@ -34,6 +25,15 @@ Rails.application.routes.draw do
     end
 
     scope module: :challenges do
+      resources :tasks do
+        resource :leaderboard, only: :show, module: :tasks
+      end
+      resources :test_sets, only: [ :show, :index ] do
+        resource :leaderboard, only: :show, module: :test_sets
+      end
+      resources :test_set, only: [ :show ]
+      resources :models, only: [ :index, :show ]
+
       namespace :dashboard do
         resources :challenges, only: [ :edit, :update, :destroy ]
         resources :external_submissions, only: :index
