@@ -59,8 +59,8 @@ crumb :submission_task do |model, task|
   parent :submission, model
 end
 
-crumb :external_submissions do
-  link "External submissions", external_submissions_path
+crumb :dashboard_external_submissions do
+  link "External submissions", dashboard_external_submissions_path
   parent :dashboard
 end
 

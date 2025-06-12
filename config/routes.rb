@@ -33,11 +33,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :external_submissions, only: :index
-
     scope module: :challenges do
       namespace :dashboard do
         resources :challenges, only: [ :edit, :update, :destroy ]
+        resources :external_submissions, only: :index
         resources :tasks
         resources :test_sets do
           resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]

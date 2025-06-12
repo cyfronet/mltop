@@ -24,7 +24,7 @@
               <% if signed_in? %>
                 <%- links.add "My submissions", submissions_path, /\A\/submissions.*/ %>
                 <% if Current.user.meetween_member? %>
-                  <%- links.add "External submissions", external_submissions_path, /\A\/external_submissions.*/ %>
+                  <%- links.add "External submissions", dashboard_external_submissions_path, /\A\/dashboard_external_submissions.*/ %>
                   <%- links.add "Dashboard", dashboard_tasks_path, /\A\/admin\/.*/ %>
                 <% end %>
               <% end %>
