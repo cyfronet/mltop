@@ -17,13 +17,6 @@ Rails.application.routes.draw do
       resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
     end
 
-    resources :submissions do
-      resources :tasks, only: [ :index, :show ], module: :submissions
-      resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
-        resource :evaluations, only: [ :create ]
-      end
-    end
-
     scope module: :challenges do
       resources :tasks do
         resource :leaderboard, only: :show, module: :tasks
@@ -33,6 +26,13 @@ Rails.application.routes.draw do
       end
       resources :test_set, only: [ :show ]
       resources :models, only: [ :index, :show ]
+
+      resources :submissions do
+        resources :tasks, only: [ :index, :show ], module: :submissions
+        resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
+          resource :evaluations, only: [ :create ]
+        end
+      end
 
       namespace :dashboard do
         resources :challenges, only: [ :edit, :update, :destroy ]

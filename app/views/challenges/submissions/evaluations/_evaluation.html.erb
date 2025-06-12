@@ -32,7 +32,7 @@
           <% if evaluation.failed? %>
             <div class="text-sm text-red-600"><%= evaluation.error_message %></div>
           <% else %>
-            <%= render "submissions/evaluations/scores",
+            <%= render "challenges/submissions/evaluations/scores",
               evaluation: , metrics: evaluation.evaluator.metrics %>
           <% end %>
         </div>
