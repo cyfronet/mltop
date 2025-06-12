@@ -19,7 +19,7 @@
           <% if hypothesis.evaluations? %>
             <div class="hidden sm:flex space-x-4">
               <% hypothesis.evaluations.each do |evaluation| %>
-                <%= render "submissions/evaluations/scores",
+                <%= render "challenges/submissions/evaluations/scores",
                   evaluation:, metrics: evaluation.evaluator.metrics %>
               <% end %>
             </div>
@@ -81,7 +81,7 @@
       <div class="<%= "hidden" unless open %> border radius-lg" data-accordion-target="content">
           <ul role="list" class="divide-y divide-gray-200">
             <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
-              <%= render partial: "submissions/evaluations/evaluation",
+              <%= render partial: "challenges/submissions/evaluations/evaluation",
                          locals: { evaluation: hypothesis.evaluation_for(evaluator) } %>
             <% end %>
           </ul>

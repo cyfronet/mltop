@@ -1,6 +1,6 @@
 <% breadcrumb :submission_task, @model, @task %>
 
-<%= render "submissions/header", model: @model %>
+<%= render "challenges/submissions/header", model: @model %>
 
 <%= turbo_stream_from [@model, @task] %>
 

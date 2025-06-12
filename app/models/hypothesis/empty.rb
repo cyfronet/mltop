@@ -9,5 +9,5 @@ class Hypothesis::Empty
   def to_s = @test_set_entry.to_s
   def model_id = @model.id
   def entry_id = @test_set_entry.id
-  def to_partial_path = "submissions/hypotheses/empty_hypothesis"
+  def to_partial_path = "challenges/submissions/hypotheses/empty_hypothesis"
 end
