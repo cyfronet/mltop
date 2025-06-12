@@ -13,9 +13,6 @@ Rails.application.routes.draw do
     resource :membership, only: :create
     resources :evaluators, only: [ :index ]
 
-    resources :evaluations, only: [ :create ] do
-      resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
-    end
 
     scope module: :challenges do
       resources :tasks do
@@ -32,6 +29,10 @@ Rails.application.routes.draw do
         resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
           resource :evaluations, only: [ :create ]
         end
+      end
+
+      resources :evaluations, only: [ :create ] do
+        resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
       end
 
       namespace :dashboard do
