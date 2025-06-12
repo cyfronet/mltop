@@ -3,7 +3,7 @@ module Challenges
     allow_unauthenticated_access only: :show
 
     def index
-      evaluators = Evaluator.all
+      evaluators = policy_scope(Evaluator)
       evaluators = evaluators.where(from: params[:from]) unless params[:from].empty?
       evaluators = evaluators.where(to: params[:to]) unless params[:to].empty?
       render json: evaluators
