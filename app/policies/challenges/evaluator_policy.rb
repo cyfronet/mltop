@@ -1,3 +1,4 @@
+module Challenges
   class EvaluatorPolicy < ApplicationPolicy
     class Scope < ApplicationPolicy::Scope
       def resolve
@@ -9,3 +10,4 @@
       true
     end
   end
+end
