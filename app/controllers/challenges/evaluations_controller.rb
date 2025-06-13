@@ -1,7 +1,6 @@
 module Challenges
   class EvaluationsController < ApplicationController
     before_action :load_hypothesis
-    meetween_members_only
 
     def create
       authorize(Evaluation)
