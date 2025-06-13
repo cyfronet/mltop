@@ -1,5 +1,5 @@
 class ChallengesController < ApplicationController
-  allow_unauthenticated_access
+  allow_unauthenticated_access only: [ :index, :show ]
   before_action :set_and_authorize_challenge, only: [ :show, :destroy ]
 
   def index
