@@ -4,50 +4,51 @@ Rails.application.routes.draw do
   constraints(-> { !_1.env["mltop.challenge_id"] }) do
     root to: "home#index"
 
-    resources :challenges
+    resources :challenges, except: [ :edit, :update ]
   end
 
   constraints(-> { _1.env["mltop.challenge_id"] }) do
-    root to: "tasks#index", as: :challenge_root
-    resources :challenges
+    scope module: :challenges do
+      root to: "tasks#index", as: :challenge_root
 
-    resource :membership, only: :create
-    resources :tasks do
-      resource :leaderboard, only: :show, module: :tasks
-    end
-    resources :test_sets, only: [ :show, :index ] do
-      resource :leaderboard, only: :show, module: :test_sets
-    end
-    resources :models, only: [ :index, :show ]
-    resources :evaluators, only: [ :index ]
+      resources :evaluators, only: [ :index ]
+      resource :membership, only: :create
 
-    resources :test_set, only: [ :show ]
-
-    resources :evaluations, only: [ :create ] do
-      resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
-    end
-
-    resources :submissions do
-      resources :tasks, only: [ :index, :show ], module: :submissions
-      resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
-        resource :evaluations, only: [ :create ]
+      resources :tasks do
+        resource :leaderboard, only: :show, module: :tasks
       end
-    end
+      resources :test_sets, only: [ :show, :index ] do
+        resource :leaderboard, only: :show, module: :test_sets
+      end
+      resources :test_set, only: [ :show ]
+      resources :models, only: [ :index, :show ]
 
-    resources :external_submissions, only: :index
-  end
+      resources :submissions do
+        resources :tasks, only: [ :index, :show ], module: :submissions
+        resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
+          resource :evaluations, only: [ :create ]
+        end
+      end
 
-  namespace :admin do
-    resources :tasks
-    resources :test_sets do
-      resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]
-    end
-    resources :evaluators do
-      resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]
-    end
+      resources :evaluations, only: [ :create ] do
+        resources :scores, only: [ :create ], defaults: { format: :json }, module: :evaluations
+      end
 
-    resources :participants, only: :index do
-      resources :hypotheses, only: :index, module: :participants
+      namespace :dashboard do
+        resources :challenges, only: [ :edit, :update, :destroy ]
+        resources :external_submissions, only: :index
+        resources :tasks
+        resources :test_sets do
+          resources :entries, module: :test_sets, shallow: true, except: [ :index, :show ]
+        end
+        resources :evaluators do
+          resources :metrics, module: :evaluators, shallow: true, except: [ :index, :show ]
+        end
+
+        resources :participants, only: :index do
+          resources :hypotheses, only: :index, module: :participants
+        end
+      end
     end
   end
 

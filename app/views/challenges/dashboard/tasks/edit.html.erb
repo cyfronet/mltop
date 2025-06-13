@@ -1,0 +1,5 @@
+<% breadcrumb :edit_dashboard_task, @task %>
+
+<%= mltop_title @task.name %>
+
+<%= render "form", task: @task, evaluators: @evaluators, challenges: @challenges %>

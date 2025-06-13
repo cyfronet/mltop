@@ -1,5 +1,0 @@
-<%= mltop_title "Edit evaluator metric" %>
-
-<%= turbo_frame_tag @metric, target: "_top" do %>
-  <%= render "form", metric: @metric, url: admin_metric_path(@metric) %>
-<% end %>

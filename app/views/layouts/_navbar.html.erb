@@ -16,6 +16,7 @@
         <div class="hidden md:ml-6 md:flex md:space-x-8">
           <%= mltop_navlinks do |links| %>
 
+            <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
             <% if Current.challenge %>
               <%- links.add "Home", root_path, [[ "tasks", "tasks/leaderboards" ]] %>
               <%- links.add "Models", models_path, [ "models" ] %>
@@ -23,17 +24,14 @@
               <% if signed_in? %>
                 <%- links.add "My submissions", submissions_path, /\A\/submissions.*/ %>
                 <% if Current.user.meetween_member? %>
-                  <%- links.add "External submissions", external_submissions_path, /\A\/external_submissions.*/ %>
+                  <%- links.add "External submissions", dashboard_external_submissions_path, /\A\/dashboard_external_submissions.*/ %>
+                  <%- links.add "Dashboard", dashboard_tasks_path, /\A\/admin\/.*/ %>
                 <% end %>
               <% end %>
           <% end %>
 
             <% if signed_in? %>
-              <% if Current.user.meetween_member? %>
-                <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
-              <% end %>
               <% if Current.user.admin? %>
-                <%- links.add "Adminland", admin_tasks_path, /\A\/admin\/.*/ %>
                 <%- links.add "Jobs", mission_control_jobs_path, /\A\/jobs\/.*/ %>
               <% end %>
             <% end %>

@@ -1,0 +1,60 @@
+<% breadcrumb :dashboard_test_set, @test_set %>
+<%= turbo_stream_from @test_set %>
+
+<div>
+  <div class="px-4 sm:px-0">
+    <div class="sm:flex sm:items-start sm:justify-between">
+      <div>
+        <h3 class="text-base font-semibold leading-7"><%= @test_set.name%></h3>
+      </div>
+      <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
+        <%= link_to [:edit, :dashboard, @test_set], type:"button", class: "btn btn-secondary-outline" do %>
+          <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+          <span> Edit </span>
+        <% end %>
+        <%= button_to [:dashboard, @test_set], method: :delete, class: "btn btn-danger",
+          form: { "data-turbo-confirm": "Are you sure you want to remove this test set? All related elements (test set entries, evalutions, scores) will be removed as well!" } do %>
+          <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+          <span> Delete </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="mt-6 border-t border-gray-100 mb-2">
+    <dl class="divide-y divide-gray-100">
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6">Description</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @test_set.description %></dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6">Challenge</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @test_set.challenge %></dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6">Task</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <%= @test_set.tasks.pluck(:name).join(', ') %>
+          </dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm font-medium leading-6">Published</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <%= @test_set.published %>
+          </dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6">Test set entries</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+        <%= turbo_frame_tag dom_id(@test_set, "entries_table") do %>
+          <%= render partial: "entry", collection: @test_set.entries, as: :entry %>
+        <% end %>
+        </dd>
+      </div>
+      <%= turbo_frame_tag dom_id(@test_set, "add_entry") do %>
+        <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
+          <%= link_to "Add entry", new_dashboard_test_set_entry_path(@test_set), class: "btn btn-secondary-outline" %>
+        </div>
+      <% end %>
+    </dl>
+  </div>
+</div>
