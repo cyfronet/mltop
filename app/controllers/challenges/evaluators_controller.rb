@@ -1,6 +1,6 @@
 module Challenges
   class EvaluatorsController < ApplicationController
-    allow_unauthenticated_access only: :show
+    allow_unauthenticated_access only: :index
 
     def index
       evaluators = policy_scope(Evaluator)
