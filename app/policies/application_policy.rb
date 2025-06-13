@@ -58,6 +58,10 @@ class ApplicationPolicy
     Current.challenge_member?
   end
 
+  def meetween_member?
+    Current.user.meetween_member?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

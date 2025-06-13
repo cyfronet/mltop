@@ -29,8 +29,8 @@ module Challenges
         sign_in_as("external", teams: [ "plgother" ])
         post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
-        assert_response :forbidden
-        assert_equal "Only Meetween members can perform this action", flash[:alert]
+        assert_response :redirect
+        assert_equal "You are not authorized to perform this action", flash[:alert]
       end
 
       test "Meetween members cannot start other meetween user model evaluation" do
