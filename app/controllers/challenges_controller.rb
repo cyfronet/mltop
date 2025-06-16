@@ -1,5 +1,6 @@
 class ChallengesController < ApplicationController
-  before_action :set_and_authorize_challenge, only: [ :show, :edit, :update, :destroy ]
+  allow_unauthenticated_access only: [ :index, :show ]
+  before_action :set_and_authorize_challenge, only: [ :show, :destroy ]
 
   def index
     @challenges = Challenge.all
@@ -25,22 +26,11 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @challenge.update(permitted_attributes(@challenge))
-      redirect_to challenge_path(@challenge), notice: "Challenge was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     if @challenge.destroy
       redirect_to challenges_path, notice: "Challenge \"#{@challenge}\" was sucessfully deleted."
     else
-      redirect_to challenge_path(@challenge), alert: "Unable to delete challenge."
+      redirect_to challenges_path, alert: "Unable to delete challenge."
     end
   end
 

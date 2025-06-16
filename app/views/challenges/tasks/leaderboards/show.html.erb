@@ -1,0 +1,17 @@
+<% content_for :head do %>
+  <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+<% end %>
+
+<% breadcrumb :task_leaderboard, @task %>
+
+<%= mltop_title "#{@task.name} Leaderboard" %>
+
+<%= render "challenges/tasks/menu", task: @task %>
+
+<%= render "filters", rows: @rows %>
+
+<% if @rows.size.positive? %>
+  <%= render "leaderboard", task: @task, rows: @rows %>
+<% else %>
+  <%= render "layouts/empty", message: "No models selected for #{@task.name} task" %>
+<% end %>
