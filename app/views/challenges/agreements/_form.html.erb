@@ -3,7 +3,8 @@
 <%= form.fields_for :agreements do |af| %>
   <% consent = af.object.consent%>
   <div title=<%= consent.mandatory? ? "Required" : "Optional"%> class="consent">
-    <p><strong><%= consent.description %> <%= "*" if consent.mandatory?%></strong></p>
+    <p><strong><%= consent.name %> <%= "*" if consent.mandatory?%></strong></p>
+    <%= consent.description %>
 
     <%= af.hidden_field :consent_id, value: af.object.consent_id %>
     <%= af.hidden_field :id, value: af.object&.id%>
