@@ -10,17 +10,11 @@ if Rails.env.local?
       task("db:migrate").invoke
       task("db:seed").invoke
 
-      TasksLoader.new(
-         File.join(Rails.root, "db", "data", "tasks.yml"),
-         File.join(Rails.root, "db", "data", "evaluators.yml")
-      ).import!
-
-
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
       user = User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
                         roles: [ :admin, :meetween_member ])
-      Challenge.create!(name: "Global",
+      challenge = Challenge.create!(name: "Global",
                         starts_at: 5.days.ago,
                         ends_at: 1.month.from_now,
                         owner: user
@@ -28,9 +22,16 @@ if Rails.env.local?
                           challenge.description = "This is a global challenge"
                         end
 
+      Membership.create(challenge:, user:)
+
+      TasksLoader.new(
+         File.join(Rails.root, "db", "data", "tasks.yml"),
+         File.join(Rails.root, "db", "data", "evaluators.yml"),
+         challenge
+      ).import!
 
       puts "DB set up complete, initializing test sets.."
-      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login))
+      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login), @challenge.id)
 
       puts "Test sets created, mocking data for ST"
       Rake::Task["dev:faked_st_models"].invoke
