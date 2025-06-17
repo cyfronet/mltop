@@ -15,7 +15,6 @@ module Challenges
 
       def create
         @consent = Current.challenge.consents.build(permitted_attributes(Consent))
-        debugger
         authorize(@consent)
 
         if @consent.save
