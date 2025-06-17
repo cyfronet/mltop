@@ -26,10 +26,10 @@
                   <%- links.add "External submissions", dashboard_external_submissions_path, /\A\/dashboard_external_submissions.*/ %>
                   <%- links.add "Dashboard", dashboard_tasks_path, /\A\/admin\/.*/ %>
                 <% end %>
-              <% else %>
-                <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
               <% end %>
-          <% end %>
+            <% else %>
+              <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
+            <% end %>
 
             <% if signed_in? %>
               <% if Current.user.admin? %>
