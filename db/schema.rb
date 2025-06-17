@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_02_123114) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "consent_target", ["model", "challenge"]
   create_enum "format", ["video", "audio", "text"]
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -56,6 +57,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_123114) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "agreements", force: :cascade do |t|
+    t.boolean "agreed", default: false, null: false
+    t.bigint "consent_id", null: false
+    t.string "agreementable_type", null: false
+    t.bigint "agreementable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agreementable_type", "agreementable_id"], name: "index_agreements_on_agreementable"
+    t.index ["consent_id"], name: "index_agreements_on_consent_id"
+  end
+
   create_table "challenges", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "owner_id", null: false
@@ -64,6 +76,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_123114) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_challenges_on_owner_id"
+  end
+
+  create_table "consents", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.string "name", null: false
+    t.enum "target", null: false, enum_type: "consent_target"
+    t.boolean "mandatory", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_consents_on_challenge_id"
   end
 
   create_table "evaluations", force: :cascade do |t|
@@ -221,6 +243,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_123114) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agreements", "consents"
   add_foreign_key "challenges", "users", column: "owner_id"
   add_foreign_key "evaluations", "evaluators"
   add_foreign_key "evaluations", "hypotheses"

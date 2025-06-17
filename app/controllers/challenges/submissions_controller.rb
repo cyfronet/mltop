@@ -13,10 +13,13 @@ module Challenges
     def new
       @model = Current.user.models.new
       @tasks = policy_scope(Task)
+      Current.challenge.model_consents.each do |consent|
+        @model.agreements.build(consent:)
+      end
     end
 
     def create
-      @model = Current.user.models.new(model_params.merge(challenge: Current.challenge))
+      @model = Current.user.models.new(permitted_attributes(Model).merge(challenge: Current.challenge))
       authorize(@model)
       if @model.save
         redirect_to submission_path(@model), notice: "Model created"
