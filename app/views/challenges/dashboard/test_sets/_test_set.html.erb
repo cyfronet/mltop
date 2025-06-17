@@ -3,7 +3,7 @@
 <li class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:flex-nowrap">
   <div>
     <p class="text-sm font-semibold leading-6">
-      <%= link_to test_set.name, [:dashboard, test_set], class: "hover:unerline" %>
+      <%= link_to test_set.name, [:dashboard, test_set], class: "hover:underline" %>
     </p>
     <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
       <p>created at: <time datetime="<%= test_set.created_at %>"><%= time_ago_in_words test_set.created_at %> ago</time></p>
