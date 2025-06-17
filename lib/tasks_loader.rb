@@ -1,26 +1,28 @@
 class TasksLoader
-  def initialize(tasks_yaml_path, evaluators_yaml_path)
+  def initialize(tasks_yaml_path, evaluators_yaml_path, challenge)
     @tasks_yaml_path = tasks_yaml_path
     @evaluators_yaml_path = evaluators_yaml_path
+    @challenge = challenge
   end
 
   def import!
     tasks =
       data_yaml(@tasks_yaml_path).map do |slug, data|
-        Task.find_or_initialize_by(slug:) do |task|
+        Task.find_or_initialize_by(slug:).tap do |task|
           task.update!(
             name:        data["name"],
             info:        data["info"],
             description: data["description"],
             from:        data["from"],
-            to:          data["to"]
+            to:          data["to"],
+            challenge:   @challenge
           )
         end
       end.to_h { |t| [ t.slug, t ] }
 
     data_yaml(@evaluators_yaml_path).each do |_, data|
       evaluator = Evaluator.find_or_initialize_by(name: data["name"])
-      evaluator.update!(script: data["script"], host: data["host"])
+      evaluator.update!(script: data["script"], host: data["host"], challenge: @challenge)
 
       data["tasks"].each { |slug| evaluator.task_evaluators.find_or_create_by(task: tasks[slug]) }
       data["metrics"].each do |hsh|
