@@ -3,6 +3,7 @@ module Authentication
 
   included do
     before_action :restore_authentication
+    before_action :store_return_to_url
     before_action :require_authentication
     helper_method :signed_in?
   end
@@ -24,7 +25,11 @@ module Authentication
     end
 
     def require_authentication
-      signed_in? || request_authentication
+      signed_in? || redirect_to(sign_in_path)
+    end
+
+    def store_return_to_url
+      cookies[:return_to_after_authenticating] = request.url if !signed_in?
     end
 
     def restore_authentication
@@ -39,13 +44,8 @@ module Authentication
       redirect_to root_url if signed_in?
     end
 
-    def request_authentication
-      session[:return_to_after_authenticating] = request.url
-      redirect_to sign_in_path
-    end
-
     def post_authenticating_url
-      session.delete(:return_to_after_authenticating) || root_url
+      cookies.delete(:return_to_after_authenticating) || root_url
     end
 
     def authenticated_as(user)

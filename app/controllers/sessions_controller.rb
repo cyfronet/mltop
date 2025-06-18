@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   require_unauthenticated_access only: [ :create, :new ]
+  skip_before_action :store_return_to_url
 
   rescue_from Plgrid::Ccm::FetchError do
     external_error_log("Unable to fetch short ssh key for #{auth.info["nickname"]}")
