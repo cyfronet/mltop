@@ -16,11 +16,19 @@ module TasksHelper
       metric == selected_metric && test_set == selected_test_set
     end
 
-  def interpolate_color(metric_value, metric)
+    def worst_score_for(metric, test_set, test_set_entry = nil)
+      relative_scores&.worst_score_for(metric, test_set, test_set_entry)
+    end
+
+    def best_score_for(metric, test_set, test_set_entry = nil)
+      relative_scores&.best_score_for(metric, test_set, test_set_entry)
+    end
+
+  def interpolate_color(metric_value, metric, worst = nil, best = nil)
     return "rgb(156, 163, 175)" unless metric_value
 
-    worst = metric.worst_score
-    best = metric.best_score
+    worst ||= metric.worst_score
+    best ||= metric.best_score
     normalized = (metric_value - worst) / (best - worst)
     normalized = 1.0 - normalized if metric.asc?
 
