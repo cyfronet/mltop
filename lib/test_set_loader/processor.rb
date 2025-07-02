@@ -18,6 +18,8 @@ class TestSetLoader::Processor
       when "ST"  then  TestSetLoader::StProcessor
       when "SUM" then  TestSetLoader::SumProcessor
       when "SSUM" then TestSetLoader::SsumProcessor
+      when "TTS" then TestSetLoader::TtsProcessor
+      when "SLU" then TestSetLoader::SluProcessor
       else TestSetLoader::UnknownProcessor
       end
 
