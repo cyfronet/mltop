@@ -1,0 +1,133 @@
+ACL6060:
+  description: |
+    Collection of ACL 2022 paper presentations for which pre-recorded audio or
+    video presentations were provided to the ACL Anthology.
+    Presentations include a variety of native and non-native English accents.
+    Presentations have been professionally transcribed and translated into ten
+    language pairs, including 4 European languages (German, Portuguese, Dutch,
+    and French). The dataset was described in detail in “Elizabeth Salesky,
+    Kareem Darwish, Mohamed Al-Badrashiny, Mona Diab, and Jan Niehues”, 2023,
+    Evaluating Multilingual Speech Translation under Realistic Conditions with
+    Resegmentation and Terminology, in Proceedings of the 20th International
+    Conference on Spoken Language Translation (IWSLT 2023), pages 62-78,
+    Toronto, Canada, Association for Computational Linguistics publication.
+    Elizabeth Salesky, Kareem Darwish, Mohamed Al-Badrashiny, Mona Diab,
+    Jan Niehues”, 2023, Evaluating Multilingual Speech Translation under
+    Realistic Conditions with Resegmentation and Terminology, in Proceedings of
+    the 20th International Conference on Spoken Language Translation
+    (IWSLT 2023), pages 62-78, Toronto, Canada, Association for Computational
+    Linguistics.
+
+MTEDX:
+  description: |
+    The corpus comprises audio recordings and transcripts from TEDx Talks in 8
+    languages, including 6 European languages (Spanish, French, Portuguese,
+    Italian, Greek, and German), with translations into up to 5 languages, all
+    European languages (English, Spanish, French, Portuguese, Italian). The
+    audio recordings are automatically aligned at the sentence level with their
+    manual transcripts and translations. The mTEDx dataset is available to
+    download for research purposes under a Creative Commons Attribution 4.0
+    International License.
+    Elizabeth Salesky, Matthew Wiesner, Jacob Bremerman, Roldano Cattoni, Matteo
+    Negri, Marco Turchi, Douglas W. Oard, Matt Post, 2021, Multilingual TEDx
+    Corpus for Speech Recognition and Translation, Proceedings of Interspeech
+    2021, Brno, Czech Republic
+
+MUSTC:
+  description: |
+    MuST-C is a large and freely available Multilingual Speech Translation
+    Corpus built from English TED Talks. Its unique features include: i)
+    language coverage and diversity (from English into 14 languages from
+    different families), ii) size (at least 237 hours of transcribed recordings
+    per language, 430 on average), iii) variety of topics and speakers, and
+    iv) data quality. The audio recordings from English TED Talks are
+    automatically aligned at the sentence level with their manual transcriptions
+    and translations. The MuST-C corpus is available to download for research
+    purposes under a Creative Commons Attribution 4.0 International License. The
+    dataset is the English component of the MuST-C v1.3 en-de, tst-COMMON set.
+    Roldano Cattoni, Mattia Antonino Di Gangi, Luisa Bentivogli, Matteo Negri,
+    Marco Turchi. 2020, MuST-C: A multilingual corpus for end-to-end speech
+    translation, In Computer Speech & Language Journal, Volume 66, March 2021
+
+DIPCO:
+  description: |
+    DiPCO (CDLA permissive license 2.0 https://cdla.dev/) is a speech data
+    corpus that simulates a "dinner party" scenario taking place in an everyday
+    home environment. The corpus was created by recording multiple groups of
+    four Amazon employee volunteers having a natural conversation in English
+    around a dining table.
+    Maarten Van Segbroeck, Zaid Ahmed, Ksenia Kutsenko, Cirenia Huerta, Tinh
+    Nguyen, Björn Hoffmeister, Jan Trmal, Maurizio Omologo, Roland Maas, 2019,
+    DiPCo - Dinner Party Corpus, Proceeding of Interspeech 2020, Shanghai, China.
+
+FLORES:
+  description: |
+    FLORES+ is a multilingual machine translation benchmark released under CC
+    BY-SA 4.0. This dataset was originally released by FAIR researchers at Meta
+    under the name FLORES. The + has been added to the name to disambiguate
+    between the original datasets and this new actively developed version.
+    The data consists of translations primarily from English into around 200
+    language varieties. The original English sentences were sampled in equal
+    amounts from Wikinews (an international news source), Wikijunior (a
+    collection of age-appropriate non-fiction books), and Wikivoyage (a travel
+    guide).
+
+    For each of the eight language pairs, the devtest split has been utilized.
+    NLLB Team, Marta R. Costa-jussa, James Cross, Onur Celebi, Maha Elbayad,
+    Kenneth Heafield, Kevin Heffernan, Elahe Kalbassi, Janice Lam, Daniel Licht,
+    Jean Maillard, Anna Sun, Skyler Wang, Guillame Wenzek, Al Youngblood, Bapi
+    Akula, Loic Barrault, Gabriel Mejia Gonzalez, Prangthip Hansanti, John
+    Hoffman, Samarley Jarrett, Kaushik Ram Sadagopan, Dirk  Rowe, Shannon
+    Spruit, ChauTran, Pierre Andrews, Necip Fazil Ayan, Shruti Bhosale,
+    Sergey Edunov, Angela Fan, Cynthia Gao, Vedanui Goswami, Francisco Guzman,
+    Philipp Koehn, Alexandre Mourachko, Christophe Ropers, Safiyyah Saleem,
+    Holger Schwenk, Jeff Wang, 2024, Scaling neural machine translation to 200
+    languages, Nature 630, 841--846 (2024).
+
+ICSI:
+  description: |
+    The ICSI Meeting corpus is a collection of 75 meetings collected at the
+    International Computer Science Institute (ICSI) in Berkeley during the years
+    2000-2002 and released under the license CC-BY-4.0. The meetings included
+    are "natural" meetings in the sense that they would have occurred anyway:
+    they are generally regular weekly meetings of various ICSI working teams,
+    including the team working on the ICSI Meeting Project. The dataset includes
+    the English audio, as well as transcripts and summaries written by humans.
+    In the textual summarization task the audio portion of the dataset is not
+    used.
+    The dataset is a split of 6 meetings extracted by the Meetween project
+    partner Zoom.
+    A. Janin, D. Baron, J. Edwards, D. Ellis, D. Gelbart, N. Morgan, 2003,
+    The ICSI Meeting Corpus, 2003 Proceedings of the IEEE International
+    Conference on Acoustics, Speech, and Signal Processing (ICASSP '03), Hong
+    Kong, China.
+
+SPOKENSQUAD:
+  description: |
+    Spoken-SQuAD is a spoken question answering dataset built on top of the
+    SQuAD dataset and released under the license CC-BY-SA-4.0. In Spoken-SQuAD,
+    the document is in spoken form, the input question is in the form of text
+    and the answer to each question is always a span in the document. The spoken
+    documents were generated from SQuAD textual articles using a Google
+    text-to-speech system. In addition, corresponding automatic transcripts were
+    generated using CMU Sphinx. The questions were left in text form. The SQuAD
+    training set was used to generate the training set of Spoken-SQuAD, and the
+    SQuAD development set was used to generate the testing set for Spoken-SQuAD.
+    All the question-answer pairs for which the answer did not exist in the ASR
+    transcriptions of the associated article were removed. The dataset is the
+    dev split.
+    Chia-Hsuan Li,Szu-Lin Wu,Chi-Liang Liu,Hung-yi Lee, 2018, Spoken SQuAD: A
+    Study of Mitigating the Impact of Speech Recognition Errors on Listening
+    Comprehension, Proceedings of Interspeech 2018, Hyderabad, India
+
+AUTOMIN:
+  description: |
+    The AutoMin dataset is the test set of the 2023 Workshop on Automatic
+    Minuting and released under the license CC-BY-NC-SA-4.0. The data consists
+    of meeting transcripts and human minutes, in English and Czech. The nature
+    of meetings as well as the reference minutes are very different (technical
+    project meetings and parliamentary sessions).
+    Tirthankar Ghosal, Ondrej Bojar, Marie Hledíková, Tom Kocmi, Anna Nedoluzhko,
+    2023, Overview of the Second Shared Task on Automatic Minuting (AutoMin) at
+    INLG 2023, Proceedings of the 16th International Natural Language
+    Generation Conference: Generation Challenges, Prague, Czech Republic

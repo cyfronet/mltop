@@ -3,12 +3,13 @@ class TestSetLoader::Processor
 
   attr_reader :dir, :challenge_id
 
-  def initialize(dir, challenge_id)
+  def initialize(dir, challenge_id, test_sets_yaml_path)
     @dir = dir
     @challenge_id = challenge_id
+    @test_sets_yaml_path = test_sets_yaml_path
   end
 
-  def self.for(dir)
+  def self.for(dir, challenge_id, test_sets_yaml_path)
     clazz =
       case dir.basename.to_s
       when "MT"  then  TestSetLoader::MtProcessor
@@ -20,7 +21,7 @@ class TestSetLoader::Processor
       else TestSetLoader::UnknownProcessor
       end
 
-    clazz.new(dir, challenge_id)
+    clazz.new(dir, challenge_id, test_sets_yaml_path)
   end
 
   def import!
@@ -67,11 +68,11 @@ class TestSetLoader::Processor
 
     def test_sets(dir)
       name = dir.basename.to_s
-      description = child_with_extension(dir, "_description.txt")&.read
+      description = child_with_extension(dir, "_description.txt")&.read || description(name)
 
       ts = TestSet.find_or_initialize_by(name:).tap do |ts|
         ts.assign_attributes(
-          description: description || "TODO: please update test set description",
+          description:,
           published: !RESTRICTED_TEST_SETS.include?(name.upcase),
           challenge_id:
         )
@@ -163,5 +164,13 @@ class TestSetLoader::Processor
 
     def error(msg)
       puts "\e[#{31}m  - #{msg}\e[0m"
+    end
+
+    def description(name)
+      descriptions[name].try(:[], "description") || "TODO: please update test set description"
+    end
+
+    def descriptions
+      @descriptions ||= YAML.load_file(@test_sets_yaml_path)
     end
 end
