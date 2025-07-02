@@ -55,7 +55,7 @@ ASR:
 
 ST:
   name: Speech Translation
-   info: |
+  info: |
     Converts spoken language from one language into spoken or written output
     in another language in real time or offline. This task combines ASR,
     machine translation, and TTS to facilitate seamless communication across
@@ -81,31 +81,31 @@ SSUM:
     lectures, eliminating the need for full transcription and helping users
     quickly grasp key points from audio sources.
   description: |
-   Speech Summarization condenses spoken content into summaries, capturing main points without full transcription.
-   This task can work with recordings from meetings, interviews, or lectures, saving users time by offering key insights.
-   There are two main methods: extractive, which selects important segments from audio, and abstractive, which generates concise summaries.
-   Some models build on ASR outputs, while others aim to summarize audio directly.
-   Handling spontaneous speech with hesitations, repetitions, and interruptions poses a challenge.
-   Robust systems must also account for background noise, accents, and speaker variability.
-   Speech summarization finds applications in business, education, and media, helping users manage large volumes of audio data efficiently.
-   Research is moving toward real-time speech summarization, allowing live meetings and events to be summarized on the fly.
+    Speech Summarization condenses spoken content into summaries, capturing main points without full transcription.
+    This task can work with recordings from meetings, interviews, or lectures, saving users time by offering key insights.
+    There are two main methods: extractive, which selects important segments from audio, and abstractive, which generates concise summaries.
+    Some models build on ASR outputs, while others aim to summarize audio directly.
+    Handling spontaneous speech with hesitations, repetitions, and interruptions poses a challenge.
+    Robust systems must also account for background noise, accents, and speaker variability.
+    Speech summarization finds applications in business, education, and media, helping users manage large volumes of audio data efficiently.
+    Research is moving toward real-time speech summarization, allowing live meetings and events to be summarized on the fly.
   from: audio
   to: text
 
 SQA:
   name: Speech Question-Anwering
   info: |
-   Enables interactive systems to answer questions based on spoken inputs or
-    audio sources, combining ASR with natural language understanding to deliver
-    accurate, real-time responses.
+    Enables interactive systems to answer questions based on spoken inputs or
+     audio sources, combining ASR with natural language understanding to deliver
+     accurate, real-time responses.
   description: |
-   Speech Question-Answering (SQA) allows users to ask questions using spoken language and receive responses instantly.
-   This task combines ASR to convert speech to text, natural language understanding (NLU) to identify the query, and question-answering models to retrieve the relevant information.
-   Handling spoken inputs introduces challenges such as disfluencies, accents, and background noise.
-   Improvements in ASR and NLP are essential to ensure accurate and meaningful responses.
-   SQA powers voice assistants, automated customer support, and interactive kiosks, offering hands-free and accessible user interactions.
-   It enhances usability by enabling natural conversations between users and systems.
-   Future developments may focus on multi-turn dialogues, where the system can maintain context over multiple exchanges to deliver more coherent responses.
+    Speech Question-Answering (SQA) allows users to ask questions using spoken language and receive responses instantly.
+    This task combines ASR to convert speech to text, natural language understanding (NLU) to identify the query, and question-answering models to retrieve the relevant information.
+    Handling spoken inputs introduces challenges such as disfluencies, accents, and background noise.
+    Improvements in ASR and NLP are essential to ensure accurate and meaningful responses.
+    SQA powers voice assistants, automated customer support, and interactive kiosks, offering hands-free and accessible user interactions.
+    It enhances usability by enabling natural conversations between users and systems.
+    Future developments may focus on multi-turn dialogues, where the system can maintain context over multiple exchanges to deliver more coherent responses.
   from: audio
   to: text
 

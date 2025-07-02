@@ -4,10 +4,10 @@ class TestSetLoader::StProcessor < TestSetLoader::Processor
       next if entry.file?
 
       case entry.basename.to_s
-      when "MUSTC"   then process_mustc(entry)
-      when "MTEDX"   then process_mtedx(entry)
       when "ACL6060" then process_acl6060(entry)
       when "COVOST"  then process_covost(entry)
+      # when "MUSTC"   then process_mustc(entry)
+      # when "MTEDX"   then process_mtedx(entry)
       else                not_supported(entry)
       end
     end

@@ -5,10 +5,10 @@ class TestSetLoader::AsrProcessor < TestSetLoader::Processor
 
       case entry.basename.to_s
       when "ACL6060" then process_acl6060(entry)
-      when "MTEDX"    then process_mtedx(entry)
-      when "MUSTC"    then process_mustc(entry)
-      when "DIPCO"    then process_dipco(entry)
       when "COVOST"   then process_covost(entry)
+      # when "MTEDX"    then process_mtedx(entry)
+      # when "MUSTC"    then process_mustc(entry)
+      # when "DIPCO"    then process_dipco(entry)
       else                 not_supported(entry)
       end
     end

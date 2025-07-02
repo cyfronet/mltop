@@ -31,7 +31,7 @@ if Rails.env.local?
       ).import!
 
       puts "DB set up complete, initializing test sets.."
-      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login), @challenge.id)
+      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login), challenge.id)
 
       puts "Test sets created, mocking data for ST"
       Rake::Task["dev:faked_st_models"].invoke
