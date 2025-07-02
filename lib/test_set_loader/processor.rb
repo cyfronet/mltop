@@ -1,10 +1,11 @@
 class TestSetLoader::Processor
   RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS2 LRS3 ].freeze
 
-  attr_reader :dir
+  attr_reader :dir, :challenge_id
 
-  def initialize(dir)
+  def initialize(dir, challenge_id)
     @dir = dir
+    @challenge_id = challenge_id
   end
 
   def self.for(dir)
@@ -19,7 +20,7 @@ class TestSetLoader::Processor
       else TestSetLoader::UnknownProcessor
       end
 
-    clazz.new(dir)
+    clazz.new(dir, challenge_id)
   end
 
   def import!
@@ -68,11 +69,13 @@ class TestSetLoader::Processor
       name = dir.basename.to_s
       description = child_with_extension(dir, "_description.txt")&.read
 
-      ts = TestSet.find_or_create_by!(name:) do |ts|
+      ts = TestSet.find_or_initialize_by(name:).tap do |ts|
         ts.assign_attributes(
           description: description || "TODO: please update test set description",
-          published: !RESTRICTED_TEST_SETS.include?(name.upcase)
+          published: !RESTRICTED_TEST_SETS.include?(name.upcase),
+          challenge_id:
         )
+        ts.save
       end
 
       TestSet.includes(entries: [ :input_blob, :groundtruth_blob, :internal_blob ]).find(ts.id)
@@ -82,7 +85,7 @@ class TestSetLoader::Processor
       input, groundtruth, internal = block.call
       task_test_set = task.task_test_sets.find_or_create_by!(test_set:)
 
-      if entry = task_test_set.test_set_entries.detect { |e| e.source_language == source_language && e.target_language == target_language && e.task_id == task.id }
+      if entry = task_test_set.test_set_entries.detect { |e| e.source_language == source_language && e.target_language == target_language }
         warning "Entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language} already exists. Updating groundtruth and internal files."
 
         to_update = {}
