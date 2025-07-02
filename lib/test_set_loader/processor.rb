@@ -19,6 +19,7 @@ class TestSetLoader::Processor
       when "SUM" then  TestSetLoader::SumProcessor
       when "SSUM" then TestSetLoader::SsumProcessor
       when "SLU" then TestSetLoader::SluProcessor
+      when "LIPREAD" then TestSetLoader::LipreadProcessor
       else TestSetLoader::UnknownProcessor
       end
 
