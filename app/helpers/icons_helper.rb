@@ -204,7 +204,7 @@ module IconsHelper
   def checked_icon(css_classes = "")
     <<~SVG
       <svg class="#{css_classes}" width="17" height="16" viewBox="0 0 17 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.916 3.37597C13.2607 3.60573 13.3538 4.07138 13.124 4.41603L8.12404 11.916C7.9994 12.103 7.7975 12.2242 7.5739 12.2464C7.3503 12.2685 7.12855 12.1892 6.96967 12.0303L3.96967 9.03033C3.67678 8.73744 3.67678 8.26257 3.96967 7.96967C4.26256 7.67678 4.73744 7.67678 5.03033 7.96967L7.38343 10.3228L11.876 3.58398C12.1057 3.23933 12.5714 3.1462 12.916 3.37597Z" fill="#15803D"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.916 3.37597C13.2607 3.60573 13.3538 4.07138 13.124 4.41603L8.12404 11.916C7.9994 12.103 7.7975 12.2242 7.5739 12.2464C7.3503 12.2685 7.12855 12.1892 6.96967 12.0303L3.96967 9.03033C3.67678 8.73744 3.67678 8.26257 3.96967 7.96967C4.26256 7.67678 4.73744 7.67678 5.03033 7.96967L7.38343 10.3228L11.876 3.58398C12.1057 3.23933 12.5714 3.1462 12.916 3.37597Z"/>
       </svg>
     SVG
     .html_safe
@@ -214,6 +214,34 @@ module IconsHelper
     <<~SVG
       <svg class="#{css_classes}" width="17" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+      </svg>
+    SVG
+    .html_safe
+  end
+
+
+  def color_picker_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 11.25L16.5 12.75L17.25 12V8.75798L19.5264 8.14802C20.019 8.01652 20.4847 7.75778 20.8712 7.37132C22.0428 6.19975 22.0428 4.30025 20.8712 3.12868C19.6996 1.95711 17.8001 1.95711 16.6286 3.12868C16.2421 3.51509 15.9832 3.98069 15.8517 4.47324L15.2416 6.74998H12L11.25 7.49998L12.75 8.99999M15 11.25L6.53033 19.7197C6.19077 20.0592 5.73022 20.25 5.25 20.25C4.76978 20.25 4.30924 20.4408 3.96967 20.7803L3 21.75L2.25 21L3.21967 20.0303C3.55923 19.6908 3.75 19.2302 3.75 18.75C3.75 18.2698 3.94077 17.8092 4.28033 17.4697L12.75 8.99999M15 11.25L12.75 8.99999" stroke="#3F3F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def compare_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 21L3 16.5M3 16.5L7.5 12M3 16.5H16.5M16.5 3L21 7.5M21 7.5L16.5 12M21 7.5L7.5 7.5" stroke="#3F3F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    SVG
+    .html_safe
+  end
+
+  def lightbulb_icon(css_classes = "")
+    <<~SVG
+      <svg class="#{css_classes}" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 18V12.75M12 12.75C12.5179 12.75 13.0206 12.6844 13.5 12.561M12 12.75C11.4821 12.75 10.9794 12.6844 10.5 12.561M14.25 20.0394C13.5212 20.1777 12.769 20.25 12 20.25C11.231 20.25 10.4788 20.1777 9.75 20.0394M13.5 22.422C13.007 22.4736 12.5066 22.5 12 22.5C11.4934 22.5 10.993 22.4736 10.5 22.422M14.25 18V17.8083C14.25 16.8254 14.9083 15.985 15.7585 15.4917C17.9955 14.1938 19.5 11.7726 19.5 9C19.5 4.85786 16.1421 1.5 12 1.5C7.85786 1.5 4.5 4.85786 4.5 9C4.5 11.7726 6.00446 14.1938 8.24155 15.4917C9.09173 15.985 9.75 16.8254 9.75 17.8083V18" stroke="#3F3F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     SVG
     .html_safe
