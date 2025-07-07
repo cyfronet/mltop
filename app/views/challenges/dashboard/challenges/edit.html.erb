@@ -1,6 +1,3 @@
-
 <% breadcrumb :new_challenge, @challenge %>
-
 <%= mltop_title "Edit challenge" %>
-
-<%= render "challenges/form", challenge: @challenge %>
+<%= render "challenges/form", url: [:dashboard, @challenge], challenge: @challenge %>
