@@ -70,11 +70,10 @@ class TestSetLoader::Processor
 
     def test_sets(dir)
       name = dir.basename.to_s
-      description = child_with_extension(dir, "_description.txt")&.read || description(name)
 
       ts = TestSet.find_or_initialize_by(name:).tap do |ts|
         ts.assign_attributes(
-          description:,
+          description: description(name, dir),
           published: !RESTRICTED_TEST_SETS.include?(name.upcase),
           challenge_id:
         )
@@ -169,7 +168,9 @@ class TestSetLoader::Processor
     end
 
     def description(name)
-      descriptions[name].try(:[], "description") || "TODO: please update test set description"
+      child_with_extension(dir, "_description.txt")&.read ||
+        descriptions[name].try(:[], "description") ||
+        "TODO: please update test set description"
     end
 
     def descriptions
