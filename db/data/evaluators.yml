@@ -26,25 +26,25 @@ screbleu:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: bleu
-    order: desc
-    worst_score: 0
-    best_score: 100
-  - name: chrf
-    order: desc
-    worst_score: 0
-    best_score: 100
-  - name: ter
-    order: asc
-    worst_score: 100
-    best_score: 0
+    - name: bleu
+      order: desc
+      worst_score: 0
+      best_score: 100
+    - name: chrf
+      order: desc
+      worst_score: 0
+      best_score: 100
+    - name: ter
+      order: asc
+      worst_score: 100
+      best_score: 0
   tasks:
-  - MT
-  - ST
+    - MT
+    - ST
   input_modality:
-  - text
+    - text
   output_modality:
-  - text
+    - text
 
 blueurt:
   name: BLEURT
@@ -75,17 +75,17 @@ blueurt:
     fi
   host: athena.cyfronet.pl
   metrics:
-  - name: bleurt
-    order: asc
-    worst_score: 1
-    best_score: 0
+    - name: bleurt
+      order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
-  - MT
-  - ST
+    - MT
+    - ST
   input_modality:
-  - text
+    - text
   output_modality:
-  - text
+    - text
 
 wer:
   name: WER
@@ -115,23 +115,23 @@ wer:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: wer
-    order: asc
-    worst_score: 1
-    best_score: 0
+    - name: wer
+      order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
-  #  - MT # not sure if it should be here - check Gdrive table
-  #  - ST
-  - ASR
-  - TTS
-  - LIPREAD
+    #  - MT # not sure if it should be here - check Gdrive table
+    #  - ST
+    - ASR
+    - TTS
+    - LIPREAD
   input_modality:
-  - audio
-  - video
-  - text
+    - audio
+    - video
+    - text
   output_modality:
-  - text
-  - audio
+    - text
+    - audio
 
 rogue:
   name: ROGUE
@@ -161,26 +161,26 @@ rogue:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: R-1
-    order: desc
-    worst_score: 0
-    best_score: 1
-  - name: R-2
-    order: desc
-    worst_score: 0
-    best_score: 1
-  - name: R-L
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: R-1
+      order: desc
+      worst_score: 0
+      best_score: 1
+    - name: R-2
+      order: desc
+      worst_score: 0
+      best_score: 1
+    - name: R-L
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - SUM
-  - SSUM
+    - SUM
+    - SSUM
   input_modality:
-  - text
-  - audio
+    - text
+    - audio
   output_modality:
-  - text
+    - text
 
 accuracy:
   name: Accuracy
@@ -211,16 +211,16 @@ accuracy:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: accuracy
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: accuracy
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - SQA
+    - SQA
   input_modality:
-  - audio
+    - audio
   output_modality:
-  - text
+    - text
 
 exact-match:
   name: Exact Match
@@ -251,16 +251,16 @@ exact-match:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: exact-match
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: exact-match
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - SQA
+    - SQA
   input_modality:
-  - audio
+    - audio
   output_modality:
-  - text
+    - text
 
 f1-score:
   name: F1 Score
@@ -291,16 +291,16 @@ f1-score:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: f1-score
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: f1-score
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - SQA
+    - SQA
   input_modality:
-  - audio
+    - audio
   output_modality:
-  - text
+    - text
 
 # NEW need to be tested!!!
 comet:
@@ -333,18 +333,18 @@ comet:
     fi
   host: athena.cyfronet.pl
   metrics:
-  - name: comet
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: comet
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - MT
-  - ST
+    - MT
+    - ST
   input_modality:
-  - text
-  - audio
+    - text
+    - audio
   output_modality:
-  - text
+    - text
 
 # run-characTER__ares.sh
 characTER:
@@ -376,18 +376,18 @@ characTER:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: characTER
-    order: asc
-    worst_score: 1
-    best_score: 0
+    - name: characTER
+      order: asc
+      worst_score: 1
+      best_score: 0
   tasks:
-  - ST
-  - MT
+    - ST
+    - MT
   input_modality:
-  - text
-  - audio
+    - text
+    - audio
   output_modality:
-  - text
+    - text
 
 # run-SLU-metrics__ares.sh
 slu:
@@ -419,24 +419,24 @@ slu:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: slot_type_f1
-    order: desc
-    worst_score: 0
-    best_score: 1
-  - name: slot_value_cer
-    order: asc
-    worst_score: 1
-    best_score: 0
-  - name: intent_accuracy
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: slot_type_f1
+      order: desc
+      worst_score: 0
+      best_score: 1
+    - name: slot_value_cer
+      order: asc
+      worst_score: 1
+      best_score: 0
+    - name: intent_accuracy
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - SLU
+    - SLU
   input_modality:
-  - audio
+    - audio
   output_modality:
-  - text
+    - text
 
 # run-SQA-HF-metrics__ares.sh
 sqa-hf:
@@ -468,21 +468,20 @@ sqa-hf:
     fi
   host: ares.cyfronet.pl
   metrics:
-  - name: exact_match
-    order: desc
-    worst_score: 0
-    best_score: 100
-  - name: f1
-    order: desc
-    worst_score: 0
-    best_score: 1
+    - name: exact_match
+      order: desc
+      worst_score: 0
+      best_score: 100
+    - name: f1
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
-  - SQA
+    - SQA
   input_modality:
-  - audio
+    - audio
   output_modality:
-  - text
-
+    - text
 # run-TTS-wer-utmos__athena.sh
 # wer-utmos:
 #   name: WER Utmos
