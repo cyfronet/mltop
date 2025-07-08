@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RelativeScoresTest < ActiveSupport::TestCase
+class TasksHelperTest < ActionView::TestCase
   def setup
     @test_set = test_sets(:flores)
     @metric = metrics(:blue)
@@ -18,24 +18,27 @@ class RelativeScoresTest < ActiveSupport::TestCase
     create(:score, metric: @metric, evaluation: evaluation3, value: 20)
     create(:score, metric: @metric, evaluation: evaluation4, value: 80)
     @rows = Top::Row.where(task: tasks(:st), test_set: @test_set)
-    @relative_scores = RelativeScores.new(@rows, [ @test_set ], [ @metric ], @test_set_entries)
+  end
+
+  def params
+    { color: "relative" }
   end
 
   test "best score without entry" do
-    assert_equal 20, @relative_scores.best_score_for(@metric, @test_set) # 80 / 4 entries = 20
+    assert_equal "rgb(4, 120, 87)", interpolate_color(20, @metric, @test_set) # 80 / 4 entries = 20
   end
 
   test "worst score without entry" do
-    assert_equal 2.5, @relative_scores.worst_score_for(@metric, @test_set) # 10 / 4 entries = 2.5
+    assert_equal "rgb(220, 38, 38)", interpolate_color(2.5, @metric, @test_set) # 10 / 4 entries = 2.5
   end
 
   test "best score with entry" do
-    assert_equal 50, @relative_scores.best_score_for(@metric, @test_set, @test_set_entries.first)
-    assert_equal 80, @relative_scores.best_score_for(@metric, @test_set, @test_set_entries.second)
+    assert_equal "rgb(4, 120, 87)", interpolate_color(50, @metric, @test_set, @test_set_entries.first)
+    assert_equal "rgb(4, 120, 87)", interpolate_color(80, @metric, @test_set, @test_set_entries.second)
   end
 
   test "worst score with entry" do
-    assert_equal 10, @relative_scores.worst_score_for(@metric, @test_set, @test_set_entries.first)
-    assert_equal 20, @relative_scores.worst_score_for(@metric, @test_set, @test_set_entries.second)
+    assert_equal "rgb(220, 38, 38)", interpolate_color(10, @metric, @test_set, @test_set_entries.first)
+    assert_equal "rgb(220, 38, 38)", interpolate_color(20, @metric, @test_set, @test_set_entries.second)
   end
 end

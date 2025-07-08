@@ -45,14 +45,14 @@
         </td>
         <% task.metrics.each do |metric| %>
           <%- value = row.score(test_set:, metric:).value %>
-          <td class="score-cell" style="background-color: <%= interpolate_color(value, metric,  worst_score_for(metric, test_set), best_score_for(metric, test_set)) %>">
+          <td class="score-cell" style="background-color: <%= interpolate_color(value, metric,  test_set) %>">
             <%= number_with_precision(value, precision: 3) || "N/A" %>
           </td>
         <% end %>
         <% @test_set_entries.each do |test_set_entry| %>
           <% task.metrics.each do |metric| %>
             <%- value = row.score(test_set:, metric:, test_set_entry:).value %>
-            <td class="score-cell" style="background-color: <%= interpolate_color(value, metric, worst_score_for(metric, test_set, test_set_entry), best_score_for(metric, test_set, test_set_entry)) %>">
+            <td class="score-cell" style="background-color: <%= interpolate_color(value, metric, test_set, test_set_entry) %>">
               <%= number_with_precision(value, precision: 3) || "N/A" %>
             </td>
           <% end %>

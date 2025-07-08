@@ -11,24 +11,10 @@ module TasksHelper
     end
   end
 
-  private
-    def test_set_metric_active?(test_set, metric)
-      metric == selected_metric && test_set == selected_test_set
-    end
-
-    def worst_score_for(metric, test_set, test_set_entry = nil)
-      relative_scores&.worst_score_for(metric, test_set, test_set_entry)
-    end
-
-    def best_score_for(metric, test_set, test_set_entry = nil)
-      relative_scores&.best_score_for(metric, test_set, test_set_entry)
-    end
-
-  def interpolate_color(metric_value, metric, worst = nil, best = nil)
+  def interpolate_color(metric_value, metric, test_set, test_set_entry = nil)
     return "rgb(156, 163, 175)" unless metric_value
 
-    worst ||= metric.worst_score
-    best ||= metric.best_score
+    worst, best = col_worstbest(test_set:, metric:, test_set_entry:)
     normalized = (metric_value - worst) / (best - worst)
     normalized = 1.0 - normalized if metric.asc?
 
@@ -50,4 +36,28 @@ module TasksHelper
 
     "rgb(#{r}, #{g}, #{b})"
   end
+
+  private
+    def test_set_metric_active?(test_set, metric)
+      metric == selected_metric && test_set == selected_test_set
+    end
+
+    def col_worstbest(test_set:, metric:, test_set_entry: nil)
+      @_col_worstbest ||= {}
+      @_col_worstbest[[ test_set, metric, test_set_entry ]] ||=
+        calculate_col_worstbest(test_set:, metric:, test_set_entry:)
+    end
+
+    def calculate_col_worstbest(test_set:, metric:, test_set_entry: nil)
+      if params[:color] == "relative"
+        minmax = @rows
+                .map { |row| row.score(test_set:, metric:, test_set_entry:).value }
+                .compact
+                .minmax
+
+        metric.asc? ? minmax.reverse : minmax
+      else
+        [ metric.worst_score, metric.best_score ]
+      end
+    end
 end

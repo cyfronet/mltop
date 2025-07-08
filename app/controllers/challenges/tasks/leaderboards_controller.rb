@@ -3,8 +3,7 @@ module Challenges
     class LeaderboardsController < ApplicationController
       allow_unauthenticated_access only: [ :show ]
 
-
-      helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params, :relative_scores
+      helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params
 
       def index
         @tasks = Task.all
@@ -21,9 +20,6 @@ module Challenges
             metric: selected_metric,
             order: selected_order
             )
-        if relative_scoring?
-          @relative_scores = RelativeScores.new(@rows,  @task.test_sets, @task.metrics)
-        end
       end
 
       private
@@ -41,14 +37,6 @@ module Challenges
 
         def filtering_params
           @filtering_params
-        end
-
-        def relative_scoring?
-          params[:color] == "relative"
-        end
-
-        def relative_scores
-          @relative_scores
         end
     end
   end

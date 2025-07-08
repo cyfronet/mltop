@@ -3,7 +3,7 @@ module Challenges
     class LeaderboardsController < ApplicationController
       allow_unauthenticated_access only: [ :show ]
 
-      helper_method :selected_order, :selected_metric, :selected_test_set, :selected_test_set_entry, :relative_scores
+      helper_method :selected_order, :selected_metric, :selected_test_set, :selected_test_set_entry
 
       def show
         @test_set = TestSet.find(params[:test_set_id])
@@ -13,9 +13,6 @@ module Challenges
         @rows = Top::Row
           .where(task: selected_task, test_set: @test_set)
           .order(test_set: @test_set, metric: selected_metric, order: selected_order, test_set_entry: selected_test_set_entry)
-        if relative_scoring?
-          @relative_scores = RelativeScores.new(@rows, [ @test_set ], @task.metrics, @test_set_entries)
-        end
       end
 
       private
@@ -37,14 +34,6 @@ module Challenges
 
         def selected_test_set_entry
           @selected_test_set_entry ||= TestSetEntry.find_by(id: params[:sid]) if params[:sid].present?
-        end
-
-        def relative_scoring?
-          params[:color] == "relative"
-        end
-
-        def relative_scores
-          @relative_scores
         end
     end
   end
