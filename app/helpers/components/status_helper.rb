@@ -1,10 +1,48 @@
 module Components::StatusHelper
-  def mltop_run_status(statusable)
-    RunStatus.new(self, statusable.status).render
+  def mltop_status(statusable)
+    Status.for(self, statusable).render
   end
 
   private
-    class RunStatus
+    class Status
+      def self.for(view, statusable)
+        case statusable
+        when Evaluation
+          RunStatus.new(view, statusable.status)
+        when Challenge
+          ChallengeStatus.new(view, statusable.status)
+        end
+      end
+
+      def initialize(view, status)
+        @view = view
+        @status = status
+      end
+
+      def render
+        @view.tag.div(
+          class: [
+            "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium border",
+            colors.fetch(@status, colors["failed"])
+          ]
+        ) do
+          @view.safe_join([
+            @view.tag.span(send(icons.fetch(@status, "failed"), "h-4 w-4"), class: "mr-1"),
+            @view.tag.span(I18n.t("statuses.#{@status}", default: I18n.t("statuses.unknown")))
+          ])
+        end
+      end
+
+      def colors
+        raise NotImplementedError, "#{self.class} must define #colors"
+      end
+
+      def icons
+        raise NotImplementedError, "#{self.class} must define #icons"
+      end
+    end
+
+    class RunStatus < Status
       include IconsHelper
 
       COLORS = {
@@ -23,23 +61,12 @@ module Components::StatusHelper
         "failed" => "error_icon"
       }
 
-      def initialize(view, status)
-        @view = view
-        @status = status
+      def colors
+        COLORS
       end
 
-      def render
-        @view.tag.div(
-          class: [
-            "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium border",
-            COLORS.fetch(@status, COLORS["failed"])
-          ]
-        ) do
-          @view.safe_join([
-            @view.tag.span(send(ICONS.fetch(@status, "failed"), "h-4 w-4"), class: "mr-1"),
-            @view.tag.span(I18n.t("statuses.#{@status}", default: I18n.t("statuses.unknown")))
-          ])
-        end
+      def icons
+        ICONS
       end
     end
 end
