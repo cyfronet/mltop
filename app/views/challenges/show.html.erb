@@ -1,38 +1,14 @@
 <% breadcrumb :challenge, @challenge %>
-<%= mltop_title "Challenges" %>
-
-<div class="px-4 sm:px-0 mb-2">
-  <div class="sm:flex sm:items-start sm:justify-between">
-    <div>
-      <h1 class="text-base font-semibold leading-7"><%= @challenge%></h3>
-    </div>
-    <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
-        <% if policy(@challenge).edit? %>
-          <%= link_to [:edit, @challenge], type:"button", class: "btn btn-secondary-outline" do %>
-              <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>
-            <span> Edit </span>
-          <% end %>
-        <% end %>
-        <% if policy(@challenge).destroy? %>
-          <%= button_to [@challenge], method: :delete, class: "btn btn-danger",
-            form: { "data-turbo-confirm": "Are you sure you want to remove this challenge?" } do %>
-            <%= trash_icon("ml-0.5 mr-1.5 h-5 w-5") %>
-            <span> Delete </span>
-          <% end %>
-        <% end %>
-    </div>
+<%= mltop_title @challenge %>
+<div class="flex px-4 sm:px-0 justify-end">
+  <%= link_to "Challenge domain", "/#{ChallengeSlug.encode(@challenge.id)}", type: "button", class: "btn btn-primary" %>
+</div>
+<div class="flex flex-col gap-2">
+  <div class="w-1/2 mx-auto text-center my-2 text-sm text-gray-500">
+    <h2> Description </h2>
+    <p class="mt-1 leading-6 text-gray-500"><%= @challenge.description%></p>
   </div>
-  <div>
-    <span> Challenge dates: <%= l(@challenge.starts_at) %> </span>
-    <span><%= l(@challenge.ends_at) %> </span>
+  <div class="mx-auto text-center">
+    <%= I18n.l(@challenge.starts_at, format: "%a, %d %b %y") %> - <%= I18n.l(@challenge.ends_at, format: "%a, %d %b %y")  %>
   </div>
 </div>
-<div class="my-2 text-sm text-gray-500 border p-2 rounded-lg">
-  <h2> Description </h2>
-  <p class="mt-1 leading-6 text-gray-500"><%= @challenge.description%></p>
-</div>
-
-<div>
-  <%= link_to "Go to challenge domain", "/#{ChallengeSlug.encode(@challenge.id)}" %>
-</div>
-
