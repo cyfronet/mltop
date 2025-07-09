@@ -20,4 +20,11 @@ class Challenge < ApplicationRecord
   def meetween_owner
     errors.add(:owner, "not a meetween member") unless owner.meetween_member?
   end
+
+  def status
+    now = Time.current
+    return "upcoming" if now.before?( starts_at)
+    return "closed"   if now.after?(ends_at)
+    "ongoing"
+  end
 end

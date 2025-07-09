@@ -37,3 +37,6 @@ en:
     completed: Executed sucessfully
     failed: Finished with errors
     unknown: Status unknown
+    ongoing: Ongoing
+    upcoming: Upcoming
+    closed: Closed

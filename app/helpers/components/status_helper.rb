@@ -69,4 +69,28 @@ module Components::StatusHelper
         ICONS
       end
     end
+
+    class ChallengeStatus < Status
+      include IconsHelper
+
+      COLORS = {
+        "upcoming" => "bg-sky-50 text-sky-700 border-sky-200",
+        "ongoing" => "bg-lime-50 text-lime-700 border-lime-200",
+        "closed" => "bg-slate-50 text-slate-700 border-slate-200"
+      }
+
+      ICONS = {
+        "upcoming" => "clock_icon",
+        "ongoing" => "play_icon",
+        "closed" => "lock_icon"
+      }
+
+      def colors
+        COLORS
+      end
+
+      def icons
+        ICONS
+      end
+    end
 end
