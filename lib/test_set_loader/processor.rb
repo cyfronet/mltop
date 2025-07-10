@@ -167,7 +167,7 @@ class TestSetLoader::Processor
       puts "\e[#{31}m  - #{msg}\e[0m"
     end
 
-    def description(name)
+    def description(name, dir)
       child_with_extension(dir, "_description.txt")&.read ||
         descriptions[name].try(:[], "description") ||
         "TODO: please update test set description"
