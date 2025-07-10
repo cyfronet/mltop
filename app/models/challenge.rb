@@ -23,7 +23,7 @@ class Challenge < ApplicationRecord
 
   def status
     now = Time.current
-    return "upcoming" if now.before?( starts_at)
+    return "upcoming" if now.before?(starts_at)
     return "closed"   if now.after?(ends_at)
     "ongoing"
   end
