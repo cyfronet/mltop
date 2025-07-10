@@ -46,7 +46,6 @@ screbleu:
   output_modality:
     - text
 
-
 blueurt:
   name: BLEURT
   script: |
@@ -121,12 +120,11 @@ wer:
       worst_score: 1
       best_score: 0
   tasks:
-  #  - MT # not sure if it should be here - check Gdrive table
-  #  - ST
-   - ASR
-   - TTS
-   - LIPREAD
-
+    #  - MT # not sure if it should be here - check Gdrive table
+    #  - ST
+    - ASR
+    - TTS
+    - LIPREAD
   input_modality:
     - audio
     - video
@@ -134,7 +132,6 @@ wer:
   output_modality:
     - text
     - audio
-
 
 rogue:
   name: ROGUE
@@ -164,10 +161,18 @@ rogue:
     fi
   host: ares.cyfronet.pl
   metrics:
-    - name: rouge
+    - name: R-1
       order: desc
       worst_score: 0
-      best_score: 100
+      best_score: 1
+    - name: R-2
+      order: desc
+      worst_score: 0
+      best_score: 1
+    - name: R-L
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - SUM
     - SSUM
@@ -297,7 +302,6 @@ f1-score:
   output_modality:
     - text
 
-
 # NEW need to be tested!!!
 comet:
   name: Comet
@@ -423,10 +427,10 @@ slu:
       order: asc
       worst_score: 1
       best_score: 0
-    # "intent_accuracy": {
-    #     "mean": 0.7841291190316073,
-    #     "standard_error": 0.007544324162844738
-    # }
+    - name: intent_accuracy
+      order: desc
+      worst_score: 0
+      best_score: 1
   tasks:
     - SLU
   input_modality:
@@ -474,12 +478,10 @@ sqa-hf:
       best_score: 1
   tasks:
     - SQA
-
   input_modality:
     - audio
   output_modality:
     - text
-
 # run-TTS-wer-utmos__athena.sh
 # wer-utmos:
 #   name: WER Utmos

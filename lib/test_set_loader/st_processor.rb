@@ -4,9 +4,10 @@ class TestSetLoader::StProcessor < TestSetLoader::Processor
       next if entry.file?
 
       case entry.basename.to_s
-      when "MUSTC"   then process_mustc(entry)
-      when "MTEDX"   then process_mtedx(entry)
       when "ACL6060" then process_acl6060(entry)
+      when "COVOST"  then process_covost(entry)
+      # when "MUSTC"   then process_mustc(entry)
+      # when "MTEDX"   then process_mtedx(entry)
       else                not_supported(entry)
       end
     end
@@ -39,6 +40,15 @@ class TestSetLoader::StProcessor < TestSetLoader::Processor
       from_to_language_process(dir) do |entry, _name, _source, target|
         [
           child_with_extension(dir, "_audios.tar.gz"),
+          child_with_extension(entry, ".#{target}")
+        ]
+      end
+    end
+
+    def process_covost(dir)
+      from_to_language_process(dir) do |entry, _name, _source, target|
+        [
+          child_with_extension(entry, "_audios.tar.gz"),
           child_with_extension(entry, ".#{target}")
         ]
       end

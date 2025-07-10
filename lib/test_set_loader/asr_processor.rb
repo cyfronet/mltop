@@ -5,9 +5,10 @@ class TestSetLoader::AsrProcessor < TestSetLoader::Processor
 
       case entry.basename.to_s
       when "ACL6060" then process_acl6060(entry)
-      when "MTEDX"    then process_mtedx(entry)
-      when "MUSTC"    then process_mustc(entry)
-      when "DIPCO"    then process_dipco(entry)
+      when "COVOST"   then process_covost(entry)
+      # when "MTEDX"    then process_mtedx(entry)
+      # when "MUSTC"    then process_mustc(entry)
+      # when "DIPCO"    then process_dipco(entry)
       else                 not_supported(entry)
       end
     end
@@ -50,6 +51,15 @@ class TestSetLoader::AsrProcessor < TestSetLoader::Processor
         [
           child_with_extension(entry, "close-talk.audios.tar.gz"),
           child_with_extension(entry, "close-talk.#{lang}")
+        ]
+      end
+    end
+
+    def process_covost(dir)
+      single_language_process(dir) do |entry, _name, lang|
+        [
+          child_with_extension(entry, "audios.tar.gz"),
+          child_with_extension(entry, "test.#{lang}")
         ]
       end
     end

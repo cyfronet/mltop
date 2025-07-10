@@ -2,6 +2,7 @@ class TestSetsLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
   TASKS_DIR = File.join(Rails.root, "tmp/tasks")
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
+  TEST_SETS_FILE_PATH = File.join(Rails.root, "db", "data", "test_sets.yml")
 
   def initialize(username:, challenge_id:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
     @username = username
@@ -15,7 +16,7 @@ class TestSetsLoader
     note "Importing tasks started"
     Task.transaction do
       Pathname.new(@tasks_dir).children.select(&:directory?).each do |dir|
-        loader = TestSetLoader::Processor.for(dir, @challenge_id)
+        loader = TestSetLoader::Processor.for(dir, @challenge_id, TEST_SETS_FILE_PATH)
         note "Importing #{dir.basename} using #{loader.class}"
 
         loader.import!
