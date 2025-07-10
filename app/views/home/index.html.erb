@@ -2,10 +2,10 @@
 <div class="w-full flex flex-col gap-4 mb-10">
   <div class="flex flex-row gap-8 ms-14 space-x-10">
     <div class="w-1/2 flex flex-col gap-8 mt-10">
-      <h1 class="text-zinc-700 font-semibold text-2xl">
+      <h1 class="text-zinc-700 font-semibold text-5xl">
         Let's challenge speech models together!
       </h1>
-      <div class="flex flex-row gap-8">
+      <div class="flex flex-row gap-8 text-xl">
         <div class="flex flex-row gap-2 bg-slate-100 p-2 rounded-xl">
           <%= color_picker_icon %> Test
         </div>
@@ -16,7 +16,7 @@
           <%= lightbulb_icon %> Improve speech models
         </div>
       </div>
-      <h2 class="mt-5 text-zinc-700">
+      <h2 class="mt-5 text-zinc-700 text-xl">
         SPEECHM is a platform for running and evaluating speech model challenges - using real-world data and open, trusted metrics.
       </h2>
       <div class="flex gap-4">
@@ -30,14 +30,16 @@
       <%= image_tag("root_page.png")%>
     </div>
   </div>
-  <div class="flex flex-col pt-8 bg-linear-to-r from-fuchsia-100 to-orange-50 space-x-10 gap-y-4 pb-4">
-    <h2 class="bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-semibold text-2xl">
-      Challenges:
-    </h2>
-    <h3 class="text-zinc-700 text-center">
-      Explore the core functions that enhance communication through language
-      understanding, translation, and speech recognition.
-    </h3>
+  <div class="flex flex-col bg-linear-to-r from-fuchsia-100 to-orange-50 space-x-10 gap-y-9 pt-10 pb-15">
+    <div class="flex flex-col gap-y-4">
+      <h2 class="bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-semibold text-4xl">
+        Challenges:
+      </h2>
+      <h3 class="text-zinc-700 text-center text-2xl">
+        Explore the core functions that enhance communication through language
+        understanding, translation, and speech recognition.
+      </h3>
+    </div>
     <% if @challenges.any? %>
       <div id="challenges" class="min-w-full">
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -49,12 +51,19 @@
       </div>
     <% end %>
   </div>
-  <div class="flex flex-col gap-y-8 text-zinc-700">
-    <div class="flex flex-col gap-y-4">
-      <h2 class="bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-2xl"> Why SPEECHM? </h2>
-      <h3 class="text-center text-lg"> Empowering open, fair, and practical evaluation of speech technolgies. </h3>
+  <div class="flex flex-col gap-y-8 text-white bg-[#0D0806] pt-10 pb-15 -mt-4">
+    <h2 class="bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center text-4xl font-semibold"> Join a challenge </h2>
+    <h3 class="text-center text-2xl"> Ready to benchmark your models? </h3>
+    <div class="flex justify-center">
+      <%= link_to "Join a challenge", challenges_path, class: "btn btn-primary-outline bg-inherit" %>
     </div>
-    <div class="flex flex-row gap-x-8">
+  </div>
+  <div class="flex flex-col gap-y-9 text-zinc-700">
+    <div class="flex flex-col gap-y-4">
+      <h2 class="bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-4xl"> Why SPEECHM? </h2>
+      <h3 class="text-center text-2xl"> Empowering open, fair, and practical evaluation of speech technolgies. </h3>
+    </div>
+    <div class="flex flex-row gap-x-8 text-xl">
       <div class="w-1/3">
         <p>SPEECHM is a set of metrics and evaluation tools developed under the Meetween project (Horizon Europe).
           <p>
@@ -88,7 +97,7 @@
         </div>
       </div>
       <div>
-        <h3 class="text-md text-center font-semibold mb-4 text-zinc-700">Partners</h3>
+        <h3 class="text-md text-center font-semibold mb-4 text-zinc-700 text-xl">Partners</h3>
         <div class="flex flex-wrap items-center justify-center gap-10">
           <%= image_tag("logos/translated.png", class: "h-8") %>
           <%= image_tag("logos/kit.png", class: "h-8") %>
