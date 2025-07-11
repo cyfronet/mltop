@@ -1,0 +1,20 @@
+MT:
+  name: Machine translation
+  info: |
+    Converts text from one language to another, maintaining the meaning and
+    context of the original message. This task involves translating between
+    languages like English to French or Polish to Spanish and aims to ensure
+    both grammatical and semantic accuracy.
+  description: |
+    Machine Translation (MT) involves translating text between languages, aiming to produce accurate and contextually relevant output.
+    Neural MT systems, such as transformer models, have replaced earlier statistical and rule-based approaches by offering more fluent translations.
+    Neural MT can be adapted to specialized fields like legal or medical content, enabling more precise translations.
+    A key challenge lies in handling idiomatic expressions, ambiguous terms, and cultural nuances while maintaining the style of the original text.
+    MT models today support low-resource languages and multilingual translation, including zero-shot translation, where they translate unseen language pairs.
+    These systems have become essential for global communication, e-commerce, and customer support.
+    MT continues to evolve, with research focusing on real-time applications, better handling of domain-specific terms, and multimodal translation that considers both text and visual data.
+  from: text
+  to: text
+  test_sets:
+    ACL6060: [ en-de, en-fr ]
+    FLORES: [ en-de, en-es, en-fr, en-it ]

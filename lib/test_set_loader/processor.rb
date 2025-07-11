@@ -1,15 +1,17 @@
 class TestSetLoader::Processor
-  RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS2 LRS3 ].freeze
+  RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS3 ].freeze
 
   attr_reader :dir, :challenge_id
 
-  def initialize(dir, challenge_id, test_sets_yaml_path)
+  delegate :skip?, to: :@metadata
+
+  def initialize(dir, challenge_id, metadata)
     @dir = dir
     @challenge_id = challenge_id
-    @test_sets_yaml_path = test_sets_yaml_path
+    @metadata = metadata
   end
 
-  def self.for(dir, challenge_id, test_sets_yaml_path)
+  def self.for(dir, challenge_id, metadata)
     clazz =
       case dir.basename.to_s
       when "MT"  then  TestSetLoader::MtProcessor
@@ -23,7 +25,7 @@ class TestSetLoader::Processor
       else TestSetLoader::UnknownProcessor
       end
 
-    clazz.new(dir, challenge_id, test_sets_yaml_path)
+    clazz.new(dir, challenge_id, metadata)
   end
 
   def import!
@@ -37,6 +39,18 @@ class TestSetLoader::Processor
         create_or_update_entry(test_set, lang, lang) do
           block.call(entry, name, lang)
         end
+      end
+    end
+
+    def for_each_test_set(&block)
+      dir.each_child do |test_set|
+        next if test_set.file?
+        if skip?(task.slug, test_set.basename.to_s)
+          warning "Skipping test set #{test_set.basename} for #{task.slug}"
+          next
+        end
+
+        block.call(test_set)
       end
     end
 
@@ -54,9 +68,7 @@ class TestSetLoader::Processor
 
       dir.each_child do |entry|
         next if entry.file?
-        name = dir.basename.to_s
-
-        block.call(test_set, name, entry)
+        block.call(test_set, dir.basename.to_s, entry)
       end
     end
 
@@ -84,6 +96,11 @@ class TestSetLoader::Processor
     end
 
     def create_or_update_entry(test_set, source_language, target_language, &block)
+      if skip?(task.slug, test_set.name, "#{source_language}-#{target_language}")
+        warning "Skipping entry #{source_language} -> #{target_language} for #{task.slug}/#{test_set.name}"
+        return
+      end
+
       input, groundtruth, internal = block.call
       task_test_set = task.task_test_sets.find_or_create_by!(test_set:)
 
@@ -113,7 +130,7 @@ class TestSetLoader::Processor
           entry.update!(to_update)
         end
       else
-        info "Creating entry for #{slug}/#{test_set.name} #{source_language} -> #{target_language}"
+        info "Creating entry #{source_language} -> #{target_language} for #{slug}/#{test_set.name}"
 
         hsh = {
           task:,
@@ -169,11 +186,7 @@ class TestSetLoader::Processor
 
     def description(name, dir)
       child_with_extension(dir, "_description.txt")&.read ||
-        descriptions[name].try(:[], "description") ||
+        @metadata.description(name) ||
         "TODO: please update test set description"
-    end
-
-    def descriptions
-      @descriptions ||= YAML.load_file(@test_sets_yaml_path)
     end
 end

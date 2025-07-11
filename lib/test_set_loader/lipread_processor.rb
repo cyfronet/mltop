@@ -1,8 +1,6 @@
 class TestSetLoader::LipreadProcessor < TestSetLoader::Processor
   def import!
-    dir.each_child do |entry|
-      next if entry.file?
-
+    for_each_test_set do |entry|
       case entry.basename.to_s
       when "LRS2" then process_lrs2(entry)
       else             not_supported(entry)
