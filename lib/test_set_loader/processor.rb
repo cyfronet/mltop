@@ -1,10 +1,6 @@
 class TestSetLoader::Processor
   RESTRICTED_TEST_SETS = %w[ MUSTC MTEDX LRS3 ].freeze
 
-  attr_reader :dir, :challenge_id
-
-  delegate :skip?, to: :@metadata
-
   def initialize(dir, challenge_id, metadata)
     @dir = dir
     @challenge_id = challenge_id
@@ -33,6 +29,8 @@ class TestSetLoader::Processor
   end
 
   private
+    delegate :skip?, to: :@metadata
+
     def single_language_process(dir, &block)
       language_process(dir) do |test_set, name, entry|
         lang = entry.basename.to_s
@@ -43,7 +41,7 @@ class TestSetLoader::Processor
     end
 
     def for_each_test_set(&block)
-      dir.each_child do |test_set|
+      @dir.each_child do |test_set|
         next if test_set.file?
         if skip?(task.slug, test_set.basename.to_s)
           warning "Skipping test set #{test_set.basename} for #{task.slug}"
@@ -73,7 +71,7 @@ class TestSetLoader::Processor
     end
 
     def slug
-      dir.basename.to_s
+      @dir.basename.to_s
     end
 
     def not_supported(entry)
@@ -87,7 +85,7 @@ class TestSetLoader::Processor
         ts.assign_attributes(
           description: description(name, dir),
           published: !RESTRICTED_TEST_SETS.include?(name.upcase),
-          challenge_id:
+          challenge_id: @challenge_id
         )
         ts.save
       end
