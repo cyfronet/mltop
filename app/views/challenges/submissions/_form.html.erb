@@ -1,11 +1,9 @@
 <%# locals: (model:) %>
-
 <%= form_with(model:, url:model.new_record? ? submissions_path : submission_path(@model), class: "contents") do |form| %>
   <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "col-span-full" %>
-      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
-
+      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <fieldset>
         <legend class="text-sm font-semibold leading-6">Compatibility map</legend>
         <div class="mt-6 space-y-6">
@@ -23,7 +21,6 @@
       </fieldset>
     </div>
   </div>
-
   <div class="my-6 flex items-center justify-end gap-x-6">
     <%= form.submit %>
   </div>

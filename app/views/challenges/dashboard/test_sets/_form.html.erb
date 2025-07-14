@@ -1,5 +1,4 @@
 <%# locals: (test_set:, challenges:) %>
-
 <%= form_with(model: test_set, url: [:dashboard, test_set], class: "contents") do |form| %>
   <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -7,24 +6,22 @@
       <%= form.select :challenge_id, challenges.map { |c| [ c.name, c.id ] },
         { include_blank: true, wrapper: "sm:col-span-2" }
       %>
-      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <div class="relative flex gap-x-3">
         <div class="flex h-6 items-center">
           <%= form.check_box :published %>
         </div>
       </div>
-  </div>
-
-  <ul>
-    <%= form.fields_for :task_test_sets do |task_test_set_form| %>
-      <li>
-        <%= task_test_set_form.rich_text_area :description, label: {text:"Description for #{task_test_set_form.object.task.name}" }, value: task_test_set_form.object.description%>
-      </li>
-    <% end%>
-  </ul>
-
-  <div class="mt-6 mb-2 flex items-center justify-end gap-x-6">
-    <%= link_to "Cancel", [:dashboard, test_set], class: "btn btn-secondary-outline" %>
-    <%= form.submit %>
-  </div>
-<% end %>
+    </div>
+    <ul>
+      <%= form.fields_for :task_test_sets do |task_test_set_form| %>
+        <li>
+          <%= task_test_set_form.rich_text_area :description, label: {text:"Description for #{task_test_set_form.object.task.name}" }, value: task_test_set_form.object.description%>
+        </li>
+      <% end%>
+    </ul>
+    <div class="mt-6 mb-2 flex items-center justify-end gap-x-6">
+      <%= link_to "Cancel", [:dashboard, test_set], class: "btn btn-secondary-outline" %>
+      <%= form.submit %>
+    </div>
+  <% end %>

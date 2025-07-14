@@ -9,7 +9,7 @@
         { include_blank: true, wrapper: "sm:col-span-2" }
       %>
       <%= form.text_area :info, wrapper: "col-span-full", class: "h-32" %>
-      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <%= form.select :from, Task::TYPES,
         { include_blank: true, wrapper: "sm:col-span-1" },
         { data: { action: "change->update-evaluators#updateEvaluators", update_evaluators_target: "from" } }
