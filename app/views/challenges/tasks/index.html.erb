@@ -1,15 +1,16 @@
 <% breadcrumb :dashboard %>
-
-<div class="w-full">
+<div class="w-full flex flex-col gap-10">
   <% if Current.challenge %>
-    <h2>
-      Welcome to <%= Current.challenge.name %> challenge
-      <% if !challenge_participant? %>
-        <%= button_to "Join challenge", membership_path, class: "btn btn-primary"%>
-      <% end %>
-    </h2>
-    <div class="mx-14 my-4">
-      <%= Current.challenge.description%>
+    <div class="flex flex-col gap-10">
+      <h2 class="font-semibold text-5xl text-center">
+        <%= Current.challenge.name %>
+      </h2>
+      <div class="ms-14">
+        <%= Current.challenge.description%>
+        <% if !challenge_participant? %>
+          <%= button_to "Join challenge", membership_path, class: "btn btn-primary block mx-auto"%>
+        <% end %>
+      </div>
     </div>
   <% end %>
   <div class="flex ms-14 space-x-10">
@@ -17,24 +18,20 @@
       <h1 class="mt-10 text-zinc-700 font-bold text-2xl text-justify">
         A suite of AI metrics that can be used to measure and track the performance of the task-specific models.
       </h1>
-
       <h2 class="mt-5 text-zinc-700 text-justify">
         Join a community shaping the future of multilingual communication.
         With Speechm, you can test cutting-edge AI models, contribute to innovation through leaderboards, and help refine solutions
         like real-time translation and speech recognition — ensuring seamless, global collaboration for everyone.
       </h2>
-
       <% if !signed_in? %>
         <%= link_to "Join us", sign_in_path, class: "btn btn-primary mt-5", "data-turbo-prefetch": false %>
       <% end %>
     </div>
-
     <div class="w-1/2 border-y rounded-s-xl py-4 ps-4 bg-zinc-50">
       <%= image_tag("home_page_section1.png", class: "grayscale")%>
     </div>
   </div>
-
-  <div class="bg-home-img bg-cover bg-left mt-10">
+  <div class="bg-home-img bg-cover bg-left">
     <div class="bg-linear-to-r from-transparent to-black to-60% flex">
       <div class="w-1/2">
       </div>
@@ -63,22 +60,20 @@
       </div>
     </div>
   </div>
-
-  <h2 class="mx-14 mt-10 bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-2xl">
-    Key Tasks in NLP and Speech Technology
-  </h2>
-
-  <h3 class="mx-14 mt-5 text-zinc-700 text-center">
-    Explore the core functions that enhance communication through language
-    understanding, translation, and speech recognition.
-  </h3>
-
+  <div class="flex flex-col gap-5">
+    <h2 class="mx-14 bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-2xl">
+      Key Tasks in NLP and Speech Technology
+    </h2>
+    <h3 class="mx-14 mt-5 text-zinc-700 text-center">
+      Explore the core functions that enhance communication through language
+      understanding, translation, and speech recognition.
+    </h3>
+  </div>
   <div id="tasks" class="min-w-full">
     <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <%= render @tasks %>
     </ul>
   </div>
-
   <div class="mt-4 flex bg-linear-to-r from-fuchsia-100 to-orange-50 pt-10 space-x-10">
     <div class="w-1/2">
       <%= image_tag("home_page_section3.png", class: "grayscale") %>
@@ -91,13 +86,12 @@
         Our leaderboards cover a wide range of tasks,
         from speech translation to text generation and beyond,
         offering detailed comparisons of models tested across various datasets and language pairs.
-         With rankings based on performance metrics like BLEU, CHRF, TER, and more,
-         you can easily find the model that meets your specific requirements.
+        With rankings based on performance metrics like BLEU, CHRF, TER, and more,
+        you can easily find the model that meets your specific requirements.
       </p>
       <p>
         Explore, compare, and select the best solution for your task.
       </p>
     </div>
-
   </div>
 </div>
