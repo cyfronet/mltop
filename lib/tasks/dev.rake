@@ -14,12 +14,12 @@ if Rails.env.local?
       user = User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
                         roles: [ :admin, :meetween_member ])
-      challenge = Challenge.create!(name: "Global",
+      challenge = Challenge.create!(name: "Meetween Global Challenge",
                         starts_at: 5.days.ago,
                         ends_at: 1.month.from_now,
                         owner: user
                         ).tap do |challenge|
-                          challenge.description = "This is a global challenge"
+                          challenge.description = "Meetween Global Challenge testing progress of the SpeechLLM development progress."
                         end
 
       Membership.create(challenge:, user:)

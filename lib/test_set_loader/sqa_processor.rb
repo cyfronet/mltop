@@ -1,7 +1,10 @@
 class TestSetLoader::SqaProcessor < TestSetLoader::Processor
   def import!
-    dir.each_child do |entry|
-      entry.basename.to_s == "SPOKENSQUAD" ? process_spokensquad(entry) : not_supported(entry)
+    for_each_test_set do |entry|
+      case entry.basename.to_s
+      when "SPOKENSQUAD" then process_spokensquad(entry)
+      else                    not_supported(entry)
+      end
     end
   end
 

@@ -2,7 +2,8 @@ class TestSetsLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
   TASKS_DIR = File.join(Rails.root, "tmp/tasks")
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
-  TEST_SETS_FILE_PATH = File.join(Rails.root, "db", "data", "test_sets.yml")
+  TASKS_YAML_PATH = File.join(Rails.root, "db", "data", "tasks.yml")
+  TEST_SETS_YAML_PATH = File.join(Rails.root, "db", "data", "test_sets.yml")
 
   def initialize(username:, challenge_id:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
     @username = username
@@ -16,7 +17,7 @@ class TestSetsLoader
     note "Importing tasks started"
     Task.transaction do
       Pathname.new(@tasks_dir).children.select(&:directory?).each do |dir|
-        loader = TestSetLoader::Processor.for(dir, @challenge_id, TEST_SETS_FILE_PATH)
+        loader = TestSetLoader::Processor.for(dir, @challenge_id, metadata)
         note "Importing #{dir.basename} using #{loader.class}"
 
         loader.import!
@@ -37,6 +38,10 @@ class TestSetsLoader
 
     def note(msg)
       puts "\e[#{34}m#{msg}\e[0m"
+    end
+
+    def metadata
+      @metadata ||= TestSetMetadata.new(TASKS_YAML_PATH, TEST_SETS_YAML_PATH)
     end
 end
 

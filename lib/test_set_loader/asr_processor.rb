@@ -1,15 +1,13 @@
 class TestSetLoader::AsrProcessor < TestSetLoader::Processor
   def import!
-    dir.each_child do |entry|
-      next if entry.file?
-
+    for_each_test_set do |entry|
       case entry.basename.to_s
       when "ACL6060" then process_acl6060(entry)
-      when "COVOST"   then process_covost(entry)
-      # when "MTEDX"    then process_mtedx(entry)
-      # when "MUSTC"    then process_mustc(entry)
-      # when "DIPCO"    then process_dipco(entry)
-      else                 not_supported(entry)
+      when "COVOST"  then process_covost(entry)
+      when "MTEDX"   then process_mtedx(entry)
+      when "MUSTC"   then process_mustc(entry)
+      when "DIPCO"   then process_dipco(entry)
+      else                not_supported(entry)
       end
     end
   end
