@@ -52,23 +52,24 @@ class Top::Row
     @cached_scores[[ test_set, metric, test_set_entry ]] ||= calculate_score(test_set:, metric:, test_set_entry:)
   end
 
-  def calculate_score(test_set:, metric:, test_set_entry: nil)
-    scores = @scores[[ test_set.id, metric.id ]]
+  private
+    def calculate_score(test_set:, metric:, test_set_entry: nil)
+      scores = @scores[[ test_set.id, metric.id ]]
 
-    scores = if test_set_entry
-      scores.filter { |score| score.test_set_entry_id == test_set_entry.id }
-    else
-      scores
-        .group_by { |score| [ score.metric_id, score.test_set_id ] }
-        .values.map do |list|
-          Score.new(metric:, value: list.sum { |item| item.value || item.metric_worst_score } / @entries_counts[test_set.id])
-        end
-    end
+      scores = if test_set_entry
+        scores.filter { |score| score.test_set_entry_id == test_set_entry.id }
+      else
+        scores
+          .group_by { |score| [ score.metric_id, score.test_set_id ] }
+          .values.map do |list|
+            Score.new(metric:, value: list.sum { |item| item.value || item.metric_worst_score } / @entries_counts[test_set.id])
+          end
+      end
 
-    case scores.count
-    when 1 then scores.first
-    when 0 then Score.new(metric:, value: nil)
-    when 2.. then raise ActiveSupport::EnumerableCoreExt::SoleItemExpectedError, "multiple items found"
+      case scores.count
+      when 1 then scores.first
+      when 0 then Score.new(metric:, value: nil)
+      when 2.. then raise ActiveSupport::EnumerableCoreExt::SoleItemExpectedError, "multiple items found"
+      end
     end
-  end
 end
