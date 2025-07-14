@@ -22,7 +22,7 @@ class TasksLoader
 
     data_yaml(@evaluators_yaml_path).each do |_, data|
       evaluator = Evaluator.find_or_initialize_by(name: data["name"])
-      evaluator.update!(script: data["script"], host: data["host"], challenge: @challenge)
+      evaluator.update!(script: data["script"], host: data["host"], challenge: @challenge, from: data["from"], to: data["to"])
 
       data["tasks"].each { |slug| evaluator.task_evaluators.find_or_create_by(task: tasks[slug]) }
       data["metrics"].each do |hsh|
