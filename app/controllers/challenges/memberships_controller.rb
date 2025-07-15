@@ -16,9 +16,9 @@ module Challenges
 
       @membership = Current.challenge.memberships.build(permitted_attributes(Membership).merge(user: Current.user))
       if @membership.save
-        flash[:notice] = "Successfully joined challenge."
+        redirect_to post_authenticating_url, notice: "Successfully joined the challenge."
       else
-        @consents = Current.challenge.challenge_consents
+        flash[:alert] = "Couldn't join the challenge."
         render :new, status: :unprocessable_entity
       end
     end

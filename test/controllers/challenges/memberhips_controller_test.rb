@@ -25,8 +25,8 @@ module Challenges
           }
         }
       end
-      assert_response :success
-      assert_match "Successfully joined challenge", flash[:notice]
+      assert_response :redirect
+      assert_match "Successfully joined the challenge", flash[:notice]
     end
 
     test "cannot create membership if already a member" do

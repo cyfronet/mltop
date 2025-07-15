@@ -1,6 +1,11 @@
-<%= turbo_frame_tag dom_id(Current.user, "membership_form") do %>
+<div class="flex items-center justify-center">
   <%= form_with model: @membership, url: membership_path, local: true do |form| %>
-    <%= render "challenges/agreements/form", form:%>
-    <%= form.submit "Join challenge", class: "mt-2" %>
+    <div class="p-6 relative overflow-y-auto">
+      <h2 class="text-xl font-semibold text-center mb-4">Welcome to <%= Current.challenge.name %> </h2>
+      <div class="flex flex-col gap-4">
+        <%= render "challenges/agreements/form", form:%>
+      </div>
+      <%= form.submit "Join challenge", class: "mt-2" %>
+    </div>
   <% end %>
-<% end %>
+</div>

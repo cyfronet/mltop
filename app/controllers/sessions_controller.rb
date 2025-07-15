@@ -18,7 +18,14 @@ class SessionsController < ApplicationController
     if user = user_provider.to_user
       authenticated_as(user)
 
-      redirect_to post_authenticating_url, info: "Welcome back #{user.name}"
+      slug = cookies.fetch(:return_to_after_authenticating, nil)&.scan(ChallengeSlug::PATTERN)&.flatten&.first
+      challenge = Challenge.find_by(id: ChallengeSlug.decode(slug))
+
+      if challenge.nil? || challenge&.memberships&.where(user_id: user.id)&.exists?
+        redirect_to post_authenticating_url, notice: "Welcome back #{user.name}"
+      else
+        redirect_to "/#{slug}/#{new_membership_path}", notice: "Welcome back #{user.name}, fill out the form, to join the challenge"
+      end
     else
       redirect_to root_path, alert: "Unable to authenticate"
     end
