@@ -3,4 +3,3 @@ module Top
     delegate_missing_to :score
   end
 end
-
