@@ -1,11 +1,11 @@
 <div class=" mx-16 mt-5 mb-5">
-  <%= form_tag model_path(model), method: :get, class: "flex place-content-center", data: { controller: "auto-submit" } do %>
-    <%= hidden_field_tag(:tid, task.id) %>
+  <%= form_tag model_path(model_row.model), method: :get, class: "flex place-content-center", data: { controller: "auto-submit" } do %>
+    <%= hidden_field_tag(:tid, model_row.task.id) %>
     <%# <%= label_tag "tsid", "Test set" %>
-    <%= select_tag "tsid", options_for_select(test_sets.map { |ts| [ ts.name, ts.id ] }, test_set.id),
+    <%= select_tag "tsid", options_for_select(test_sets.map { |ts| [ ts.name, ts.id ] }, model_row.test_set.id),
         class: "mt-2 block w-full rounded-s-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
         data: { action: "change->auto-submit#submit" } %>
-    <%= select_tag "mid", options_for_select(metrics.map { |ts| [ ts.name, ts.id ] }, metric.id),
+    <%= select_tag "mid", options_for_select(metrics.map { |ts| [ ts.name, ts.id ] }, model_row.metric.id),
         class: "mt-2 block w-full rounded-e-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
         data: { action: "change->auto-submit#submit" } %>
     <%# <%= label_tag "mid", "Metric", class: "text-sm font-medium leading-6 text-gray-900" %>
@@ -19,7 +19,7 @@
         <th colspan="1" rowspan="2" class="leaderboard-item">
           From\To
         </th>
-        <% @model_row.target_languages.each do |target_language| %>
+        <% model_row.target_languages.each do |target_language| %>
           <th class="leaderboard-item">
             <%= target_language %>
           </th>
@@ -28,16 +28,16 @@
     </thead>
 
     <tbody>
-      <% @model_row.source_languages.each do |source_language| %>
+      <% model_row.source_languages.each do |source_language| %>
         <tr>
           <td class="leaderboard-item">
             <%= source_language %>
           </td>
-          <% @model_row.target_languages.each do |target_language| %>
-            <%- score = @model_row.score(source_language, target_language) -%>
+          <% model_row.target_languages.each do |target_language| %>
+            <%- score = model_row.score(source_language, target_language) -%>
               <td class="score-cell"
-                style="background-color: <%= interpolate_color(score, @metric, @test_set) unless score.nil? %>">
-              <%= score && number_with_precision(score, precision: 3) %>
+                style="background-color: <%= score_color(score) %>">
+              <%= number_with_precision(score&.value, precision: 3) || "N/A" %>
             </td>
           <% end %>
         </tr>

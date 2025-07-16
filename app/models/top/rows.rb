@@ -3,7 +3,9 @@ class Top::Rows
   attr_reader :source_languages, :target_languages
 
   def initialize(rows, source_languages, target_languages, source, target)
-    @rows = rows
+    @normalizer = Top::Normalizer.new(rows)
+    @rows = rows.map { |r| RowWithNormalization.new(r, @normalizer) }
+
     @source_languages = source_languages
     @target_languages = target_languages
     @source = source
@@ -37,4 +39,25 @@ class Top::Rows
     (@source.blank? && source_languages.size > 1) ||
       (@target.blank? && target_languages.size > 1)
   end
+
+  def relative!
+    @normalizer.relative!
+  end
+
+  private
+    class RowWithNormalization
+      delegate_missing_to :@row
+
+      def initialize(row, normalizer)
+        @row = row
+        @normalizer = normalizer
+      end
+
+      def score(test_set:, metric:, test_set_entry: nil)
+        score = @row.score(test_set:, metric:, test_set_entry:)
+        normalized = @normalizer.normalize(score&.value, test_set, metric, test_set_entry)
+
+        Top::ScoreWithNormalization.new(score, normalized)
+      end
+    end
 end

@@ -32,14 +32,14 @@ class Model::ScoresTest < ActiveSupport::TestCase
 
     scores = Model::Scores.new(model:, task: tasks("st"), test_set: test_sets("flores"), metric: metrics("blue"))
     assert_nil scores.score("en", "pt"), "Nil should be returned for non existing score"
-    assert_equal 1, scores.score("en", "pl")
-    assert_equal 3, scores.score("en", "it")
+    assert_equal 1, scores.score("en", "pl").value
+    assert_equal 3, scores.score("en", "it").value
     assert_nil scores.score("be", "bg"), "Nil is returned for non existing score within the task"
 
     scores = Model::Scores.new(model:, task: tasks("st"), test_set: test_sets("flores"), metric: metrics("chrf"))
     assert_nil scores.score("en", "pt"), "Nil should be returned for non existing score"
-    assert_equal 2, scores.score("en", "pl")
-    assert_equal 4, scores.score("en", "it")
+    assert_equal 2, scores.score("en", "pl").value
+    assert_equal 4, scores.score("en", "it").value
     assert_nil scores.score("be", "bg"), "Nil is returned for non existing score within the task"
   end
 end

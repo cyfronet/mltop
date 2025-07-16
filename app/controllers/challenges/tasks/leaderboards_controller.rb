@@ -20,6 +20,8 @@ module Challenges
             metric: selected_metric,
             order: selected_order
             )
+
+        @rows.relative! if params[:color] == "relative"
       end
 
       private
