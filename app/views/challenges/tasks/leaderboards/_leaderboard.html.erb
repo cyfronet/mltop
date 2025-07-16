@@ -39,10 +39,7 @@
         </td>
         <% task.test_sets.each do |test_set| %>
           <% task.metrics.each do |metric| %>
-            <%- score = row.score(test_set:, metric:) %>
-            <td class="score-cell" style="background-color: <%= score_color(score) %>">
-              <%= number_with_precision(score.value, precision: 3) || "N/A" %>
-            </td>
+            <%= score_cell row.score(test_set:, metric:) %>
           <% end %>
         <% end %>
       </tr>

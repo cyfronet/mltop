@@ -44,17 +44,11 @@
           <%= link_to row.name, row.model %>
         </td>
         <% task.metrics.each do |metric| %>
-          <%- score = row.score(test_set:, metric:) %>
-          <td class="score-cell" style="background-color: <%= score_color(score) %>">
-            <%= number_with_precision(score.value, precision: 3) || "N/A" %>
-          </td>
+          <%= score_cell row.score(test_set:, metric:) %>
         <% end %>
         <% @test_set_entries.each do |test_set_entry| %>
           <% task.metrics.each do |metric| %>
-            <%- score = row.score(test_set:, metric:, test_set_entry:) %>
-            <td class="score-cell" style="background-color: <%= score_color(score) %>">
-              <%= number_with_precision(score.value, precision: 3) || "N/A" %>
-            </td>
+            <%= score_cell row.score(test_set:, metric:, test_set_entry:) %>
           <% end %>
         <% end %>
       </tr>

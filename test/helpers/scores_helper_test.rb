@@ -1,6 +1,6 @@
 require "test_helper"
 
-class TasksHelperTest < ActionView::TestCase
+class ScoresHelperTest < ActionView::TestCase
   Normalized = Struct.new(:normalized) do
     def value = normalized
   end
