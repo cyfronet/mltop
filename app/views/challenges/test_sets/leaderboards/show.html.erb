@@ -8,15 +8,7 @@
 
 <%= render "challenges/test_sets/menu", test_set: @test_set %>
 
-<% if @tasks.size > 1 %>
-  <div class=" mx-16 mt-5 mb-5">
-    <%= form_tag test_set_leaderboard_path(@test_set), method: :get, class: "flex place-content-center", data: { controller: "auto-submit" } do %>
-      <%= select_tag "tid", options_for_select(@tasks.map { |t| [ t.name, t.id ] }, params[:tid]),
-          class: "mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
-          data: { action: "change->auto-submit#submit" } %>
-    <% end %>
-  </div>
-<% end %>
+<%= render "filters" %>
 
 <% if @rows.size.positive? %>
   <%= render "leaderboard", task: @task, test_set: @test_set, rows: @rows %>

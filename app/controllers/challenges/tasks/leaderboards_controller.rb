@@ -3,7 +3,6 @@ module Challenges
     class LeaderboardsController < ApplicationController
       allow_unauthenticated_access only: [ :show ]
 
-
       helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params
 
       def index
@@ -21,6 +20,8 @@ module Challenges
             metric: selected_metric,
             order: selected_order
             )
+
+        @rows.relative! if params[:color] == "relative"
       end
 
       private

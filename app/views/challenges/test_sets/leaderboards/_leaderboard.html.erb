@@ -8,9 +8,9 @@
         <th rowspan="2" class="leaderboard-item">
           <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, o: aggregated_metric_order(metric)), class: "flex items-center justify-center" do %>
             <span class="flex items-center cursor-pointer mr-1" title="<%="Score range: #{metric.worst_score} - #{metric.best_score}"%>">
-                <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
-                <%= metric.name %>
-              </span>
+              <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
+              <%= metric.name %>
+            </span>
             <%= aggregated_metric_sort_chevron(metric) %>
           <% end %>
         </th>
@@ -43,20 +43,12 @@
         <td class="leaderboard-item">
           <%= link_to row.name, row.model %>
         </td>
-
         <% task.metrics.each do |metric| %>
-          <%- value = row.score(test_set: test_set, metric:).value %>
-          <td class="score-cell" style="background-color: <%= interpolate_color(value, metric) %>">
-            <%= number_with_precision(value, precision: 3) || "N/A" %>
-          </td>
+          <%= score_cell row.score(test_set:, metric:) %>
         <% end %>
-
         <% @test_set_entries.each do |test_set_entry| %>
           <% task.metrics.each do |metric| %>
-            <%- value = row.score(test_set: test_set, metric:, test_set_entry:).value %>
-            <td class="score-cell" style="background-color: <%= interpolate_color(value, metric) %>">
-              <%= number_with_precision(value, precision: 3) || "N/A" %>
-            </td>
+            <%= score_cell row.score(test_set:, metric:, test_set_entry:) %>
           <% end %>
         <% end %>
       </tr>

@@ -13,7 +13,7 @@
 </div>
 
 <% if @task && @test_set && @metric %>
-  <%= render "scores", model: @model, task: @task, test_set: @test_set, test_sets: @test_sets, metric: @metric, metrics: @metrics %>
+  <%= render "scores", model_row: @model_row, test_sets: @test_sets, metrics: @metrics %>
 <% else %>
   <%= render "layouts/empty", message: "No scores for selected task" %>
 <% end %>

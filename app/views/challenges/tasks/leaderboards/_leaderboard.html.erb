@@ -7,13 +7,13 @@
       <% task.test_sets.each do |test_set| %>
         <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
           <%= link_to test_set.name, test_set_leaderboard_path(test_set) %>
-            <% if rows.average? %>
-             <span class="text-gray-400 cursor-pointer" title="Presented score is an average for all matching languages. If both source and target languages are specified, the score reflects a specific value.">
-                <%= info_icon("h-4 w-4 inline") %>
-              </span>
-            <% end %>
+          <% if rows.average? %>
+            <span class="text-gray-400 cursor-pointer" title="Presented score is an average for all matching languages. If both source and target languages are specified, the score reflects a specific value.">
+              <%= info_icon("h-4 w-4 inline") %>
+            </span>
+          <% end %>
         </th>
-        <% end %>
+      <% end %>
     </tr>
     <tr>
       <% task.test_sets.each do |test_set| %>
@@ -37,13 +37,9 @@
         <td class="leaderboard-item">
           <%= link_to row.name, row.model %>
         </td>
-
         <% task.test_sets.each do |test_set| %>
           <% task.metrics.each do |metric| %>
-            <%- value = row.score(test_set:, metric:).value %>
-            <td class="score-cell" style="background-color: <%= interpolate_color(value, metric) %>">
-              <%= number_with_precision(value, precision: 3) || "N/A" %>
-            </td>
+            <%= score_cell row.score(test_set:, metric:) %>
           <% end %>
         <% end %>
       </tr>

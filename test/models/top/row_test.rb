@@ -1,6 +1,8 @@
 require "test_helper"
 
 class Top::RowTest < ActiveSupport::TestCase
+  include EvaluationHelpers
+
   test "returns only task models with results" do
     create(:model, name: "From other task", tasks: [ tasks(:asr) ])
     create(:model, name: "Without results", tasks: [ tasks(:st) ])
@@ -152,11 +154,35 @@ class Top::RowTest < ActiveSupport::TestCase
     assert_equal %w[en pl], rows.target_languages.sort
   end
 
-  private
-    def new_evaluation(model, test_set_entry_fixture_name, value, evaluator: evaluators(:blueurt), metric: metrics(:blueurt))
-      hypothesis = create(:hypothesis, model:,
-                          test_set_entry: test_set_entries(test_set_entry_fixture_name))
-      evaluation = create(:evaluation, hypothesis:, evaluator:)
-      create(:score, evaluation:, metric:, value:)
-    end
+  test "by default use absolute normalization" do
+    model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
+
+    new_evaluation(model, :flores_st_en_pl, 100)
+    row = Top::Row.where(task: tasks(:st)).first
+    score = row.score(test_set: test_sets(:flores), metric: metrics(:blueurt))
+
+    assert_equal 0.25, score.normalized
+
+    new_evaluation(model, :flores_st_en_it, 60)
+    row = Top::Row.where(task: tasks(:st)).first
+    score = row.score(test_set: test_sets(:flores), metric: metrics(:blueurt))
+
+    assert_equal 0.4, score.normalized
+  end
+
+  test "relative normalization" do
+    m1, m2, m3 = create_list(:model, 3, tasks: [ tasks(:st) ])
+
+    new_evaluation(m1, :flores_st_en_pl, 100, metric: metrics(:blueurt))
+    new_evaluation(m2, :flores_st_en_pl, 50, metric: metrics(:blueurt))
+    new_evaluation(m3, :flores_st_en_pl, 75, metric: metrics(:blueurt))
+    rows = Top::Row.where(task: tasks(:st)).order(test_set: test_sets(:flores), metric: metrics(:blueurt))
+    rows.relative!
+
+    row = rows.second
+    score = row.score(test_set: test_sets(:flores), metric: metrics(:blueurt), test_set_entry: test_set_entries(:flores_st_en_pl))
+
+    assert_equal m3, row.model
+    assert_equal 0.5, score.normalized
+  end
 end
