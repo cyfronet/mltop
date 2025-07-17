@@ -39,10 +39,10 @@
       <div class="flex items-center">
         <div class="shrink-0">
           <% if signed_in? %>
-            <% if Current.challenge.present? && Current.challenge_member? %>
-              <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-navbar-outline" %>
-            <% else %>
+            <% if Current.challenge.present? && !Current.challenge_member? %>
               <%= link_to "Join challenge", new_membership_path, class: "btn btn-navbar-outline"%>
+            <% else %>
+              <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-navbar-outline" %>
             <% end %>
           <% else %>
             <% label = Current.challenge.nil? ? "Log in" : "Log in/Join the challenge" %>

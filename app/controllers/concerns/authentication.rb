@@ -44,8 +44,10 @@ module Authentication
       redirect_to root_url if signed_in?
     end
 
-    def post_authenticating_url
-      cookies.delete(:return_to_after_authenticating) || root_url
+    def post_authenticating_url(keep: false)
+      method = keep ? :[] : :delete
+
+      cookies.send(method, :return_to_after_authenticating) || root_url
     end
 
     def authenticated_as(user)

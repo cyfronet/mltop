@@ -29,6 +29,13 @@ module Challenges
       assert_match "Successfully joined the challenge", flash[:notice]
     end
 
+    test "cannot go to new membership if already a member" do
+      create(:membership)
+      get new_membership_path
+      assert_response :redirect
+      assert_equal "You're already a participant of this challenge.", flash[:alert]
+    end
+
     test "cannot create membership if already a member" do
       create(:membership)
       assert_no_difference "Membership.count" do
@@ -41,7 +48,7 @@ module Challenges
         }
       end
       assert_response :redirect
-      assert_equal "Already member of this challenge.", flash[:alert]
+      assert_equal "You're already a participant of this challenge.", flash[:alert]
     end
 
     test "fails to create membership without agreeing to mandatory consent" do

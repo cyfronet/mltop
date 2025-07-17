@@ -2,7 +2,7 @@ class Consent < ApplicationRecord
   belongs_to :challenge
 
   TARGETS = { challenge: "challenge", model: "model" }
-  enum :target, TARGETS, prefix: true
+  enum :target, TARGETS, suffix: "scoped"
 
   has_rich_text :description
 

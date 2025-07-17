@@ -78,6 +78,11 @@ crumb :new_challenge do |challenge|
   parent :challenges
 end
 
+crumb :new_membership do |membership|
+  link membership.challenge, root_path
+  link "New membership", new_membership_path(membership)
+end
+
 crumb :dashboard_tasks do
   link "Manage tasks", dashboard_tasks_path
 end

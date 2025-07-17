@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     if user = user_provider.to_user
       authenticated_as(user)
 
-      slug = cookies.fetch(:return_to_after_authenticating, nil)&.scan(ChallengeSlug::PATTERN)&.flatten&.first
+      slug = ChallengeSlug::Extractor.from_url post_authenticating_url(keep: true)
       challenge = Challenge.find_by(id: ChallengeSlug.decode(slug))
 
       if challenge.nil? || challenge&.memberships&.where(user_id: user.id)&.exists?
