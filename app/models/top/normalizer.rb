@@ -30,25 +30,23 @@ module Top
     def relative? = @relative
 
     private
-    def relative? = @relative
-
-    def col_worstbest(test_set:, metric:, test_set_entry: nil)
-      @col_worstbest ||= {}
-      @col_worstbest[[ test_set, metric, test_set_entry ]] ||=
-      calculate_col_worstbest(test_set:, metric:, test_set_entry:)
-    end
-
-    def calculate_col_worstbest(test_set:, metric:, test_set_entry: nil)
-      if relative?
-        minmax = @rows
-          .map { |row| row.score(test_set:, metric:, test_set_entry:).value }
-          .compact
-          .minmax
-
-        metric.asc? ? minmax.reverse : minmax
-      else
-        [ metric.worst_score, metric.best_score ]
+      def col_worstbest(test_set:, metric:, test_set_entry: nil)
+        @col_worstbest ||= {}
+        @col_worstbest[[ test_set, metric, test_set_entry ]] ||=
+        calculate_col_worstbest(test_set:, metric:, test_set_entry:)
       end
-    end
+
+      def calculate_col_worstbest(test_set:, metric:, test_set_entry: nil)
+        if relative?
+          minmax = @rows
+            .map { |row| row.score(test_set:, metric:, test_set_entry:).value }
+            .compact
+            .minmax
+
+          metric.asc? ? minmax.reverse : minmax
+        else
+          [ metric.worst_score, metric.best_score ]
+        end
+      end
   end
 end

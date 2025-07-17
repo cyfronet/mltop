@@ -14,14 +14,14 @@ class Model::Scores
   end
 
   def present?
-    @task && test_set && @metric
+    @task && @test_set && @metric
   end
 
   def score(source_language, target_language)
     value = @scores_map[[ source_language, target_language ]]
 
     if value
-      normalized = Top::Normalizer.normalize(value, metric.best_score, metric.worst_score, metric.asc?)
+      normalized = Top::Normalizer.normalize(value, @metric.best_score, @metric.worst_score, @metric.asc?)
       Top::ScoreWithNormalization.new(score: Score.new(value:), normalized: normalized)
     end
   end
