@@ -16,11 +16,10 @@ module Challenges
         @task = Task.new
         authorize(@task)
         @evaluators = Evaluator.all
-        @challenges = Challenge.all
       end
 
       def create
-        @task = Task.new(task_params)
+        @task = Current.challenge.tasks.build(task_params)
 
         if @task.save
           redirect_to dashboard_task_path(@task), notice: "Task was successfully created."
@@ -31,7 +30,6 @@ module Challenges
 
       def edit
         @evaluators = @task.compatible_evaluators
-        @challenges = Challenge.all
       end
 
       def update
@@ -53,7 +51,7 @@ module Challenges
       private
         def task_params
           params.expect(task: [
-            :name, :slug, :info, :description, :from, :to, :challenge_id, evaluator_ids: []
+            :name, :slug, :info, :description, :from, :to, evaluator_ids: []
           ])
         end
 

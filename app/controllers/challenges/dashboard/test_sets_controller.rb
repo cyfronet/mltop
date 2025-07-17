@@ -13,11 +13,10 @@ module Challenges
       def new
         @test_set = TestSet.new
         authorize(@test_set)
-        @challenges = Challenge.all
       end
 
       def create
-        @test_set = TestSet.new(test_set_params)
+        @test_set = Current.challenge.test_sets.build(test_set_params)
 
         if @test_set.save
           redirect_to dashboard_test_set_path(@test_set),
@@ -28,7 +27,6 @@ module Challenges
       end
 
       def edit
-        @challenges = Challenge.all
       end
 
       def update
@@ -54,7 +52,7 @@ module Challenges
       private
         def test_set_params
           params.expect(test_set: [
-            :name, :description, :published, :challenge_id, task_test_sets_attributes: [ [ :description, :id ] ]
+            :name, :description, :published, task_test_sets_attributes: [ [ :description, :id ] ]
           ])
         end
 

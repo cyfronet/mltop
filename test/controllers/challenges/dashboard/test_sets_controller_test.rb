@@ -22,6 +22,7 @@ class Challenges::Dashboard::TestSetsControllerTest < ActionDispatch::Integratio
   end
 
   test "should create test set" do
+    Current.challenge = challenges(:global)
     test_set = build(:test_set)
     assert_difference("TestSet.count") do
       post dashboard_test_sets_url, params: { test_set: { name: test_set.name } }

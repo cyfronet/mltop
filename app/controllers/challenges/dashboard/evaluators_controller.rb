@@ -13,11 +13,10 @@ module Challenges
       def new
         @evaluator = Evaluator.new
         authorize(@evaluator)
-        @challenges = Challenge.all
       end
 
       def create
-        @evaluator = Evaluator.new(evaluator_params)
+        @evaluator = Current.challenge.evaluators.build(evaluator_params)
 
         if @evaluator.save
           redirect_to dashboard_evaluator_path(@evaluator), notice: "Evaluator was successfully created."
@@ -27,7 +26,6 @@ module Challenges
       end
 
       def edit
-        @challenges = Challenge.all
       end
 
       def update
@@ -48,7 +46,7 @@ module Challenges
 
       private
       def evaluator_params
-        params.required(:evaluator).permit(:name, :script, :host, :from, :to, :challenge_id)
+        params.required(:evaluator).permit(:name, :script, :host, :from, :to)
       end
 
       def find_and_authorize_evaluator

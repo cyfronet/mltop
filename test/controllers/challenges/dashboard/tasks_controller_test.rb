@@ -16,7 +16,8 @@ class Challenges::Dashboard::TasksControllerTest < ActionDispatch::IntegrationTe
     assert_response :success
   end
 
-  test "should create user" do
+  test "should create task" do
+    Current.challenge = challenges(:global)
     task = build(:task)
 
     assert_difference("Task.count") do

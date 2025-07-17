@@ -3,9 +3,6 @@
   <div class="space-y-12">
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <%= form.text_field :name, wrapper: "sm:col-span-4" %>
-      <%= form.select :challenge_id, challenges.map { |c| [ c.name, c.id ] },
-        { wrapper: "sm:col-span-2" }
-      %>
       <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <div class="relative flex gap-x-3">
         <div class="flex h-6 items-center">

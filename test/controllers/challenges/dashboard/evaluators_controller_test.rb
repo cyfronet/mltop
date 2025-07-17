@@ -17,6 +17,8 @@ class Challenges::Dashboard::EvaluatorsControllerTest < ActionDispatch::Integrat
   end
 
   test "should create new evaluator" do
+    Current.challenge = challenges(:global)
+
     assert_difference("Evaluator.count") do
       post dashboard_evaluators_url, params: { evaluator: {
         name: "New evaluator name", script: "dummy script", host: "dummy host"
