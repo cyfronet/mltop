@@ -1,0 +1,12 @@
+<%= form.fields_for :agreements do |af| %>
+  <% consent = af.object.consent%>
+  <div>
+    <div class="flex justify-between items-center">
+      <span class="font-semibold"><%= consent.name %> <%= "*" if consent.mandatory?%></span>
+      <%= af.check_box :agreed, required: consent.mandatory?, label: { class: "hidden" } %>
+    </div>
+    <%= af.hidden_field :consent_id, value: af.object.consent_id %>
+    <%= af.hidden_field :id, value: af.object&.id%>
+    <%= consent.description %>
+  </div>
+<% end %>

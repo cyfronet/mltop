@@ -78,8 +78,22 @@ crumb :new_challenge do |challenge|
   parent :challenges
 end
 
+crumb :new_membership do |membership|
+  link membership.challenge, root_path
+  link "New membership", new_membership_path(membership)
+end
+
 crumb :dashboard_tasks do
   link "Manage tasks", dashboard_tasks_path
+end
+
+crumb :dashboard_consents do
+  link "Manage consents", dashboard_consents_path
+end
+
+crumb :edit_dashboard_consent do |consent|
+  link "Edit #{consent.name.presence || consent.name_was}", edit_dashboard_consent_path(consent)
+  parent :dashboard_consents
 end
 
 crumb :dashboard_task do |task, name|

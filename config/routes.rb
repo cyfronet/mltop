@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       root to: "tasks#index", as: :challenge_root
 
       resources :evaluators, only: [ :index ]
-      resource :membership, only: :create
+      resource :membership, only: [ :new, :create ]
 
       resources :tasks do
         resource :leaderboard, only: :show, module: :tasks
@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
       namespace :dashboard do
         resources :challenges, only: [ :edit, :update, :destroy ]
+        resources :consents, except: [ :show ]
         resources :external_submissions, only: :index
         resources :tasks
         resources :test_sets do

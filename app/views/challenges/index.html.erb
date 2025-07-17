@@ -1,9 +1,11 @@
 <%= mltop_title "Challenges" %>
-<div class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-end">
-  <div class="mt-3 flex sm:ml-4 sm:mt-0">
-    <%= link_to "New challenge", new_challenge_path, class: "btn btn-primary" %>
+<% if policy(Challenge).new? %>
+  <div class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-end">
+    <div class="mt-3 flex sm:ml-4 sm:mt-0">
+      <%= link_to "New challenge", new_challenge_path, class: "btn btn-primary" %>
+    </div>
   </div>
-</div>
+<% end %>
 <ul role="list" class="flex flex-col gap-4 mt-4">
   <%= render partial: "challenge",
         collection: @challenges, as: :challenge %>

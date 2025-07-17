@@ -20,10 +20,7 @@
         SPEECHM is a platform for running and evaluating speech model challenges - using real-world data and open, trusted metrics.
       </h2>
       <div class="flex gap-4">
-        <% if !signed_in? %>
-          <%= link_to "Join us", sign_in_path, class: "btn btn-primary mt-5", "data-turbo-prefetch": false %>
-        <% end %>
-        <%= link_to "Browse examples", challenges_path, class: "btn btn-secondary-outline mt-5" %>
+        <%= link_to "Browse our challenges", challenges_path, class: "btn btn-primary mt-5" %>
       </div>
     </div>
     <div class="w-1/2 md:translate-y-26 mr-8">

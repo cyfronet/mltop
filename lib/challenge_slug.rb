@@ -23,6 +23,11 @@ module ChallengeSlug
       @app = app
     end
 
+    def self.from_url(url)
+      $2 if URI.parse(url).path =~ PATH_INFO_MATCH
+    rescue
+    end
+
     def call(env)
       request = ActionDispatch::Request.new(env)
 

@@ -9,13 +9,11 @@
           <% if Current.challenge %>
             <div class="ml-4 text-gray-500"> Challenge: <%= Current.challenge.name %></div>
           <% end %>
-
         </div>
       </div>
       <div class="flex items-center">
         <div class="hidden md:ml-6 md:flex md:space-x-8">
           <%= mltop_navlinks do |links| %>
-
             <% if Current.challenge %>
               <%- links.add "Home", root_path, [[ "tasks", "tasks/leaderboards" ]] %>
               <%- links.add "Models", models_path, [ "models" ] %>
@@ -30,7 +28,6 @@
             <% else %>
               <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
             <% end %>
-
             <% if signed_in? %>
               <% if Current.user.admin? %>
                 <%- links.add "Jobs", mission_control_jobs_path, /\A\/jobs\/.*/ %>
@@ -42,13 +39,17 @@
       <div class="flex items-center">
         <div class="shrink-0">
           <% if signed_in? %>
-            <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-navbar-outline" %>
+            <% if Current.challenge.present? && !Current.challenge_member? %>
+              <%= link_to "Join challenge", new_membership_path, class: "btn btn-navbar-outline"%>
+            <% else %>
+              <%= button_to "Log out", sign_out_path, method: :delete, class: "btn btn-navbar-outline" %>
+            <% end %>
           <% else %>
-            <%= link_to "Log in", sign_in_path, type:"button", class: "btn btn-navbar-outline", "data-turbo": false %>
+            <% label = Current.challenge.nil? ? "Log in" : "Log in/Join the challenge" %>
+            <%= link_to label, sign_in_path, type:"button", class: "btn btn-navbar-outline", "data-turbo": false %>
           <% end %>
         </div>
       </div>
     </div>
   </div>
 </nav>
-

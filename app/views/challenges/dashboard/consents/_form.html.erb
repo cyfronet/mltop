@@ -1,0 +1,18 @@
+
+<%# locals: (consent:, url: [:dashboard, consent]) %>
+
+<%= form_with(model: consent, url:, class: "contents") do |form| %>
+  <div class="space-y-12">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <%= form.text_field :name, wrapper: "sm:col-span-4" %>
+      <%= form.rich_text_area :description, wrapper: "col-span-full", class: "h-96" %>
+      <%= form.select :target, Consent.targets.keys, wrapper: "sm:col-span-4" %>
+      <%= form.check_box :mandatory, value: false, wrapper: "sm:col-span-4" %>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <%= link_to "Cancel", :back, class: "btn btn-secondary-outline" %>
+    <%= form.submit %>
+  </div>
+<% end %>

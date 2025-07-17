@@ -7,6 +7,7 @@ class Challenge < ApplicationRecord
   has_many :evaluators, dependent: :nullify
   has_many :memberships, dependent: :destroy
   has_many :members, class_name: "User", source: :user, through: :memberships
+  has_many :consents, dependent: :destroy
 
   has_rich_text :description
 
@@ -26,5 +27,13 @@ class Challenge < ApplicationRecord
     return "upcoming" if now.before?(starts_at)
     return "closed"   if now.after?(ends_at)
     "ongoing"
+  end
+
+  def challenge_consents
+    consents.where(target: :challenge)
+  end
+
+  def model_consents
+    consents.where(target: :model)
   end
 end

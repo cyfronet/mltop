@@ -1,16 +1,28 @@
 module Challenges
   class MembershipsController < ApplicationController
-    def create
-      if Current.challenge_member?
-        redirect_back fallback_location: root_path, alert: "Already member of this challenge."
-        return
-      end
+    before_action :check_for_membership
 
-      if Current.challenge.memberships.create(user: Current.user)
-        redirect_to root_path, notice: "Successfully joined challenge."
-      else
-        redirect_back fallback_location: root_path, alert: "An error occurred while joining challenge."
+    def new
+      @membership = Current.challenge.memberships.build
+      Current.challenge.challenge_consents.each do |consent|
+        @membership.agreements.build(consent:)
       end
+    end
+
+    def create
+      @membership = Current.challenge.memberships.build(permitted_attributes(Membership).merge(user: Current.user))
+      if @membership.save
+        redirect_to post_authenticating_url, notice: "Successfully joined the challenge."
+      else
+        flash[:alert] = "Couldn't join the challenge."
+        render :new, status: :unprocessable_entity
+      end
+    end
+
+    private
+
+    def check_for_membership
+      redirect_back fallback_location: root_path, alert: "You're already a participant of this challenge." if Current.challenge_member?
     end
   end
 end
