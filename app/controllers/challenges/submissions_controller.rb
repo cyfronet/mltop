@@ -3,7 +3,7 @@ module Challenges
     before_action :find_and_authorize_model, only: [ :show, :update ]
 
     def index
-      @models = policy_scope(Model).where(owner: Current.user)
+      @models = policy_scope(:submission).where(owner: Current.user)
     end
 
     def show
@@ -20,7 +20,7 @@ module Challenges
 
     def create
       @model = Current.user.models.new(permitted_attributes(Model).merge(challenge: Current.challenge))
-      authorize(@model)
+      authorize(@model, policy_class: SubmissionPolicy)
       if @model.save
         redirect_to submission_path(@model), notice: "Model created"
       else
@@ -29,7 +29,7 @@ module Challenges
     end
 
     def update
-      if @model.update(model_params)
+      if @model.update(permitted_attributes(Model))
         redirect_to submission_path(@model), notice: "Model updated"
       else
         render_error :show
@@ -42,13 +42,9 @@ module Challenges
         render view, status: :unprocessable_entity
       end
 
-      def model_params
-        params.required(:model).permit(:name, :description, task_ids: [])
-      end
-
       def find_and_authorize_model
-        @model = policy_scope(Model).where(owner: Current.user).find(params[:id])
-        authorize(@model)
+        @model = policy_scope(:submission).find(params[:id])
+        authorize(@model, policy_class: SubmissionPolicy)
       end
   end
 end
