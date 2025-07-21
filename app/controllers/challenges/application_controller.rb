@@ -4,8 +4,8 @@ module Challenges
       super([ :challenges, scope ], **args)
     end
 
-    def authorize(record, query = nil)
-      super([ :challenges, record ], query)
+    def authorize(record, **args)
+      super([ :challenges, record ], **args)
     end
 
     def permitted_attributes(record, **args)
