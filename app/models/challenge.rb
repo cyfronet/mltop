@@ -17,6 +17,9 @@ class Challenge < ApplicationRecord
 
   validate :meetween_owner
 
+  VISIBILITIES = { leaderboard_released: "leaderboard_released", scores_released: "scores_released" }
+  enum :visibility, VISIBILITIES
+
   def to_s = name
 
   def meetween_owner

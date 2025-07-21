@@ -14,7 +14,7 @@ module Challenges
       end
 
       def permitted_attributes
-        [ :name, :starts_at, :ends_at, :description ]
+        [ :name, :starts_at, :ends_at, :description, :visibility ]
       end
     end
   end

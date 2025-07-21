@@ -6,6 +6,7 @@
       <%= form.rich_text_area :description, wrapper: "col-span-full" %>
       <%= form.date_field :starts_at, wrapper: "sm:col-span-1" %>
       <%= form.date_field :ends_at, wrapper: "sm:col-span-1" %>
+      <%= form.select :visibility, Challenge.visibilities.keys.map { |key| [key.humanize, key]}, include_blank: true, wrapper: "sm:col-span-1" %>
     </div>
   </div>
   <div class="mt-6 mb-2 flex items-center justify-end gap-x-6">
