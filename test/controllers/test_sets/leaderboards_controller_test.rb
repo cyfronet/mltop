@@ -12,7 +12,13 @@ module TestSets
       assert_response :success
     end
 
+    test "doesn't show data when visibility is nil" do
+      get test_set_leaderboard_path(test_set_id: test_sets("flores"))
+      assert_includes response.body, "Leaderboards are not currently visible"
+    end
+
     test "should filter index based on task id" do
+      challenges(:global).update(visibility: "leaderboard_released")
       model = create(:model, name: "model", tasks: [ tasks(:st) ])
       hypothesis = create(:hypothesis, model:)
       evaluation = create(:evaluation, hypothesis:,
