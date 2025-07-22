@@ -72,6 +72,10 @@ class ApplicationPolicy
       raise NotImplementedError, "You must define #resolve in #{self.class}"
     end
 
+    def leaderboard_released?
+      Current.challenge.visibility == Challenge.visibilities[:leaderboard_released]
+    end
+
     private
 
     attr_reader :user, :scope

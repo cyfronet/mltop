@@ -2,7 +2,7 @@ module Challenges
   class TestSetPolicy < ApplicationPolicy
     class Scope < ApplicationPolicy::Scope
       def resolve
-        Current.challenge ? Current.challenge.test_sets : TestSet.all
+        Current.challenge ? Current.challenge.test_sets : TestSet.none
       end
     end
 
