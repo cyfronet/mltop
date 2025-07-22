@@ -2,7 +2,7 @@ module Challenges
   class ModelPolicy < ApplicationPolicy
     class Scope < ApplicationPolicy::Scope
       def resolve
-        Current.challenge.models
+        leaderboard_released? ? Current.challenge.models : Model.none
       end
     end
 

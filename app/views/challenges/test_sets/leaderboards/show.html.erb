@@ -1,18 +1,17 @@
 <% content_for :head do %>
   <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
 <% end %>
-
-<% breadcrumb :test_set_leaderboard, @test_set %>
-
-<%= mltop_title "#{@task.name}: #{@test_set.name} Leaderboard" %>
-
-<%= render "challenges/test_sets/menu", test_set: @test_set %>
-
-<%= render "filters" %>
-
-<% if @rows.size.positive? %>
-  <%= render "leaderboard", task: @task, test_set: @test_set, rows: @rows %>
+<% if @test_set.nil? %>
+  <% breadcrumb :test_sets %>
+  <%= render "layouts/empty", message: "Leaderboards are not currently visible" %>
 <% else %>
-  <%= render "layouts/empty", message: "No models selected for #{@test_set.name} test set" %>
+  <% breadcrumb :test_set_leaderboard, @test_set %>
+  <%= mltop_title "#{@task.name}: #{@test_set.name} Leaderboard" %>
+  <%= render "challenges/test_sets/menu", test_set: @test_set %>
+  <%= render "filters" %>
+  <% if @rows.size.positive? %>
+    <%= render "leaderboard", task: @task, test_set: @test_set, rows: @rows %>
+  <% else %>
+    <%= render "layouts/empty", message: "No models selected for #{@test_set.name} test set" %>
+  <% end %>
 <% end %>
-
