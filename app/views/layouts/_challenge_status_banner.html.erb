@@ -6,7 +6,7 @@
     <% if Mltop.challenge_open? %>
       The challenge is open. Time left: <%= challenge_time_left %> (<%= challenge_end_date %>)
     <% elsif Mltop.challenge_finished? %>
-      The challenge is closed. Challenge dates are: <%= challenge_dates %>
+      The challenge is closed. You can browse the results, but you cannot make new submissions.
     <% else %>
       The challenge has not yet started. It will start in <%= challenge_starts_at %>
     <% end %>
