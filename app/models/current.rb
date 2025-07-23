@@ -15,6 +15,10 @@ class Current < ActiveSupport::CurrentAttributes
     membership.present?
   end
 
+  def scoring_released?
+    challenge.visibility.present?
+  end
+
   private
 
   def find_membership
