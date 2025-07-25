@@ -8,6 +8,7 @@ class Challenge < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :members, class_name: "User", source: :user, through: :memberships
   has_many :consents, dependent: :destroy
+  has_many :access_rules, dependent: :destroy
 
   has_rich_text :description
 

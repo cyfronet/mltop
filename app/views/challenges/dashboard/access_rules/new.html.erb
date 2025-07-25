@@ -1,0 +1,4 @@
+<%= mltop_title "New allowed group" %>
+<%= turbo_frame_tag "new_access_rule" do %>
+  <%= render "form", access_rule: @access_rule %>
+<% end %>

@@ -19,6 +19,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
   create_enum "consent_target", ["model", "challenge"]
   create_enum "format", ["video", "audio", "text"]
 
+  create_table "access_rules", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.string "group_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_access_rule_on_challenge_id"
+  end
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"

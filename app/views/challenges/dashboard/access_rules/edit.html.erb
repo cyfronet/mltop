@@ -1,0 +1,4 @@
+<%= mltop_title "Edit challenge access_rule" %>
+<%= turbo_frame_tag @access_rule, target: "_top" do %>
+  <%= render "form", access_rule: @access_rule, url: dashboard_access_rule_path(@access_rule) %>
+<% end %>
