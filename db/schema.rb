@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -122,6 +122,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
     t.enum "to", enum_type: "format"
     t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "hypotheses", force: :cascade do |t|

@@ -23,8 +23,17 @@ module Sso
         User.find_or_initialize_by(provider: "plgrid", uid: @uid).tap do |user|
           meetween_member? ? user.roles.add(:meetween_member) : user.roles.delete(:meetween_member)
           user.assign_attributes(attributes)
+          manage_groups(user)
           user.save
         end
+      end
+    end
+
+    def manage_groups(user)
+      current_names = user.groups.pluck(:name)
+      user.groups.where(name: current_names - @teams).destroy_all
+      (@teams - current_names).map do |team_name|
+        user.groups.build(name: team_name)
       end
     end
 
