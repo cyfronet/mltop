@@ -64,5 +64,20 @@ module Challenges
       assert_response :unprocessable_entity
       assert_select "form"
     end
+
+    test "fails to create membership if user does not have proper group" do
+      challenges(:global).update(access_rules: [])
+      assert_no_difference "Membership.count" do
+        post membership_path, params: {
+          membership: {
+            agreements_attributes: [
+              { consent_id: @mandatory_consent.id, agreed: true }
+            ]
+          }
+        }
+      end
+      assert_response :unprocessable_entity
+      assert_equal flash[:alert], "Couldn't join the challenge. Only  group members can join this challenge"
+    end
   end
 end
