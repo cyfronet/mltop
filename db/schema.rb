@@ -68,6 +68,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_04_124445) do
     t.index ["consent_id"], name: "index_agreements_on_consent_id"
   end
 
+  create_table "allowed_groups", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.string "group_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_allowed_groups_on_challenge_id"
+  end
+
   create_table "challenges", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "owner_id", null: false

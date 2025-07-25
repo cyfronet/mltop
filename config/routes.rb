@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
       namespace :dashboard do
         resources :challenges, only: [ :edit, :update, :destroy ]
+        resources :allowed_groups, except: [ :index, :show ]
         resources :consents, except: [ :show ]
         resources :external_submissions, only: :index
         resources :tasks

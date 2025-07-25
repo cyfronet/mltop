@@ -1,0 +1,3 @@
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
+<%= turbo_stream.append  "allowed_groups", partial: "challenges/dashboard/challenges/allowed_group", locals: { allowed_group: @allowed_group } %>
+<%= turbo_stream.replace "new_allowed_group", partial: "challenges/dashboard/challenges/new_allowed_group", locals: { challenge: @allowed_group.challenge } %>
