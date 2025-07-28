@@ -74,6 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.string "group_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "roles_mask", default: 0, null: false
     t.index ["challenge_id"], name: "index_allowed_groups_on_challenge_id"
   end
 
