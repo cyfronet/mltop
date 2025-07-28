@@ -12,6 +12,7 @@ module Challenges
 
     def new
       @model = Current.user.models.new
+      authorize(@model, policy_class: SubmissionPolicy)
       @tasks = policy_scope(Task)
       Current.challenge.model_consents.each do |consent|
         @model.agreements.build(consent:)
