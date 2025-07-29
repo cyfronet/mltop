@@ -12,7 +12,8 @@ module Challenges
     end
 
     def create
-      @membership = Current.challenge.memberships.build(permitted_attributes(Membership).merge(user: Current.user))
+      roles = Current.challenge.role_for(Current.user)
+      @membership = Current.challenge.memberships.build(permitted_attributes(Membership).merge(user: Current.user, roles:))
       if @membership.save
         redirect_to post_authenticating_url, notice: "Successfully joined the challenge."
       else
