@@ -50,6 +50,10 @@ class ApplicationPolicy
     Current.challenge&.owner == user
   end
 
+  def challenge_manager?
+    Current.membership.has_role?(:manager)
+  end
+
   def admin?
     user&.admin?
   end
