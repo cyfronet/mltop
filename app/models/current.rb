@@ -20,7 +20,7 @@ class Current < ActiveSupport::CurrentAttributes
   end
 
   def challenge_manager?
-    membership.has_role?(:manager)
+    membership&.has_role?(:manager)
   end
 
   private

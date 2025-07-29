@@ -40,4 +40,13 @@ class Challenge < ApplicationRecord
   def model_consents
     consents.where(target: :model)
   end
+
+  def role_for(user)
+    return :manager if user.id = owner_id
+    (user.groups.map(&:name) & manager_groups.map(&:group_name)).any? ? :manager : :participant
+  end
+
+  def manager_groups
+    allowed_groups.management
+  end
 end
