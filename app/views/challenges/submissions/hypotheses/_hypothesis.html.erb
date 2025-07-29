@@ -77,14 +77,14 @@
         </div>
       </div>
     </div>
-    <% if Current.user.meetween_member? %>
+    <% if Current.challenge_manager? %>
       <div class="<%= "hidden" unless open %> border radius-lg" data-accordion-target="content">
-          <ul role="list" class="divide-y divide-gray-200">
-            <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
-              <%= render partial: "challenges/submissions/evaluations/evaluation",
+        <ul role="list" class="divide-y divide-gray-200">
+          <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
+            <%= render partial: "challenges/submissions/evaluations/evaluation",
                          locals: { evaluation: hypothesis.evaluation_for(evaluator) } %>
-            <% end %>
-          </ul>
+          <% end %>
+        </ul>
       </div>
     <% else %>
       <div class="radius-lg">
