@@ -2,16 +2,13 @@ require "test_helper"
 
 class EvaluationsControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
-
-  def setup
-    in_challenge!
-  end
-
-  test "Meetween members can run owned model evaluations" do
+  test "Challenge manager can run owned model evaluations" do
     model = create(:model, owner: users("marek"))
     hypothesis = create(:hypothesis, model:)
 
     sign_in_as("marek")
+    in_challenge!(users(:marek))
+
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
         hypothesis_id: hypothesis.id,
@@ -23,11 +20,13 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Evaluation queued to submit", flash[:notice]
   end
 
-  test "Not Meetween member cannot start owned model evaluation" do
+  test "Challenge participants cannot start owned model evaluation" do
     model = create(:model, owner: users("external"))
     hypothesis = create(:hypothesis, model:)
 
-    sign_in_as("external", teams: [ "plgother" ])
+    sign_in_as("external", teams: [ "plgggemini" ])
+    in_challenge!(users(:external))
+
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
         hypothesis_id: hypothesis.id,
@@ -39,11 +38,14 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "You are not authorized to perform this action", flash[:alert]
   end
 
-  test "Meetween members cannot start other meetween user model evaluation" do
-    model =  create(:model, owner: users("szymon"))
+  test "Managers cannot start other managers model evaluation" do
+    model =  create(:model, owner: users(:szymon))
+    create(:group, user: users(:szymon), name: "plggmeetween")
+    create(:membership, user: users(:szymon), challenge: challenges(:global))
     hypothesis = create(:hypothesis, model:)
 
-    sign_in_as("marek")
+    sign_in_as(:marek)
+    in_challenge!(users(:marek), :manager)
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
         hypothesis_id: hypothesis.id,
@@ -54,11 +56,12 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
-  test "Meetween members can start external users model evaluations" do
+  test "Challenge managers can start external users model evaluations" do
     model =  create(:model, owner: users("external"))
     hypothesis = create(:hypothesis, model:)
 
-    sign_in_as("marek")
+    sign_in_as(:marek)
+    in_challenge!(users(:marek), :manager)
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
         hypothesis_id: hypothesis.id,

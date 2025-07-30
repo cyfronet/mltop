@@ -1,3 +1,14 @@
 meetween:
   group_name: plggmeetween
   challenge: global
+  roles_mask: <%= AllowedGroup.mask_for(:manager) %>
+
+gemini:
+  group_name: plgggemini
+  challenge: global
+  roles_mask: <%= AllowedGroup.mask_for(:participant) %>
+
+plggother:
+  group_name: plggother
+  challenge: global
+  roles_mask: <%= AllowedGroup.mask_for(:participant) %>
