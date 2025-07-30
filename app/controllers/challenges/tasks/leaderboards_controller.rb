@@ -5,10 +5,6 @@ module Challenges
 
       helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params
 
-      def index
-        @tasks = Task.all
-      end
-
       def show
         @filtering_params = params.permit(:tsid, :mid, :o, :source, :target)
         @task = Task.with_published_test_sets.includes(:metrics).find(params[:task_id])
