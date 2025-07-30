@@ -54,7 +54,7 @@ module Mltop
     # config.eager_load_paths << Rails.root.join("extras")
     config.hpc_client = "::Hpc::Client"
 
-    config.ranking_released = ENV["RANKING_RELEASED"] == "true"
+    config.ranking_released = true # ENV["RANKING_RELEASED"] == "true"
     config.challenge_open_time = Time.parse(ENV["CHALLENGE_OPEN_TIME"]) rescue Time.current
     config.challenge_close_time = Time.parse(ENV["CHALLENGE_CLOSE_TIME"]) rescue Time.current + 1.day
   end
