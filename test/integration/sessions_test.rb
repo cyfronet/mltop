@@ -12,7 +12,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   test "Non challenge managers can log in through PLGrid, but do not see external submissions" do
-    sign_in_as("marek", teams: [ "plggother" ])
+    sign_in_as("szymon", teams: [ "plggother" ])
     in_challenge!
 
     get root_path
