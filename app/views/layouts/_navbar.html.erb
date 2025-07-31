@@ -20,7 +20,7 @@
               <%- links.add "Test sets", test_sets_path, [[ "test_sets", "test_sets/leaderboards" ]] %>
               <% if signed_in? %>
                 <%- links.add "My submissions", submissions_path, /\A\/submissions.*/ %>
-                <% if Current.challenge_manager? %>
+                <% if Current.challenge_manager? || Current.challenge_owner? %>
                   <%- links.add "External submissions", dashboard_external_submissions_path, /\A\/dashboard_external_submissions.*/ %>
                   <%- links.add "Dashboard", dashboard_tasks_path, /\A\/admin\/.*/ %>
                 <% end %>
