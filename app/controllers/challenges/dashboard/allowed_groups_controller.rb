@@ -12,6 +12,7 @@ module Challenges
         @allowed_group = Current.challenge.allowed_groups.build(permitted_attributes(AllowedGroup))
         authorize(@allowed_group)
         if @allowed_group.save
+          Memberships::UpdateRoles.new(challenge: Current.challenge).call
           flash.now[:notice] = "Evaluator allowed_group was successfully created."
         else
           render :new, status: :unprocessable_entity
@@ -23,6 +24,7 @@ module Challenges
 
       def update
         if @allowed_group.update(permitted_attributes(@allowed_group))
+          Memberships::UpdateRoles.new(challenge: Current.challenge).call
           redirect_to edit_dashboard_challenge_path(Current.challenge),
           notice: "Allowed group was successfully updated."
         else
@@ -32,6 +34,7 @@ module Challenges
 
       def destroy
         if @allowed_group.destroy
+          Memberships::UpdateRoles.new(challenge: Current.challenge).call
           redirect_to edit_dashboard_challenge_path(Current.challenge),
           notice:  "\"#{@allowed_group.group_name}\" allowed group was sucessfully deleted."
         else
@@ -42,10 +45,10 @@ module Challenges
 
       private
 
-      def set_and_authorize_allowed_group
-        @allowed_group = AllowedGroup.find(params[:id])
-        authorize(@allowed_group)
-      end
+        def set_and_authorize_allowed_group
+          @allowed_group = AllowedGroup.find(params[:id])
+          authorize(@allowed_group)
+        end
     end
   end
 end

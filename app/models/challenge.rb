@@ -46,6 +46,10 @@ class Challenge < ApplicationRecord
     (user.groups.map(&:name) & manager_groups.map(&:group_name)).any? ? :manager : :participant
   end
 
+  def can_be_joined_by?(user)
+    (user.groups.map(&:name) & allowed_groups.map(&:group_name)).any?
+  end
+
   def manager_groups
     allowed_groups.management
   end

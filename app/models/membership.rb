@@ -10,7 +10,7 @@ class Membership < ApplicationRecord
   roles AllowedGroup.valid_roles
 
   def user_belongs_to_allowed_group
-    errors.add(:user, "You do not belong to allowed group within the challenge") if
-      (user.groups.pluck(:name) & challenge.allowed_groups.pluck(:group_name)).empty?
+    errors.add(:user, "You do not belong to allowed group within the challenge") unless
+      challenge.can_be_joined_by?(user)
   end
 end
