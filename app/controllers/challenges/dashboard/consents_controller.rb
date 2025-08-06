@@ -46,10 +46,10 @@ module Challenges
 
       private
 
-      def set_and_authorize_consent
-        @consent = Consent.find(params[:id])
-        authorize(@consent)
-      end
+        def set_and_authorize_consent
+          @consent = Consent.find(params[:id])
+          authorize(@consent)
+        end
     end
   end
 end

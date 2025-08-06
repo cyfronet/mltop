@@ -16,36 +16,36 @@ module Evaluations
     end
 
     private
-    def submitted_evaluations
-      @submitted_evaluations ||= Evaluation.joins(:evaluator)
-        .where(
-          creator: @user,
-          evaluations: { status: [ :pending, :running ] },
-          evaluator: { host: @host }
-        )
-    end
-
-    def update_evaluations(statuses)
-      statuses = statuses.transform_keys(&:to_s)
-      submitted_evaluations.each do |evaluation|
-        evaluation.update job_status: statuses[evaluation.job_id]
+      def submitted_evaluations
+        @submitted_evaluations ||= Evaluation.joins(:evaluator)
+          .where(
+            creator: @user,
+            evaluations: { status: [ :pending, :running ] },
+            evaluator: { host: @host }
+          )
       end
-    end
 
-    def log_error(user, code, message)
-      Rails.logger.tagged(self.class.name) do
-        Rails.logger.warn(
-          "Error while updating evaluations for #{user.plgrid_login}: #{code} #{message}"
-        )
+      def update_evaluations(statuses)
+        statuses = statuses.transform_keys(&:to_s)
+        submitted_evaluations.each do |evaluation|
+          evaluation.update job_status: statuses[evaluation.job_id]
+        end
       end
-    end
 
-    def client
-      @client ||= Mltop.hpc_client(@user, @host)
-    end
+      def log_error(user, code, message)
+        Rails.logger.tagged(self.class.name) do
+          Rails.logger.warn(
+            "Error while updating evaluations for #{user.plgrid_login}: #{code} #{message}"
+          )
+        end
+      end
 
-    def check_statuses(user)
-      Hpc::Response.new(request: client.jobs)
-    end
+      def client
+        @client ||= Mltop.hpc_client(@user, @host)
+      end
+
+      def check_statuses(user)
+        Hpc::Response.new(request: client.jobs)
+      end
   end
 end

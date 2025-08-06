@@ -41,17 +41,17 @@ module Challenges
         end
 
         private
-        def set_evaluator
-          @evaluator = Evaluator.find(params[:evaluator_id])
-        end
+          def set_evaluator
+            @evaluator = Evaluator.find(params[:evaluator_id])
+          end
 
-        def set_metric
-          @metric = Metric.find(params[:id])
-        end
+          def set_metric
+            @metric = Metric.find(params[:id])
+          end
 
-        def metric_params
-          params.require(:metric).permit(:name, :order, :worst_score, :best_score)
-        end
+          def metric_params
+            params.require(:metric).permit(:name, :order, :worst_score, :best_score)
+          end
       end
     end
   end

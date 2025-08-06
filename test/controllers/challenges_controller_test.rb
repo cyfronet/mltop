@@ -14,10 +14,10 @@ class ChallengesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#show" do
-    sign_in_as(:marek)
-    get challenge_path(@challenge)
-    assert_response :success
-    assert_includes response.body, @challenge.name
+  sign_in_as(:marek)
+  get challenge_path(@challenge)
+  assert_response :success
+  assert_includes response.body, @challenge.name
 end
   test "#new denied access for normal user" do
     sign_in_as(:external, teams: nil)

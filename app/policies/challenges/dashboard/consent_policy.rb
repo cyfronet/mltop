@@ -41,9 +41,9 @@ module Challenges
 
       private
 
-      def challenge_maintainer?
-        user.admin? || (user == record.challenge.owner && user.meetween_member?)
-      end
+        def challenge_maintainer?
+          user.admin? || (user == record.challenge.owner && user.meetween_member?)
+        end
     end
   end
 end

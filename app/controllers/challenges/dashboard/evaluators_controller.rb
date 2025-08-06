@@ -45,14 +45,14 @@ module Challenges
       end
 
       private
-      def evaluator_params
-        params.required(:evaluator).permit(:name, :script, :host, :from, :to)
-      end
+        def evaluator_params
+          params.required(:evaluator).permit(:name, :script, :host, :from, :to)
+        end
 
-      def find_and_authorize_evaluator
-        @evaluator = policy_scope(Evaluator).find(params[:id])
-        authorize(@evaluator)
-      end
+        def find_and_authorize_evaluator
+          @evaluator = policy_scope(Evaluator).find(params[:id])
+          authorize(@evaluator)
+        end
     end
   end
 end

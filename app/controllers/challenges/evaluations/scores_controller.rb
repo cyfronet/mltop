@@ -16,7 +16,7 @@ module Challenges
       end
 
       def metrics
-      @evaluation.metrics.map(&:name)
+        @evaluation.metrics.map(&:name)
       end
     end
   end

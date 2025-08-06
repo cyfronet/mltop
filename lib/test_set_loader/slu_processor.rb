@@ -11,21 +11,21 @@ class TestSetLoader::SluProcessor < TestSetLoader::Processor
 
   private
 
-  def process_speech_massive(dir)
-    single_language_process(dir) do |entry, _name, lang|
-      [
-        child_with_extension(entry, "#{lang}_audios.tar.gz"),
-        child_with_extension(entry, ".#{lang}")
-      ]
+    def process_speech_massive(dir)
+      single_language_process(dir) do |entry, _name, lang|
+        [
+          child_with_extension(entry, "#{lang}_audios.tar.gz"),
+          child_with_extension(entry, ".#{lang}")
+        ]
+      end
     end
-  end
 
-  def process_slurp(dir)
-    single_language_process(dir) do |entry, _name, lang|
-      [
-        child_with_extension(entry, "en_audios.tar.gz"),
-        child_with_extension(entry, ".en")
-      ]
+    def process_slurp(dir)
+      single_language_process(dir) do |entry, _name, lang|
+        [
+          child_with_extension(entry, "en_audios.tar.gz"),
+          child_with_extension(entry, ".en")
+        ]
+      end
     end
-  end
 end

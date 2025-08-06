@@ -15,14 +15,14 @@ module Evaluations
 
     private
 
-    def stub_ssh_connection
-      HPCKit::Slurm::Backends::Netssh.stubs(:new)
-      @restd = Minitest::Mock.new
-      @restd_runner = Minitest::Mock.new
-      HPCKit::Slurm::Restd.stubs(:new).returns(@restd)
-      @restd.expect(:start, nil) do |&block|
-        block.call(@restd_runner)
+      def stub_ssh_connection
+        HPCKit::Slurm::Backends::Netssh.stubs(:new)
+        @restd = Minitest::Mock.new
+        @restd_runner = Minitest::Mock.new
+        HPCKit::Slurm::Restd.stubs(:new).returns(@restd)
+        @restd.expect(:start, nil) do |&block|
+          block.call(@restd_runner)
+        end
       end
-    end
   end
 end
