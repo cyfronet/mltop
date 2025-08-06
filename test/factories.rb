@@ -107,5 +107,20 @@ class ActiveSupport::TestCase
         challenge: challenges(:global)
       }
     end
+
+    factory(:allowed_group) do |i|
+      {
+        challenge: challenges(:global),
+        group_name: "name #{i}",
+        roles: :participant
+      }
+    end
+
+    factory(:group) do |i|
+      {
+        user: users(:marek),
+        name: "name #{i}"
+      }
+    end
   end
 end

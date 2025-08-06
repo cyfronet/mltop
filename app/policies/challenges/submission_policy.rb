@@ -1,8 +1,8 @@
 module Challenges
-  class ModelPolicy < ApplicationPolicy
+  class SubmissionPolicy < ApplicationPolicy
     class Scope < ApplicationPolicy::Scope
       def resolve
-        leaderboard_released? ? Current.challenge.models : Model.none
+        Current.challenge.models.where(owner: Current.user)
       end
     end
 
@@ -11,7 +11,7 @@ module Challenges
     end
 
     def show?
-      true
+      owner?
     end
 
     def new?
@@ -28,10 +28,6 @@ module Challenges
 
     def update?
       challenge_open? && owner? && challenge_participant?
-    end
-
-    def permitted_attributes
-      [ :name, :description, task_ids: [], agreements_attributes: [ :consent_id, :agreed, :id ] ]
     end
 
     private

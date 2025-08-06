@@ -6,8 +6,10 @@ module Challenges
       helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params
 
       def show
+        @task = policy_scope(Task, policy_scope_class: LeaderboardsPolicy::Scope).includes(:metrics).find_by(id: params[:task_id])
+        return unless @task
+
         @filtering_params = params.permit(:tsid, :mid, :o, :source, :target)
-        @task = Task.with_published_test_sets.includes(:metrics).find(params[:task_id])
         @rows = Top::Row
           .where(task: @task,
             source: params[:source],

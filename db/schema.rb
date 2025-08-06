@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_28_130433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "challenge_visibility", ["leaderboard_released", "scores_released"]
   create_enum "consent_target", ["model", "challenge"]
   create_enum "format", ["video", "audio", "text"]
 
@@ -73,6 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.string "group_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "roles_mask", default: 0, null: false
     t.index ["challenge_id"], name: "index_allowed_groups_on_challenge_id"
   end
 
@@ -83,6 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.datetime "ends_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "visibility", enum_type: "challenge_visibility"
     t.index ["owner_id"], name: "index_challenges_on_owner_id"
   end
 
@@ -147,6 +150,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.bigint "challenge_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "roles_mask", default: 0, null: false
     t.index ["challenge_id"], name: "index_memberships_on_challenge_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end

@@ -4,7 +4,7 @@ module Challenges
   class MembershipsControllerTest < ActionDispatch::IntegrationTest
     setup do
       sign_in_as("marek")
-      in_challenge!
+      in_challenge!(users(:marek), nil)
       @mandatory_consent = create(:consent, mandatory: true)
       @optional_consent = create(:consent, mandatory: false)
     end

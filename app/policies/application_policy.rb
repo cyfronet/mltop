@@ -50,6 +50,10 @@ class ApplicationPolicy
     Current.challenge&.owner == user
   end
 
+  def challenge_manager?
+    Current.membership.has_role?(:manager)
+  end
+
   def admin?
     user&.admin?
   end
@@ -70,6 +74,10 @@ class ApplicationPolicy
 
     def resolve
       raise NotImplementedError, "You must define #resolve in #{self.class}"
+    end
+
+    def leaderboard_released?
+      Current.challenge.visibility == Challenge.visibilities[:leaderboard_released]
     end
 
     private

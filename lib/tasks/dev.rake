@@ -21,8 +21,8 @@ if Rails.env.local?
                         ).tap do |challenge|
                           challenge.description = "Meetween Global Challenge testing progress of the SpeechLLM development progress."
                         end
-
-      Membership.create(challenge:, user:)
+      AllowedGroup.create(challenge:, group_name: "plggmeetween")
+      Membership.create(challenge:, user:, roles: manager)
 
       TasksLoader.new(
          File.join(Rails.root, "db", "data", "tasks.yml"),
