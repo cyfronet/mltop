@@ -9,7 +9,7 @@ module Evaluations
 
     test "submits evaluations" do
       stub_ssh_connection
-      Evaluation.any_instance.stubs(:run).returns(true)
+      Evaluation.any_instance.expects(:run).returns(true)
       RunJob.perform_now(evaluations: [ @evaluation ], user: @user)
     end
 
