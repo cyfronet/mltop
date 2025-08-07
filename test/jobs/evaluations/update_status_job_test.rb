@@ -37,7 +37,6 @@ module Evaluations
       end
     end
 
-
     test "does not call hpc client when evaluations are not running" do
       evaluation1 = create(:evaluation, job_id: "1", status: :completed, creator: users("marek"))
 

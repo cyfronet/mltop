@@ -150,7 +150,6 @@ class TestSetLoader::Processor
       blob&.checksum != ActiveStorage::Blob.new.send(:compute_checksum_in_chunks, io.open)
     end
 
-
     def task
       @task ||= Task.find_by!(slug:)
     end

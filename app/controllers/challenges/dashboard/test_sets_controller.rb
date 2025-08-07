@@ -48,7 +48,6 @@ module Challenges
         end
       end
 
-
       private
         def test_set_params
           params.expect(test_set: [
