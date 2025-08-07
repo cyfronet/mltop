@@ -11,6 +11,22 @@ module Authorization
     end
   end
 
+  class_methods do
+    def scoped_authentication(*scopes)
+      define_method :policy_scope do |scope, *args|
+        super([ scopes, scope ].flatten, *args)
+      end
+
+      define_method :authorize do |record, *args|
+        super([ scopes, record ].flatten, *args)
+      end
+
+      define_method :permitted_attributes do |record, *args|
+        super([ scopes, record ].flatten, *args)
+      end
+    end
+  end
+
   def current_user
     Current.user
   end
