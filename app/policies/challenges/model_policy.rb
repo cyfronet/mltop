@@ -2,7 +2,7 @@ module Challenges
   class ModelPolicy < ApplicationPolicy
     class Scope < ApplicationPolicy::Scope
       def resolve
-        leaderboard_released? ? Current.challenge.models : Model.none
+        Current.challenge.models
       end
     end
 
@@ -11,7 +11,7 @@ module Challenges
     end
 
     def show?
-      true
+      owner?
     end
 
     def new?
@@ -36,8 +36,8 @@ module Challenges
 
     private
 
-    def owner?
-      record.owner == user
-    end
+      def owner?
+        record.owner == user
+      end
   end
 end
