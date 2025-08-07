@@ -8,7 +8,7 @@ class Model < ApplicationRecord
   has_many :tasks, through: :task_models
   accepts_nested_attributes_for :tasks, allow_destroy: true
 
-  has_many :hypothesis, dependent: :destroy
+  has_many :hypotheses, dependent: :destroy
 
   has_rich_text :description
 
@@ -17,10 +17,10 @@ class Model < ApplicationRecord
 
   scope :external, -> { where(owner: User.external) }
 
-  scope :with_not_evaluated_hypothesis, -> do
-    includes(hypothesis: :evaluations)
-      .where.not(hypothesis: { id: nil })
-      .where(hypothesis: { evaluations: { id: nil } })
+  scope :with_not_evaluated_hypotheses, -> do
+    includes(hypotheses: :evaluations)
+      .where.not(hypotheses: { id: nil })
+      .where(hypotheses: { evaluations: { id: nil } })
   end
 
   def to_s
