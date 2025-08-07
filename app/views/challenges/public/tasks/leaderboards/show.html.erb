@@ -6,7 +6,7 @@
 <% else %>
   <% breadcrumb :task_leaderboard, @task %>
   <%= mltop_title "#{@task.name} Leaderboard" %>
-  <%= render "challenges/tasks/menu", task: @task %>
+  <%= render "challenges/public/tasks/menu", task: @task %>
   <%= render "filters", rows: @rows %>
   <% if @rows.size.positive? %>
     <%= render "leaderboard", task: @task, rows: @rows %>

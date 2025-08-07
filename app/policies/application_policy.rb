@@ -62,6 +62,10 @@ class ApplicationPolicy
     Current.user.meetween_member?
   end
 
+  def leaderboard_released?
+    Current.challenge.leaderboard_released?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user
@@ -73,7 +77,7 @@ class ApplicationPolicy
     end
 
     def leaderboard_released?
-      Current.challenge.visibility == Challenge.visibilities[:leaderboard_released]
+      Current.challenge.leaderboard_released?
     end
 
     private
