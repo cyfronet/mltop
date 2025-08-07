@@ -12,7 +12,7 @@ module Authorization
   end
 
   class_methods do
-    def scoped_authentication(*scopes)
+    def scoped_authorization(*scopes)
       define_method :policy_scope do |scope, *args|
         super([ scopes, scope ].flatten, *args)
       end

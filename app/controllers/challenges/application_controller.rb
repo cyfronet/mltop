@@ -1,5 +1,5 @@
 module Challenges
   class ApplicationController < ApplicationController
-    scoped_authentication :challenges
+    scoped_authorization :challenges
   end
 end
