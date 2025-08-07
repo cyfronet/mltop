@@ -1,11 +1,17 @@
 class Evaluation::Script < HPCKit::Slurm::Script
-  include LinkHelper
+  include Rails.application.routes.url_helpers
+
   GROUP_DIR = "/net/pr2/projects/plgrid/plggmeetween/mltop"
 
   def initialize(evaluation, token)
     @evaluation = evaluation
     @token = token
     super(evaluation.evaluator.script, script_options)
+  end
+
+  def default_url_options
+    Rails.application.config.action_mailer.default_url_options
+      .merge(script_name: "/#{ChallengeSlug.encode(challenge.id)}")
   end
 
   private
@@ -51,5 +57,9 @@ class Evaluation::Script < HPCKit::Slurm::Script
 
     def target
       @evaluation.hypothesis.test_set_entry.target_language
+    end
+
+    def challenge
+      Challenge.joins(models: :hypotheses).find_by(hypotheses: { id: @evaluation.hypothesis })
     end
 end
