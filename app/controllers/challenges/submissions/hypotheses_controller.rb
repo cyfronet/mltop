@@ -3,7 +3,7 @@ module Challenges
     class HypothesesController < ApplicationController
       def create
         @model = Current.user.models.find(params[:submission_id])
-        @hypothesis = @model.hypothesis.new(hypothesis_params)
+        @hypothesis = @model.hypotheses.new(hypothesis_params)
         authorize(@hypothesis)
 
         if @hypothesis.save

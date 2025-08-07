@@ -28,10 +28,10 @@ class ModelTest < ActiveSupport::TestCase
       test_set_entry: test_set_entries("flores_st_en_it"))
     create(:evaluation, hypothesis: evaluated_hypothesis)
 
-    not_evaluated = Model.with_not_evaluated_hypothesis
+    not_evaluated = Model.with_not_evaluated_hypotheses
 
     assert_equal [ with_evaluation_pending ], not_evaluated
-    assert_equal [ not_validated_hypothesis ], not_evaluated.first.hypothesis,
+    assert_equal [ not_validated_hypothesis ], not_evaluated.first.hypotheses,
       "Only not evaluated hypothesis should be loaded"
   end
 end

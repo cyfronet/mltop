@@ -11,7 +11,7 @@ class Evaluation < ApplicationRecord
   validates :hypothesis, uniqueness: { scope: :evaluator_id }
 
   broadcasts_to ->(ev) { [ ev.hypothesis.model, ev.hypothesis.test_set_entry.task ] },
-                partial: "submissions/evaluations/evaluation"
+                partial: "challenges/submissions/evaluations/evaluation"
 
   enum :status, {
     created: 0,

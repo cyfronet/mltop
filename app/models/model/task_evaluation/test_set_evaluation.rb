@@ -7,14 +7,14 @@ class Model::TaskEvaluation::TestSetEvaluation
 
   def name = @test_set.name
 
-  def hypothesis
-    hypothesis = @model.hypothesis
+  def hypotheses
+    hypotheses = @model.hypotheses
       .select { |h| entries_ids.include? h.test_set_entry_id }
       .map { |h| [ h.test_set_entry_id, h ] }
       .to_h
 
     @test_set.entries.for_task(@task)
-      .map { |e| hypothesis[e.id] || Hypothesis::Empty.new(@model, e) }
+      .map { |e| hypotheses[e.id] || Hypothesis::Empty.new(@model, e) }
   end
 
   private
