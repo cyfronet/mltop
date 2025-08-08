@@ -6,5 +6,7 @@ class CreateAccessRules < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :access_rules, [ :challenge_id, :group_name ], unique: true
   end
 end

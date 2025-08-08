@@ -24,7 +24,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.string "group_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["challenge_id"], name: "index_access_rule_on_challenge_id"
+    t.index ["challenge_id", "group_name"], name: "index_access_rules_on_challenge_id_and_group_name", unique: true
+    t.index ["challenge_id"], name: "index_access_rules_on_challenge_id"
   end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -247,7 +248,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.text "ssh_certificate"
     t.string "provider"
     t.boolean "force_challenge_open", default: false, null: false
-    t.string "groups", array: true
+    t.string "groups", default: [], array: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

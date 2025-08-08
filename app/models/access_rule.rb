@@ -1,5 +1,5 @@
 class AccessRule < ApplicationRecord
   belongs_to :challenge
 
-  validates_presence_of :group_name
+  validates :group_name, presence: true, uniqueness: { scope: :challenge_id }
 end

@@ -1,6 +1,6 @@
 module Challenges
   module Dashboard
-    class AcessRulePolicy < ApplicationPolicy
+    class AccessRulePolicy < ApplicationPolicy
       def new?
         challenge_editor?
       end
