@@ -18,7 +18,7 @@ class User < ApplicationRecord
   end
 
   def has_hypotheses?
-    models.map(&:hypotheseh).flatten.any?
+    models.map(&:hypotheses).flatten.any?
   end
   private
     def ssh_credentials
