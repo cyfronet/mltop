@@ -4,10 +4,10 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :challenge
 
-  validate :user_satisfies_access_rule
+  validate :satisfies_access_rules
 
   private
-    def user_satisfies_access_rule
+    def satisfies_access_rules
       errors.add(:user, "Only #{challenge.access_rules.map(&:group_name).join(",")} group members can join this challenge") unless satisfies_access_rules?
     end
 
