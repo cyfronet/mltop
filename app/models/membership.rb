@@ -12,6 +12,7 @@ class Membership < ApplicationRecord
     end
 
     def satisfies_access_rules?
-      (user.groups & challenge.access_rules.pluck(:group_name)).present?
+      challenge.access_rules.size.zero? ||
+        (user.groups & challenge.access_rules.pluck(:group_name)).present?
     end
 end

@@ -66,7 +66,7 @@ module Challenges
     end
 
     test "fails to create membership if user does not have proper group" do
-      challenges(:global).update(access_rules: [])
+      challenges(:global).update(access_rules: [ AccessRule.new(group_name: "restricted") ])
       assert_no_difference "Membership.count" do
         post membership_path, params: {
           membership: {
@@ -77,7 +77,7 @@ module Challenges
         }
       end
       assert_response :unprocessable_entity
-      assert_equal flash[:alert], "Couldn't join the challenge. Only  group members can join this challenge"
+      assert_equal flash[:alert], "Couldn't join the challenge. Only restricted group members can join this challenge"
     end
   end
 end
