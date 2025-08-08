@@ -2,6 +2,8 @@ class User < ApplicationRecord
   include RoleModel
   include Users::Contribution
 
+  attribute :groups, :string, array: true, default: []
+
   encrypts :ssh_key, :ssh_certificate
   has_many :models, inverse_of: :owner, dependent: :destroy
   has_many :evaluations, class_name: "Evaluation", foreign_key: "creator_id"

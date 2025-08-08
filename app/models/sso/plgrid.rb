@@ -39,7 +39,8 @@ module Sso
           email: @email,
           plgrid_login: @plgrid_login,
           ssh_key: @ssh_key,
-          ssh_certificate: @ssh_certificate
+          ssh_certificate: @ssh_certificate,
+          groups: @teams
         }
       end
 

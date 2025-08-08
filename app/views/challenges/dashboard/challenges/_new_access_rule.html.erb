@@ -1,0 +1,4 @@
+<%# locals: (challenge:) %>
+<%= turbo_frame_tag "new_access_rule" do %>
+  <%= link_to "New allowed group", new_dashboard_access_rule_path(challenge), class: "btn btn-primary" %>
+<% end %>

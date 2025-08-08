@@ -14,7 +14,7 @@ module Challenges
       if @membership.save
         redirect_to post_authenticating_url, notice: "Successfully joined the challenge."
       else
-        flash[:alert] = "Couldn't join the challenge."
+        flash[:alert] = "Couldn't join the challenge. #{@membership.errors[:user]&.first}"
         render :new, status: :unprocessable_entity
       end
     end
