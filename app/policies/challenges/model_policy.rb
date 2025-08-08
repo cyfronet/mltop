@@ -11,7 +11,7 @@ module Challenges
     end
 
     def show?
-      true
+      owner?
     end
 
     def new?
@@ -36,8 +36,8 @@ module Challenges
 
     private
 
-    def owner?
-      record.owner == user
-    end
+      def owner?
+        record.owner == user
+      end
   end
 end

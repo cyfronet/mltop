@@ -59,8 +59,19 @@ class Evaluation < ApplicationRecord
     pending? || running?
   end
 
+  def released?
+    # a bit hacky, but don't want to fetch the same challenge multiple time's
+    # while rendering view. Explicit challenge fetch from DB is needed for
+    # broadcasts to work properly.
+    (Current.challenge || challenge).scores_released?
+  end
+
   private
     def finished_status?(status)
       %w[ completed failed ].include?(status.to_s)
+    end
+
+    def challenge
+      @challenge ||= hypothesis.model.challenge
     end
 end
