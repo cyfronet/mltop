@@ -1,5 +1,7 @@
 module Challenges
   class SubmissionsController < ApplicationController
+    scoped_authorization :challenges
+
     before_action :find_and_authorize_model, only: [ :show, :update ]
 
     def index

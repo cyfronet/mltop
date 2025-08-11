@@ -1,5 +1,7 @@
 module Challenges
   class EvaluationsController < ApplicationController
+    scoped_authorization :challenges
+
     before_action :load_hypothesis
 
     def create

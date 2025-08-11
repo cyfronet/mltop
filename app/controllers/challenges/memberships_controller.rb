@@ -1,5 +1,7 @@
 module Challenges
   class MembershipsController < ApplicationController
+    scoped_authorization :challenges
+
     before_action :check_for_membership
 
     def new

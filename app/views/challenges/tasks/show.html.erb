@@ -9,5 +9,5 @@
   <h2 class="text-2xl font-bold tracking-tight sm:text-4xl mb-8 mt-8 text-center">
     <%= link_to "#{task_test_set.test_set.name} test set", test_set_path(task_test_set.test_set) %>
   </h2>
-  <%= render "challenges/public/test_sets/show", test_set: task_test_set.test_set, task_test_sets: [task_test_set] %>
+  <%= render "challenges/test_sets/show", test_set: task_test_set.test_set, task_test_sets: [task_test_set] %>
 <% end %>
