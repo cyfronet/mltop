@@ -4,8 +4,8 @@ module Challenges
       before_action :set_and_authorize_consent, only: [ :edit, :update, :destroy ]
 
       def index
+        authorize(Consent)
         @consents = policy_scope(Consent)
-        authorize(@consents)
       end
 
       def new
