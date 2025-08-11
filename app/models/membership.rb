@@ -1,10 +1,12 @@
 class Membership < ApplicationRecord
   include Agreementable
+  include RoleModel
 
   belongs_to :user
   belongs_to :challenge
 
   validate :satisfies_access_rules
+  roles AccessRule.valid_roles
 
   private
     def satisfies_access_rules
