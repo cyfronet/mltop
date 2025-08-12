@@ -41,16 +41,15 @@ class Challenge < ApplicationRecord
     consents.where(target: :model)
   end
 
-  def role_for(user)
-    return :manager if user.id = owner_id
-    (user.groups.map(&:name) & manager_groups.map(&:group_name)).any? ? :manager : :participant
-  end
-
-  def manager_groups
-    access_rules.management
+  def join!(user, agreements_attributes:)
+    memberships.create!(user: user, roles: [ roles_manager.role_for(user) ],
+                       agreements_attributes:)
   end
 
   def update_memberships
-    Challenge::RolesManager.new(self).update_memberships
+    roles_manager.update_memberships
   end
+
+  private
+    def roles_manager = Challenge::RolesManager.new(self)
 end
