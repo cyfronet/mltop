@@ -25,7 +25,7 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     assert_no_changes "Membership.count" do
       @challenge.update_memberships
     end
-    assert @membership.has_role?(:manager)
+    assert @membership.manager?
   end
 
   test "role is changed to participant - membership is downgraded to participant" do
@@ -33,7 +33,7 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
 
     @challenge.update_memberships
 
-    assert @membership.reload.has_role?(:manager)
+    assert @membership.reload.manager?
   end
 
 
@@ -54,6 +54,6 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @access_rule.update(roles: [ :participant ])
     @challenge.update_memberships
 
-    assert @membership.reload.has_role?(:manager)
+    assert @membership.reload.manager?
   end
 end

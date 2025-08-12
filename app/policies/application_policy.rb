@@ -47,7 +47,7 @@ class ApplicationPolicy
   end
 
   def challenge_manager?
-    Current.membership&.has_role?(:manager)
+    Current.membership&.manager?
   end
 
   def admin?
