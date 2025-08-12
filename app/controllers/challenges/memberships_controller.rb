@@ -2,7 +2,7 @@ module Challenges
   class MembershipsController < ApplicationController
     scoped_authorization :challenges
 
-    before_action :check_for_membership
+    before_action :ensure_not_challenge_member
 
     def new
       @membership = Current.challenge.memberships.build
@@ -21,9 +21,11 @@ module Challenges
     end
 
     private
-      def check_for_membership
-        redirect_back fallback_location: root_path,
-          alert: "You're already a participant of this challenge." if Current.challenge_member?
+      def ensure_not_challenge_member
+        if Current.challenge_member?
+          redirect_back fallback_location: root_path,
+                        alert: "You're already a participant of this challenge."
+        end
       end
 
       def agreements_attributes
