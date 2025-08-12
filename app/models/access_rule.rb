@@ -12,6 +12,6 @@ class AccessRule < ApplicationRecord
   validates :group_name, presence: true, uniqueness: { scope: :challenge_id }
 
   def update_memberships
-    Memberships::UpdateRoles.new(challenge:).call
+    challenge.update_memberships
   end
 end

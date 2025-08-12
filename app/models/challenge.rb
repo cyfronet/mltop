@@ -49,4 +49,8 @@ class Challenge < ApplicationRecord
   def manager_groups
     access_rules.management
   end
+
+  def update_memberships
+    Challenge::RolesManager.new(self).update_memberships
+  end
 end
