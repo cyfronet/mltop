@@ -1,6 +1,7 @@
 module Challenges
   class TestSetsController < ApplicationController
     allow_unauthenticated_access
+    scoped_authorization :challenges, :public
 
     def index
       @test_sets = policy_scope(TestSet).includes(:tasks).published

@@ -50,8 +50,8 @@ module Components::NavHelper
         @sections = {}
       end
 
-      def section(name, link, active: nil, condition: :exlusive)
-        @sections[name] = { link:, active:, condition: }
+      def section(name, link, active: nil, condition: :exlusive, enabled: true)
+        @sections[name] = { link:, active:, condition:, enabled: }
       end
 
       def render
@@ -73,13 +73,13 @@ module Components::NavHelper
             tag.div class: "block" do
               tag.nav class: "flex items-center justify-center gap-x-16", "aria-label" => "Tabs" do
                 @sections.map do |title, link|
-                  concat menu_link(title, **link)
+                  concat link[:enabled] ? menu_link(title, **link) : disabled_menu_link(title, **link)
                 end
               end
             end
           end
 
-          def menu_link(title, link:, active:, condition:)
+          def menu_link(title, link:, active:, condition:, **)
             active = @manual ? active : @view.is_active_link?(@view.url_for(link), condition)
 
             options = { class: "#{active ? "text-fuchsia-600 bg-fuchsia-100 hover:bg-fuchsia-200 font-bold" : "text-zinc-500 bg-transparent hover:bg-gray-50 font-medium"} flex-none rounded-md group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10" }
@@ -89,6 +89,10 @@ module Components::NavHelper
               concat tag.span title
               concat tag.span class: " absolute inset-x-0 ", "aria-hidden": true
             end
+          end
+
+          def disabled_menu_link(title, **)
+            tag.span title, class: "text-zinc-300 bg-transparent font-medium flex-none group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10"
           end
     end
 end

@@ -1,12 +1,16 @@
 module Challenges
   module TestSets
     class LeaderboardsController < ApplicationController
-      allow_unauthenticated_access only: [ :show ]
+      allow_unauthenticated_access
+      scoped_authorization :challenges, :public
 
       helper_method :selected_order, :selected_metric, :selected_test_set, :selected_test_set_entry
 
       def show
-        @test_set = TestSet.find(params[:test_set_id])
+        @test_set = policy_scope(TestSet).find_by(id: params[:test_set_id])
+        return unless @test_set
+        authorize(@test_set, :leaderboard?)
+
         @tasks = @test_set.tasks
         @test_set_entries = @test_set.entries.for_task(selected_task)
 

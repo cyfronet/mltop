@@ -1,5 +1,7 @@
 module Challenges
   class SubmissionsController < ApplicationController
+    scoped_authorization :challenges
+
     before_action :find_and_authorize_model, only: [ :show, :update ]
 
     def index
@@ -7,12 +9,13 @@ module Challenges
     end
 
     def show
-      @tasks = policy_scope(Task)
+      @tasks = policy_scope([ :public, Task ])
     end
 
     def new
       @model = Current.user.models.new
-      @tasks = policy_scope(Task)
+      authorize(@model)
+      @tasks = policy_scope([ :public, Task ])
       Current.challenge.model_consents.each do |consent|
         @model.agreements.build(consent:)
       end
@@ -29,7 +32,7 @@ module Challenges
     end
 
     def update
-      if @model.update(model_params)
+      if @model.update(permitted_attributes(Model))
         redirect_to submission_path(@model), notice: "Model updated"
       else
         render_error :show
@@ -38,12 +41,8 @@ module Challenges
 
     private
       def render_error(view)
-        @tasks = policy_scope(Task).all
+        @tasks = policy_scope([ :public, Task ]).all
         render view, status: :unprocessable_entity
-      end
-
-      def model_params
-        params.required(:model).permit(:name, :description, task_ids: [])
       end
 
       def find_and_authorize_model

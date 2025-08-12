@@ -62,6 +62,10 @@ class ApplicationPolicy
     Current.user.meetween_member?
   end
 
+  def leaderboard_released?
+    Current.challenge.leaderboard_released?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user
@@ -70,6 +74,10 @@ class ApplicationPolicy
 
     def resolve
       raise NotImplementedError, "You must define #resolve in #{self.class}"
+    end
+
+    def leaderboard_released?
+      Current.challenge.leaderboard_released?
     end
 
     private

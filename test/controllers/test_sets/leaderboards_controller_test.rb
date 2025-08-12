@@ -1,18 +1,31 @@
 require "test_helper"
 
-
 module TestSets
   class LeaderboardsControllerTest < ActionDispatch::IntegrationTest
     def setup
       in_challenge!
+      challenges(:global).update(visibility: :leaderboard_released)
     end
 
-    test "should get index" do
+    test "return unauthorized when leaderboards are not released" do
+      challenges(:global).update(visibility: nil)
+      get test_set_leaderboard_path(test_set_id: test_sets("flores"))
+      assert :unauthorized, response.status
+    end
+
+    test "should get index when leaderboards are released" do
       get test_set_leaderboard_path(test_set_id: test_sets("flores"))
       assert_response :success
     end
 
+    test "doesn't show data when visibility is nil" do
+      get test_set_leaderboard_path(test_set_id: test_sets("unpublished"))
+
+      assert_includes response.body, "Leaderboards are not currently visible"
+    end
+
     test "should filter index based on task id" do
+      challenges(:global).update(visibility: "leaderboard_released")
       model = create(:model, name: "model", tasks: [ tasks(:st) ])
       hypothesis = create(:hypothesis, model:)
       evaluation = create(:evaluation, hypothesis:,

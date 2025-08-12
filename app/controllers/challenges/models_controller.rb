@@ -1,6 +1,7 @@
 module Challenges
   class ModelsController < ApplicationController
     allow_unauthenticated_access
+    scoped_authorization :challenges, :public
 
     def index
       @models = policy_scope(Model)
@@ -21,11 +22,11 @@ module Challenges
     end
 
     private
-    def find_by_query_param(collection, key)
-      collection = collection.to_a
+      def find_by_query_param(collection, key)
+        collection = collection.to_a
 
-      collection.to_a.find { |record| record.id.to_s == params[key] } ||
-      collection.first
-    end
+        collection.to_a.find { |record| record.id.to_s == params[key] } ||
+        collection.first
+      end
   end
 end

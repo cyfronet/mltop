@@ -1,6 +1,7 @@
 module Challenges
   class TasksController < ApplicationController
-    allow_unauthenticated_access only: [ :index, :show ]
+    allow_unauthenticated_access
+    scoped_authorization :challenges, :public
 
     def index
       @tasks = policy_scope(Task)

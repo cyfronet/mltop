@@ -1,7 +1,9 @@
 <% breadcrumb :models %>
-
 <%= mltop_title "Models" %>
-
-<ul role="list" class="divide-y divide-gray-100">
-  <%= render @models %>
-</ul>
+<% if @models.size.positive? %>
+  <ul role="list" class="divide-y divide-gray-100">
+    <%= render @models %>
+  </ul>
+<% else %>
+  <%= render "layouts/empty", message: "Challenge models are not currently visible." %>
+<% end %>

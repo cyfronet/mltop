@@ -1,13 +1,17 @@
 module Challenges
   module Tasks
     class LeaderboardsController < ApplicationController
-      allow_unauthenticated_access only: [ :show ]
+      allow_unauthenticated_access
+      scoped_authorization :challenges, :public
 
       helper_method :selected_order, :selected_metric, :selected_test_set, :filtering_params
 
       def show
+        @task = policy_scope(Task).includes(:metrics).find_by(id: params[:task_id])
+        return unless @task
+        authorize(@task, :leaderboard?)
+
         @filtering_params = params.permit(:tsid, :mid, :o, :source, :target)
-        @task = Task.with_published_test_sets.includes(:metrics).find(params[:task_id])
         @rows = Top::Row
           .where(task: @task,
             source: params[:source],
@@ -21,6 +25,7 @@ module Challenges
       end
 
       private
+
         def selected_order
           params[:o].presence_in([ "asc", "desc" ]) || "desc"
         end
