@@ -42,10 +42,6 @@ class ApplicationPolicy
     Time.current.between?(Current.challenge.starts_at, Current.challenge.ends_at)
   end
 
-  def admin_or_challenge_editor?
-    user.admin? || Current.challenge&.owner == user
-  end
-
   def challenge_editor?
     Current.challenge&.owner == user
   end
