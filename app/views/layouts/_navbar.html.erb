@@ -20,7 +20,7 @@
               <%- links.add "Test sets", test_sets_path, [[ "challenges/test_sets", "challenges/test_sets/leaderboards" ]] %>
               <% if signed_in? %>
                 <%- links.add "My submissions", submissions_path, /\/#{ChallengeSlug::PATTERN}\/submissions.*/ %>
-                <% if Current.user.meetween_member? %>
+                <% if Current.challenge_manager? || Current.challenge_owner? %>
                   <%- links.add "External submissions", dashboard_external_submissions_path, /\/#{ChallengeSlug::PATTERN}\/dashboard\/external_submissions.*/ %>
                   <%- links.add "Dashboard", dashboard_tasks_path, /\/#{ChallengeSlug::PATTERN}\/dashboard\/(?!.*external_submissions).*/ %>
                 <% end %>

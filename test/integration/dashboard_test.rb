@@ -7,12 +7,23 @@ class DashboardTest < ActionDispatch::IntegrationTest
 
     get edit_dashboard_challenge_path(challenges(:global))
     assert_response :success
-    assert_match "Dashboard", response.body
+    assert_match "Update Challenge", response.body
   end
 
-  test "normal user is redirected to root page" do
+  test "Challenge participant is redirected to root page" do
     sign_in_as("szymon", teams: [])
-    in_challenge!
+    in_challenge!(users(:szymon))
+
+    get edit_dashboard_challenge_path(challenges(:global))
+    assert_redirected_to root_path
+
+    follow_redirect!
+    assert_no_match "Dashboard", response.body
+  end
+
+  test "User without membership is redirected to root page" do
+    sign_in_as("szymon", teams: [])
+    in_challenge!(users(:szymon), nil)
 
     get edit_dashboard_challenge_path(challenges(:global))
     assert_redirected_to root_path

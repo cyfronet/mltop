@@ -40,4 +40,16 @@ class Challenge < ApplicationRecord
   def model_consents
     consents.where(target: :model)
   end
+
+  def join!(user, agreements_attributes:)
+    memberships.create!(user: user, roles: [ roles_manager.role_for(user) ],
+                       agreements_attributes:)
+  end
+
+  def update_memberships
+    roles_manager.update_memberships
+  end
+
+  private
+    def roles_manager = Challenge::RolesManager.new(self)
 end

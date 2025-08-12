@@ -107,5 +107,13 @@ class ActiveSupport::TestCase
         challenge: challenges(:global)
       }
     end
+
+    factory(:access_rule) do |i|
+      {
+        challenge: challenges(:global),
+        group_name: "name #{i}",
+        roles: :participant
+      }
+    end
   end
 end

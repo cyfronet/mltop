@@ -2,6 +2,7 @@
 <%= turbo_frame_tag access_rule do %>
   <div class="sm:flex sm:items-start sm:justify-between">
     <span><%= access_rule.group_name %></span>
+    <span><%= access_rule.roles.map(&:to_s).join(" ") %></span>
     <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:shrink-0 sm:items-center space-x-2">
       <%= link_to edit_dashboard_access_rule_path(access_rule), class: "btn btn-secondary-outline" do %>
         <%= edit_icon("ml-0.5 mr-1.5 h-5 w-5") %>

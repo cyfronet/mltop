@@ -19,6 +19,14 @@ class Current < ActiveSupport::CurrentAttributes
     challenge.visibility.present?
   end
 
+  def challenge_manager?
+    membership&.has_role?(:manager)
+  end
+
+  def challenge_owner?
+    challenge.owner_id == user.id
+  end
+
   private
 
   def find_membership

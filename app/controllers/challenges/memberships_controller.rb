@@ -2,7 +2,7 @@ module Challenges
   class MembershipsController < ApplicationController
     scoped_authorization :challenges
 
-    before_action :check_for_membership
+    before_action :ensure_not_challenge_member
 
     def new
       @membership = Current.challenge.memberships.build
@@ -12,19 +12,24 @@ module Challenges
     end
 
     def create
-      @membership = Current.challenge.memberships.build(permitted_attributes(Membership).merge(user: Current.user))
-      if @membership.save
-        redirect_to post_authenticating_url, notice: "Successfully joined the challenge."
-      else
-        flash[:alert] = "Couldn't join the challenge. #{@membership.errors[:user]&.first}"
-        render :new, status: :unprocessable_entity
-      end
+      Current.challenge.join!(Current.user, agreements_attributes:)
+      redirect_to post_authenticating_url, notice: "Successfully joined the challenge."
+    rescue ActiveRecord::RecordInvalid => e
+      @membership = e.record
+      flash[:alert] = "Couldn't join the challenge. #{@membership.errors[:user]&.first}"
+      render :new, status: :unprocessable_entity
     end
 
     private
+      def ensure_not_challenge_member
+        if Current.challenge_member?
+          redirect_back fallback_location: root_path,
+                        alert: "You're already a participant of this challenge."
+        end
+      end
 
-    def check_for_membership
-      redirect_back fallback_location: root_path, alert: "You're already a participant of this challenge." if Current.challenge_member?
-    end
+      def agreements_attributes
+        permitted_attributes(Membership).fetch(:agreements_attributes, [])
+      end
   end
 end

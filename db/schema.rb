@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_11_094141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.string "group_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "roles_mask", default: 0, null: false
     t.index ["challenge_id", "group_name"], name: "index_access_rules_on_challenge_id_and_group_name", unique: true
     t.index ["challenge_id"], name: "index_access_rules_on_challenge_id"
   end
@@ -142,6 +143,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_25_124114) do
     t.bigint "challenge_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "roles_mask", default: 0, null: false
     t.index ["challenge_id"], name: "index_memberships_on_challenge_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
