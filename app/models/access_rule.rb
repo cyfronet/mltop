@@ -11,7 +11,8 @@ class AccessRule < ApplicationRecord
   scope :management, -> { where(roles_mask: AccessRule.mask_for(:manager)) }
   validates :group_name, presence: true, uniqueness: { scope: :challenge_id }
 
-  def update_memberships
-    challenge.update_memberships
-  end
+  private
+    def update_memberships
+      challenge.update_memberships
+    end
 end
