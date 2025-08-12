@@ -14,7 +14,7 @@ module Memberships
     def update_membership_status(membership)
       user = membership.user
 
-      unless membership.satisfies_access_rules?
+      unless membership.valid?
         membership.destroy
         return
       end
