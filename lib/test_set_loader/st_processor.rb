@@ -18,7 +18,8 @@ class TestSetLoader::StProcessor < TestSetLoader::Processor
           archive_with_extensions(entry,
             name: "#{slug}_#{name}_#{source}.tgz",
             extensions: [ "_audios.tar.gz", "tst-COMMON.yaml" ]),
-          child_with_extension(entry, ".#{target}")
+          child_with_extension(entry, ".#{target}"),
+          child_with_extension(entry, ".#{source}")
         ]
       end
     end
@@ -29,25 +30,28 @@ class TestSetLoader::StProcessor < TestSetLoader::Processor
           archive_with_extensions(entry,
             name: "#{slug}_#{name}_#{source}.tgz",
             extensions: [ "_audios.tar.gz", "test.yaml" ]),
-          child_with_extension(entry, ".#{target}")
+          child_with_extension(entry, ".#{target}"),
+          child_with_extension(entry, ".#{source}")
         ]
       end
     end
 
     def process_acl6060(dir)
-      from_to_language_process(dir) do |entry, _name, _source, target|
+      from_to_language_process(dir) do |entry, _name, source, target|
         [
           child_with_extension(dir, "_audios.tar.gz"),
-          child_with_extension(entry, ".#{target}")
+          child_with_extension(entry, ".#{target}"),
+          child_with_extension(entry, ".#{source}")
         ]
       end
     end
 
     def process_covost(dir)
-      from_to_language_process(dir) do |entry, _name, _source, target|
+      from_to_language_process(dir) do |entry, _name, source, target|
         [
           child_with_extension(entry, "_audios.tar.gz"),
-          child_with_extension(entry, ".#{target}")
+          child_with_extension(entry, ".#{target}"),
+          child_with_extension(entry, ".#{source}")
         ]
       end
     end
