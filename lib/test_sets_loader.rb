@@ -1,6 +1,6 @@
 class TestSetsLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
-  TASKS_DIR = File.join(Rails.root, "tmp/tasks")
+  TASKS_DIR = File.join(Rails.root, "tmp")
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
   TASKS_YAML_PATH = File.join(Rails.root, "db", "data", "tasks.yml")
   TEST_SETS_YAML_PATH = File.join(Rails.root, "db", "data", "test_sets.yml")
@@ -16,7 +16,7 @@ class TestSetsLoader
   def import!
     note "Importing tasks started"
     Task.transaction do
-      Pathname.new(@tasks_dir).children.select(&:directory?).each do |dir|
+      Pathname.new(File.join(@tasks_dir, "tasks")).children.select(&:directory?).each do |dir|
         loader = TestSetLoader::Processor.for(dir, @challenge_id, metadata)
         note "Importing #{dir.basename} using #{loader.class}"
 
@@ -28,7 +28,7 @@ class TestSetsLoader
 
   def synchronize_with_remote!
     note "Synchronizing with #{@username}@#{@hostname}:#{@remote_tasks_dir}"
-    system "rsync -avzh #{@username}@#{@hostname}:#{@remote_tasks_dir} #{File.join(Rails.root, "tmp")}"
+    system "rsync -avzh #{@username}@#{@hostname}:#{@remote_tasks_dir} #{@tasks_dir}"
   end
 
   private
