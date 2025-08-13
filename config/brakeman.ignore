@@ -7,7 +7,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/test_set_loader/processor.rb",
-      "line": 148,
+      "line": 168,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
       "render_path": null,
@@ -17,6 +17,29 @@
         "method": "archive_with_extensions"
       },
       "user_input": "dir",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "624e4283927c5f14a34040842c69fa4407d04c7bfdc7163584d1954b248aa869",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/test_sets_loader.rb",
+      "line": 31,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{tasks_dir}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TestSetsLoader",
+        "method": "synchronize_with_remote!"
+      },
+      "user_input": "username",
       "confidence": "Medium",
       "cwe_id": [
         77
@@ -69,30 +92,7 @@
         22
       ],
       "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "eaf56e295a4b8afb31e3dcb77e7523924f6d1137bb2a0a74e062c134718c83d8",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/test_sets_loader.rb",
-      "line": 28,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"rsync -avzh #{username}@#{hostname}:#{remote_tasks_dir} #{File.join(Rails.root, \"tmp\")}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TestSetsLoader",
-        "method": "synchronize_with_remote!"
-      },
-      "user_input": "username",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": ""
     }
   ],
-  "brakeman_version": "7.0.2"
+  "brakeman_version": "7.1.0"
 }
