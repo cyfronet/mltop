@@ -26,7 +26,8 @@ class Evaluation::Script < HPCKit::Slurm::Script
           "RESULTS_URL=#{results_upload_url}",
           "SOURCE_LANGUAGE=#{source}",
           "TARGET_LANGUAGE=#{target}",
-          "TOKEN=#{@token}"
+          "TOKEN=#{@token}",
+          "TASK=#{task.slug}"
         ].compact
       }
     end
@@ -57,6 +58,10 @@ class Evaluation::Script < HPCKit::Slurm::Script
 
     def target
       @evaluation.hypothesis.test_set_entry.target_language
+    end
+
+    def task
+      @evaluation.hypothesis.test_set_entry.task
     end
 
     def challenge
