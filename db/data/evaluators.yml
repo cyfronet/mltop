@@ -151,7 +151,7 @@ wer_tsv:
   metrics:
     - name: wer
       order: asc
-      worst_score: 1
+      worst_score: 100
       best_score: 0
   tasks:
     - LIPREAD
