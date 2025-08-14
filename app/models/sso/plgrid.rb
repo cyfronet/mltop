@@ -24,6 +24,7 @@ module Sso
           meetween_member? ? user.roles.add(:meetween_member) : user.roles.delete(:meetween_member)
           user.assign_attributes(attributes)
           user.save
+          update_memberships(user) if user.groups_previously_changed?
         end
       end
     end
@@ -50,6 +51,10 @@ module Sso
 
         @ssh_key =  ccm.key
         @ssh_certificate = ccm.certificate
+      end
+
+      def update_memberships(user)
+        user.memberships.map(&:update_role)
       end
   end
 end

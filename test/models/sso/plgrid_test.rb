@@ -67,6 +67,33 @@ module Sso
       assert_not plgrid_user.to_user.meetween_member?
     end
 
+    test "groups are membership are updated when user groups change" do
+      user = create(:user, uid: "plgexisting_user", groups: [ "plggmeetween" ], provider: "plgrid")
+      membership = create(:membership, user:, challenge: challenges(:global), roles: [ :manager ])
+
+      Sso::Plgrid.from_omniauth(auth("plgexisting_user", token: CcmHelpers::VALID_TOKEN, groups: [ "plgggemini" ])).to_user
+      assert_equal [ "plgggemini" ], user.reload.groups
+      assert_not membership.reload.has_role?(:manager)
+    end
+
+    test "membership is deleted when user no longer has required group" do
+      user = create(:user, uid: "plgexisting_user", groups: [ "plggmeetween" ], provider: "plgrid")
+      create(:membership, user:, challenge: challenges(:global), roles: [ :manager ])
+
+      Sso::Plgrid.from_omniauth(auth("plgexisting_user", token: CcmHelpers::VALID_TOKEN, groups: [])).to_user
+      assert_empty user.reload.groups
+      assert_empty user.memberships
+    end
+
+    test "membership is upgraded when user has required group" do
+      user = create(:user, uid: "plgexisting_user", groups: [ "plgggemini" ], provider: "plgrid")
+      membership = create(:membership, user:, challenge: challenges(:global), roles: [ :participant ])
+
+      Sso::Plgrid.from_omniauth(auth("plgexisting_user", token: CcmHelpers::VALID_TOKEN, groups: [ "plggmeetween" ])).to_user
+      assert_equal [ "plggmeetween" ], user.reload.groups
+      assert membership.reload.has_role?(:manager)
+    end
+
     private
       def assert_user_attrs_equal(attrs, plgrid_user)
         user_attrs = plgrid_user.to_user.attributes

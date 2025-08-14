@@ -11,6 +11,10 @@ class Challenge::RolesManager
     end
   end
 
+  def update_membership(membership)
+    update_membership_status(membership)
+  end
+
   def role_for(user)
     owner?(user) || manager_role?(user) ? :manager : :participant
   end
