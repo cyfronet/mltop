@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <% if Current.challenge_manager? %>
+    <% if Current.scoring_released? %>
       <div class="<%= "hidden" unless open %> border radius-lg" data-accordion-target="content">
         <ul role="list" class="divide-y divide-gray-200">
           <% (@evaluators || hypothesis.evaluators).each do |evaluator| %>
