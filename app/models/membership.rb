@@ -8,6 +8,11 @@ class Membership < ApplicationRecord
   validate :satisfies_access_rules
   roles AccessRule.valid_roles
 
+
+  def update_role
+    challenge.update_membership(self)
+  end
+
   private
     def satisfies_access_rules
       errors.add(:user, "Only #{challenge.access_rules.map(&:group_name).join(",")} group members can join this challenge") unless satisfies_access_rules?

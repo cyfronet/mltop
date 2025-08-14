@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :models, inverse_of: :owner, dependent: :destroy
   has_many :evaluations, class_name: "Evaluation", foreign_key: "creator_id"
   has_many :challenges, inverse_of: :owner, dependent: :destroy
+  has_many :memberships, dependent: :destroy
 
   roles :admin, :meetween_member
 
