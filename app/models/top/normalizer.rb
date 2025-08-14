@@ -21,10 +21,11 @@ module Top
     def self.normalize(value, best_score, worst_score, asc = false)
       return nil if value.nil?
 
-      normalized = (value - worst_score) / (best_score - worst_score)
-      normalized = 1.0 - normalized if asc
-
-      normalized
+      if asc
+        (worst_score - value) / (worst_score - best_score)
+      else
+        (value - worst_score) / (best_score - worst_score)
+      end
     end
 
     def relative? = @relative
