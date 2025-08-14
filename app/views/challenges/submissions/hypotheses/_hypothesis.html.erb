@@ -1,4 +1,4 @@
-<% cache hypothesis do %>
+<% cache [hypothesis, Current.membership, Current.scoring_released?] do %>
   <%- open = local_assigns[:open] -%>
   <div id="<%= dom_id(hypothesis.test_set_entry) %>" class="mx-3 my-4 sm:rounded-lg" data-controller="accordion">
     <div class="border border-zinc-200 bg-zinc-50 dark:bg-gray-800 px-2 py-5 rounded-lg", data-accordion-target="header">
