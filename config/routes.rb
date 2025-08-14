@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     root to: "home#index"
 
     resources :challenges, except: [ :edit, :update ]
+    mount MissionControl::Jobs::Engine, at: "/admin/jobs"
   end
 
   constraints(-> { _1.env["mltop.challenge_id"] }) do
@@ -72,6 +73,4 @@ Rails.application.routes.draw do
   # errors
   get "/404", to: "errors#not_found", via: :all
   get "/500", to: "errors#server_error", via: :all
-
-  mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 end

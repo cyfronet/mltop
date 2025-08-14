@@ -27,9 +27,7 @@
               <% end %>
             <% else %>
               <%- links.add "Challenges", challenges_path, /\A\/challenges.*/ %>
-            <% end %>
-            <% if signed_in? %>
-              <% if Current.user.admin? %>
+              <% if Current.user&.admin? %>
                 <%- links.add "Jobs", mission_control_jobs_path, /\A\/jobs\/.*/ %>
               <% end %>
             <% end %>
