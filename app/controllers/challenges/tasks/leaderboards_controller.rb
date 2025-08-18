@@ -21,7 +21,7 @@ module Challenges
             order: selected_order
             )
 
-        @rows.relative! if params[:color] == "relative"
+        @rows.relative! if params[:color] != "absolute"
       end
 
       private

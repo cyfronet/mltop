@@ -17,8 +17,7 @@ module Challenges
         @rows = Top::Row
           .where(task: selected_task, test_set: @test_set)
           .order(test_set: @test_set, metric: selected_metric, order: selected_order, test_set_entry: selected_test_set_entry)
-
-        @rows.relative! if params[:color] == "relative"
+        @rows.relative! if params[:color] != "absolute"
       end
 
       private
