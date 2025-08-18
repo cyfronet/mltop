@@ -47,6 +47,18 @@ class Top::NormalizerTest < ActiveSupport::TestCase
     assert_equal 0, normalize(100)
   end
 
+  test "returns 1 when all scores are the same" do
+    @metric.scores.update_all(value: 50)
+    @rows = Top::Row.where(task: tasks(:st))
+    @normalizer = Top::Normalizer.new(@rows)
+    @normalizer.relative!
+    assert_equal 1, normalize(50)
+  end
+
+  test "returns nil fro nil value" do
+    assert_nil normalize(nil)
+  end
+
   private
     def normalize(value)
       @normalizer.normalize(value, test_sets(:flores), @metric, test_set_entries(:flores_st_en_pl))
