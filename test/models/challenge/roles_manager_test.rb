@@ -12,7 +12,7 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @access_rule.update(group_name: "new name")
 
     assert_changes "Membership.count", -1 do
-      @challenge.update_memberships
+      @challenge.reload.update_memberships
     end
   end
 

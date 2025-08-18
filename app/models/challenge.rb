@@ -12,6 +12,8 @@ class Challenge < ApplicationRecord
 
   has_rich_text :description
 
+  after_create_commit :create_owner_membership
+
   validates :name, :starts_at, :ends_at, presence: true
   validates :ends_at, comparison: { greater_than: :starts_at }
 
@@ -56,4 +58,9 @@ class Challenge < ApplicationRecord
 
   private
     def roles_manager = Challenge::RolesManager.new(self)
+
+    def create_owner_membership
+      membership = Membership.new(challenge: self, user: owner, roles: [ :admin ])
+      membership.save(validate: false)
+    end
 end
