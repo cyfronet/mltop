@@ -2,23 +2,23 @@ module Challenges
   module Dashboard
     class AccessRulePolicy < ApplicationPolicy
       def new?
-        challenge_editor?
+        challenge_admin?
       end
 
       def create?
-        challenge_editor?
+        challenge_admin?
       end
 
       def edit?
-        challenge_editor?
+        challenge_admin?
       end
 
       def update?
-        challenge_editor?
+        challenge_admin?
       end
 
       def destroy?
-        challenge_editor?
+        challenge_admin?
       end
 
       def permitted_attributes

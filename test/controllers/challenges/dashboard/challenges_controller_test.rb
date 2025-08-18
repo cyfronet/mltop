@@ -16,8 +16,9 @@ class Challenges::Dashboard::ChallengesControllerTest < ActionDispatch::Integrat
     assert_equal "You are not authorized to perform this action", flash[:alert]
   end
 
-  test "#edit for meetween member" do
+  test "#edit for admin" do
     sign_in_as(:marek)
+    Membership.find_by(user: users(:marek), challenge: challenges(:global)).update(roles: [ :admin ])
     get edit_dashboard_challenge_path(@challenge)
 
     assert_response :success
@@ -25,6 +26,7 @@ class Challenges::Dashboard::ChallengesControllerTest < ActionDispatch::Integrat
 
   test "should update challenge" do
     sign_in_as(:marek)
+    Membership.find_by(user: users(:marek), challenge: challenges(:global)).update(roles: [ :admin ])
     patch dashboard_challenge_path(@challenge), params: { challenge: { name: "updated name" } }
     assert_redirected_to challenge_path(@challenge)
     assert_equal @challenge.reload.name, "updated name"
@@ -32,6 +34,7 @@ class Challenges::Dashboard::ChallengesControllerTest < ActionDispatch::Integrat
 
   test "should destroy challenge" do
     sign_in_as(:marek)
+    Membership.find_by(user: users(:marek), challenge: challenges(:global)).update(roles: [ :admin ])
     assert_difference("Challenge.count", -1) do
       delete dashboard_challenge_path(@challenge)
     end

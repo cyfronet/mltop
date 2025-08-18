@@ -3,7 +3,7 @@ require "test_helper"
 class Challenges::Dashboard::TestSetsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as("marek")
-    in_challenge!
+    in_challenge!(users(:marek), :admin)
   end
 
   test "should get index" do
