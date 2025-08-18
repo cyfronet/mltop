@@ -21,8 +21,12 @@ module TasksHelper
 
     worst = metric.worst_score
     best = metric.best_score
-    normalized = (metric_value - worst) / (best - worst)
-    normalized = 1.0 - normalized if metric.asc?
+
+    normalized = if metric.asc?
+      (worst - metric_value) / (worst - best)
+    else
+      (metric_value - worst) / (best- worst)
+    end
 
     red = [ 220, 38, 38 ] # red-600
     yellow = [ 251, 191, 36 ] # yellow-400
