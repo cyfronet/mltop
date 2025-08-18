@@ -6,7 +6,7 @@ class Membership < ApplicationRecord
   belongs_to :challenge
 
   validate :satisfies_access_rules
-  roles AccessRule.valid_roles
+  roles AccessRule.valid_roles + [ :admin ]
 
   def update_role
     challenge.update_membership(self)
