@@ -23,8 +23,8 @@ class Current < ActiveSupport::CurrentAttributes
     membership&.has_role?(:manager)
   end
 
-  def challenge_owner?
-    challenge.owner_id == user.id
+  def challenge_admin?
+    membership&.admin?
   end
 
   private
