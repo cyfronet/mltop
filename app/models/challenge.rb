@@ -50,6 +50,10 @@ class Challenge < ApplicationRecord
     roles_manager.update_memberships
   end
 
+  def update_membership(membership)
+    roles_manager.update_membership(membership)
+  end
+
   private
     def roles_manager = Challenge::RolesManager.new(self)
 end
