@@ -46,6 +46,7 @@ module ActiveSupport
           }
         },
       )
+      get root_url
       get "/auth/plgrid/callback"
     end
 
@@ -64,10 +65,12 @@ module ActiveSupport
 
     def challenge_member_signs_in(name, challenge = challenges(:global), teams: [])
       user = users(name)
-      Membership.find_or_create_by(user:, challenge:)
+      Membership.find_or_initialize_by(user:, challenge:).save(validate: false)
 
       in_challenge!(challenge)
       sign_in_as(name, teams:)
+      refute_equal new_membership_url, response.redirect_url,
+        "User does not belongs to teams required by the challenge"
     end
   end
 

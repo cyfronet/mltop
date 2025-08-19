@@ -3,7 +3,7 @@ require "test_helper"
 module Challenges
   class TestSetsControllerTest < ActionDispatch::IntegrationTest
     def setup
-      challenge_member_signs_in("marek", challenges(:global))
+      in_challenge!
     end
 
     test "should get index" do
