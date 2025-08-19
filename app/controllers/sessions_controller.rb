@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
       if challenge.nil? || challenge&.memberships&.where(user_id: user.id)&.exists?
         redirect_to post_authenticating_url, notice: "Welcome back #{user.name}"
       else
-        redirect_to "/#{slug}/#{new_membership_path}", notice: "Welcome back #{user.name}, fill out the form, to join the challenge"
+        redirect_to "/#{slug}#{new_membership_path}", notice: "Welcome back #{user.name}, fill out the form, to join the challenge"
       end
     else
       redirect_to root_path, alert: "Unable to authenticate"
