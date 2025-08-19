@@ -20,6 +20,7 @@ module Top
 
     def self.normalize(value, best_score, worst_score, asc = false)
       return nil if value.nil?
+      return 1 if best_score == worst_score && best_score == value
 
       if asc
         (worst_score - value) / (worst_score - best_score)
