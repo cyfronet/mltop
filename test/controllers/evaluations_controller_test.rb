@@ -6,8 +6,7 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     model = create(:model, owner: users("marek"))
     hypothesis = create(:hypothesis, model:)
 
-    sign_in_as("marek")
-    in_challenge!(users(:marek))
+    challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
 
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
@@ -25,7 +24,7 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     hypothesis = create(:hypothesis, model:)
 
     sign_in_as("external", teams: [ "plgggemini" ])
-    in_challenge!(users(:external))
+    in_challenge!
 
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
@@ -44,8 +43,8 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     create(:membership, user: users(:szymon), challenge: challenges(:global))
     hypothesis = create(:hypothesis, model:)
 
-    sign_in_as(:marek)
-    in_challenge!(users(:marek), :manager)
+    challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
+
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
         hypothesis_id: hypothesis.id,
@@ -60,8 +59,8 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
     model =  create(:model, owner: users("external"))
     hypothesis = create(:hypothesis, model:)
 
-    sign_in_as(:marek)
-    in_challenge!(users(:marek), :manager)
+    challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
+
     post evaluations_path(format: :turbo_stream), params: {
       evaluation: {
         hypothesis_id: hypothesis.id,

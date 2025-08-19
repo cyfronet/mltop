@@ -4,8 +4,7 @@ module Challenges
   module Dashboard
     class ExternalSubmissionsControllerTest < ActionDispatch::IntegrationTest
       test "Challenge manager can manage external users submissions" do
-        sign_in_as("marek")
-        in_challenge!(users(:marek), :manager)
+        challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
 
         get dashboard_external_submissions_path
         assert_response :success
@@ -13,7 +12,7 @@ module Challenges
 
       test "External user cannot manage external users submissions" do
         sign_in_as("external", teams: [ "plggother" ])
-        in_challenge!(users(:external))
+        in_challenge!
 
         get dashboard_external_submissions_path
         assert_redirected_to root_path
@@ -24,8 +23,7 @@ module Challenges
         external_model = create_not_evaluated_model(owner: users("external"))
         internal_model = create_not_evaluated_model(owner: users("marek"))
 
-        sign_in_as("marek")
-        in_challenge!(users(:marek), :manager)
+        challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
 
         get dashboard_external_submissions_path
         assert_includes response.body, external_model.name

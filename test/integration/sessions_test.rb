@@ -2,8 +2,7 @@ require "test_helper"
 
 class SessionsTest < ActionDispatch::IntegrationTest
   test "Challenge manager can log in through PLGrid and see external users submissions" do
-    in_challenge!(users(:marek), :manager)
-    sign_in_as("marek", teams: [ "plggmeetween", "plgother" ])
+    challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
     get root_path
 
     assert_response :success
@@ -12,8 +11,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   test "Non challenge managers can log in through PLGrid, but do not see external submissions" do
-    sign_in_as("szymon", teams: [ "plggother" ])
-    in_challenge!
+    challenge_member_signs_in("szymon", challenges(:global), teams: [ "plggother" ])
 
     get root_path
 

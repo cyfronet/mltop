@@ -3,8 +3,7 @@ require "test_helper"
 module Challenges
   class SubmissionsControllerTest < ActionDispatch::IntegrationTest
     def setup
-      sign_in_as("marek")
-      in_challenge!(users("marek"))
+      challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
     end
 
     test "show user models" do
