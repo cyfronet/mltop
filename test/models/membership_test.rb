@@ -23,4 +23,15 @@ class MembershipTest < ActiveSupport::TestCase
 
     assert_not @membership.valid?
   end
+
+  test "admin membership is always valid" do
+    @membership.roles = [ :admin ]
+    assert @membership.valid?
+
+    @user.update!(groups: [])
+    assert @membership.valid?
+
+    @challenge.access_rules.destroy_all
+    assert @membership.valid?
+  end
 end

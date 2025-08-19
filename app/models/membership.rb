@@ -9,7 +9,8 @@ class Membership < ApplicationRecord
   roles AccessRule.valid_roles + [ :admin ]
 
   def update_role
-    challenge.update_membership(self)
+    # admin is assigned manually per user, so we don't want to overwrite it
+    challenge.update_membership(self) unless admin?
   end
 
   private
@@ -18,6 +19,7 @@ class Membership < ApplicationRecord
     end
 
     def satisfies_access_rules?
+      admin? ||
       challenge.access_rules.size.zero? ||
         (user.groups & challenge.access_rules.pluck(:group_name)).present?
     end
