@@ -12,7 +12,7 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @access_rule.update(group_name: "new name")
 
     assert_changes "Membership.count", -1 do
-      @challenge.update_memberships
+      @challenge.reload.update_memberships
     end
   end
 
@@ -52,6 +52,29 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @challenge.update_memberships
 
     assert @membership.reload.manager?
+  end
+
+  test "membership is not deleted when it has admin role, but manager is removed" do
+    @access_rule.update(group_name: "new name")
+    @membership.update(roles: [ :manager, :admin ])
+    assert_no_changes "Membership.count" do
+      @challenge.reload.update_memberships
+    end
+
+    assert @membership.reload.admin?
+    assert_equal false, @membership.manager?
+  end
+
+  test "membership changes from participant to membership, but is still admin" do
+    @access_rule.update(roles: [ :participant ])
+    @membership.update(roles: [ :admin ])
+
+    assert_no_changes "Membership.count" do
+      @challenge.reload.update_memberships
+    end
+
+    assert @membership.reload.admin?
+    assert @membership.participant?
   end
 
   test "#update_membership membership should be deleted when it was only one granting user access" do
@@ -98,5 +121,28 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @challenge.update_membership(@membership)
 
     assert @membership.manager?
+  end
+
+  test "#update_membership membership is not deleted when it has admin role, but manager is removed" do
+    @access_rule.update(group_name: "new name")
+    @membership.update(roles: [ :manager, :admin ])
+    assert_no_changes "Membership.count" do
+      @challenge.reload.update_membership(@membership)
+    end
+
+    assert @membership.reload.admin?
+    assert_equal false, @membership.manager?
+  end
+
+  test "#update_membership membership changes from participant to membership, but is still admin" do
+    @access_rule.update(roles: [ :participant ])
+    @membership.update(roles: [ :admin ])
+
+    assert_no_changes "Membership.count" do
+      @challenge.reload.update_membership(@membership)
+    end
+
+    assert @membership.reload.admin?
+    assert @membership.participant?
   end
 end

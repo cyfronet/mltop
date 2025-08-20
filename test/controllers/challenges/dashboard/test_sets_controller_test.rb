@@ -2,8 +2,8 @@ require "test_helper"
 
 class Challenges::Dashboard::TestSetsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as("marek")
-    in_challenge!
+    challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
+    grant_admin_access_to(:marek, challenges(:global))
   end
 
   test "should get index" do

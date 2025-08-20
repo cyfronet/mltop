@@ -16,7 +16,9 @@ class ChallengesController < ApplicationController
   end
 
   def create
-    @challenge = Current.user.challenges.build(permitted_attributes(Challenge))
+    @challenge = Current.user.challenges
+      .build(permitted_attributes(Challenge)
+              .merge(memberships: [ Membership.new(user: Current.user, roles: [ :admin ]) ]))
     authorize(@challenge)
 
     if @challenge.save

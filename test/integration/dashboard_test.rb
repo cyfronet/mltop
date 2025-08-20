@@ -3,6 +3,7 @@ require "test_helper"
 class DashboardTest < ActionDispatch::IntegrationTest
   test "only admin can enter adminland" do
     challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
+    grant_admin_access_to(:marek, challenges(:global))
 
     get edit_dashboard_challenge_path(challenges(:global))
     assert_response :success

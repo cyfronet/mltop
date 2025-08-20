@@ -3,6 +3,7 @@ require "test_helper"
 class Challenges::Dashboard::EvaluatorsControllerTest < ActionDispatch::IntegrationTest
   setup do
     challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
+    grant_admin_access_to(:marek, challenges(:global))
   end
 
   test "should get index" do

@@ -43,11 +43,13 @@ class ChallengesControllerTest < ActionDispatch::IntegrationTest
     challenge = build(:challenge)
 
     assert_difference("Challenge.count") do
-      post challenges_path, params: { challenge: {
-        name: challenge.name,  description: challenge.description,
-        starts_at: challenge.starts_at, ends_at: challenge.ends_at,
-        owner_id: users(:marek).id
-      } }
+      assert_difference("Membership.count") do
+        post challenges_path, params: { challenge: {
+          name: challenge.name,  description: challenge.description,
+          starts_at: challenge.starts_at, ends_at: challenge.ends_at,
+          owner_id: users(:marek).id
+        } }
+      end
     end
 
     assert_redirected_to challenge_path(Challenge.last)
