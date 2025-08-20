@@ -1,6 +1,5 @@
 require "test_helper"
 
-
 class Challenges::Dashboard::TestSets::EntriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as("marek")

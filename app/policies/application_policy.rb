@@ -38,50 +38,75 @@ class ApplicationPolicy
 
   private
 
-  def challenge_open?
-    Time.current.between?(Current.challenge.starts_at, Current.challenge.ends_at)
-  end
-
-  def challenge_editor?
-    Current.challenge&.owner == user
-  end
-
-  def challenge_manager?
-    Current.membership&.manager?
-  end
-
-  def admin?
-    user&.admin?
-  end
-
-  def challenge_participant?
-    Current.challenge_member?
-  end
-
-  def meetween_member?
-    Current.user.meetween_member?
-  end
-
-  def leaderboard_released?
-    Current.challenge.leaderboard_released?
-  end
-
-  class Scope
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
+    def challenge_open?
+      Time.current.between?(Current.challenge.starts_at, Current.challenge.ends_at)
     end
 
-    def resolve
-      raise NotImplementedError, "You must define #resolve in #{self.class}"
+    def challenge_editor?
+      Current.challenge&.owner == user
+    end
+
+    def challenge_manager?
+      Current.membership&.manager?
+    end
+
+    def admin?
+      user&.admin?
+    end
+
+    def challenge_participant?
+      Current.challenge_member?
+    end
+
+    def meetween_member?
+      Current.user.meetween_member?
     end
 
     def leaderboard_released?
       Current.challenge.leaderboard_released?
     end
 
-    private
+    class Scope
+      def initialize(user, scope)
+        @user = user
+        @scope = scope
+      end
 
-    attr_reader :user, :scope
-  end
+      def admin_or_challenge_editor?
+        user.admin? || Current.challenge&.owner == user
+      end
+
+      def leaderboard_released?
+        Current.challenge.leaderboard_released?
+      end
+
+      private
+
+        def admin?
+          user&.admin?
+        end
+
+        def challenge_participant?
+          Current.challenge_member?
+        end
+
+        def meetween_member?
+          Current.user.meetween_member?
+        end
+
+        class Scope
+          def initialize(user, scope)
+            @user = user
+            @scope = scope
+          end
+
+          def resolve
+            raise NotImplementedError, "You must define #resolve in #{self.class}"
+          end
+
+          private
+
+            attr_reader :user, :scope
+        end
+    end
 end

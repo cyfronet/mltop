@@ -38,12 +38,12 @@ class Hpc::ClientMock
 
   private
 
-  class RequestMock
-    def initialize(code:, body:)
-      @code = code
-      @body = body
-    end
+    class RequestMock
+      def initialize(code:, body:)
+        @code = code
+        @body = body
+      end
 
-    attr_reader :code, :body
-  end
+      attr_reader :code, :body
+    end
 end

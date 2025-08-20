@@ -29,7 +29,7 @@ class Current < ActiveSupport::CurrentAttributes
 
   private
 
-  def find_membership
-    self.membership = Membership.find_by(user:, challenge:) if user && challenge
-  end
+    def find_membership
+      self.membership = Membership.find_by(user:, challenge:) if user && challenge
+    end
 end

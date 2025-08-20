@@ -27,9 +27,9 @@ module Challenges
       end
 
       private
-      def hypothesis_params
-        params.require(:hypothesis).permit(:test_set_entry_id, :input)
-      end
+        def hypothesis_params
+          params.require(:hypothesis).permit(:test_set_entry_id, :input)
+        end
     end
   end
 end

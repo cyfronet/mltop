@@ -54,7 +54,7 @@ class Top::RowTest < ActiveSupport::TestCase
 
     new_evaluation(model, :flores_st_pl_en, 4.5)
     row = Top::Row.where(task: tasks(:st), source: "en").first
-        assert_equal 2, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
+    assert_equal 2, row.score(test_set: test_sets(:flores), metric: metrics(:blueurt)).value,
       "Wrong score: (4 (en->pl) + 2 (en->it) + 0 (en->de)) / 3 = 2, pl->en not included"
 
     new_evaluation(model, :flores_st_en_de, 6)
@@ -79,8 +79,8 @@ class Top::RowTest < ActiveSupport::TestCase
 
     assert_nil row.score(test_set: test_sets(:flores),
                          metric: metrics(:blueurt),
-                         test_set_entry: test_set_entries(:flores_st_en_it)).value
-              "Nil score should be created when no score in DB"
+                         test_set_entry: test_set_entries(:flores_st_en_it)).value,
+      "Nil score should be created when no score in DB"
   end
 
   test "order" do

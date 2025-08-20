@@ -6,9 +6,11 @@ class ChallengesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @challenge = create(:challenge)
   end
+
   test "#index" do
     sign_in_as(:marek)
     get challenges_path
+
     assert_response :success
     assert_includes response.body, @challenge.name
   end
@@ -16,9 +18,11 @@ class ChallengesControllerTest < ActionDispatch::IntegrationTest
   test "#show" do
     sign_in_as(:marek)
     get challenge_path(@challenge)
+
     assert_response :success
     assert_includes response.body, @challenge.name
-end
+  end
+
   test "#new denied access for normal user" do
     sign_in_as(:external, teams: nil)
     get new_challenge_path
@@ -51,10 +55,10 @@ end
 
   test "should destroy challenge" do
     sign_in_as(:marek)
+
     assert_difference("Challenge.count", -1) do
       delete challenge_path(@challenge)
     end
-
     assert_redirected_to challenges_path
   end
 end

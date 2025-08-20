@@ -42,10 +42,10 @@ module Challenges
 
       private
 
-      def set_and_authorize_access_rule
-        @access_rule = AccessRule.find(params[:id])
-        authorize(@access_rule)
-      end
+        def set_and_authorize_access_rule
+          @access_rule = AccessRule.find(params[:id])
+          authorize(@access_rule)
+        end
     end
   end
 end

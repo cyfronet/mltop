@@ -11,12 +11,12 @@ class Metric < ApplicationRecord
   }
 
   private
-  def proper_score_range
-    if asc? && best_score >= worst_score
-      errors.add(:best_score, "Best score has to be lesser than worst score")
+    def proper_score_range
+      if asc? && best_score >= worst_score
+        errors.add(:best_score, "Best score has to be lesser than worst score")
+      end
+      if desc? && best_score <= worst_score
+        errors.add(:best_score, "Best score has to be greater than worst score")
+      end
     end
-    if desc? && best_score <= worst_score
-      errors.add(:best_score, "Best score has to be greater than worst score")
-    end
-  end
 end

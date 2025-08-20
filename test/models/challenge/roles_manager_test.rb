@@ -8,7 +8,6 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @membership = create(:membership, user: @user, challenge: @challenge, roles: [ :manager ])
   end
 
-
   test "membership should be deleted when it was only one granting user access" do
     @access_rule.update(group_name: "new name")
 
@@ -36,7 +35,6 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     assert @membership.reload.manager?
   end
 
-
   test "other group created with participant, membership stays as is" do
     @user.update(groups: [ "old name", "other group" ])
     create(:access_rule, challenge: @challenge, group_name: "other group", roles: [ :participant ])
@@ -56,13 +54,13 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     assert @membership.reload.manager?
   end
 
-   test "#update_membership membership should be deleted when it was only one granting user access" do
-    @access_rule.update(group_name: "new name")
+  test "#update_membership membership should be deleted when it was only one granting user access" do
+   @access_rule.update(group_name: "new name")
 
-    assert_changes "Membership.count", -1 do
-      @challenge.update_membership(@membership)
-    end
-  end
+   assert_changes "Membership.count", -1 do
+     @challenge.update_membership(@membership)
+   end
+ end
 
   test "#update_membership name changes, but user still has access from other group - membership should stay as is" do
     @user.update(groups: [ "old name", "other group" ])
@@ -82,7 +80,6 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
 
     assert @membership.manager?
   end
-
 
   test "#update_membership other group created with participant, membership stays as is" do
     @user.update(groups: [ "old name", "other group" ])

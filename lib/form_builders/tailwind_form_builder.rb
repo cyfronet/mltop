@@ -109,74 +109,74 @@ module FormBuilders
 
     private
 
-    def text_like_field(field_method, object_method, options = {})
-      custom_opts, opts = partition_custom_opts(options)
+      def text_like_field(field_method, object_method, options = {})
+        custom_opts, opts = partition_custom_opts(options)
 
-      classes = apply_style_classes(TEXT_FIELD_STYLE, custom_opts, object_method)
+        classes = apply_style_classes(TEXT_FIELD_STYLE, custom_opts, object_method)
 
-      field = send(field_method, object_method, {
-        class: classes,
-        title: errors_for(object_method)&.join(" ")
-      }.compact.merge(opts).merge(tailwindified: true))
+        field = send(field_method, object_method, {
+          class: classes,
+          title: errors_for(object_method)&.join(" ")
+        }.compact.merge(opts).merge(tailwindified: true))
 
-      label = item_label(object_method, custom_opts[:label], options)
+        label = item_label(object_method, custom_opts[:label], options)
 
-      @template.content_tag "div", class: custom_opts[:wrapper] do
-        label + field + error_label(object_method)
-      end
-    end
-
-    def item_label(object_method, label_options, field_options)
-      label = tailwind_label(object_method, label_options, field_options)
-      @template.content_tag("div", label, class: "flex flex-col items-start")
-    end
-
-    def tailwind_label(object_method, label_options, field_options)
-      text, label_opts = if label_options.present?
-        [ label_options[:text], label_options.except(:text) ]
-      else
-        [ nil, {} ]
+        @template.content_tag "div", class: custom_opts[:wrapper] do
+          label + field + error_label(object_method)
+        end
       end
 
-      label_classes = label_opts[:class] || "block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-      label_classes += " text-yellow-800 dark:text-yellow-400" if field_options[:disabled]
-      label(object_method, text, {
-        class: label_classes
-      }.merge(label_opts.except(:class)))
-    end
-
-    def error_label(object_method, options = {})
-      if errors_for(object_method).present?
-        error_message = @object.errors[object_method].collect(&:titleize).join(", ")
-        tailwind_label(object_method, { text: error_message, class: " font-bold text-red-500" }, options)
+      def item_label(object_method, label_options, field_options)
+        label = tailwind_label(object_method, label_options, field_options)
+        @template.content_tag("div", label, class: "flex flex-col items-start")
       end
-    end
 
-    def border_color_classes(object_method)
-      if errors_for(object_method).present?
-        "border-2 border-red-400 focus:border-rose-200"
-      else
-        "border border-gray-300 focus:border-yellow-700"
+      def tailwind_label(object_method, label_options, field_options)
+        text, label_opts = if label_options.present?
+          [ label_options[:text], label_options.except(:text) ]
+        else
+          [ nil, {} ]
+        end
+
+        label_classes = label_opts[:class] || "block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        label_classes += " text-yellow-800 dark:text-yellow-400" if field_options[:disabled]
+        label(object_method, text, {
+          class: label_classes
+        }.merge(label_opts.except(:class)))
       end
-    end
 
-    def apply_style_classes(classes, custom_opts, object_method = nil)
-      join_classes(classes, border_color_classes(object_method), custom_opts[:class])
-    end
+      def error_label(object_method, options = {})
+        if errors_for(object_method).present?
+          error_message = @object.errors[object_method].collect(&:titleize).join(", ")
+          tailwind_label(object_method, { text: error_message, class: " font-bold text-red-500" }, options)
+        end
+      end
 
-    def join_classes(*classes)
-      classes.compact.join(" ")
-    end
+      def border_color_classes(object_method)
+        if errors_for(object_method).present?
+          "border-2 border-red-400 focus:border-rose-200"
+        else
+          "border border-gray-300 focus:border-yellow-700"
+        end
+      end
 
-    CUSTOM_OPTS = [ :label, :class, :wrapper ].freeze
-    def partition_custom_opts(opts)
-      opts.partition { |k, v| CUSTOM_OPTS.include?(k) }.map(&:to_h)
-    end
+      def apply_style_classes(classes, custom_opts, object_method = nil)
+        join_classes(classes, border_color_classes(object_method), custom_opts[:class])
+      end
 
-    def errors_for(object_method)
-      return unless @object.present? && object_method.present?
+      def join_classes(*classes)
+        classes.compact.join(" ")
+      end
 
-      @object.errors[object_method]
-    end
+      CUSTOM_OPTS = [ :label, :class, :wrapper ].freeze
+      def partition_custom_opts(opts)
+        opts.partition { |k, v| CUSTOM_OPTS.include?(k) }.map(&:to_h)
+      end
+
+      def errors_for(object_method)
+        return unless @object.present? && object_method.present?
+
+        @object.errors[object_method]
+      end
   end
 end

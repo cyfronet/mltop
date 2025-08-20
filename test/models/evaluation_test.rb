@@ -56,7 +56,6 @@ class EvaluationTest < ActiveSupport::TestCase
     end
   end
 
-
   test "successful started evaluation changes status to running" do
     Hpc::ClientMock.stub_submit
 
