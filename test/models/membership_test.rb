@@ -15,6 +15,7 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   test "can join challenge when have access rules satisfied" do
+    @user.groups = [ "plggmeetween" ]
     assert @membership.valid?
   end
 

@@ -72,6 +72,12 @@ module ActiveSupport
       refute_equal new_membership_url, response.redirect_url,
         "User does not belongs to teams required by the challenge"
     end
+
+    def grant_admin_access_to(name, challenge = challenges(:global))
+      user = users(name)
+      membership = Membership.find_by(user:, challenge: challenges(:global))
+      membership.update(roles: membership.calculated_roles + [ :admin ])
+    end
   end
 
   WebMock.disable_net_connect!(allow_localhost: true)

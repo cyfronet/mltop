@@ -30,14 +30,18 @@ module Challenges
     end
 
     test "cannot go to new membership if already a member" do
-      create(:membership)
+      user = users(:marek)
+      user.update(groups: [ "plggmeetween" ])
+      create(:membership, user:)
       get new_membership_path
       assert_response :redirect
       assert_equal "You're already a participant of this challenge.", flash[:alert]
     end
 
     test "cannot create membership if already a member" do
-      create(:membership)
+      user = users(:marek)
+      user.update(groups: [ "plggmeetween" ])
+      create(:membership, user:)
       assert_no_difference "Membership.count" do
         post membership_path, params: {
           membership: {

@@ -8,7 +8,7 @@ module Challenges
 
       def update
         if @challenge.update(permitted_attributes(@challenge))
-          redirect_to challenge_path(@challenge), notice: "Challenge was successfully updated."
+          redirect_to edit_dashboard_challenge_path(@challenge), notice: "Challenge was successfully updated."
         else
           render :edit, status: :unprocessable_entity
         end
