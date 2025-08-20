@@ -13,9 +13,7 @@ module Sso
       @email = auth.info["email"]
       @plgrid_login = auth.info["nickname"]
 
-      if meetween_member?
-        fetch_short_lived_ssh_credentials!(auth.dig("credentials", "token"))
-      end
+      fetch_short_lived_ssh_credentials!(auth.dig("credentials", "token"))
     end
 
     def to_user
