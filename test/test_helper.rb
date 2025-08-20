@@ -22,6 +22,11 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
     OmniAuth.config.test_mode = true
 
+    def in_challenge!(challenge = challenges(:global))
+      self.default_url_options =
+        { script_name: "/#{ChallengeSlug.encode(challenge.id)}" }
+    end
+
     def sign_in_as(name, teams: [ "plggmeetween" ])
       user = users(name)
       OmniAuth.config.add_mock(
@@ -41,6 +46,7 @@ module ActiveSupport
           }
         },
       )
+      get root_url
       get "/auth/plgrid/callback"
     end
 
@@ -57,10 +63,14 @@ module ActiveSupport
       get "/auth/github/callback"
     end
 
-    def in_challenge!(user = users(:marek), roles = "participant", challenge = challenges(:global))
-      Membership.create(user:, challenge:, roles:) if roles
-      self.default_url_options =
-        { script_name: "/#{ChallengeSlug.encode(challenge.id)}" }
+    def challenge_member_signs_in(name, challenge = challenges(:global), teams: [])
+      user = users(name)
+      Membership.find_or_initialize_by(user:, challenge:).save(validate: false)
+
+      in_challenge!(challenge)
+      sign_in_as(name, teams:)
+      refute_equal new_membership_url, response.redirect_url,
+        "User does not belongs to teams required by the challenge"
     end
   end
 

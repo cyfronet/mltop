@@ -2,8 +2,7 @@ require "test_helper"
 
 class Challenges::Dashboard::EvaluatorsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in_as("marek")
-    in_challenge!
+    challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
   end
 
   test "should get index" do

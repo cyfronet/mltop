@@ -13,8 +13,7 @@ module Challenges
         hypothesis = create(:hypothesis, model:)
         Hypothesis.any_instance.stubs(:evaluate!)
 
-        sign_in_as("marek")
-        in_challenge!(users(:marek), "manager")
+        challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
         post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
         assert_response :success
@@ -26,8 +25,7 @@ module Challenges
         hypothesis = create(:hypothesis, model:)
         create(:evaluation, hypothesis:)
 
-        sign_in_as("external", teams: [ "plggother" ])
-        in_challenge!(users(:external), "participant")
+        challenge_member_signs_in("external", challenges(:global), teams: [ "plggother" ])
         post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
         assert_response :redirect
@@ -40,8 +38,7 @@ module Challenges
         create(:membership, user: users(:szymon), challenge: challenges(:global))
         hypothesis = create(:hypothesis, model:)
 
-        sign_in_as("marek")
-        in_challenge!(users(:marek), "manager")
+        challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
         post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
         assert_response :not_found
@@ -51,8 +48,7 @@ module Challenges
         model =  create(:model, owner: users("external"))
         hypothesis = create(:hypothesis, model:)
 
-        sign_in_as("marek")
-        in_challenge!(users(:marek), "manager")
+        challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
         post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
 
         assert_response :success
