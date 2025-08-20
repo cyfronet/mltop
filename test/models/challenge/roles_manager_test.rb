@@ -55,12 +55,12 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
   end
 
   test "#update_membership membership should be deleted when it was only one granting user access" do
-   @access_rule.update(group_name: "new name")
+    @access_rule.update(group_name: "new name")
 
-   assert_changes "Membership.count", -1 do
-     @challenge.update_membership(@membership)
-   end
- end
+    assert_changes "Membership.count", -1 do
+      @challenge.update_membership(@membership)
+    end
+  end
 
   test "#update_membership name changes, but user still has access from other group - membership should stay as is" do
     @user.update(groups: [ "old name", "other group" ])
