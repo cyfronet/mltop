@@ -23,9 +23,7 @@ private
   def update_membership_status(membership)
     if membership.valid?
       new_role = role_for(membership.user)
-
-      membership.calculated_roles = [ new_role ]
-      membership.save
+      membership.update(calculated_roles: [ new_role ])
     else
       membership.destroy
     end

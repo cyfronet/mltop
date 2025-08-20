@@ -9,7 +9,7 @@ class Membership < ApplicationRecord
   roles AccessRule.valid_roles + [ :admin ]
 
   def update_role
-    challenge.update_membership(self) unless admin?
+    challenge.update_membership(self)
   end
 
   # admin is assigned manually per user, so we don't want to overwrite it when updating other roles
