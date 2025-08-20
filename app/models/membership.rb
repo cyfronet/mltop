@@ -9,8 +9,16 @@ class Membership < ApplicationRecord
   roles AccessRule.valid_roles + [ :admin ]
 
   def update_role
-    # admin is assigned manually per user, so we don't want to overwrite it
     challenge.update_membership(self) unless admin?
+  end
+
+  # admin is assigned manually per user, so we don't want to overwrite it when updating other roles
+  def calculated_roles=(new_roles)
+    self.roles = self.roles.to_a - AccessRule.valid_roles + new_roles
+  end
+
+  def calculated_roles
+    roles.to_a & AccessRule.valid_roles
   end
 
   private

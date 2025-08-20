@@ -72,10 +72,6 @@ class ApplicationPolicy
         @scope = scope
       end
 
-      def admin_or_challenge_editor?
-        user.admin? || Current.challenge&.owner == user
-      end
-
       def leaderboard_released?
         Current.challenge.leaderboard_released?
       end

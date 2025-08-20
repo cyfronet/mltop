@@ -24,9 +24,8 @@ private
     if membership.valid?
       new_role = role_for(membership.user)
 
-      unless membership.has_role?(new_role)
-        membership.update(roles: [ new_role ])
-      end
+      membership.calculated_roles = [ new_role ]
+      membership.save
     else
       membership.destroy
     end
