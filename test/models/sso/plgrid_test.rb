@@ -5,35 +5,17 @@ require "ostruct"
 
 module Sso
   class PlgridTest < ActiveSupport::TestCase
-    test "plgrid login uses auth info and CCM to populate user data for meetween members" do
+    test "plgrid login uses auth info and CCM to populate user data" do
       plgrid_user = Sso::Plgrid.from_omniauth(auth("plgnewuser",
         token: CcmHelpers::VALID_TOKEN,
-        groups: [ "plggmeetween", "other", "group" ]))
+        groups: [ "group1", "group2" ]))
 
       attrs = {
         name: "plgnewuser Last Name",
         email: "plgnewuser@b.c",
         plgrid_login: "plgnewuser",
-        roles_mask: ::User.new(roles: [ :meetween_member ]).roles_mask,
         ssh_key: CredentialsProvider.key,
         ssh_certificate: CredentialsProvider.cert
-      }
-
-      assert_user_attrs_equal attrs, plgrid_user
-    end
-
-    test "plgrid login uses only auth info to populate user data for non-meetween members" do
-      plgrid_user = Sso::Plgrid.from_omniauth(auth("plgnewuser",
-        token: CcmHelpers::VALID_TOKEN,
-        groups: [ "other", "group" ]))
-
-      attrs = {
-        name: "plgnewuser Last Name",
-        email: "plgnewuser@b.c",
-        plgrid_login: "plgnewuser",
-        roles_mask: ::User.new(roles: []).roles_mask,
-        ssh_key: nil,
-        ssh_certificate: nil
       }
 
       assert_user_attrs_equal attrs, plgrid_user
