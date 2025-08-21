@@ -11,7 +11,8 @@ class DashboardTest < ActionDispatch::IntegrationTest
   end
 
   test "Challenge participant is redirected to root page" do
-    challenge_member_signs_in("szymon", challenges(:global), teams: [ "plgggemini" ])
+    challenges(:global).access_rules.required.destroy_all
+    challenge_member_signs_in("szymon", challenges(:global), teams: [ "plggmeetween" ])
 
     get edit_dashboard_challenge_path(challenges(:global))
     assert_redirected_to root_path

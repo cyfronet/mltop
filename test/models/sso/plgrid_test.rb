@@ -30,6 +30,7 @@ module Sso
     test "groups are membership are updated when user groups change" do
       user = create(:user, uid: "plgexisting_user", groups: [ "plggmeetween" ], provider: "plgrid")
       membership = create(:membership, user:, challenge: challenges(:global), roles: [ :manager ])
+      challenges(:global).access_rules.required.destroy_all
 
       Sso::Plgrid.from_omniauth(auth("plgexisting_user", token: CcmHelpers::VALID_TOKEN, groups: [ "plgggemini" ])).to_user
       assert_equal [ "plgggemini" ], user.reload.groups
@@ -47,7 +48,8 @@ module Sso
 
     test "membership is upgraded when user has required group" do
       user = create(:user, uid: "plgexisting_user", groups: [ "plgggemini" ], provider: "plgrid")
-      membership = create(:membership, user:, challenge: challenges(:global), roles: [ :participant ])
+      membership = build(:membership, user:, challenge: challenges(:global), roles: [ :participant ])
+      membership.save(validate: false)
 
       Sso::Plgrid.from_omniauth(auth("plgexisting_user", token: CcmHelpers::VALID_TOKEN, groups: [ "plggmeetween" ])).to_user
       assert_equal [ "plggmeetween" ], user.reload.groups

@@ -6,14 +6,34 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     @access_rule = create(:access_rule, challenge: @challenge, group_name: "old name", roles: [ :manager ])
     @user = create(:user, groups: [ "old name" ])
     @membership = create(:membership, user: @user, challenge: @challenge, roles: [ :manager ])
+    AccessRule.skip_callback(:commit, :after, :update_memberships)
   end
 
-  test "membership should be deleted when it was only one granting user access" do
-    @access_rule.update(group_name: "new name")
+  teardown do
+    AccessRule.set_callback(:commit, :after, :update_memberships)
+  end
+
+  test "membership should be deleted when user doesn't have required group" do
+    @access_rule.update(group_name: "new name", required: true)
 
     assert_changes "Membership.count", -1 do
       @challenge.reload.update_memberships
     end
+  end
+
+  test "membership should be deleted when new required access rule is created user" do
+    create(:access_rule, challenge: @challenge, group_name: "other group", required: true)
+    assert_changes "Membership.count", -1 do
+      @challenge.reload.update_memberships
+    end
+  end
+
+  test "optional acces rule grants membership role" do
+    @membership.update(roles: [ :participant ])
+
+    @challenge.reload.update_memberships
+
+    assert @membership.reload.manager?
   end
 
   test "name changes, but user still has access from other group - membership should stay as is" do
@@ -77,12 +97,27 @@ class Challenge::RolesManagerTest < ActiveSupport::TestCase
     assert @membership.participant?
   end
 
-  test "#update_membership membership should be deleted when it was only one granting user access" do
-    @access_rule.update(group_name: "new name")
+  test "#update_membership membership should be deleted when user doesn't have required group" do
+    @access_rule.update(group_name: "new name", required: true)
 
     assert_changes "Membership.count", -1 do
       @challenge.update_membership(@membership)
     end
+  end
+
+  test "#update_membership membership should be deleted when new required access rule is created user" do
+    create(:access_rule, challenge: @challenge, group_name: "other group", required: true)
+    assert_changes "Membership.count", -1 do
+      @challenge.update_membership(@membership)
+    end
+  end
+
+  test "#update_membership optional acces rule grants membership role" do
+    @membership.update(roles: [ :participant ])
+
+    @challenge.reload.update_memberships
+
+    assert @membership.reload.manager?
   end
 
   test "#update_membership name changes, but user still has access from other group - membership should stay as is" do

@@ -24,6 +24,7 @@ module Challenges
         model = create(:model, owner: users("external"))
         hypothesis = create(:hypothesis, model:)
         create(:evaluation, hypothesis:)
+        challenges(:global).access_rules.required.update_all(required: false)
 
         challenge_member_signs_in("external", challenges(:global), teams: [ "plggother" ])
         post hypothesis_evaluations_path(hypothesis_id: hypothesis, format: :turbo_stream)
@@ -45,7 +46,7 @@ module Challenges
       end
 
       test "Challenge managers can start external users model evaluations" do
-        users("external").update(groups: [ "plggother" ])
+        challenges(:global).access_rules.required.update_all(required: false)
         create(:membership, user: users(:external), challenge: challenges(:global), roles: [])
         model =  create(:model, owner: users("external"))
         hypothesis = create(:hypothesis, model:)

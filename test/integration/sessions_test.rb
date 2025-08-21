@@ -10,12 +10,12 @@ class SessionsTest < ActionDispatch::IntegrationTest
     assert_match "External submissions", response.body
   end
 
-  test "Non challenge managers can log in through PLGrid, but do not see external submissions" do
-    challenge_member_signs_in("szymon", challenges(:global), teams: [ "plggother" ])
+  test "Non challenge users can log in through PLGrid, but do not see external submissions" do
+    in_challenge!
+    sign_in_as(:szymon, teams: [ "plggother" ])
 
     get root_path
 
-    assert_match "My submissions", response.body
     assert_no_match "External submissions", response.body
   end
 

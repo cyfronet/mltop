@@ -9,6 +9,7 @@ class AccessRule < ApplicationRecord
   after_create_commit :update_memberships
 
   scope :management, -> { where(roles_mask: AccessRule.mask_for(:manager)) }
+  scope :required, -> { where(required: true) }
   validates :group_name, presence: true, uniqueness: { scope: :challenge_id }
 
   private

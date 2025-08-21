@@ -23,12 +23,12 @@ class Membership < ApplicationRecord
 
   private
     def satisfies_access_rules
-      errors.add(:user, "Only #{challenge.access_rules.map(&:group_name).join(",")} group members can join this challenge") unless satisfies_access_rules?
+      errors.add(:user, "Only #{challenge.access_rules.required.map(&:group_name).join(",")} group members can join this challenge") unless satisfies_access_rules?
     end
 
     def satisfies_access_rules?
       admin? ||
-      challenge.access_rules.size.zero? ||
-        (user.groups & challenge.access_rules.pluck(:group_name)).present?
+      challenge.access_rules.required.size.zero? ||
+        (challenge.access_rules.required.pluck(:group_name) - user.groups).empty?
     end
 end

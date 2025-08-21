@@ -56,7 +56,7 @@ class EvaluationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Challenge managers can start external users model evaluations" do
-    users("external").update(groups: [ "plggother" ])
+    challenges(:global).access_rules.required.update_all(required: false)
     create(:membership, user: users(:external), challenge: challenges(:global), roles: [])
     model =  create(:model, owner: users("external"))
     hypothesis = create(:hypothesis, model:)
