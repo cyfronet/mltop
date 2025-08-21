@@ -27,28 +27,6 @@ module Sso
       end
     end
 
-    test "meetween users has meetween_member role" do
-      plgrid_user = Sso::Plgrid.from_omniauth(auth("plgnewuser",
-        token: CcmHelpers::VALID_TOKEN, groups: [ "plggmeetween" ]))
-
-      assert plgrid_user.to_user.meetween_member?
-    end
-
-    test "meetween_member role is removed when user does not belong to plggmeetween group" do
-      user = create(:user, uid: "plgexisting_user", roles: [ :meetween_member ], provider: "plgrid")
-      plgrid_user = Sso::Plgrid.from_omniauth(auth("plgexisting_user", token: CcmHelpers::VALID_TOKEN, groups: []))
-
-      assert_equal user.id, plgrid_user.to_user.id
-      assert_not plgrid_user.to_user.meetween_member?
-    end
-
-    test "non meetween users does not have meetween_member role" do
-      plgrid_user = Sso::Plgrid.from_omniauth(auth("plgnewuser",
-        token: CcmHelpers::VALID_TOKEN, groups: [ "plggother" ]))
-
-      assert_not plgrid_user.to_user.meetween_member?
-    end
-
     test "groups are membership are updated when user groups change" do
       user = create(:user, uid: "plgexisting_user", groups: [ "plggmeetween" ], provider: "plgrid")
       membership = create(:membership, user:, challenge: challenges(:global), roles: [ :manager ])

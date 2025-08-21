@@ -15,16 +15,10 @@ class Challenge < ApplicationRecord
   validates :name, :starts_at, :ends_at, presence: true
   validates :ends_at, comparison: { greater_than: :starts_at }
 
-  validate :meetween_owner
-
   VISIBILITIES = { leaderboard_released: "leaderboard_released", scores_released: "scores_released" }
   enum :visibility, VISIBILITIES
 
   def to_s = name
-
-  def meetween_owner
-    errors.add(:owner, "not a meetween member") unless owner.meetween_member?
-  end
 
   def status
     now = Time.current

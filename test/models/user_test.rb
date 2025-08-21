@@ -10,6 +10,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "external users" do
+    users("marek").update!(groups: [ "plggmeetween" ])
+    users("szymon").update!(groups: [ "plggother" ])
+    users("external").update!(groups: [ "plggother" ])
+
+    Membership.create!(user: users("marek"), challenge: challenges(:global), roles: [ :manager ])
+    Membership.create!(user: users("szymon"), challenge: challenges(:global), roles: [ :manager ])
+    Membership.create!(user: users("external"), challenge: challenges(:global), roles: [])
+
     assert_equal [ users("external") ], User.external
   end
 end

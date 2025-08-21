@@ -22,7 +22,8 @@ module Challenges
         end
 
         def my_or_external_models
-          Model.external.or(Model.where(owner: Current.user))
+          policy_scope(Model).external.or(
+            policy_scope(Model).where(owner: Current.user))
         end
     end
   end

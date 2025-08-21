@@ -58,10 +58,6 @@ class ApplicationPolicy
       Current.challenge_member?
     end
 
-    def meetween_member?
-      Current.user.meetween_member?
-    end
-
     def leaderboard_released?
       Current.challenge.leaderboard_released?
     end
@@ -84,10 +80,6 @@ class ApplicationPolicy
 
         def challenge_participant?
           Current.challenge_member?
-        end
-
-        def meetween_member?
-          Current.user.meetween_member?
         end
 
         class Scope
