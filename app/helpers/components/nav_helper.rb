@@ -64,35 +64,34 @@ module Components::NavHelper
       private
         delegate :tag, :concat, to: :@view
 
-        private
-          def mobile_menu
-            # TODO: https://tailwindui.com/components/application-ui/navigation/tabs#component-83b472fc38b57e49a566805a5e5bb2f7
-          end
+        def mobile_menu
+          # TODO: https://tailwindui.com/components/application-ui/navigation/tabs#component-83b472fc38b57e49a566805a5e5bb2f7
+        end
 
-          def menu
-            tag.div class: "block" do
-              tag.nav class: "flex items-center justify-center gap-x-16", "aria-label" => "Tabs" do
-                @sections.map do |title, link|
-                  concat link[:enabled] ? menu_link(title, **link) : disabled_menu_link(title, **link)
-                end
+        def menu
+          tag.div class: "block" do
+            tag.nav class: "flex items-center justify-center gap-x-16", "aria-label" => "Tabs" do
+              @sections.map do |title, link|
+                concat link[:enabled] ? menu_link(title, **link) : disabled_menu_link(title, **link)
               end
             end
           end
+        end
 
-          def menu_link(title, link:, active:, condition:, **)
-            active = @manual ? active : @view.is_active_link?(@view.url_for(link), condition)
+        def menu_link(title, link:, active:, condition:, **)
+          active = @manual ? active : @view.is_active_link?(@view.url_for(link), condition)
 
-            options = { class: "#{active ? "text-fuchsia-600 bg-fuchsia-100 hover:bg-fuchsia-200 font-bold" : "text-zinc-500 bg-transparent hover:bg-gray-50 font-medium"} flex-none rounded-md group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10" }
-            options["aria-current"] = "page" if active
+          options = { class: "#{active ? "text-fuchsia-600 bg-fuchsia-100 hover:bg-fuchsia-200 font-bold" : "text-zinc-500 bg-transparent hover:bg-gray-50 font-medium"} flex-none rounded-md group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10" }
+          options["aria-current"] = "page" if active
 
-            @view.link_to link, options do
-              concat tag.span title
-              concat tag.span class: " absolute inset-x-0 ", "aria-hidden": true
-            end
+          @view.link_to link, options do
+            concat tag.span title
+            concat tag.span class: " absolute inset-x-0 ", "aria-hidden": true
           end
+        end
 
-          def disabled_menu_link(title, **)
-            tag.span title, class: "text-zinc-300 bg-transparent font-medium flex-none group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10"
-          end
+        def disabled_menu_link(title, **)
+          tag.span title, class: "text-zinc-300 bg-transparent font-medium flex-none group relative min-w-0 flex-1 overflow-hidden py-2 px-3 text-center text-sm focus:z-10"
+        end
     end
 end

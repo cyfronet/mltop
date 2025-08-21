@@ -9,6 +9,8 @@ Layout/EmptyLines:
   Enabled: true
 Layout/BlockAlignment:
   Enabled: true
+Layout/AccessModifierIndentation:
+  Enabled: true
 # Overwrite or add rules to create your own house style
 #
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
