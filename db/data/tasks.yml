@@ -177,27 +177,29 @@ LIPREAD:
   test_sets:
     LRS2: [ en-en ]
 
-# TTS:
-#   name: Text-to-Speech
-#   info: |
-#     Converts written text into natural-sounding speech, facilitating
-#     applications like audiobooks, virtual assistants, and accessibility tools
-#     for visually impaired users.
-#   description: |
-#     Text-to-Speech (TTS) technology transforms text into spoken output, enabling
-#     machines to communicate verbally. TTS is widely used in virtual assistants,
-#     audiobooks, and accessibility tools. Modern TTS systems use neural
-#     architectures, such as WaveNet and Tacotron, to generate high-quality,
-#     human-like speech. These systems can mimic natural prosody, including
-#     intonation and rhythm. Challenges in TTS include handling complex names,
-#     multiple languages, and generating emotionally expressive speech.
-#     Personalized voices are also an area of active research. TTS enhances
-#     accessibility by making content available to visually impaired users and
-#     providing hands-free interaction in various applications. Future advancements
-#     aim for real-time TTS with dynamic emotional expressions to improve user
-#     experience and engagement.
-#   from: text
-#   to: audio
+TTS:
+  name: Text-to-Speech
+  info: |
+    Converts written text into natural-sounding speech, facilitating
+    applications like audiobooks, virtual assistants, and accessibility tools
+    for visually impaired users.
+  description: |
+    Text-to-Speech (TTS) technology transforms text into spoken output, enabling
+    machines to communicate verbally. TTS is widely used in virtual assistants,
+    audiobooks, and accessibility tools. Modern TTS systems use neural
+    architectures, such as WaveNet and Tacotron, to generate high-quality,
+    human-like speech. These systems can mimic natural prosody, including
+    intonation and rhythm. Challenges in TTS include handling complex names,
+    multiple languages, and generating emotionally expressive speech.
+    Personalized voices are also an area of active research. TTS enhances
+    accessibility by making content available to visually impaired users and
+    providing hands-free interaction in various applications. Future advancements
+    aim for real-time TTS with dynamic emotional expressions to improve user
+    experience and engagement.
+  from: text
+  to: audio
+  test_sets:
+    LJSPEECH: [ en-en ]
 
 # LIPGEN:
 #   name: Lip Generation

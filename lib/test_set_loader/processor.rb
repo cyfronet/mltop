@@ -10,14 +10,15 @@ class TestSetLoader::Processor
   def self.for(dir, challenge_id, metadata)
     clazz =
       case dir.basename.to_s
-      when "MT"  then  TestSetLoader::MtProcessor
-      when "ASR" then  TestSetLoader::AsrProcessor
-      when "SQA" then  TestSetLoader::SqaProcessor
-      when "ST"  then  TestSetLoader::StProcessor
-      when "SUM" then  TestSetLoader::SumProcessor
-      when "SSUM" then TestSetLoader::SsumProcessor
-      when "SLU" then TestSetLoader::SluProcessor
+      when "MT"      then TestSetLoader::MtProcessor
+      when "ASR"     then TestSetLoader::AsrProcessor
+      when "SQA"     then TestSetLoader::SqaProcessor
+      when "ST"      then TestSetLoader::StProcessor
+      when "SUM"     then TestSetLoader::SumProcessor
+      when "SSUM"    then TestSetLoader::SsumProcessor
+      when "SLU"     then TestSetLoader::SluProcessor
       when "LIPREAD" then TestSetLoader::LipreadProcessor
+      when "TTS"     then TestSetLoader::TtsProcessor
       else TestSetLoader::UnknownProcessor
       end
 
