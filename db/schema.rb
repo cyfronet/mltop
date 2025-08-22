@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_093414) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "roles_mask", default: 0, null: false
+    t.boolean "required", default: false, null: false
     t.index ["challenge_id", "group_name"], name: "index_access_rules_on_challenge_id_and_group_name", unique: true
     t.index ["challenge_id"], name: "index_access_rules_on_challenge_id"
   end

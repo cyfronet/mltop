@@ -70,7 +70,7 @@ module Challenges
     end
 
     test "fails to create membership if user does not have proper group" do
-      challenges(:global).update(access_rules: [ AccessRule.new(group_name: "restricted") ])
+      challenges(:global).update(access_rules: [ AccessRule.new(group_name: "restricted", required: true) ])
       assert_no_difference "Membership.count" do
         post membership_path, params: {
           membership: {

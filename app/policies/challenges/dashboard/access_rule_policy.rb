@@ -22,7 +22,7 @@ module Challenges
       end
 
       def permitted_attributes
-        [ :group_name, :roles ]
+        [ :group_name, :roles, :required ]
       end
     end
   end

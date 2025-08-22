@@ -35,4 +35,16 @@ class MembershipTest < ActiveSupport::TestCase
     @challenge.access_rules.destroy_all
     assert @membership.valid?
   end
+
+  test "has to have all required groups" do
+    @user.groups = [ "plggmeetween" ]
+    assert @membership.valid?
+    create(:access_rule, required: true, challenge: @challenge, group_name: "other required")
+    assert_not @membership.valid?
+  end
+
+  test "can join challenge when only optional groups are present" do
+    @challenge.access_rules.required.destroy_all
+    assert @membership.valid?
+  end
 end

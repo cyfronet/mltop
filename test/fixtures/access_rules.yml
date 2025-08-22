@@ -2,6 +2,7 @@ meetween:
   group_name: plggmeetween
   challenge: global
   roles_mask: <%= AccessRule.mask_for(:manager) %>
+  required: true
 
 gemini:
   group_name: plgggemini
