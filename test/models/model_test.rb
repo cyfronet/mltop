@@ -8,6 +8,11 @@ class ModelTest < ActiveSupport::TestCase
   end
 
   test "find all external models" do
+    users("marek").update(groups: [ "plggmeetween" ])
+    users("external").update(groups: [ "plggother" ])
+    Membership.create!(user: users("marek"), challenge: challenges(:global), roles: [ :manager ])
+    Membership.create!(user: users("external"), challenge: challenges(:global), roles: [])
+
     external = create(:model, owner: users("external"))
     create(:model, owner: users("marek"))
 

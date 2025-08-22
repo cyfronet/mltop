@@ -13,7 +13,7 @@ if Rails.env.local?
       uid = ENV["UID"] || raise("Please put your keycloak UID to .env file (echo \"UID=my-uid\" >> .env)")
       user = User.create!(uid:, plgrid_login: "will-be-updated", provider: "plgrid",
                         email: "will@be.updated",
-                        roles: [ :admin, :meetween_member ])
+                        roles: [ :admin ])
       challenge = Challenge.create!(name: "Meetween Global Challenge",
                         starts_at: 5.days.ago,
                         ends_at: 1.month.from_now,

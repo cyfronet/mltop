@@ -19,8 +19,8 @@ class SessionsTest < ActionDispatch::IntegrationTest
     assert_no_match "External submissions", response.body
   end
 
-  test "Meetween members session is scoped to ssh certificate validation" do
-    sign_in_as("marek", teams: [ "plggmeetween" ])
+  test "Plgrid members session is scoped to ssh certificate validation" do
+    sign_in_as("marek", teams: [ "plggother" ])
     in_challenge!
 
     get submissions_path

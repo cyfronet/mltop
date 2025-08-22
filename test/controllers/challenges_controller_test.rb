@@ -31,14 +31,14 @@ class ChallengesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "You are not authorized to perform this action", flash[:alert]
   end
 
-  test "#new for meetween member" do
+  test "#new for admin" do
     sign_in_as(:marek)
     get new_challenge_path
 
     assert_response :success
   end
 
-  test "#create for meetween member" do
+  test "admin can create a new challenge" do
     sign_in_as(:marek)
     challenge = build(:challenge)
 
@@ -55,7 +55,7 @@ class ChallengesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to challenge_path(Challenge.last)
   end
 
-  test "should destroy challenge" do
+  test "admin can remove challenge" do
     sign_in_as(:marek)
 
     assert_difference("Challenge.count", -1) do

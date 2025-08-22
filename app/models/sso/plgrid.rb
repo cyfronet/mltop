@@ -19,7 +19,6 @@ module Sso
     def to_user
       if @uid
         User.find_or_initialize_by(provider: "plgrid", uid: @uid).tap do |user|
-          meetween_member? ? user.roles.add(:meetween_member) : user.roles.delete(:meetween_member)
           user.assign_attributes(attributes)
           user.save
           update_memberships(user) if user.groups_previously_changed?
@@ -28,10 +27,6 @@ module Sso
     end
 
     private
-      def meetween_member?
-        @teams.include?("plggmeetween")
-      end
-
       def attributes
         {
           name: @name,

@@ -8,7 +8,7 @@ module Challenges
       end
 
       def index?
-        meetween_member?
+        challenge_manager?
       end
     end
   end

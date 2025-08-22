@@ -35,7 +35,7 @@ module Challenges
       test "Challenge managers cannot start other managers model evaluation" do
         model =  create(:model, owner: users("szymon"))
         users(:szymon).update(groups: [ "plggmeetween" ])
-        create(:membership, user: users(:szymon), challenge: challenges(:global))
+        create(:membership, user: users(:szymon), challenge: challenges(:global), roles: [ "manager" ])
         hypothesis = create(:hypothesis, model:)
 
         challenge_member_signs_in("marek", challenges(:global), teams: [ "plggmeetween" ])
@@ -45,6 +45,8 @@ module Challenges
       end
 
       test "Challenge managers can start external users model evaluations" do
+        users("external").update(groups: [ "plggother" ])
+        create(:membership, user: users(:external), challenge: challenges(:global), roles: [])
         model =  create(:model, owner: users("external"))
         hypothesis = create(:hypothesis, model:)
 

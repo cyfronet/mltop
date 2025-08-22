@@ -8,42 +8,36 @@ module Challenges
       end
 
       def index?
-        user.meetween_member?
+        challenge_admin?
       end
 
       def show?
-        user.meetween_member?
+        challenge_admin?
       end
 
       def new?
-        user.meetween_member?
+        challenge_admin?
       end
 
       def create?
-        user.meetween_member?
+        challenge_admin?
       end
 
       def edit?
-        challenge_maintainer?
+        challenge_admin?
       end
 
       def update?
-        challenge_maintainer?
+        challenge_admin?
       end
 
       def destroy?
-        challenge_maintainer?
+        challenge_admin?
       end
 
       def permitted_attributes
         [ :name, :description, :mandatory, :target ]
       end
-
-      private
-
-        def challenge_maintainer?
-          user.admin? || (user == record.challenge.owner && user.meetween_member?)
-        end
     end
   end
 end

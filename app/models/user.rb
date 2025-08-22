@@ -10,9 +10,12 @@ class User < ApplicationRecord
   has_many :challenges, inverse_of: :owner, dependent: :destroy
   has_many :memberships, dependent: :destroy
 
-  roles :admin, :meetween_member
+  roles :admin
 
-  scope :external, -> { where(without_role(:meetween_member)) }
+  scope :external, -> do
+    joins(:memberships)
+      .where(Membership.without_role(:manager))
+  end
 
   def credentials_valid?
     ssh_credentials.valid?
@@ -21,12 +24,13 @@ class User < ApplicationRecord
   def has_hypotheses?
     models.map(&:hypotheses).flatten.any?
   end
+
+  def from_plgrid?
+    provider == "plgrid"
+  end
+
   private
     def ssh_credentials
       Plgrid::SshCredentials.new(ssh_key, ssh_certificate)
-    end
-
-    def self.without_role(*roles)
-      (arel_table[:roles_mask] & mask_for(roles)).eq(0)
     end
 end

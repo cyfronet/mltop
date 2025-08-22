@@ -4,7 +4,7 @@ marek:
   plgrid_login: plgmarek
   uid: uid-marek
   provider: plgrid
-  roles_mask: <%= User.new(roles: [:admin, :meetween_member]).roles_mask %>
+  roles_mask: <%= User.new(roles: [ :admin ]).roles_mask %>
   ssh_key: "abc"
   ssh_certificate: "def"
 
@@ -14,7 +14,7 @@ szymon:
   plgrid_login: plgszymon
   uid: uid-szymon
   provider: plgrid
-  roles_mask: <%= User.new(roles: [:meetween_member]).roles_mask %>
+  roles_mask: <%= User.new(roles: []).roles_mask %>
   ssh_key: "abc"
   ssh_certificate: "def"
 

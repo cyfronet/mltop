@@ -35,7 +35,7 @@ module Authentication
     def restore_authentication
       user = User.find_by(id: cookies.signed[:user_id])
 
-      if user && (!user.meetween_member? || user.credentials_valid?)
+      if user && (!user.from_plgrid? || user.credentials_valid?)
         authenticated_as(user)
       end
     end

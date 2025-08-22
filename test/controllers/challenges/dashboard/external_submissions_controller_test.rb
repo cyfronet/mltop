@@ -19,6 +19,11 @@ module Challenges
       end
 
       test "Challenge manager can see only not evaluated external models" do
+        users("marek").update(groups: [ "plggmeetween" ])
+        users("external").update(groups: [ "plggother" ])
+        Membership.create(user: users("marek"), challenge: challenges(:global), roles: [ :manager ])
+        Membership.create(user: users("external"), challenge: challenges(:global), roles: [])
+
         empty_external_model = create(:model, owner: users("external"))
         external_model = create_not_evaluated_model(owner: users("external"))
         internal_model = create_not_evaluated_model(owner: users("marek"))
