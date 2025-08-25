@@ -17,11 +17,13 @@ if Rails.env.local?
       challenge = Challenge.create!(name: "Meetween Global Challenge",
                         starts_at: 5.days.ago,
                         ends_at: 1.month.from_now,
-                        owner: user
+                        owner: user,
+                        access_rules: [ AccessRule.new(group_name: "plggmeetween", required: true, roles: [ :manager ]) ],
+                        visibility: :leaderboard_released
                         ).tap do |challenge|
                           challenge.description = "Meetween Global Challenge testing progress of the SpeechLLM development progress."
                         end
-      Membership.create(challenge:, user:, roles: :manager)
+      Membership.create(challenge:, user:, roles: [ :manager, :admin ])
 
       TasksLoader.new(
          File.join(Rails.root, "db", "data", "tasks.yml"),
