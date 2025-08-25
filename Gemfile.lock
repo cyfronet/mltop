@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/cyfronet/hpckit.git
-  revision: ce17740badc05bc9461f9d7fb7d780bf0ada2d69
+  revision: 2f35912580d6b500d30bca94ea30a54a2e51ea22
   branch: slurm-client
   specs:
     hpckit (0.1.0)
