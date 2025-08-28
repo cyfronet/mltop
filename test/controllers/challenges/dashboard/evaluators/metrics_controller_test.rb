@@ -16,7 +16,6 @@ class Challenges::Dashboard::Evaluators::MetricsControllerTest < ActionDispatch:
     assert_difference("evaluator.metrics.count") do
       post dashboard_evaluator_metrics_path(evaluator, format: :turbo_stream), params: { metric: {
         name: "new-metric",
-        order: "desc",
         worst_score: 20,
         best_score: 120
       } }

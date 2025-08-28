@@ -1,28 +1,23 @@
 blue:
   name: blue
-  order: desc
   evaluator: sacrebleu
   worst_score: 0
   best_score: 100
 
 chrf:
   name: chrf
-  order: desc
   evaluator: sacrebleu
   worst_score: 0
-  best_score: 100
   best_score: 100
 
 ter:
   name: ter
-  order: asc
   evaluator: sacrebleu
   worst_score: 100
   best_score: 0
 
 blueurt:
   name: blueurt
-  order: desc
   evaluator: blueurt
   worst_score: 0
   best_score: 100
