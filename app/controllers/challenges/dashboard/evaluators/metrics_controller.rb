@@ -50,7 +50,7 @@ module Challenges
           end
 
           def metric_params
-            params.require(:metric).permit(:name, :order, :worst_score, :best_score)
+            params.require(:metric).permit(:name, :worst_score, :best_score)
           end
       end
     end

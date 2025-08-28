@@ -31,7 +31,7 @@ class Top::NormalizerTest < ActiveSupport::TestCase
   end
 
   test "absolute normalization with ascending metric" do
-    @metric.update!(order: :asc, best_score: 0, worst_score: 100)
+    @metric.update!(best_score: 0, worst_score: 100)
 
     assert_equal 1, normalize(0)
     assert_equal 0.5, normalize(50)
@@ -39,7 +39,7 @@ class Top::NormalizerTest < ActiveSupport::TestCase
   end
 
   test "relative normalization with ascending metric" do
-    @metric.update!(order: :asc, best_score: 0, worst_score: 100)
+    @metric.update!(best_score: 0, worst_score: 100)
     @normalizer.relative!
 
     assert_equal 1, normalize(50)
