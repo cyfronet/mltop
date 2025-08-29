@@ -4,7 +4,7 @@ class Score < ApplicationRecord
 
   validates :value, presence: true, numericality: true
   validates :metric, uniqueness: { scope: :evaluation_id }
-  validate :value_within_range
+  validate :value_within_range, if: -> { metric.strict? }
 
   def value_within_range
     proper_range = if metric.asc?

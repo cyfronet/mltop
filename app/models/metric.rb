@@ -12,4 +12,8 @@ class Metric < ApplicationRecord
   def desc?
     best_score >= worst_score
   end
+
+  def strict?
+    strict
+  end
 end
