@@ -20,6 +20,6 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [ :name, :starts_at, :ends_at, :description, :visibility ]
+    [ :name, :starts_at, :ends_at, :description, :visibility, :logo ]
   end
 end
