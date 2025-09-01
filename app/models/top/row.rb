@@ -62,7 +62,7 @@ class Top::Row
         scores
           .group_by { |score| [ score.metric_id, score.test_set_id ] }
           .values.map do |list|
-            Score.new(metric:, value: list.sum { |item| item.value || item.metric_worst_score } / @entries_counts[test_set.id])
+            Score.new(metric:, value: list.sum { |item| item.effective_value || item.metric_worst_score } / @entries_counts[test_set.id])
           end
       end
 

@@ -22,8 +22,8 @@ module ScoresHelper
   end
 
   def score_cell(score)
-    content_tag(:td, score&.value, class: "score-cell", style: "background-color: #{score_color(score)};") do
-      number_with_precision(score&.value, precision: 3) || "N/A"
+    content_tag(:td, score&.effective_value, class: "score-cell", style: "background-color: #{score_color(score)};") do
+      number_with_precision(score&.effective_value, precision: 3) || "N/A"
     end
   end
 end

@@ -55,7 +55,7 @@ class Top::Rows
 
       def score(test_set:, metric:, test_set_entry: nil)
         score = @row.score(test_set:, metric:, test_set_entry:)
-        normalized = @normalizer.normalize(score&.value, test_set, metric, test_set_entry)
+        normalized = @normalizer.normalize(score&.effective_value, test_set, metric, test_set_entry)
 
         Top::ScoreWithNormalization.new(score, normalized)
       end

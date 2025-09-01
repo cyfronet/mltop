@@ -14,4 +14,15 @@ class Score < ApplicationRecord
     end
     errors.add(:value, "is not within the range of the metric") unless proper_range
   end
+
+  def effective_value
+    return nil unless value
+    return value if metric.strict?
+
+    if metric.asc?
+      value.clamp(metric.best_score, metric.worst_score)
+    else
+      value.clamp(metric.worst_score, metric.best_score)
+    end
+  end
 end

@@ -41,7 +41,7 @@ module Top
       def calculate_col_worstbest(test_set:, metric:, test_set_entry: nil)
         if relative?
           minmax = @rows
-            .map { |row| row.score(test_set:, metric:, test_set_entry:).value }
+            .map { |row| row.score(test_set:, metric:, test_set_entry:).effective_value }
             .compact
             .minmax
 
