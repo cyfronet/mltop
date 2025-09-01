@@ -4,10 +4,10 @@
       <div class="flex">
         <div class="flex shrink-0 items-center">
           <%= link_to root_path do %>
-            <%= image_tag "logo.webp", class: "h-8 w-auto", alt: "MLTop" %>
+            <%= image_tag Current.challenge&.logo&.presence || "logo.webp", class: "h-8 w-auto", alt: "SPEECHM" %>
           <% end %>
           <% if Current.challenge %>
-            <div class="ml-4 text-gray-500"> Challenge: <%= Current.challenge.name %></div>
+            <div class="ml-4 text-gray-500"> <%= Current.challenge.name %></div>
           <% end %>
         </div>
       </div>
