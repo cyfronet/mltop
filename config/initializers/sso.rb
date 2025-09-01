@@ -11,8 +11,18 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       host: Rails.application.credentials.dig(:sso, :plgrid, :host),
       realm: Rails.application.credentials.dig(:sso, :plgrid, :realm),
       identifier: Rails.application.credentials.dig(:sso, :plgrid, :identifier),
-      secret: Rails.application.credentials.dig(:sso, :plgrid, :secret),
-      redirect_uri: "#{Rails.application.credentials.dig(:sso, :plgrid, :redirect_uri_base)}/auth/plgrid/callback"
+      secret: Rails.application.credentials.dig(:sso, :plgrid, :secret)
+    },
+    setup: lambda { |env|
+      request = Rack::Request.new(env)
+
+      redirect_uri = [
+        Rails.application.credentials.dig(:sso, :plgrid, :redirect_uri_base),
+        request.script_name,
+        "/auth/plgrid/callback"
+      ].join
+
+      env["omniauth.strategy"].options[:client_options][:redirect_uri] = redirect_uri
     }
 
   provider :github,

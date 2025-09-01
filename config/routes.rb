@@ -62,9 +62,9 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Authentication
-  direct(:plgrid_sign_in) { "/auth/plgrid" }
-  direct(:github_sign_in) { "/auth/github" }
-  direct(:google_sign_in) { "/auth/google_oauth2" }
+  direct(:plgrid_sign_in) { [ request.script_name, "/auth/plgrid" ].join }
+  direct(:github_sign_in) { [ request.script_name, "/auth/github" ].join }
+  direct(:google_sign_in) { [ request.script_name, "/auth/google_oauth2" ].join }
   get "auth/:provider/callback", to: "sessions#create"
   get "auth/failure", to: redirect("/")
   get "sign_in", to: "sessions#new", as: "sign_in"
