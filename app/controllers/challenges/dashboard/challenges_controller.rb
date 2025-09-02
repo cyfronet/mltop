@@ -7,7 +7,7 @@ module Challenges
       end
 
       def update
-        if @challenge.update(permitted_attributes(@challenge))
+        if @challenge.update(update_attributes)
           redirect_to edit_dashboard_challenge_path(@challenge), notice: "Challenge was successfully updated."
         else
           render :edit, status: :unprocessable_entity
@@ -23,6 +23,14 @@ module Challenges
       end
 
       private
+        def update_attributes
+          if permitted_attributes(@challenge)[:remove_logo]
+            permitted_attributes(@challenge).except(:remove_logo).merge({ logo: nil })
+          else
+            permitted_attributes(@challenge)
+          end
+        end
+
         def set_and_authorize_challenge
           @challenge = Current.challenge
           authorize(@challenge)
