@@ -24,10 +24,10 @@ module Challenges
 
       private
         def update_attributes
-          if permitted_attributes(@challenge)[:remove_logo]
-            permitted_attributes(@challenge).except(:remove_logo).merge({ logo: nil })
+          if permitted_attributes(@challenge)[:use_default_logo] == "1"
+            permitted_attributes(@challenge).except(:use_default_logo).merge({ logo: nil })
           else
-            permitted_attributes(@challenge)
+            permitted_attributes(@challenge).except(:use_default_logo)
           end
         end
 
