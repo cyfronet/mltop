@@ -11,6 +11,7 @@ class Challenge < ApplicationRecord
   has_many :access_rules, dependent: :destroy
 
   has_rich_text :description
+  has_one_attached :logo
 
   validates :name, :starts_at, :ends_at, presence: true
   validates :ends_at, comparison: { greater_than: :starts_at }

@@ -3,11 +3,13 @@
     <div class="flex h-16 justify-between">
       <div class="flex">
         <div class="flex shrink-0 items-center">
-          <%= link_to root_path do %>
-            <%= image_tag "logo.webp", class: "h-8 w-auto", alt: "MLTop" %>
-          <% end %>
-          <% if Current.challenge %>
-            <div class="ml-4 text-gray-500"> Challenge: <%= Current.challenge.name %></div>
+          <% cache Current.challenge do %>
+            <%= link_to root_path do %>
+              <%= image_tag Current.challenge&.logo&.presence || "logo.webp", class: "h-8 w-auto", alt: Current.challenge&.name || "SPEECHM" %>
+            <% end %>
+            <% if Current.challenge %>
+              <div class="ml-4 text-gray-500"> <%= Current.challenge.name %></div>
+            <% end %>
           <% end %>
         </div>
       </div>
