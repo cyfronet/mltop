@@ -1,6 +1,4 @@
 class Evaluation::Script < HPCKit::Slurm::Script
-  include Rails.application.routes.url_helpers
-
   GROUP_DIR = "/net/pr2/projects/plgrid/plggmeetween/mltop"
 
   def initialize(evaluation, token)
@@ -9,20 +7,15 @@ class Evaluation::Script < HPCKit::Slurm::Script
     super(evaluation.evaluator.script, script_options)
   end
 
-  def default_url_options
-    Rails.application.config.action_mailer.default_url_options
-      .merge(script_name: "/#{ChallengeSlug.encode(challenge.id)}")
-  end
-
   private
     def script_options
       {
         current_working_directory: GROUP_DIR,
         environment: [
-          "INPUT_URL=#{url_for(input)}",
-          "GROUNDTRUTH_URL=#{url_for(groundtruth)}",
-          "HYPOTHESIS_URL=#{url_for(hypothesis)}",
-          internal.attached? ? "INTERNAL_URL=#{url_for(internal)}" : nil,
+          "INPUT_URL=#{blob_url(input)}",
+          "GROUNDTRUTH_URL=#{blob_url(groundtruth)}",
+          "HYPOTHESIS_URL=#{blob_url(hypothesis)}",
+          internal.attached? ? "INTERNAL_URL=#{blob_url(internal)}" : nil,
           "RESULTS_URL=#{results_upload_url}",
           "SOURCE_LANGUAGE=#{source}",
           "TARGET_LANGUAGE=#{target}",
@@ -48,10 +41,6 @@ class Evaluation::Script < HPCKit::Slurm::Script
       @evaluation.hypothesis.test_set_entry.internal
     end
 
-    def results_upload_url
-      evaluation_scores_url(@evaluation)
-    end
-
     def source
       @evaluation.hypothesis.test_set_entry.source_language
     end
@@ -66,5 +55,18 @@ class Evaluation::Script < HPCKit::Slurm::Script
 
     def challenge
       Challenge.joins(models: :hypotheses).find_by(hypotheses: { id: @evaluation.hypothesis })
+    end
+
+    def blob_url(blob)
+      Rails.application.routes.url_helpers.rails_blob_url(blob, default_url_options)
+    end
+
+    def results_upload_url
+      Rails.application.routes.url_helpers.evaluation_scores_url(@evaluation, default_url_options)
+    end
+
+    def default_url_options
+      Rails.application.config.action_mailer.default_url_options
+        .merge(script_name: "/#{ChallengeSlug.encode(challenge.id)}")
     end
 end
