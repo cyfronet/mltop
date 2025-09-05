@@ -1,4 +1,6 @@
 class Challenge < ApplicationRecord
+  INTRODUCTION = YAML.load_file(File.join(Rails.root, "config", "challenges", "default_texts.yml"))["introduction"]
+  CALL_TO_ACTION = YAML.load_file(File.join(Rails.root, "config", "challenges", "default_texts.yml"))["call_to_action"]
   belongs_to :owner, required: true, class_name: "User"
 
   has_many :models, dependent: :destroy
@@ -11,6 +13,9 @@ class Challenge < ApplicationRecord
   has_many :access_rules, dependent: :destroy
 
   has_rich_text :description
+  has_rich_text :introduction
+  has_rich_text :call_to_action
+
   has_one_attached :logo
 
   validates :name, :starts_at, :ends_at, presence: true
@@ -18,6 +23,8 @@ class Challenge < ApplicationRecord
 
   VISIBILITIES = { leaderboard_released: "leaderboard_released", scores_released: "scores_released" }
   enum :visibility, VISIBILITIES
+
+  before_create :set_default_texts
 
   def to_s = name
 
@@ -51,4 +58,9 @@ class Challenge < ApplicationRecord
 
   private
     def roles_manager = Challenge::RolesManager.new(self)
+
+    def set_default_texts
+      self.introduction = INTRODUCTION if self.introduction.empty?
+      self.call_to_action = CALL_TO_ACTION if self.call_to_action.empty?
+    end
 end
