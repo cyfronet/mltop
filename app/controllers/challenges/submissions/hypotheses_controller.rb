@@ -7,10 +7,9 @@ module Challenges
         authorize(@hypothesis)
 
         if @hypothesis.save
-          flash.now[:notice] = "Hypothesis succesfully created"
+          redirect_back fallback_location: model_path(@model), notice: "Hypothesis succesfully created"
         else
-          flash.now[:alert] = "Unable to create hypothesis"
-          render(:create, status: :bad_request)
+          redirect_back fallback_location: model_path(@model), alert: "Unable to create hypothesis"
         end
       end
 
