@@ -6,15 +6,10 @@ namespace :db do
 
     def models_to_export
       [ User,
-      # Challenge,
-      AccessRule,
-      Consent,
       TestSet,
       Evaluator,
       Model,
       Task,
-      Membership,
-      Agreement,
       TaskTestSet,
       TaskModel,
       TaskEvaluator,
@@ -110,6 +105,7 @@ namespace :db do
     data = JSON.parse(File.read(file))
 
     ActiveRecord::Base.transaction do
+      iwslt = Challenge.create(name: "IWSLT", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
       data.each do |model_name, records|
         model = model_name.constantize
         puts "Importing #{records.size} #{model_name} records..."
@@ -131,6 +127,7 @@ namespace :db do
               attrs[key] = value.to_i + OFFSET
             end
           end
+          attrs.merge!({ challenge_id: iwslt.id }) if model.reflect_on_association(:challenge)
 
           record = model.new(attrs).tap { |record| record.save(validate: false) }
 
