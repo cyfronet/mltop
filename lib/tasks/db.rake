@@ -102,6 +102,12 @@ namespace :db do
       end
     end
 
+    def create_memberships(challenge)
+      User.where("id > ?", 10000).map do |user|
+        Membership.create(challenge:, user:)
+      end
+    end
+
     data = JSON.parse(File.read(file))
 
     ActiveRecord::Base.transaction do
@@ -143,6 +149,7 @@ namespace :db do
           end
         end
       end
+      create_memberships(iwslt)
       deduplicate_users
     end
     puts "✅ Import finished with offset #{OFFSET}"
