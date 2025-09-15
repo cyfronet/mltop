@@ -10,8 +10,6 @@ namespace :db do
       Evaluator,
       Model,
       Task,
-      TaskTestSet,
-      TaskModel,
       TaskEvaluator,
       TestSetEntry,
       Metric,
@@ -133,6 +131,13 @@ namespace :db do
               attrs[key] = value.to_i + OFFSET
             end
           end
+
+          if model_name == "TestSetEntry"
+            task_test_set = TaskTestSet.find_or_create_by(test_set_id: attrs.delete("test_set_id"), task_id: attrs.delete("task_id"))
+            attrs.merge!({ task_test_set_id: task_test_set.id })
+          end
+
+          attrs.delete("order") if model_name == "Metric"
           attrs.merge!({ challenge_id: iwslt.id }) if model.reflect_on_association(:challenge)
 
           record = model.new(attrs).tap { |record| record.save(validate: false) }
