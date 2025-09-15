@@ -2,10 +2,10 @@
 <div class="w-full flex flex-col gap-4 mb-10">
   <div class="flex flex-row gap-8 ms-14 space-x-10">
     <div class="w-1/2 flex flex-col gap-8 mt-10">
-      <h1 class="text-zinc-700 font-semibold text-5xl">
+      <h1 class="font-semibold text-5xl">
         Let's challenge speech models together!
       </h1>
-      <div class="flex flex-row gap-8 text-xl">
+      <div class="flex flex-row gap-8 text-xl dark:text-zinc-700">
         <div class="flex flex-row gap-2 bg-slate-100 p-2 rounded-xl">
           <%= color_picker_icon %> Test
         </div>
@@ -16,7 +16,7 @@
           <%= lightbulb_icon %> Improve speech models
         </div>
       </div>
-      <h2 class="mt-5 text-zinc-700 text-xl">
+      <h2 class="mt-5 text-xl">
         SPEECHM is a platform for running and evaluating speech model challenges - using real-world data and open, trusted metrics.
       </h2>
       <div class="flex gap-4">
@@ -55,7 +55,7 @@
       <%= link_to "Join a challenge", challenges_path, class: "btn btn-primary-outline bg-inherit" %>
     </div>
   </div>
-  <div class="flex flex-col gap-y-9 text-zinc-700">
+  <div class="flex flex-col gap-y-9 text-zinc-700 dark:text-zinc-200">
     <div class="flex flex-col gap-y-4">
       <h2 class="bg-linear-to-r from-orange-500 to-fuchsia-600 text-transparent bg-clip-text text-center font-bold text-4xl"> Why SPEECHM? </h2>
       <h3 class="text-center text-2xl"> Empowering open, fair, and practical evaluation of speech technolgies. </h3>
@@ -83,7 +83,7 @@
                 Open Science
               </li>
               <li class="flex items-center gap-2">
-                <%= github_icon("h-8 fill-[#24292F]")%> Github
+                <%= github_icon("h-8 fill-[#24292F] dark:fill-[#ffffff]")%> Github
               </li>
               <li class="flex items-center gap-2">
                 <%= image_tag("logos/hugging_face.png", class: "h-8")%>
@@ -94,7 +94,7 @@
         </div>
       </div>
       <div>
-        <h3 class="text-md text-center font-semibold mb-4 text-zinc-700 text-xl">Partners</h3>
+        <h3 class="text-md text-center font-semibold mb-4 text-xl">Partners</h3>
         <div class="flex flex-wrap items-center justify-center gap-10">
           <%= image_tag("logos/translated.png", class: "h-8") %>
           <%= image_tag("logos/kit.png", class: "h-8") %>
