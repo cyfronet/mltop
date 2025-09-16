@@ -1,7 +1,7 @@
 class Evaluator < ApplicationRecord
   belongs_to :challenge, required: false
 
-  has_many :task_evaluators
+  has_many :task_evaluators, dependent: :destroy
   has_many :tasks, through: :task_evaluators
 
   has_many :metrics, dependent: :destroy
