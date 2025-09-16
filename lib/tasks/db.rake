@@ -109,53 +109,55 @@ namespace :db do
     data = JSON.parse(File.read(file))
 
     ActiveRecord::Base.transaction do
-      iwslt = Challenge.create(name: "IWSLT", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
-      data.each do |model_name, records|
-        model = model_name.constantize
-        puts "Importing #{records.size} #{model_name} records..."
+      Hypothesis.no_touching do
+        iwslt = Challenge.create(name: "IWSLT", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
+        data.each do |model_name, records|
+          model = model_name.constantize
+          puts "Importing #{records.size} #{model_name} records..."
 
-        records.each do |attrs|
-          attachments = {}
+          records.each do |attrs|
+            attachments = {}
 
-          model.reflect_on_all_attachments.each do |reflection|
-            name = reflection.name.to_s
-            if attrs.key?(name)
-              attachments[name] = attrs.delete(name)
+            model.reflect_on_all_attachments.each do |reflection|
+              name = reflection.name.to_s
+              if attrs.key?(name)
+                attachments[name] = attrs.delete(name)
+              end
             end
-          end
 
-          attrs["id"] = attrs["id"].to_i + OFFSET
+            attrs["id"] = attrs["id"].to_i + OFFSET
 
-          attrs.each do |key, value|
-            if key.ends_with?("_id") && value.present?
-              attrs[key] = value.to_i + OFFSET
+            attrs.each do |key, value|
+              if key.ends_with?("_id") && value.present?
+                attrs[key] = value.to_i + OFFSET
+              end
             end
-          end
 
-          if model_name == "TestSetEntry"
-            task_test_set = TaskTestSet.find_or_create_by(test_set_id: attrs.delete("test_set_id"), task_id: attrs.delete("task_id"))
-            attrs.merge!({ task_test_set_id: task_test_set.id })
-          end
+            if model_name == "TestSetEntry"
+              task_test_set = TaskTestSet.find_or_create_by(test_set_id: attrs.delete("test_set_id"), task_id: attrs.delete("task_id"))
+              attrs.merge!({ task_test_set_id: task_test_set.id })
+            end
 
-          attrs.delete("order") if model_name == "Metric"
-          attrs.merge!({ challenge_id: iwslt.id }) if model.reflect_on_association(:challenge)
+            attrs.delete("order") if model_name == "Metric"
+            attrs.merge!({ challenge_id: iwslt.id }) if model.reflect_on_association(:challenge)
 
-          record = model.new(attrs).tap { |record| record.save(validate: false) }
+            record = model.new(attrs).tap { |record| record.save(validate: false) }
 
-          attachments.each do |name, blob_info|
-            if blob_info.class == Hash
-              full_path = EXPORT_DIR.join(blob_info["path"])
-              record.public_send(name)
-                .attach(io: File.open(full_path),
-                filename: File.basename(full_path),
-                content_type: Marcel::MimeType.for(full_path)
-                )
+            attachments.each do |name, blob_info|
+              if blob_info.class == Hash
+                full_path = EXPORT_DIR.join(blob_info["path"])
+                record.public_send(name)
+                  .attach(io: File.open(full_path),
+                  filename: File.basename(full_path),
+                  content_type: Marcel::MimeType.for(full_path)
+                  )
+              end
             end
           end
         end
+        create_memberships(iwslt)
+        deduplicate_users
       end
-      create_memberships(iwslt)
-      deduplicate_users
     end
     puts "✅ Import finished with offset #{OFFSET}"
   end
