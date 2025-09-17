@@ -22,7 +22,7 @@ class Model::Scores
 
     if value
       normalized = Top::Normalizer.normalize(value, @metric.best_score, @metric.worst_score, @metric.asc?)
-      Top::ScoreWithNormalization.new(score: Score.new(value:), normalized: normalized)
+      Top::ScoreWithNormalization.new(score: Score.new(value:, metric: @metric), normalized: normalized)
     end
   end
 
