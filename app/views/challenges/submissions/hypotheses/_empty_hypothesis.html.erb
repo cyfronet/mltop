@@ -22,7 +22,6 @@
             <p data-direct-upload-target="text">Upload hypothesis</p>
             <%= f.file_field :input, class: "hidden", direct_upload: true, data: {direct_upload_target: "input", action: "direct-upload#upload"} %>
           </label>
-          <%= f.hidden_field :model_id, value: empty_hypothesis.model_id %>
           <%= f.hidden_field :test_set_entry_id, value: empty_hypothesis.entry_id %>
         <% end %>
       </div>
