@@ -13,7 +13,6 @@ export default class extends Controller {
     Array.from(this.inputTarget.files).forEach(file => {
       this.uploadFile(file)
     })
-    this.inputTarget.value = null
     this.element.closest('form').submit()
   }
 
@@ -50,11 +49,8 @@ export default class extends Controller {
         // Handle the error
         console.error("Direct upload failed:", error)
       } else {
-        const hiddenField = document.createElement('input')
-        hiddenField.setAttribute("type", "hidden")
-        hiddenField.setAttribute("value", blob.signed_id)
-        hiddenField.name = this.inputTarget.name
-        this.element.closest('form').appendChild(hiddenField)
+        this.inputTarget.setAttribute("type", "hidden")
+        this.inputTarget.setAttribute("value", blob.signed_id)
       }
     })
   }
