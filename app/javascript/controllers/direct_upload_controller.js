@@ -10,10 +10,11 @@ export default class extends Controller {
 
   upload() {
     this.textTarget.innerHTML = "Uploading..."
-    Array.from(this.inputTarget.files).forEach(file => {
-      this.uploadFile(file)
+    const files = Array.from(this.inputTarget.files)
+    this.uploadFiles(files).then(() => {
+      this.inputTarget.value = null
+      this.element.closest('form').submit()
     })
-    this.element.closest('form').submit()
   }
 
   dragenter(event) {
@@ -30,17 +31,28 @@ export default class extends Controller {
     event.preventDefault()
     const files = event.dataTransfer.files
     this.textTarget.innerHTML = "Uploading..."
-    Array.from(files).forEach(file => {
-      this.uploadFile(file)
+    this.uploadFiles(files).then(() => {
+      this.inputTarget.value = null
+      this.element.closest('form').submit()
     })
-    this.element.closest('form').submit()
   }
 
   dragover(event) {
     event.preventDefault()
   }
 
-  uploadFile(file) {
+  uploadFiles(files) {
+    // Create an array of promises for all uploads
+    this.uploadPromises = Array.from(files).map(file => {
+      return new Promise((resolve) => {
+        this.uploadFile(file, resolve)
+      })
+    })
+
+    return Promise.all(this.uploadPromises)
+  }
+
+  uploadFile(file, resolve) {
     const url = this.inputTarget.dataset.directUploadUrl
     const upload = new DirectUpload(file, url)
 
@@ -49,8 +61,12 @@ export default class extends Controller {
         // Handle the error
         console.error("Direct upload failed:", error)
       } else {
-        this.inputTarget.setAttribute("type", "hidden")
-        this.inputTarget.setAttribute("value", blob.signed_id)
+        const hiddenField = document.createElement('input')
+        hiddenField.setAttribute("type", "hidden")
+        hiddenField.setAttribute("value", blob.signed_id)
+        hiddenField.name = this.inputTarget.name
+        this.element.closest('form').appendChild(hiddenField)
+        resolve()
       }
     })
   }
