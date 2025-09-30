@@ -1,7 +1,7 @@
 namespace :db do
   desc "Import records from JSON dump with ID offset"
   task import_json: :environment do
-    EXPORT_DIR = Rails.root.join("export")
+    EXPORT_DIR = ENV["EXPORT_PATH"].present? ? Pathname.new(ENV["EXPORT_PATH"]) : Rails.root.join("export")
     BLOBS_DIR  = EXPORT_DIR.join("blobs")
     file = EXPORT_DIR.join("db_export.json")
     OFFSET = 10_000
