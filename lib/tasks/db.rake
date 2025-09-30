@@ -73,7 +73,7 @@ namespace :db do
                 full_path = EXPORT_DIR.join(blob_info["path"])
                 record.public_send(name)
                   .attach(io: File.open(full_path),
-                  filename: File.basename(full_path),
+                  filename: File.basename(full_path)..sub(/^\d+_/, ""),
                   content_type: Marcel::MimeType.for(full_path)
                   )
               end
