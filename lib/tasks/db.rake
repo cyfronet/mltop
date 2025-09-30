@@ -35,7 +35,7 @@ namespace :db do
 
     ActiveRecord::Base.transaction do
       Hypothesis.no_touching do
-        iwslt = Challenge.create(name: "IWSLT", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
+        iwslt = Challenge.create(name: "IWSLT 2025", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
         data.each do |model_name, records|
           model = model_name.constantize
           puts "Importing #{records.size} #{model_name} records..."
