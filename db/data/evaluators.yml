@@ -27,15 +27,12 @@ screbleu:
   host: ares.cyfronet.pl
   metrics:
     - name: bleu
-      order: desc
       worst_score: 0
       best_score: 100
     - name: chrf
-      order: desc
       worst_score: 0
       best_score: 100
     - name: ter
-      order: asc
       worst_score: 100
       best_score: 0
   tasks:
@@ -74,7 +71,6 @@ screbleu:
 #   host: athena.cyfronet.pl
 #   metrics:
 #     - name: bleurt
-#       order: asc
 #       worst_score: 1
 #       best_score: 0
 #   tasks:
@@ -112,7 +108,6 @@ wer:
   host: ares.cyfronet.pl
   metrics:
     - name: wer
-      order: asc
       worst_score: 100
       best_score: 0
   tasks:
@@ -150,7 +145,6 @@ wer_tsv:
   host: ares.cyfronet.pl
   metrics:
     - name: wer
-      order: asc
       worst_score: 100
       best_score: 0
   tasks:
@@ -188,15 +182,12 @@ rogue:
   host: ares.cyfronet.pl
   metrics:
     - name: R-1
-      order: desc
       worst_score: 0
       best_score: 1
     - name: R-2
-      order: desc
       worst_score: 0
       best_score: 1
     - name: R-L
-      order: desc
       worst_score: 0
       best_score: 1
   tasks:
@@ -237,7 +228,6 @@ accuracy:
   host: ares.cyfronet.pl
   metrics:
     - name: accuracy
-      order: desc
       worst_score: 0
       best_score: 1
   tasks:
@@ -275,7 +265,6 @@ exact-match:
   host: ares.cyfronet.pl
   metrics:
     - name: exact-match
-      order: desc
       worst_score: 0
       best_score: 1
   tasks:
@@ -313,7 +302,6 @@ f1-score:
   host: ares.cyfronet.pl
   metrics:
     - name: f1-score
-      order: desc
       worst_score: 0
       best_score: 1
   tasks:
@@ -353,7 +341,6 @@ f1-score:
 #   host: athena.cyfronet.pl
 #   metrics:
 #     - name: comet
-#       order: desc
 #       worst_score: 0
 #       best_score: 1
 #   tasks:
@@ -395,7 +382,6 @@ f1-score:
 #   host: ares.cyfronet.pl
 #   metrics:
 #     - name: characTER
-#       order: asc
 #       worst_score: 1
 #       best_score: 0
 #   tasks:
@@ -437,15 +423,12 @@ ic:
   host: ares.cyfronet.pl
   metrics:
     - name: intent_accuracy
-      order: desc
       worst_score: 0
       best_score: 1
     # - name: slot_type_f1
-    #   order: desc
     #   worst_score: 0
     #   best_score: 1
     # - name: slot_value_cer
-    #   order: asc
     #   worst_score: 1
     #   best_score: 0
   tasks:
@@ -484,11 +467,9 @@ sqa-hf:
   host: ares.cyfronet.pl
   metrics:
     - name: exact_match
-      order: desc
       worst_score: 0
       best_score: 100
     - name: f1
-      order: desc
       worst_score: 0
       best_score: 1
   tasks:
@@ -528,6 +509,5 @@ sqa-hf:
 #   host: athena.cyfronet.pl
 #   metrics:
 #     - name: f1-score
-#       order: desc
 #   tasks:
 #     - SQA
