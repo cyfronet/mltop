@@ -4,7 +4,6 @@ namespace :db do
     EXPORT_DIR = ENV["EXPORT_PATH"].present? ? Pathname.new(ENV["EXPORT_PATH"]) : Rails.root.join("export")
     BLOBS_DIR  = EXPORT_DIR.join("blobs")
     file = EXPORT_DIR.join("db_export.json")
-    OFFSET = 10_000
 
     def deduplicate_users
       puts "Deduplicating users"
@@ -32,10 +31,11 @@ namespace :db do
     end
 
     data = JSON.parse(File.read(file))
+    ids = {}
 
     ActiveRecord::Base.transaction do
       Hypothesis.no_touching do
-        iwslt = Challenge.create(name: "IWSLT 2025", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
+        iwslt = Challenge.create!(name: "IWSLT 2025", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
         data.each do |model_name, records|
           model = model_name.constantize
           puts "Importing #{records.size} #{model_name} records..."
@@ -50,11 +50,12 @@ namespace :db do
               end
             end
 
-            attrs["id"] = attrs["id"].to_i + OFFSET
+            old_id = attrs.delete("id")
 
             attrs.each do |key, value|
-              if key.ends_with?("_id") && value.present?
-                attrs[key] = value.to_i + OFFSET
+              if key.ends_with?("_id") && value.present? && key != "job_id"
+                klass = model.reflect_on_association(key[0..-4].to_sym).klass
+                attrs[key] = ids.fetch([ klass, value.to_i ])
               end
             end
 
@@ -64,16 +65,17 @@ namespace :db do
             end
 
             attrs.delete("order") if model_name == "Metric"
-            attrs.merge!({ challenge_id: iwslt.id }) if model.reflect_on_association(:challenge)
+            attrs[:challenge_id] = iwslt.id if model.reflect_on_association(:challenge)
 
             record = model.new(attrs).tap { |record| record.save(validate: false) }
+            ids[[ model, old_id ]] = record.id
 
             attachments.each do |name, blob_info|
               if blob_info.class == Hash
                 full_path = EXPORT_DIR.join(blob_info["path"])
                 record.public_send(name)
                   .attach(io: File.open(full_path),
-                  filename: File.basename(full_path)..sub(/^\d+_/, ""),
+                  filename: File.basename(full_path).sub(/^\d+_/, ""),
                   content_type: Marcel::MimeType.for(full_path)
                   )
               end
@@ -84,6 +86,6 @@ namespace :db do
         deduplicate_users
       end
     end
-    puts "✅ Import finished with offset #{OFFSET}"
+    puts "✅ Import finished"
   end
 end
