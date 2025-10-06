@@ -24,14 +24,15 @@ namespace :db do
       end
     end
 
-    def create_memberships(challenge)
-      User.where("id > ?", 10000).map do |user|
-        Membership.create(challenge:, user:)
+    def create_memberships(challenge, user_ids)
+      user_ids.each do |user_id|
+        Membership.create(challenge:, user_id:)
       end
     end
 
     data = JSON.parse(File.read(file))
     ids = {}
+    user_ids = []
 
     ActiveRecord::Base.transaction do
       Hypothesis.no_touching do
@@ -70,6 +71,8 @@ namespace :db do
             record = model.new(attrs).tap { |record| record.save(validate: false) }
             ids[[ model, old_id ]] = record.id
 
+            user_ids << record.id if model_name == "User"
+
             attachments.each do |name, blob_info|
               if blob_info.class == Hash
                 full_path = EXPORT_DIR.join(blob_info["path"])
@@ -82,7 +85,7 @@ namespace :db do
             end
           end
         end
-        create_memberships(iwslt)
+        create_memberships(iwslt, user_ids)
         deduplicate_users
       end
     end
