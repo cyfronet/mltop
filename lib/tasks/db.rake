@@ -1,6 +1,6 @@
 namespace :db do
   task dump_to_json: :environment do
-    EXPORT_DIR = Rails.root.join("export")
+    EXPORT_DIR = ENV["EXPORT_PATH"].present? ? Pathname.new(ENV["EXPORT_PATH"]) : Rails.root.join("export")
     BLOBS_DIR  = EXPORT_DIR.join("blobs")
     FileUtils.mkdir_p(BLOBS_DIR)
 
@@ -25,19 +25,23 @@ namespace :db do
       { id: blob.id, path: blob_path.relative_path_from(EXPORT_DIR).to_s }
     end
 
-    def save_attachments(record, attachment_names)
+    def save_attachments(record, attachment_names, blob_ids)
       result = {}
       attachment_names.each do |attachment_name|
         attachment = record.send(attachment_name)
         if attachment.class == ActiveStorage::Attached::One
           blob = attachment.blob
           next unless blob
+          blob_ids[blob.id] = blob.created_at
           result[attachment.name] = save_blob(blob)
         else
           blobs = attachment.blobs
           next if blobs.empty?
 
-          result[attachment.name] = blobs.map { |blob| save_blob(blob) }
+          result[attachment.name] = blobs.map do |blob|
+            blob_ids[blob.id] = blob.created_at
+            save_blob(blob)
+          end
         end
       end
       result
@@ -50,6 +54,7 @@ namespace :db do
     end
 
     data = {}
+    data["blobs"] = {}
     Rails.application.eager_load!
     models_to_export.each do |model|
       puts "Exporting #{model.name}..."
@@ -58,7 +63,7 @@ namespace :db do
       rich_text_names = model.rich_text_association_names.map { |name| name.to_s.delete_prefix("rich_text_").to_sym }
       records = model.all.map do |record|
         attrs = record.attributes
-        attrs.merge!(save_attachments(record, attachment_names)) if attachment_names
+        attrs.merge!(save_attachments(record, attachment_names, data["blobs"])) if attachment_names
         attrs.merge!(rich_text_attributes(record, rich_text_names)) if rich_text_names
         attrs
       end
