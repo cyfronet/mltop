@@ -37,6 +37,7 @@ namespace :db do
     ActiveRecord::Base.transaction do
       Hypothesis.no_touching do
         iwslt = Challenge.create!(name: "IWSLT 2025", owner: User.find_by(plgrid_login: "plgkasztelnik"), starts_at: "2025-04-01".to_date.beginning_of_day,  ends_at: "2025-04-19".to_date.end_of_day)
+        blobs = data.delete("blobs")
         data.each do |model_name, records|
           model = model_name.constantize
           puts "Importing #{records.size} #{model_name} records..."
@@ -76,11 +77,16 @@ namespace :db do
             attachments.each do |name, blob_info|
               if blob_info.class == Hash
                 full_path = EXPORT_DIR.join(blob_info["path"])
+                filename = File.basename(full_path)
                 record.public_send(name)
                   .attach(io: File.open(full_path),
-                  filename: File.basename(full_path).sub(/^\d+_/, ""),
+                  filename: filename.sub(/^\d+_/, ""),
                   content_type: Marcel::MimeType.for(full_path)
                   )
+
+                created_at = blobs.fetch(filename[/^\d+/])
+                record.public_send(name).update!(created_at:)
+                record.public_send(name).blob.update!(created_at:)
               end
             end
           end
