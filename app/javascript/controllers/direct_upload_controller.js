@@ -30,6 +30,13 @@ export default class extends Controller {
   drop(event) {
     event.preventDefault()
     const files = event.dataTransfer.files
+    const allowsMultiple = this.inputTarget.hasAttribute("multiple")
+
+    if (!allowsMultiple && files.length > 1) {
+      this.addErrorMessage()
+      return
+    }
+
     this.textTarget.innerHTML = "Uploading..."
     this.uploadFiles(files).then(() => {
       this.inputTarget.value = null
@@ -69,5 +76,18 @@ export default class extends Controller {
         resolve()
       }
     })
+  }
+
+  addErrorMessage() {
+    const errorMessage = document.createElement("div")
+    errorMessage.classList.add("file-upload-error", "text-red-500", "text-sm", "ml-2", "mt-1", "opacity-100", "transition-opacity", "duration-500")
+    errorMessage.textContent = "You can only upload one file."
+
+    this.textTarget.parentElement.insertAdjacentElement("afterend", errorMessage)
+
+    setTimeout(() => {
+      errorMessage.classList.replace("opacity-100", "opacity-0")
+      setTimeout(() => errorMessage.remove(), 500)
+    }, 3000)
   }
 }
