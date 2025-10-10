@@ -98,6 +98,30 @@ To customize the application you can set the following ENV variables:
   * `SENTRY_DN` - if present Portal will sent error and performance
     information to Sentry
 
+## Active Storage S3
+On the production environment we are using S3 to store hypotheses and other files.
+We also have direct upload implemented and it requires special cors
+configuration:
+  1. configure `s3cmd` (`s3cmd --configure`) for your S3 account
+  2. create `cors.xml` with following content (replace `__DOMAIN__` with the SPEECHM
+     host name):
+    ```xml
+      <CORSConfiguration>
+        <CORSRule>
+          <AllowedOrigin>https://__DOMAIN__</AllowedOrigin>
+          <AllowedMethod>PUT</AllowedMethod>
+          <AllowedHeader>*</AllowedHeader>
+          <ExposeHeader>Origin</ExposeHeader>
+          <ExposeHeader>Content-Type</ExposeHeader>
+          <ExposeHeader>Content-MD5</ExposeHeader>
+          <ExposeHeader>Content-Disposition</ExposeHeader>
+          <MaxAgeSeconds>3600</MaxAgeSeconds>
+        </CORSRule>
+      </CORSConfiguration>
+    ```
+    3. set CORS: `s3cmd setcors cors.xml s3://__BUCKET_NAME__`
+    4. check CORS: `s3cmd info s3://__BUCKET_NAME__`
+
 ## Testing
 
 Some tests require Chrome headless installed. Please take a look at:

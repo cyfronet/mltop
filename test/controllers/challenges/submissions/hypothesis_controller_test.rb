@@ -16,8 +16,8 @@ module Challenges
             params: { hypothesis: { test_set_entry_id: @test_set_entry.id, model_id: @model.id, input: fixture_file_upload("input.txt") } }
         end
 
-        assert_response :ok
         assert_equal "Hypothesis succesfully created", flash[:notice]
+        assert_response :redirect
       end
 
       test "it returns uprocessable for invalid params" do

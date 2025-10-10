@@ -1,10 +1,11 @@
 <%= turbo_frame_tag dom_id(entry, "hypothesis_form") do %>
-    <%= form_with model: Hypothesis.new, url: submission_hypotheses_path(submission_id:), local: true do |f| %>
-      <label class="btn btn-primary cursor-pointer">
-        Upload hypothesis
-        <%= f.file_field :input, class: "hidden", onchange: 'this.form.requestSubmit();' %>
-      </label>
-      <%= f.hidden_field :model_id %>
-      <%= f.hidden_field :test_set_entry_id, value: entry.id %>
-    <% end %>
+  <%= form_with model: Hypothesis.new, url: submission_hypotheses_path(submission_id: empty_hypothesis.model_id), class: "relative inline-flex", data: {controller: "direct-upload", action: "dragover->direct-upload#dragover dragenter->direct-upload#dragenter dragleave->direct-upload#dragleave drop->direct-upload#drop"} do |f| %>
+    <label class="btn btn-secondary relative inline-flex items-center cursor-pointer">
+      <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      <p data-direct-upload-target="text">Upload hypothesis</p>
+      <%= f.file_field :input, class: "hidden", direct_upload: true, data: {direct_upload_target: "input", action: "direct-upload#upload"} %>
+    </label>
+    <%= f.hidden_field :model_id, value: empty_hypothesis.model_id %>
+    <%= f.hidden_field :test_set_entry_id, value: empty_hypothesis.entry_id %>
+  <% end %>
 <% end %>
