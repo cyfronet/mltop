@@ -569,6 +569,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   role_model
   rubocop-rails-omakase
+  rubyzip
   selenium-webdriver
   sentry-rails
   sentry-ruby
