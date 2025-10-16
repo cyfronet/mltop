@@ -1,0 +1,4 @@
+CREATE DATABASE speechm_production;
+CREATE DATABASE speechm_production_cache;
+CREATE DATABASE speechm_production_queue;
+CREATE DATABASE speechm_production_cable;
