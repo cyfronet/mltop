@@ -42,17 +42,18 @@ builder:
   #   RUBY_VERSION: <%= ENV["RBENV_VERSION"] || ENV["rvm_ruby_string"] || "#{RUBY_ENGINE}-#{RUBY_ENGINE_VERSION}" %>
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 #
-# env:
-#   clear:
-#     DB_HOST: 192.168.0.2
+env:
+  clear:
+    DB_HOST: speechm-db
 #   secret:
 #     - RAILS_MASTER_KEY
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal app logs -r job" will tail logs from the first server in the job section.
 #
-# aliases:
-#   shell: app exec --interactive --reuse "bash"
+aliases:
+  shell: app exec --interactive --reuse "bash"
+  console: app exec --interactive --reuse "bin/bash console"
 
 # Use a different ssh user than root
 #
@@ -78,21 +79,21 @@ ssh:
 
 # Use accessory services (secrets come from .kamal/secrets).
 #
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     port: 3306
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
+accessories:
+  db:
+    image: postgres:17.6
+    host: 149.156.182.169
+    port: "127.0.0.1:3306:3306"
+    env:
+      clear:
+        PSQL_ROOT_HOST: '%'
+      secret:
+        - PSQL_ROOT_PASSWORD
+    files:
 #       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
+      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/psql
 #   redis:
 #     image: valkey/valkey:8
 #     host: 192.168.0.2
