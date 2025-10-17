@@ -1,4 +1,4 @@
-CREATE DATABASE speechm_production;
-CREATE DATABASE speechm_production_cache;
-CREATE DATABASE speechm_production_queue;
-CREATE DATABASE speechm_production_cable;
+CREATE DATABASE mltop_production;
+CREATE DATABASE mltop_production_cache;
+CREATE DATABASE mltop_production_queue;
+CREATE DATABASE mltop_production_cable;
