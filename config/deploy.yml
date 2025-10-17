@@ -2,7 +2,7 @@
 service: speechm
 
 # Name of the container image.
-image: speechm/speechm
+image: piotrrcyfro/speechm
 
 # Deploy to these servers.
 servers:
