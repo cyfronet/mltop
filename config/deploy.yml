@@ -1,5 +1,5 @@
 # Name of your application. Used to uniquely configure containers.
-service: speechm
+service: mltop
 
 # Name of the container image.
 image: piotrrcyfro/speechm
@@ -44,7 +44,7 @@ builder:
 #
 env:
   clear:
-    DB_HOST: speechm-db
+    DB_HOST: mltop-db
   secret:
     - RAILS_MASTER_KEY
 
@@ -87,7 +87,7 @@ accessories:
     port: "127.0.0.1:3306:3306"
     env:
       clear:
-        POSTGRES_DB: "speechm_production"
+        POSTGRES_DB: "mltop_production"
     files:
       #       - config/mysql/production.cnf:/etc/mysql/my.cnf
       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
