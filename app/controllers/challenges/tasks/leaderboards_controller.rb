@@ -11,7 +11,7 @@ module Challenges
         return unless @task
         authorize(@task, :leaderboard?)
 
-        @filtering_params = params.permit(:tsid, :mid, :o, :source, :target)
+        @filtering_params = params.permit(:tsid, :mid, :o, :source, :target, :color)
         @rows = Top::Row
           .where(task: @task,
             source: params[:source],
