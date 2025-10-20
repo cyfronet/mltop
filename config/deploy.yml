@@ -20,8 +20,8 @@ servers:
 # proxy:
 #   ssl: true
 #   host: speechm.kamal.com
-  # Proxy connects to your container on port 80 by default.
-  # app_port: 3000
+# Proxy connects to your container on port 80 by default.
+# app_port: 3000
 
 # Credentials for your image host.
 registry:
@@ -53,7 +53,7 @@ env:
 #
 aliases:
   shell: app exec --interactive --reuse "bash"
-  console: app exec --interactive --reuse "bin/bash console"
+  console: app exec --interactive --reuse "bin/rails console"
   logs: app logs -f
   dbc: app exec --interactive --reuse "bin/rails dbconsole"
 
