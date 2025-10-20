@@ -54,6 +54,8 @@ env:
 aliases:
   shell: app exec --interactive --reuse "bash"
   console: app exec --interactive --reuse "bin/bash console"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
 
 # Use a different ssh user than root
 #
