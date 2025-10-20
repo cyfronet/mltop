@@ -2,7 +2,7 @@
 <%= mltop_title model.name %>
 <div class="px-4 py-12 sm:px-6 lg:px-8">
   <%= mltop_nav do |nav| %>
-    <%- nav.section "Model info", submission_path(model), condition: [ "submissions" ] %>
+    <%- nav.section "Model info", submission_path(model), condition: [ "challenges/submissions" ] %>
     <% model.tasks.each do |task| %>
       <%- nav.section "#{task.slug} Hyphoteses", submission_task_path(model, task), condition: :exclusive %>
     <% end %>
