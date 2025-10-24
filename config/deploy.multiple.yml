@@ -7,7 +7,8 @@ image: piotrrcyfro/speechm
 # Deploy to these servers.
 servers:
   web:
-    - 149.156.182.169
+    # - 149.156.182.169
+    - 192.168.1.11
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -34,13 +35,13 @@ env:
 # Use a different ssh user than root
 #
 ssh:
-  user: ubuntu
-
+  # user: ubuntu
+  proxy: ubuntu@149.156.182.169
 accessories:
   db:
     image: postgres:17.6
-    host: 149.156.182.165
-    port: 5432
+    host: 192.168.1.8
+    port: "5432:5432"
     env:
       clear:
         POSTGRES_USER: "postgres"
