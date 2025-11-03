@@ -46,6 +46,7 @@ env:
   clear:
     # DB_HOST: mltop-db
     DB_HOST: 192.168.1.8
+    RAILS_ENV: staging
   secret:
     - RAILS_MASTER_KEY
 
@@ -99,7 +100,7 @@ accessories:
         - POSTGRES_PASSWORD
     files:
       #       - config/mysql/production.cnf:/etc/mysql/my.cnf
-      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db/staging.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/postgresql/data
 #   redis:
