@@ -24,7 +24,6 @@ screbleu:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: bleu
@@ -69,7 +68,6 @@ screbleu:
 #       echo "Error while calculating scores"
 #       exit 1
 #     fi
-#   host: athena.cyfronet.pl
 #   site: athena
 #   metrics:
 #     - name: bleurt
@@ -107,7 +105,6 @@ wer:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: wer
@@ -145,7 +142,6 @@ wer_tsv:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: wer
@@ -183,7 +179,6 @@ rogue:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: R-1
@@ -230,7 +225,6 @@ accuracy:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: accuracy
@@ -268,7 +262,6 @@ exact-match:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: exact-match
@@ -306,7 +299,6 @@ f1-score:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: f1-score
@@ -346,7 +338,6 @@ f1-score:
 #       echo "Error while calculating scores"
 #       exit 1
 #     fi
-#   host: athena.cyfronet.pl
 #   site: athena
 #   metrics:
 #     - name: comet
@@ -388,8 +379,8 @@ f1-score:
 #       echo "Error while calculating scores"
 #       exit 1
 #     fi
-#   host: ares.cyfronet.pl
 #   site: ares
+#
 #   metrics:
 #     - name: characTER
 #       worst_score: 1
@@ -430,7 +421,6 @@ ic:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: intent_accuracy
@@ -475,7 +465,6 @@ sqa-hf:
       echo "Error while calculating scores"
       exit 1
     fi
-  host: ares.cyfronet.pl
   site: ares
   metrics:
     - name: exact_match
@@ -518,7 +507,6 @@ sqa-hf:
 #       echo "Error while calculating scores"
 #       exit 1
 #     fi
-#   host: athena.cyfronet.pl
 #   site: athena
 #   metrics:
 #     - name: f1-score

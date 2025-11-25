@@ -122,7 +122,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_25_133314) do
     t.enum "from", enum_type: "format"
     t.string "name", null: false
     t.text "script", null: false
-    t.string "host", null: false
     t.bigint "site_id"
     t.enum "to", enum_type: "format"
     t.datetime "updated_at", null: false
