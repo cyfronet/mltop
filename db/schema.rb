@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_25_125610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -126,7 +126,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
     t.enum "from", enum_type: "format"
     t.enum "to", enum_type: "format"
     t.bigint "challenge_id", null: false
+    t.bigint "site_id"
     t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
+    t.index ["site_id"], name: "index_evaluators_on_site_id"
   end
 
   create_table "hypotheses", force: :cascade do |t|
@@ -182,6 +184,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
     t.index ["metric_id"], name: "index_scores_on_metric_id"
   end
 
+  create_table "sites", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "host", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sites_on_name", unique: true
+  end
+
   create_table "task_evaluators", force: :cascade do |t|
     t.bigint "task_id", null: false
     t.bigint "evaluator_id", null: false
@@ -221,6 +231,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
     t.datetime "updated_at", null: false
     t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
+  end
+
+  create_table "temps", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "test_set_entries", force: :cascade do |t|
