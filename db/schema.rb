@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_25_125610) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_25_133314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -120,7 +120,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_25_125610) do
   create_table "evaluators", force: :cascade do |t|
     t.string "name", null: false
     t.text "script", null: false
-    t.string "host", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.enum "from", enum_type: "format"

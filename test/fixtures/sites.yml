@@ -1,0 +1,6 @@
+ares:
+  name: ares
+  host: ares.cyfronet.pl
+athena:
+  name: athena
+  host: athena.cyfronet.pl

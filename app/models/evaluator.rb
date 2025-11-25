@@ -14,9 +14,7 @@ class Evaluator < ApplicationRecord
   enum :from, Task::TYPES, prefix: true
   enum :to, Task::TYPES, prefix: true
 
-  def host
-    site&.host || super
-  end
+  delegate :host, to: :site
 
   def to_s = name
 end
