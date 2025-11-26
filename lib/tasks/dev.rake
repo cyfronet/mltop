@@ -24,11 +24,14 @@ if Rails.env.local?
                           challenge.description = "Meetween Global Challenge testing progress of the SpeechLLM development progress."
                         end
       Membership.create(challenge:, user:, roles: [ :manager, :admin ])
+      sites = YAML.load_file(File.join(Rails.root, "db", "data", "sites.yml")).map do |name, data|
+        Site.find_or_create_by(name:, host: data["host"])
+      end.to_h { |site| [ site.name, site ] }
 
       TasksLoader.new(
          File.join(Rails.root, "db", "data", "tasks.yml"),
          File.join(Rails.root, "db", "data", "evaluators.yml"),
-         challenge
+         challenge, sites
       ).import!
 
       puts "DB set up complete, initializing test sets.."
