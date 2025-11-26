@@ -17,11 +17,11 @@ module Evaluations
 
     private
       def submitted_evaluations
-        @submitted_evaluations ||= Evaluation.joins(:evaluator)
+        @submitted_evaluations ||= Evaluation.joins(evaluator: :site)
           .where(
             creator: @user,
             evaluations: { status: [ :pending, :running ] },
-            evaluator: { host: @host }
+            evaluator: { sites: { host: @host } }
           )
       end
 
