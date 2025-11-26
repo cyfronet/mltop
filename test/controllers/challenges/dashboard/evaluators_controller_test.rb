@@ -21,7 +21,7 @@ class Challenges::Dashboard::EvaluatorsControllerTest < ActionDispatch::Integrat
 
     assert_difference("Evaluator.count") do
       post dashboard_evaluators_url, params: { evaluator: {
-        name: "New evaluator name", script: "dummy script", host: "dummy host"
+        name: "New evaluator name", script: "dummy script", site_id: sites(:ares).id
       } }
     end
 

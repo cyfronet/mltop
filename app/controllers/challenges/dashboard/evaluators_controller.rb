@@ -12,6 +12,7 @@ module Challenges
 
       def new
         @evaluator = Evaluator.new
+        @sites = Site.all
         authorize(@evaluator)
       end
 
@@ -26,6 +27,7 @@ module Challenges
       end
 
       def edit
+        @sites = Site.all
       end
 
       def update
@@ -46,7 +48,7 @@ module Challenges
 
       private
         def evaluator_params
-          params.required(:evaluator).permit(:name, :script, :host, :from, :to)
+          params.required(:evaluator).permit(:name, :script, :site_id, :from, :to)
         end
 
         def find_and_authorize_evaluator
