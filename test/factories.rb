@@ -76,9 +76,9 @@ class ActiveSupport::TestCase
     factory(:evaluator) do |i|
       {
         name: "Evaluator #{i}",
-        host: "host",
         script: "script",
-        challenge: challenges(:global)
+        challenge: challenges(:global),
+        site: sites(:ares)
       }
     end
 
