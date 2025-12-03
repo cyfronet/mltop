@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_25_133314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,47 +19,46 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
   create_enum "challenge_visibility", ["leaderboard_released", "scores_released"]
   create_enum "consent_target", ["model", "challenge"]
   create_enum "format", ["video", "audio", "text"]
-
   create_table "access_rules", force: :cascade do |t|
     t.bigint "challenge_id", null: false
-    t.string "group_name", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "roles_mask", default: 0, null: false
+    t.string "group_name", null: false
     t.boolean "required", default: false, null: false
+    t.integer "roles_mask", default: 0, null: false
+    t.datetime "updated_at", null: false
     t.index ["challenge_id", "group_name"], name: "index_access_rules_on_challenge_id_and_group_name", unique: true
     t.index ["challenge_id"], name: "index_access_rules_on_challenge_id"
   end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
-    t.string "name", null: false
     t.text "body"
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
     t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
     t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
+    t.string "content_type"
     t.datetime "created_at", null: false
+    t.string "filename", null: false
+    t.string "key", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -71,9 +70,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
 
   create_table "agreements", force: :cascade do |t|
     t.boolean "agreed", default: false, null: false
-    t.bigint "consent_id", null: false
-    t.string "agreementable_type", null: false
     t.bigint "agreementable_id", null: false
+    t.string "agreementable_type", null: false
+    t.bigint "consent_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["agreementable_type", "agreementable_id"], name: "index_agreements_on_agreementable"
@@ -81,11 +80,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
   end
 
   create_table "challenges", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "ends_at", null: false
     t.string "name", null: false
     t.bigint "owner_id", null: false
     t.datetime "starts_at", null: false
-    t.datetime "ends_at", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.enum "visibility", enum_type: "challenge_visibility"
     t.index ["owner_id"], name: "index_challenges_on_owner_id"
@@ -93,24 +92,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
 
   create_table "consents", force: :cascade do |t|
     t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.boolean "mandatory", default: false
     t.string "name", null: false
     t.enum "target", null: false, enum_type: "consent_target"
-    t.boolean "mandatory", default: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_consents_on_challenge_id"
   end
 
   create_table "evaluations", force: :cascade do |t|
-    t.string "token_digest"
-    t.bigint "hypothesis_id", null: false
-    t.bigint "evaluator_id", null: false
-    t.integer "status", default: 0, null: false
-    t.string "job_id"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "error_message"
     t.bigint "creator_id", null: false
+    t.string "error_message"
+    t.bigint "evaluator_id", null: false
+    t.bigint "hypothesis_id", null: false
+    t.string "job_id"
+    t.integer "status", default: 0, null: false
+    t.string "token_digest"
+    t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_evaluations_on_creator_id"
     t.index ["evaluator_id"], name: "index_evaluations_on_evaluator_id"
     t.index ["hypothesis_id", "evaluator_id"], name: "index_evaluations_on_hypothesis_id_and_evaluator_id", unique: true
@@ -118,21 +117,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
   end
 
   create_table "evaluators", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.enum "from", enum_type: "format"
     t.string "name", null: false
     t.text "script", null: false
     t.string "host", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.enum "from", enum_type: "format"
+    t.bigint "site_id"
     t.enum "to", enum_type: "format"
-    t.bigint "challenge_id", null: false
+    t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
+    t.index ["site_id"], name: "index_evaluators_on_site_id"
   end
 
   create_table "hypotheses", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.bigint "model_id", null: false
     t.bigint "test_set_entry_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["model_id", "test_set_entry_id"], name: "index_hypotheses_on_model_id_and_test_set_entry_id", unique: true
     t.index ["model_id"], name: "index_hypotheses_on_model_id"
@@ -140,52 +141,61 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.bigint "challenge_id", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "roles_mask", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["challenge_id"], name: "index_memberships_on_challenge_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "metrics", force: :cascade do |t|
-    t.string "name"
-    t.bigint "evaluator_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.float "best_score", default: 0.0, null: false
-    t.float "worst_score", default: 100.0, null: false
+    t.datetime "created_at", null: false
+    t.bigint "evaluator_id", null: false
+    t.string "name"
     t.boolean "strict", default: true, null: false
+    t.datetime "updated_at", null: false
+    t.float "worst_score", default: 100.0, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 
   create_table "models", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.boolean "data_consent", default: false, null: false
     t.string "name"
     t.bigint "owner_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "data_consent", default: false, null: false
-    t.bigint "challenge_id", null: false
     t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
 
   create_table "scores", force: :cascade do |t|
-    t.float "value"
-    t.bigint "metric_id", null: false
-    t.bigint "evaluation_id", null: false
     t.datetime "created_at", null: false
+    t.bigint "evaluation_id", null: false
+    t.bigint "metric_id", null: false
     t.datetime "updated_at", null: false
+    t.float "value"
     t.index ["evaluation_id"], name: "index_scores_on_evaluation_id"
     t.index ["metric_id", "evaluation_id"], name: "index_scores_on_metric_id_and_evaluation_id", unique: true
     t.index ["metric_id"], name: "index_scores_on_metric_id"
   end
 
-  create_table "task_evaluators", force: :cascade do |t|
-    t.bigint "task_id", null: false
-    t.bigint "evaluator_id", null: false
+  create_table "sites", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "host", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host"], name: "index_sites_on_host", unique: true
+    t.index ["name"], name: "index_sites_on_name", unique: true
+  end
+
+  create_table "task_evaluators", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "evaluator_id", null: false
+    t.bigint "task_id", null: false
     t.datetime "updated_at", null: false
     t.index ["evaluator_id"], name: "index_task_evaluators_on_evaluator_id"
     t.index ["task_id", "evaluator_id"], name: "index_task_evaluators_on_task_id_and_evaluator_id", unique: true
@@ -193,9 +203,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
   end
 
   create_table "task_models", force: :cascade do |t|
-    t.bigint "task_id", null: false
-    t.bigint "model_id", null: false
     t.datetime "created_at", null: false
+    t.bigint "model_id", null: false
+    t.bigint "task_id", null: false
     t.datetime "updated_at", null: false
     t.index ["model_id"], name: "index_task_models_on_model_id"
     t.index ["task_id", "model_id"], name: "index_task_models_on_task_id_and_model_id", unique: true
@@ -203,57 +213,63 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_29_101926) do
   end
 
   create_table "task_test_sets", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.bigint "task_id", null: false
     t.bigint "test_set_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["task_id"], name: "index_task_test_sets_on_task_id"
     t.index ["test_set_id"], name: "index_task_test_sets_on_test_set_id"
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "name"
-    t.text "info"
-    t.string "slug"
-    t.enum "from", null: false, enum_type: "format"
-    t.enum "to", null: false, enum_type: "format"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.enum "from", null: false, enum_type: "format"
+    t.text "info"
+    t.string "name"
+    t.string "slug"
+    t.enum "to", null: false, enum_type: "format"
+    t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
   end
 
+  create_table "temps", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "test_set_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "source_language", null: false
     t.string "target_language", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "task_test_set_id", null: false
+    t.datetime "updated_at", null: false
     t.index ["task_test_set_id"], name: "index_test_set_entries_on_task_test_set_id"
   end
 
   create_table "test_sets", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "published", default: false, null: false
     t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.boolean "published", default: false, null: false
+    t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_test_sets_on_challenge_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "plgrid_login"
-    t.string "email"
-    t.string "uid"
-    t.integer "roles_mask", default: 0
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "ssh_key"
-    t.text "ssh_certificate"
-    t.string "provider"
+    t.string "email"
     t.boolean "force_challenge_open", default: false, null: false
     t.string "groups", default: [], array: true
+    t.string "name"
+    t.string "plgrid_login"
+    t.string "provider"
+    t.integer "roles_mask", default: 0
+    t.text "ssh_certificate"
+    t.text "ssh_key"
+    t.string "uid"
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
