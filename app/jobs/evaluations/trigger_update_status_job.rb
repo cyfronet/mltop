@@ -3,7 +3,7 @@
 module Evaluations
   class TriggerUpdateStatusJob < ApplicationJob
     def perform
-      hosts = Evaluator.pluck(:host).uniq
+      hosts = Site.pluck(:host)
       User.joins(:evaluations)
       .where(evaluations: { status: [ :pending, :running ] }).uniq
       .map do |user|
