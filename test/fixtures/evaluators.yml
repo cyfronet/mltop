@@ -3,9 +3,11 @@ sacrebleu:
   script: dummy script
   site: ares
   challenge: global
+  directory: some/directory/path
 
 blueurt:
   name: Blueurt
   script: dummy script
   site: ares
   challenge: global
+  directory: some/directory/path
