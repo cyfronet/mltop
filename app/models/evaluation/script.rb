@@ -1,6 +1,4 @@
 class Evaluation::Script < HPCKit::Slurm::Script
-  GROUP_DIR = "/net/pr2/projects/plgrid/plggmeetween/mltop"
-
   def initialize(evaluation, token)
     @evaluation = evaluation
     @token = token
@@ -10,7 +8,7 @@ class Evaluation::Script < HPCKit::Slurm::Script
   private
     def script_options
       {
-        current_working_directory: GROUP_DIR,
+        current_working_directory:,
         environment: [
           "INPUT_URL=#{blob_url(input)}",
           "GROUNDTRUTH_URL=#{blob_url(groundtruth)}",
@@ -51,6 +49,10 @@ class Evaluation::Script < HPCKit::Slurm::Script
 
     def task
       @evaluation.hypothesis.test_set_entry.task
+    end
+
+    def current_working_directory
+      @evaluation.evaluator.directory
     end
 
     def challenge
