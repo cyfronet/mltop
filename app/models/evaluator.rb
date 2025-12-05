@@ -9,7 +9,7 @@ class Evaluator < ApplicationRecord
 
   has_many :evaluations, dependent: :destroy
 
-  validates :name, :script, :host, presence: true
+  validates :name, :script, :host, :directory, presence: true
 
   enum :from, Task::TYPES, prefix: true
   enum :to, Task::TYPES, prefix: true
