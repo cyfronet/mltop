@@ -30,6 +30,10 @@ module Challenges
       def destroy?
         challenge_admin?
       end
+
+      def permitted_attributes
+        [ :name, :script, :site_id, :from, :to, :directory ]
+      end
     end
   end
 end

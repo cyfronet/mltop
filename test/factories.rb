@@ -78,7 +78,8 @@ class ActiveSupport::TestCase
         name: "Evaluator #{i}",
         script: "script",
         challenge: challenges(:global),
-        site: sites(:ares)
+        site: sites(:ares),
+        directory: "some/directory/path"
       }
     end
 

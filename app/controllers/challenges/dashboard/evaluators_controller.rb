@@ -17,11 +17,12 @@ module Challenges
       end
 
       def create
-        @evaluator = Current.challenge.evaluators.build(evaluator_params)
+        @evaluator = Current.challenge.evaluators.build(permitted_attributes(Evaluator))
 
         if @evaluator.save
           redirect_to dashboard_evaluator_path(@evaluator), notice: "Evaluator was successfully created."
         else
+          @sites = Site.all
           render :new, status: :unprocessable_entity
         end
       end
@@ -31,9 +32,10 @@ module Challenges
       end
 
       def update
-        if @evaluator.update(evaluator_params)
+        if @evaluator.update(permitted_attributes(@evaluator))
           redirect_to dashboard_evaluator_path(@evaluator), notice: "Evaluator was successfully updated."
         else
+          @sites = Site.all
           render :edit, status: :unprocessable_entity
         end
       end
@@ -47,10 +49,6 @@ module Challenges
       end
 
       private
-        def evaluator_params
-          params.required(:evaluator).permit(:name, :script, :site_id, :from, :to)
-        end
-
         def find_and_authorize_evaluator
           @evaluator = policy_scope(Evaluator).find(params[:id])
           authorize(@evaluator)
