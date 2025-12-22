@@ -14,6 +14,7 @@ class GroupSubmissionProcessor
         link_entries_and_save
       end
     end
+    @group_submission.update!(state: "success") unless @group_submission.state == "failed"
   end
 
   private
@@ -31,6 +32,10 @@ class GroupSubmissionProcessor
         return
       end
 
+      invalid = top_level_names - task_names
+      if invalid.any?
+        raise InvalidTaskError, "Invalid tasks: #{invalid.join(', ')}"
+      end
       zip_file.entries.select(&:file?).each do |entry|
         names = entry.name.split("/")
         if names.size != 3
@@ -52,7 +57,6 @@ class GroupSubmissionProcessor
           }
         )
       end
-      @group_submission.update!(state: "success")
     end
 
     def link_entries_and_save
