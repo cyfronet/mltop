@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_05_110946) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_124933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_05_110946) do
   create_enum "challenge_visibility", ["leaderboard_released", "scores_released"]
   create_enum "consent_target", ["model", "challenge"]
   create_enum "format", ["video", "audio", "text"]
+  create_enum "hypotheses_bundle_state", ["processing", "failed", "success"]
+
   create_table "access_rules", force: :cascade do |t|
     t.bigint "challenge_id", null: false
     t.datetime "created_at", null: false
@@ -132,12 +134,24 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_05_110946) do
 
   create_table "hypotheses", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.bigint "hypotheses_bundle_id"
     t.bigint "model_id", null: false
     t.bigint "test_set_entry_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["hypotheses_bundle_id"], name: "index_hypotheses_on_hypotheses_bundle_id"
     t.index ["model_id", "test_set_entry_id"], name: "index_hypotheses_on_model_id_and_test_set_entry_id", unique: true
     t.index ["model_id"], name: "index_hypotheses_on_model_id"
     t.index ["test_set_entry_id"], name: "index_hypotheses_on_test_set_entry_id"
+  end
+
+  create_table "hypotheses_bundles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "error_message"
+    t.bigint "model_id"
+    t.string "name", null: false
+    t.enum "state", default: "processing", null: false, enum_type: "hypotheses_bundle_state"
+    t.datetime "updated_at", null: false
+    t.index ["model_id"], name: "index_hypotheses_bundles_on_model_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -280,8 +294,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_05_110946) do
   add_foreign_key "evaluations", "hypotheses"
   add_foreign_key "evaluations", "users", column: "creator_id"
   add_foreign_key "evaluators", "challenges"
+  add_foreign_key "hypotheses", "hypotheses_bundles"
   add_foreign_key "hypotheses", "models"
   add_foreign_key "hypotheses", "test_set_entries"
+  add_foreign_key "hypotheses_bundles", "models"
   add_foreign_key "metrics", "evaluators"
   add_foreign_key "models", "challenges"
   add_foreign_key "models", "users", column: "owner_id"

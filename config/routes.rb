@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
       resources :submissions do
         resources :tasks, only: [ :index, :show ], module: :submissions
+        resource :hypotheses_bundle, only: [ :create ], module: :submissions
         resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
           resource :evaluations, only: [ :create ]
         end

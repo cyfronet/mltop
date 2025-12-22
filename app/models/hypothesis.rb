@@ -1,6 +1,7 @@
 class Hypothesis < ApplicationRecord
   belongs_to :model
   belongs_to :test_set_entry
+  belongs_to :hypotheses_bundle, optional: true
 
   has_many :evaluations, dependent: :destroy
 
