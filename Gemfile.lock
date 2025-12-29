@@ -354,7 +354,6 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.2)
-    pg (1.6.2-x86_64-linux)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
