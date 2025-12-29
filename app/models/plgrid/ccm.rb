@@ -29,10 +29,10 @@ class Plgrid::Ccm
 
       raise FetchError, "Cannot fetch short lived ssh key (#{response.code} response code)"
     end
-  rescue Net::ReadTimeout
-    raise FetchError, "Cannot fetch short lived ssh key (read timeout)"
-  rescue StandardError
-    raise FetchError, "Cannot fetch short lived ssh key"
+  rescue Net::ReadTimeout => e
+    raise FetchError, "Cannot fetch short lived ssh key (read timeout)\n\t#{e}"
+  rescue StandardError => e
+    raise FetchError, "Cannot fetch short lived ssh key\n\t#{e}"
   end
 
   private
