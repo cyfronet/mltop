@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", github: "rails/rails", branch: "8-1-stable"
 
-# Get ready for ruby 3.4 - freeze all strings
+# freeze all strings
 gem "freezolite"
 
 gem "puma", ">= 5.0"
@@ -71,6 +71,7 @@ group :test do
   gem "fixture_factory"
   gem "webmock", "~> 3.10"
   gem "mocha"
+  gem "minitest-mock"
 end
 
 group :production do
