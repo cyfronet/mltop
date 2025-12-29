@@ -198,7 +198,6 @@ GEM
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
     ffi (1.17.2)
-    ffi (1.17.2-x86_64-linux-gnu)
     fixture_factory (0.3.0)
       activemodel (>= 5.2)
       activerecord (>= 5.2)
