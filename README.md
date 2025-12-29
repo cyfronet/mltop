@@ -97,6 +97,10 @@ To customize the application you can set the following ENV variables:
     Default is set to discovered ngrok public url in development environment.
   * `SENTRY_DN` - if present Portal will sent error and performance
     information to Sentry
+  * `CCM_CERT_VERIFY` - Controls SSL certificate verification when making
+    requests to the CCM service (default `true` - certificate verification
+    enabled).
+
 
 ## Active Storage S3
 On the production environment we are using S3 to store hypotheses and other files.

@@ -39,7 +39,8 @@ class Plgrid::Ccm
     def make_request
       Net::HTTP.start(CCM_URI.host, CCM_URI.port,
                       use_ssl: CCM_URI.is_a?(URI::HTTPS),
-                      open_timeout: 1, read_timeout: 2) do |http|
+                      open_timeout: 1, read_timeout: 2,
+                      verify_mode:) do |http|
         # TODO: Remove query param once CCM fixes the issue with not accepting
         #       lifetime as form data.
         url = CCM_URI.dup
@@ -51,5 +52,10 @@ class Plgrid::Ccm
 
         http.request(req)
       end
+    end
+
+    def verify_mode
+      ActiveModel::Type::Boolean.new.cast(ENV.fetch("CCM_CERT_VERIFY", true)) ?
+        OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
     end
 end
