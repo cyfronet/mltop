@@ -46,4 +46,22 @@ class GroupSubmissionProcessorTest < ActiveSupport::TestCase
     assert_equal "failed", @group_submission.state
     assert_equal "Submitted file is empty or has invalid structure", @group_submission.error_message
   end
+
+  test "should not create duplicate hypotheses" do
+    assert_difference "@model.reload.hypotheses.count", 4 do
+      GroupSubmissionProcessor.new(@group_submission).process
+    end
+
+    @group_submission.file.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/group_submission.zip")),
+      filename: "group_submission.zip"
+    )
+
+    assert_no_difference "Hypothesis.count" do
+      GroupSubmissionProcessor.new(@group_submission).process
+    end
+    @group_submission.reload
+    assert_equal "failed", @group_submission.state
+    assert_match "Hypothesis for this task and test set is already present", @group_submission.error_message
+  end
 end

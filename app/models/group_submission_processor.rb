@@ -70,6 +70,8 @@ class GroupSubmissionProcessor
           end
         end
       end
+    rescue ActiveRecord::RecordInvalid => e
+      @group_submission.update!(state: "failed", error_message: "#{e.record.input.filename} - Hypothesis for this task and test set is already present")
     end
 
     def test_set_entries
