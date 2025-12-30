@@ -18,7 +18,7 @@ module Challenges
           @group_submission.process_later
           redirect_to submission_path(@group_submission.model), notice: "Group submission uploaded successfully, starting processing."
         else
-          render :unprocessable_entity
+          redirect_back fallback_location: submission_path(@group_submission.model), alert: "We couldn't upload group submission"
         end
       end
     end
