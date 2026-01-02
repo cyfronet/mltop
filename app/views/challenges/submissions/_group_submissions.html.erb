@@ -1,0 +1,28 @@
+<div class="flex flex-col gap-4">
+  <%= form_with model: GroupSubmission.new, url: submission_group_submission_path(submission_id: model.id), class: "relative inline-flex", data: {controller: "direct-upload", action: "dragover->direct-upload#dragover dragenter->direct-upload#dragenter dragleave->direct-upload#dragleave drop->direct-upload#drop"} do |f| %>
+    <label class="btn btn-secondary relative inline-flex items-center cursor-pointer">
+      <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      <p data-direct-upload-target="text">Upload group submissions file</p>
+      <%= f.file_field :file, class: "hidden", direct_upload: true, data: {direct_upload_target: "input", action: "direct-upload#upload"} %>
+    </label>
+  <% end %>
+
+  <span class="mt-8 text-lg font-semibold">Uploaded Group Submissions</span>
+  <table class="w-full table-auto">
+    <tbody>
+      <%- model.group_submissions.each do |group_submission| %>
+        <tr>
+          <td class="py-2 gap-4 flex"><%= group_submission.name %>
+            <% if group_submission.state == "processing" %>
+              <span class="text-yellow-600 font-semibold"> <%= info_icon("h-4 w-4 inline-block") %> Processing</span>
+            <% elsif group_submission.state == "failed" %>
+              <span class="text-red-600 font-semibold"> <%= alert_icon("h-4 w-4 inline-block") %> Failed: <%= group_submission.error_message %></span>
+            <% elsif group_submission.state == "success" %>
+              <span class="text-green-600 font-semibold"> <%= checked_icon("h-4 w-4 inline-block") %> Success </span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
