@@ -1,11 +1,19 @@
 <div class="flex flex-col gap-4">
-  <%= form_with model: GroupSubmission.new, url: submission_group_submission_path(submission_id: model.id), class: "relative inline-flex", data: {controller: "direct-upload", action: "dragover->direct-upload#dragover dragenter->direct-upload#dragenter dragleave->direct-upload#dragleave drop->direct-upload#drop"} do |f| %>
-    <label class="btn btn-secondary relative inline-flex items-center cursor-pointer">
-      <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5") %>
-      <p data-direct-upload-target="text">Upload group submissions file</p>
-      <%= f.file_field :file, class: "hidden", direct_upload: true, data: {direct_upload_target: "input", action: "direct-upload#upload"} %>
-    </label>
-  <% end %>
+  <div class="flex flex-row gap-2">
+    <%= form_with model: GroupSubmission.new, url: submission_group_submission_path(submission_id: model.id), class: "relative inline-flex", data: {controller: "direct-upload", action: "dragover->direct-upload#dragover dragenter->direct-upload#dragenter dragleave->direct-upload#dragleave drop->direct-upload#drop"} do |f| %>
+      <label class="btn btn-secondary relative inline-flex items-center cursor-pointer">
+        <%= upload_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+        <p data-direct-upload-target="text">Upload group submissions file</p>
+        <%= f.file_field :file, class: "hidden", direct_upload: true, data: {direct_upload_target: "input", action: "direct-upload#upload"} %>
+      </label>
+    <% end %>
+    <div>
+      <%= link_to submission_group_submissions_template_path(@model), class: "btn btn-primary", data: { turbo: false }  do %>
+      <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+      Download Group Submission Template
+      <% end %>
+    </div>
+  </div>
 
   <span class="mt-8 text-lg font-semibold">Uploaded Group Submissions</span>
   <table class="w-full table-auto">
