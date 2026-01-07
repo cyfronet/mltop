@@ -1,5 +1,5 @@
 class TestSetEntry < ApplicationRecord
-  belongs_to :task_test_set
+  belongs_to :task_test_set, touch: true
   has_one :test_set, through: :task_test_set
   has_one :task, through: :task_test_set
 
