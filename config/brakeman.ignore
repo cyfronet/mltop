@@ -92,7 +92,30 @@
         22
       ],
       "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "ec544b05c7e959b866367d1c4098e6aa45aeb4d60758aa50e13c1331b50fe327",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/challenges/submissions/group_submissions_templates_controller.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(GroupSubmissionTemplate.new(Current.user.models.find(params[:submission_id])).create.path, :type => \"application/zip\", :filename => (\"submission_template_#{Current.user.models.find(params[:submission_id]).name}.zip\"), :disposition => \"attachment\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Challenges::Submissions::GroupSubmissionTemplatesController",
+        "method": "show"
+      },
+      "user_input": "GroupSubmissionTemplate.new(Current.user.models.find(params[:submission_id])).create.path",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
     }
   ],
-  "brakeman_version": "7.1.0"
+  "brakeman_version": "7.1.2"
 }
