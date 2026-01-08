@@ -9,7 +9,7 @@ module Challenges
     end
 
     def show
-      @task = policy_scope(Task).with_published_test_sets.preload(:task_test_sets).find(params[:id])
+      @task = policy_scope(Task).with_published_test_sets.preload(task_test_sets: :test_set).find(params[:id])
       @task_test_sets = @task.task_test_sets
     end
   end

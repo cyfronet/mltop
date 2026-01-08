@@ -56,6 +56,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem "faker"
   gem "dotenv-rails"
+  gem "prosopite"
+  gem "pg_query" # for prosopite
 end
 
 group :development do

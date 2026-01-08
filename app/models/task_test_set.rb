@@ -1,5 +1,5 @@
 class TaskTestSet < ApplicationRecord
-  belongs_to :test_set
+  belongs_to :test_set, touch: true
   belongs_to :task
   has_many :test_set_entries, class_name: "TestSetEntry", dependent: :destroy
 

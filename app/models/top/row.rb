@@ -17,7 +17,7 @@ class Top::Row
 
   def self.where(task:, test_set: nil, source: nil, target: nil)
     scores = Score
-      .joins(:metric, evaluation: { hypothesis: { test_set_entry: :task_test_set } })
+      .joins(:metric, evaluation: { hypothesis: { test_set_entry: :task_test_set } }).preload(:metric)
       .where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { task_id: task } } } })
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { test_set_id: test_set } } } }) if test_set
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { source_language: source } } }) unless source.blank?
