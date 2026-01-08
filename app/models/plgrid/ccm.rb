@@ -41,12 +41,7 @@ class Plgrid::Ccm
                       use_ssl: CCM_URI.is_a?(URI::HTTPS),
                       open_timeout: 1, read_timeout: 2,
                       verify_mode:) do |http|
-        # TODO: Remove query param once CCM fixes the issue with not accepting
-        #       lifetime as form data.
-        url = CCM_URI.dup
-        url.query = URI.encode_www_form(lifetime: LIFETIME)
-
-        req = Net::HTTP::Post.new(url)
+        req = Net::HTTP::Post.new(CCM_URI)
         req["Authorization"] = "Bearer #{@token}"
         req.set_form_data("lifetime" => LIFETIME)
 
