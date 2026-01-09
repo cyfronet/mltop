@@ -40,3 +40,6 @@ en:
     ongoing: Ongoing
     upcoming: Upcoming
     closed: Closed
+  time:
+    formats:
+      compact: "%Y-%m-%d-%H:%M:%S"

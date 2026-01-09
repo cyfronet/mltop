@@ -9,6 +9,7 @@ class Model < ApplicationRecord
   accepts_nested_attributes_for :tasks, allow_destroy: true
 
   has_many :hypotheses, dependent: :destroy
+  has_many :hypotheses_bundles, dependent: :destroy
 
   has_rich_text :description
 
