@@ -4,6 +4,7 @@ if Rails.env.local?
     task :recreate, [ "user_login" ] => [ :environment ] do |t, args|
       task("db:drop").invoke
       system "rm -rf #{File.join(Rails.root, "storage", "*/")}"
+      FileUtils.touch("tmp/caching-dev.txt") unless File.exist?("tmp/caching-dev.txt")
 
       task("db:create").invoke
       task("db:schema:load").invoke
