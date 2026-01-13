@@ -56,7 +56,7 @@ module Challenges
         end
 
         def find_and_authorize_test_set
-          @test_set = policy_scope(TestSet).find(params[:id])
+          @test_set = policy_scope(TestSet).preload(entries: { groundtruth_attachment: :blob, input_attachment: :blob }).find(params[:id])
           authorize(@test_set)
         end
     end

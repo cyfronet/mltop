@@ -89,4 +89,8 @@ Rails.application.configure do
   config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.hosts << /[a-z0-9.-]+\.ngrok-free\.app/
+
+  config.after_initialize do
+    Prosopite.rails_logger = true
+  end
 end

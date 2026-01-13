@@ -13,7 +13,7 @@ class Model::TaskEvaluation::TestSetEvaluation
       .map { |h| [ h.test_set_entry_id, h ] }
       .to_h
 
-    @test_set.entries.for_task(@task)
+    @test_set.entries.for_task(@task).preload(input_attachment: :blob)
       .map { |e| hypotheses[e.id] || Hypothesis::Empty.new(@model, e) }
   end
 

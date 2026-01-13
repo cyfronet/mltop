@@ -1,44 +1,46 @@
-<%= test_set.description %>
+<% cache test_set do %>
+  <%= test_set.description %>
 
-<% task_test_sets.each do |task_test_set| %>
-  <div class="mb-2 p-2">
-    <h1 class="font-bold text-center mt-2">
-      <%= task_test_set.task.name %>
-    </h1>
+  <% task_test_sets.each do |task_test_set| %>
+    <div class="mb-2 p-2">
+      <h1 class="font-bold text-center mt-2">
+        <%= task_test_set.task.name %>
+      </h1>
 
-    <%= task_test_set.description %>
+      <%= task_test_set.description %>
 
-    <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-600 bg-white dark:bg-zinc-700 text-sm shadow-xs mt-2">
-      <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-200">
-        <tr>
-          <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-left">
-            Language
-          </th>
-
-          <% test_set.source_languages_for(task: task_test_set.task).each do |language| %>
-            <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-center">
-              <%= language %>
+      <table class="table-auto border-collapse w-full border border-zinc-400 dark:border-zinc-600 bg-white dark:bg-zinc-700 text-sm shadow-xs mt-2">
+        <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-200">
+          <tr>
+            <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-left">
+              Language
             </th>
-          <% end %>
-      </thead>
-      <tbody class="bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-200">
-          <% test_set.target_languages_for(task: task_test_set.task).each do |target| %>
-            <tr>
-              <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-center ">
-                <%= target %>
-              </td>
-              <% test_set.source_languages_for(task: task_test_set.task).each do |source| %>
-                <td class="border border-zinc-300 dark:border-zinc-600 p-4 text-zinc-500">
-                  <%- if entry = test_set.entry_language_for(source:, target:, task: task_test_set.task) %>
-                    <%= link_to entry.input, class: "flex justify-center hover:text-black", "data-turbo-prefetch": false do %>
-                      <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
-                    <% end %>
-                  <% end %>
+
+            <% test_set.source_languages_for(task: task_test_set.task).each do |language| %>
+              <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-center">
+                <%= language %>
+              </th>
+            <% end %>
+        </thead>
+        <tbody class="bg-zinc-50 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-200">
+            <% test_set.target_languages_for(task: task_test_set.task).each do |target| %>
+              <tr>
+                <td class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-center ">
+                  <%= target %>
                 </td>
-              <% end %>
-            </tr>
-          <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end%>
+                <% test_set.source_languages_for(task: task_test_set.task).each do |source| %>
+                  <td class="border border-zinc-300 dark:border-zinc-600 p-4 text-zinc-500">
+                    <%- if entry = test_set.entry_language_for(source:, target:, task: task_test_set.task) %>
+                      <%= link_to entry.input, class: "flex justify-center hover:text-black", "data-turbo-prefetch": false do %>
+                        <%= download_icon("ml-0.5 mr-1.5 h-5 w-5") %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>
