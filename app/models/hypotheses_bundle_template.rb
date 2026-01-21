@@ -12,7 +12,7 @@ class HypothesesBundleTemplate
         zos.put_next_entry(path)
         zos.puts "# Replace this line with your hypothesis for #{tse.source_language}-#{tse.target_language}"
       end
-    end.string
+    end.tap { it.rewind }
   end
 
   private
