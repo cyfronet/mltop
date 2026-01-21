@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "4408ebeca778a85ba105372de1a39b52ec6f9144741cb52972b27f3d7080966d",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/challenges/submissions/hypotheses_bundle_templates_controller.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(HypothesesBundleTemplate.new(Current.user.models.find(params[:submission_id])).create.path, :type => \"application/zip\", :filename => (\"submission_template_#{Current.user.models.find(params[:submission_id]).name}.zip\"), :disposition => \"attachment\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Challenges::Submissions::HypothesesBundleTemplatesController",
+        "method": "show"
+      },
+      "user_input": "HypothesesBundleTemplate.new(Current.user.models.find(params[:submission_id])).create.path",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Command Injection",
       "warning_code": 14,
       "fingerprint": "5ebb468cb47d184cffd1566379d4dcb1414d8aedf9726b12b4ba86dbec7017c9",
@@ -94,5 +117,5 @@
       "note": ""
     }
   ],
-  "brakeman_version": "7.1.0"
+  "brakeman_version": "7.1.2"
 }
