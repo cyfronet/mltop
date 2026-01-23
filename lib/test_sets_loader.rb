@@ -1,11 +1,12 @@
 class TestSetsLoader
   HOSTNAME = "login01.ares.cyfronet.pl"
   TASKS_DIR = File.join(Rails.root, "tmp")
+  FAKE_TASKS_DIR = File.join(Rails.root, "tmp", "fake_tasks")
   REMOTE_TASKS_DIR = "/net/pr2/projects/plgrid/plggmeetween/tasks"
   TASKS_YAML_PATH = File.join(Rails.root, "db", "data", "tasks.yml")
   TEST_SETS_YAML_PATH = File.join(Rails.root, "db", "data", "test_sets.yml")
 
-  def initialize(username:, challenge_id:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
+  def initialize(username: nil, challenge_id:, hostname: HOSTNAME, remote_tasks_dir: REMOTE_TASKS_DIR, tasks_dir: TASKS_DIR)
     @username = username
     @challenge_id = challenge_id
     @hostname = hostname
