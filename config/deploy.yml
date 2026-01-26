@@ -47,6 +47,7 @@ env:
     # DB_HOST: mltop-db
     DB_HOST: 192.168.1.8
     RAILS_ENV: staging
+    HOST: speechm-dev.cloud.cyfronet.pl
   secret:
     - RAILS_MASTER_KEY
 
