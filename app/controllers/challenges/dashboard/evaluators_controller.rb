@@ -4,7 +4,7 @@ module Challenges
       before_action :find_and_authorize_evaluator, only: %i[ show edit update destroy ]
 
       def index
-        @evaluators = Evaluator.includes(:challenge).all
+        @evaluators = policy_scope(Evaluator).includes(:challenge)
       end
 
       def show

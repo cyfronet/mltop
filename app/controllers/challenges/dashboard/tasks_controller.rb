@@ -4,11 +4,11 @@ module Challenges
       before_action :find_and_authorize_task, only: %i[edit update destroy]
 
       def index
-        @tasks = Task.all
+        @tasks = policy_scope(Task)
       end
 
       def show
-        @task = Task.includes(:challenge, test_sets: { entries: { input_attachment: :blob } }).find(params[:id])
+        @task = policy_scope(Task).includes(:challenge, test_sets: { entries: { input_attachment: :blob } }).find(params[:id])
         @test_sets_left = (TestSet.count - @task.test_sets.count).positive?
       end
 
