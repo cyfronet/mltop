@@ -73,13 +73,9 @@ accessories:
     host: 192.168.1.8
     port: "5432:5432"
     env:
-      clear:
-        POSTGRES_USER: "postgres"
-        POSTGRES_DB: "mltop_staging"
       secret:
         - POSTGRES_PASSWORD
     files:
-      #       - config/mysql/production.cnf:/etc/mysql/my.cnf
       - db/staging.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/postgresql/data
