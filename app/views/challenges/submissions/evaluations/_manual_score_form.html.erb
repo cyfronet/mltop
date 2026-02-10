@@ -1,0 +1,20 @@
+<%= form_with model: [evaluation.hypothesis, evaluation], url: hypothesis_manual_evaluations_path(evaluation.hypothesis), method: :post, local: true do |f| %>
+  <%= f.hidden_field :hypothesis_id %>
+  <%= f.hidden_field :evaluator_id %>
+
+  <div class="space-y-4">
+    <% evaluation.evaluator.metrics.each do |metric| %>
+      <% if metric.strict? %>
+        <%= f.number_field metric.name,
+            placeholder: 'Enter score',
+            min: metric.best_score,
+            max: metric.worst_score %>
+      <% else %>
+        <%= f.number_field metric.name,
+            placeholder: 'Enter score' %>
+      <% end %>
+    <% end %>
+
+  <%= f.submit "Save Scores", class:"w-full" %>
+  </div>
+<% end %>
