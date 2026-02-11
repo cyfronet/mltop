@@ -1,7 +1,7 @@
 if Rails.env.local?
   namespace :dev do
     desc "Sample data for local development environment"
-    task :recreate, [ "user_login" ] => [ :environment ] do |t, args|
+    task :recreate, [ "user_login", "generate_tasks" ] => [ :environment ] do |t, args|
       task("db:drop").invoke
       system "rm -rf #{File.join(Rails.root, "storage", "*/")}"
       FileUtils.touch("tmp/caching-dev.txt") unless File.exist?("tmp/caching-dev.txt")
@@ -36,7 +36,7 @@ if Rails.env.local?
       ).import!
 
       puts "DB set up complete, initializing test sets.."
-      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login), challenge.id)
+      Rake::Task["test_sets:synchronize"].invoke(args.fetch(:user_login), challenge.id, nil, args.fetch(:generate_tasks))
 
       puts "Test sets created, mocking data for ST"
       Rake::Task["dev:faked_st_models"].invoke
