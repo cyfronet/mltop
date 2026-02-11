@@ -10,6 +10,7 @@ class Evaluation < ApplicationRecord
 
   validates :hypothesis, uniqueness: { scope: :evaluator_id }
 
+  delegate :automatic?, :manual?, to: :evaluator
   broadcasts_to ->(ev) do
     task = ev.hypothesis.test_set_entry&.task
     task ? [ ev.hypothesis.model, task ] : nil
