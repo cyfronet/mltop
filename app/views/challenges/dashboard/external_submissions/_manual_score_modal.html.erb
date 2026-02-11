@@ -1,0 +1,21 @@
+<div
+  data-modal-target="modal"
+  class="fixed inset-0 z-50 hidden bg-opacity-50 flex items-center justify-center p-4">
+  <div class="rounded-lg shadow-xl overflow-y-auto border border-zinc-200 bg-white dark:bg-gray-900">
+    <div class="p-6 flex-col flex gap-4">
+        <h3 class="text-lg font-semibold">Manual Score Submission</h3>
+
+      <div id="manual-score-form-container"">
+        <% hypothesis.evaluators.manual.each do |evaluator| %>
+          <% evaluation = hypothesis.evaluation_for(evaluator) %>
+          <% if evaluation.new_record? %>
+            <%= render 'challenges/submissions/evaluations/manual_score_form', evaluation: evaluation %>
+          <% end %>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-secondary justify-center" data-action="click->modal#close">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<%= form_with model: [evaluation.hypothesis, evaluation], url: hypothesis_manual_evaluations_path(evaluation.hypothesis), method: :post, local: true do |f| %>
+<%= form_with model: [evaluation.hypothesis, evaluation], url: hypothesis_manual_evaluations_path(evaluation.hypothesis), method: :post, local: true, data: { action: "turbo:submit-end->modal#close" } do |f| %>
   <%= f.hidden_field :hypothesis_id %>
   <%= f.hidden_field :evaluator_id %>
 

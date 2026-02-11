@@ -12,6 +12,13 @@
               <span>Evaluate</span>
             <% end %>
           <% end %>
+          <% if hypothesis.evaluators.manual.any? && hypothesis.evaluators.manual.any? { |e| hypothesis.evaluation_for(e).new_record? } %>
+          <div data-controller="modal">
+            <%= render "manual_score_button", hypothesis: hypothesis %>
+            <%= render "manual_score_modal", hypothesis: hypothesis %>
+          </div>
+          <% end %>
+
           <div data-controller="dropdown" class="relative">
             <button
               data-action="click->dropdown#toggle"
