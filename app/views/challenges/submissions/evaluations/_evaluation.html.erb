@@ -15,7 +15,10 @@
                 <% end %>
               <% end %>
              <% else %>
-               <%= render 'challenges/submissions/evaluations/manual_score_form', evaluation: evaluation %>
+                <div data-controller="modal">
+                  <%= render "challenges/dashboard/external_submissions/manual_score_button", hypothesis: evaluation.hypothesis %>
+                  <%= render "challenges/dashboard/external_submissions/manual_score_modal", hypothesis: evaluation.hypothesis %>
+                </div>
              <% end %>
           </div>
         </div>
