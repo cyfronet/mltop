@@ -16,7 +16,7 @@
             <% end %>
             <% if hypothesis.evaluators.manual.any? && hypothesis.evaluators.manual.any? { |e| hypothesis.evaluation_for(e).new_record? } %>
               <div data-controller="modal">
-                <%= render "challenges/dashboard/external_submissions/manual_score_button", hypothesis: hypothesis %>
+                <%= render "challenges/dashboard/external_submissions/manual_score_button" %>
                 <%= render "challenges/dashboard/external_submissions/manual_score_modal", hypothesis: hypothesis, modal_open: local_assigns[:modal_open] %>
               </div>
             <% end %>

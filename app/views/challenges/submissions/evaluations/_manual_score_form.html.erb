@@ -7,13 +7,11 @@
     <% evaluation.evaluator.metrics.each do |metric| %>
       <% if metric.strict? %>
         <%= f.number_field metric.name,
-        value: 10,
             placeholder: 'Enter score',
             min: metric.best_score,
             max: metric.worst_score %>
       <% else %>
         <%= f.number_field metric.name,
-        value: 10,
             placeholder: 'Enter score' %>
       <% end %>
     <% end %>
