@@ -13,11 +13,11 @@ module Challenges
             @evaluation.record_scores!(scores_params)
             @evaluators = @hypothesis.evaluators
             flash.now[:notice] = "Manual scores recorded successfully"
-
           else
-            flash.now[:alert] = "Unable to create evaluations"
-            render status: :unprocessable_entity
+            flash.now[:alert] = "Unable to record scores"
           end
+        rescue ActiveRecord::RecordInvalid
+          flash.now[:alert] = "Unable to record scores"
         end
       end
 

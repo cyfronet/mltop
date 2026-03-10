@@ -79,10 +79,19 @@ class ActiveSupport::TestCase
         script: "script",
         challenge: challenges(:global),
         site: sites(:ares),
-        directory: "some/directory/path"
+        directory: "some/directory/path",
+        kind: "automatic"
       }
     end
 
+    factory(:metric) do |i|
+      {
+        name: "Metric #{i}",
+        evaluator: evaluators(:blueurt),
+        worst_score: 0,
+        best_score: 100
+      }
+    end
     factory(:challenge) do |i|
       {
         name: "Challenge #{i}",
