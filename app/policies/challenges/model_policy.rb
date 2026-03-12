@@ -31,7 +31,7 @@ module Challenges
     end
 
     def permitted_attributes
-      [ :name, :description, task_ids: [], agreements_attributes: [ :consent_id, :agreed, :id ] ]
+      [ :name, :description, :visibility, task_ids: [], agreements_attributes: [ :consent_id, :agreed, :id ] ]
     end
 
     private

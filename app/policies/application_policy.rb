@@ -84,6 +84,14 @@ class ApplicationPolicy
           user&.admin?
         end
 
+        def challenge_admin?
+          Current.membership&.admin?
+        end
+
+        def challenge_manager?
+          Current.membership&.manager?
+        end
+
         def challenge_participant?
           Current.challenge_member?
         end

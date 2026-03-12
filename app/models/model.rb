@@ -16,6 +16,10 @@ class Model < ApplicationRecord
   validates :name, presence: true
   validates :task_ids, presence: true
 
+  VISIBILITIES = { internal: "internal", visible: "visible" }
+  enum :visibility, VISIBILITIES
+  before_create :set_default_visibility
+
   scope :external, -> { where(owner: User.external) }
 
   scope :with_not_evaluated_hypotheses, -> do
@@ -27,4 +31,9 @@ class Model < ApplicationRecord
   def to_s
     name
   end
+
+  private
+    def set_default_visibility
+      self.visibility ||= "visible"
+    end
 end

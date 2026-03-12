@@ -3,7 +3,12 @@ module Challenges
     class ModelPolicy < ApplicationPolicy
       class Scope < ApplicationPolicy::Scope
         def resolve
-          leaderboard_released? ? Current.challenge.models : Model.none
+          return Model.none unless leaderboard_released?
+          if challenge_admin? || challenge_manager?
+            Current.challenge.models
+          else
+            Current.challenge.models.visible
+          end
         end
       end
 

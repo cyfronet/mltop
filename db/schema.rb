@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_06_125435) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_12_122438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_125435) do
   create_enum "evaluator_kind", ["automatic", "manual"]
   create_enum "format", ["video", "audio", "text"]
   create_enum "hypotheses_bundle_state", ["processing", "failed", "success"]
+  create_enum "model_visibility", ["internal", "visible"]
 
   create_table "access_rules", force: :cascade do |t|
     t.bigint "challenge_id", null: false
@@ -184,6 +185,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_125435) do
     t.string "name"
     t.bigint "owner_id", null: false
     t.datetime "updated_at", null: false
+    t.enum "visibility", enum_type: "model_visibility"
     t.index ["challenge_id"], name: "index_models_on_challenge_id"
     t.index ["owner_id"], name: "index_models_on_owner_id"
   end
