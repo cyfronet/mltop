@@ -72,7 +72,13 @@ class ApplicationPolicy
         Current.challenge.leaderboard_released?
       end
 
+      def resolve
+        raise NotImplementedError, "You must define #resolve in #{self.class}"
+      end
+
       private
+
+        attr_reader :user, :scope
 
         def admin?
           user&.admin?
@@ -80,21 +86,6 @@ class ApplicationPolicy
 
         def challenge_participant?
           Current.challenge_member?
-        end
-
-        class Scope
-          def initialize(user, scope)
-            @user = user
-            @scope = scope
-          end
-
-          def resolve
-            raise NotImplementedError, "You must define #resolve in #{self.class}"
-          end
-
-          private
-
-            attr_reader :user, :scope
         end
     end
 end
