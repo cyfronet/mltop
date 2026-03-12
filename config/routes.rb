@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         resource :hypotheses_bundle_template, only: [ :show ], module: :submissions
         resources :hypotheses, only: [ :create, :destroy ], module: :submissions, shallow: true do
           resource :evaluations, only: [ :create ]
+          resource :manual_evaluations, only: [ :create ]
         end
       end
 

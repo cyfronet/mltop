@@ -15,6 +15,7 @@ class Hypothesis < ApplicationRecord
       run_evaluators = evaluations.map(&:evaluator_id)
       missing_evaluations = evaluators
         .reject { |e| run_evaluators.include?(e.id) }
+        .reject(&:manual?)
         .map do |evaluator|
           evaluations.build(evaluator:, creator:).tap { it.save! }
         end.compact
@@ -26,6 +27,10 @@ class Hypothesis < ApplicationRecord
 
   def fully_evaluated?
     evaluations.size == evaluators.size
+  end
+
+  def automatic_evaluators_not_evaluated?
+    evaluations.filter(&:automatic?).size < evaluators.automatic.size
   end
 
   def evaluators

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_22_124933) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_06_125435) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,6 +18,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_124933) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "challenge_visibility", ["leaderboard_released", "scores_released"]
   create_enum "consent_target", ["model", "challenge"]
+  create_enum "evaluator_kind", ["automatic", "manual"]
   create_enum "format", ["video", "audio", "text"]
   create_enum "hypotheses_bundle_state", ["processing", "failed", "success"]
 
@@ -123,6 +124,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_22_124933) do
     t.datetime "created_at", null: false
     t.string "directory", null: false
     t.enum "from", enum_type: "format"
+    t.enum "kind", default: "automatic", null: false, enum_type: "evaluator_kind"
     t.string "name", null: false
     t.text "script", null: false
     t.bigint "site_id"

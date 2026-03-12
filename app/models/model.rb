@@ -19,9 +19,9 @@ class Model < ApplicationRecord
   scope :external, -> { where(owner: User.external) }
 
   scope :with_not_evaluated_hypotheses, -> do
-    includes(hypotheses: :evaluations)
-      .where.not(hypotheses: { id: nil })
-      .where(hypotheses: { evaluations: { id: nil } })
+    left_joins(tasks: :evaluators).left_joins(hypotheses: :evaluations)
+    .group(:id)
+    .having("COUNT(DISTINCT evaluations.id) < (COUNT(DISTINCT evaluators.id) * COUNT(DISTINCT hypotheses.id))")
   end
 
   def to_s

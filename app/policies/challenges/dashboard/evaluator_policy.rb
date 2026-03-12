@@ -32,7 +32,7 @@ module Challenges
       end
 
       def permitted_attributes
-        [ :name, :script, :site_id, :from, :to, :directory ]
+        [ :name, :script, :site_id, :from, :to, :directory, :kind ]
       end
     end
   end
