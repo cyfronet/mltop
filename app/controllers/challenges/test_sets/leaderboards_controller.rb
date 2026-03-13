@@ -10,12 +10,13 @@ module Challenges
         @test_set = policy_scope(TestSet).find_by(id: params[:test_set_id])
         return unless @test_set
         authorize(@test_set, :leaderboard?)
+        visibility = Current.challenge_manager? || Current.challenge_admin? ? Model.visibilities.values : Model.visibilities[:visible]
 
         @tasks = @test_set.tasks
         @test_set_entries = @test_set.entries.for_task(selected_task)
 
         @rows = Top::Row
-          .where(task: selected_task, test_set: @test_set)
+          .where(task: selected_task, test_set: @test_set, visibility:)
           .order(test_set: @test_set, metric: selected_metric, order: selected_order, test_set_entry: selected_test_set_entry)
         @rows.relative! if params[:color] != "absolute"
       end

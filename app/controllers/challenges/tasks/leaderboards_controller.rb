@@ -10,12 +10,15 @@ module Challenges
         @task = policy_scope(Task).includes(:metrics).find_by(id: params[:task_id])
         return unless @task
         authorize(@task, :leaderboard?)
+        visibility = Current.challenge_manager? || Current.challenge_admin? ? Model.visibilities.values : Model.visibilities[:visible]
 
         @filtering_params = params.permit(:tsid, :mid, :o, :source, :target, :color)
         @rows = Top::Row
           .where(task: @task,
             source: params[:source],
-            target: params[:target])
+            target: params[:target],
+            visibility:
+            )
           .order(test_set: selected_test_set,
             metric: selected_metric,
             order: selected_order

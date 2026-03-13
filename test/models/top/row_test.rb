@@ -185,4 +185,15 @@ class Top::RowTest < ActiveSupport::TestCase
     assert_equal m3, row.model
     assert_equal 0.5, score.normalized
   end
+
+  test "internal models filtering" do
+    internal_model = create(:model, name: "Internal model", visibility: :internal, tasks: [ tasks(:st) ])
+    create(:hypothesis, model: internal_model)
+    create(:score, evaluation: create(:evaluation, hypothesis: internal_model.hypotheses.first), metric: metrics(:blueurt))
+
+    rows = Top::Row.where(task: tasks(:st), visibility: Model.visibilities[:visible])
+    assert rows.map(&:model).exclude?(internal_model), "Internal model should be skipped"
+    rows = Top::Row.where(task: tasks(:st), visibility: Model.visibilities.values)
+    assert_includes rows.map(&:model), internal_model, "Internal model should be present"
+  end
 end
