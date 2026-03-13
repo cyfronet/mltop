@@ -15,14 +15,14 @@ class Top::Row
     @cached_scores = {}
   end
 
-  def self.where(task:, test_set: nil, source: nil, target: nil)
+  def self.where(task:, test_set: nil, source: nil, target: nil, visibility: Model.visibilities[:visible])
     scores = Score
-      .joins(:metric, evaluation: { hypothesis: { test_set_entry: :task_test_set } }).preload(:metric)
-      .where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { task_id: task } } } })
+      .joins(:metric, evaluation: { hypothesis: [ :model, test_set_entry: :task_test_set ] }).preload(:metric)
+      .where(evaluation: { hypotheses: { models: { visibility: }, test_set_entries: { task_test_sets: { task_id: task } } } })
+
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { task_test_sets: { test_set_id: test_set } } } }) if test_set
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { source_language: source } } }) unless source.blank?
     scores = scores.where(evaluation: { hypotheses: { test_set_entries: { target_language: target } } }) unless target.blank?
-
     scores = scores.select("scores.value, scores.metric_id, hypotheses.model_id, task_test_sets.test_set_id, test_set_entries.id as test_set_entry_id, metrics.worst_score as metric_worst_score")
 
     entries = task.test_set_entries
