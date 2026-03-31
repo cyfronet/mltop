@@ -41,7 +41,7 @@ gem "active_link_to"
 # app security
 gem "rack-attack"
 
-gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.22"
 gem "hpckit", github: "cyfronet/hpckit", branch: "slurm-client"
 
 gem "kamal", ">= 2.0.0.rc2", require: false
