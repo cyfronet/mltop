@@ -19,6 +19,9 @@ class TestSetLoader::Processor
       when "SLU"     then TestSetLoader::SluProcessor
       when "LIPREAD" then TestSetLoader::LipreadProcessor
       when "TTS"     then TestSetLoader::TtsProcessor
+      when "OFFLINE"  then TestSetLoader::OfflineProcessor
+      when "MODELCOMPRESSION" then TestSetLoader::ModelCompressionProcessor
+      when "IF" then TestSetLoader::IfProcessor
       else TestSetLoader::UnknownProcessor
       end
 
