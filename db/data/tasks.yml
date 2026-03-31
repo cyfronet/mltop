@@ -201,6 +201,78 @@ TTS:
   test_sets:
     LJSPEECH: [ en-en ]
 
+OFFLINE:
+  name: "Offline"
+  info: |
+    Offline Speech Translation Task at IWSLT is the one with the longest-standing
+    tradition at the conference. The task provides a stable evaluation framework
+    for tracking technological advancements in Spoken Language Translation (SLT),
+    with a focus on unconstrained SLT—free from the temporal and structural
+    constraints imposed by tasks such as simultaneous translation or subtitling.
+    Such an unconstrained condition offers a good estimate to the current upper
+    limit of our speech technologies, making this offline task the foundation
+    of other shared tasks."
+  description:
+  from: "audio"
+  to: "text"
+  test_sets:
+    TRACK1_ACL6060: [en-de, en-zh]
+    TRACK1_BUSINESSNEWS: [en-ar, en-de, en-ja, en-zh]
+    TRACK1_CALLCENTER: [en-de, en-ja, en-zh]
+    TRACK1_CHALLENGEACCENT: [en-de]
+    TRACK1_TVSERIES: [en-de, en-ja, en-zh]
+    TRACK1_YOUTUBE: [en-de, en-ja, en-zh]
+    TRACK1_TTS1: [en-de, en-zh]
+    TRACK1_TTS2: [en-de, en-zh]
+    TRACK1_TTS3: [en-de, en-zh]
+    TRACK2_MULTILINGUAL: [any-en]
+
+MODELCOMPRESSION:
+  name: "Model Compression"
+  info: |
+    Text and speech foundation models have revolutionized many natural language
+    processing tasks, including speech-to-text trnslation. However, their large
+    size and high computational demands pose significant challenges when deploying
+    these models in real-world scenarios, particularly in resource-constrained
+    environments such as mobile devices, embedded systems, and edge computing.
+    Reducing the size of large, general-purpose models while preserving or even
+    improving their performance in specific tasks or language settings is essential
+    for making them more efficient, accessible, and sustainable. This task
+    focuses on evaluating participants’ ability to apply model compression
+    techniques to a large multilingual speech-to-text model, balancing the
+    need for accessibility and deployment feasibility with the requirement
+    for good performance in English-German and English-Chinese speech translation."
+  description:
+  from: "audio"
+  to: "text"
+  test_sets:
+    ACL6060: [en-de, en-zh]
+    BUSINESSNEWS: [en-de, en-zh]
+    CALLCENTER: [en-de, en-zh]
+    CHALLENGEACCENT: [en-de]
+    TVSERIES: [en-de, en-zh]
+    YOUTUBE: [en-de, en-zh]
+
+IF:
+  name: "Instruction Following"
+  info: |
+    Large language models (LLMs) have demonstrated the ability to perform several
+    NLP tasks without the need to build dedicated models, offering a single solution
+    for many applications. While solely processing text in their initial stage,
+    LLMs are now being enhanced by integrating other modalities, like vision
+    and audio. In this scenario, the emerging paradigm of creating a unique
+    architecture from speech foundation models (SFMs) and LLMs is gaining
+    traction to combine the best of both worlds: the ability to process spoken
+    language inputs with the always-evolving language knowledge of the LLMs.
+    The Instruction Following (IF) task aims to test these general-purpose models
+    for the speech modality, namely, SpeechLLMs."
+  description:
+  from: "audio"
+  to: "text"
+  test_sets:
+    IFSHORT26: [en-en, en-de, en-it, en-zh]
+    IFLONG26: [en-en, en-de, en-it, en-zh]
+
 # LIPGEN:
 #   name: Lip Generation
 #   info: |
