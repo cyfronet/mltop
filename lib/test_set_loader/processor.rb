@@ -85,11 +85,10 @@ class TestSetLoader::Processor
     def test_sets(dir)
       name = dir.basename.to_s
 
-      ts = TestSet.find_or_initialize_by(name:).tap do |ts|
+      ts = TestSet.find_or_initialize_by(name:, challenge_id: @challenge_id).tap do |ts|
         ts.assign_attributes(
           description: description(name, dir),
           published: !RESTRICTED_TEST_SETS.include?(name.upcase),
-          challenge_id: @challenge_id
         )
         ts.save
       end
@@ -155,7 +154,7 @@ class TestSetLoader::Processor
     end
 
     def task
-      @task ||= Task.find_by!(slug:)
+      @task ||= Task.find_by!(slug:, challenge_id: @challenge_id)
     end
 
     def child_with_extension(dir, extension)
