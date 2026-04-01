@@ -3,10 +3,10 @@ require "zip"
 module Users::Contribution
   extend ActiveSupport::Concern
 
-  def all_hypothesis
+  def all_hypothesis(challenge_id)
     tmp_dir = Dir.mktmpdir
     ::Zip::OutputStream.open("#{tmp_dir}.zip") do |zip_stream|
-      models.preload(tasks: :test_set_entries).each do |model|
+      models.where(challenge_id:).preload(tasks: :test_set_entries).each do |model|
         model.tasks.each do |task|
           model.hypotheses.preload(:input_blob, test_set_entry: :test_set).where(test_set_entry: task.test_set_entries).with_attached_input.each do |hypothesis|
             if filename = [ "user-#{id}", task.name, hypothesis.model.name, hypothesis.test_set_entry.test_set.name, hypothesis.test_set_entry.to_s ].join("/")

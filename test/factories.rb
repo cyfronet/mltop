@@ -64,6 +64,13 @@ class ActiveSupport::TestCase
       }
     end
 
+    factory(:task_test_set) do
+      {
+        task: tasks(:st),
+        test_set: test_sets(:flores)
+      }
+    end
+
     factory(:test_set_entry) do |i|
       {
         source_language: "en",

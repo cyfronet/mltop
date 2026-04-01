@@ -3,20 +3,20 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
-      "fingerprint": "4408ebeca778a85ba105372de1a39b52ec6f9144741cb52972b27f3d7080966d",
+      "fingerprint": "2869410d32b514e7f1b52066218a98d2d24a6d99db5db2f8833571a2ddd8e565",
       "check_name": "SendFile",
       "message": "Model attribute used in file name",
-      "file": "app/controllers/challenges/submissions/hypotheses_bundle_templates_controller.rb",
-      "line": 9,
+      "file": "app/controllers/challenges/dashboard/participants/hypotheses_controller.rb",
+      "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "send_file(HypothesesBundleTemplate.new(Current.user.models.find(params[:submission_id])).create.path, :type => \"application/zip\", :filename => (\"submission_template_#{Current.user.models.find(params[:submission_id]).name}.zip\"), :disposition => \"attachment\")",
+      "code": "send_file(User.find(params[:participant_id]).all_hypothesis(Current.challenge.id), :type => \"application/zip\", :filename => (\"user-#{User.find(params[:participant_id]).id}-hypotheses.zip\"))",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "Challenges::Submissions::HypothesesBundleTemplatesController",
-        "method": "show"
+        "class": "Challenges::Dashboard::Participants::HypothesesController",
+        "method": "index"
       },
-      "user_input": "HypothesesBundleTemplate.new(Current.user.models.find(params[:submission_id])).create.path",
+      "user_input": "User.find(params[:participant_id]).all_hypothesis(Current.challenge.id)",
       "confidence": "Medium",
       "cwe_id": [
         22
@@ -30,7 +30,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/test_set_loader/processor.rb",
-      "line": 168,
+      "line": 171,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "system(\"tar -C #{dir} -cf #{File.join(dir, name)} #{dir.children.select do\n extensions.any? do\n child.basename.to_s.ends_with?(ext)\n end\n end.map(&:basename).join(\" \")}\")",
       "render_path": null,
@@ -92,30 +92,7 @@
         95
       ],
       "note": ""
-    },
-    {
-      "warning_type": "File Access",
-      "warning_code": 16,
-      "fingerprint": "89aefba31ecd62cc93e8c76eda94678b5d9966a5d55f0ddedc049ee84aa65776",
-      "check_name": "SendFile",
-      "message": "Model attribute used in file name",
-      "file": "app/controllers/challenges/dashboard/participants/hypotheses_controller.rb",
-      "line": 8,
-      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "send_file(User.find(params[:participant_id]).all_hypothesis, :type => \"application/zip\", :filename => (\"user-#{User.find(params[:participant_id]).id}-hypotheses.zip\"))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Challenges::Dashboard::Participants::HypothesesController",
-        "method": "index"
-      },
-      "user_input": "User.find(params[:participant_id]).all_hypothesis",
-      "confidence": "Medium",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
     }
   ],
-  "brakeman_version": "7.1.2"
+  "brakeman_version": "8.0.4"
 }
