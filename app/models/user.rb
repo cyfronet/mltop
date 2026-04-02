@@ -21,8 +21,8 @@ class User < ApplicationRecord
     ssh_credentials.valid?
   end
 
-  def has_hypotheses?
-    models.map(&:hypotheses).flatten.any?
+  def has_hypotheses?(challenge)
+    models.filter { |model| model.challenge == challenge }.map(&:hypotheses).flatten.any?
   end
 
   def from_plgrid?

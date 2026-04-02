@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <% if participant.has_hypotheses? %>
+  <% if participant.has_hypotheses?(Current.challenge) %>
     <dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto">
       <%= link_to "Download all submissions", dashboard_participant_hypotheses_path(participant), class: "btn btn-primary", "data-turbo": false %>
     </dl>
