@@ -51,7 +51,9 @@ module ChallengeSlug
     end
 
     def call(env)
-      env["rack.session.options"][:path] = env["SCRIPT_NAME"] if env["mltop.challenge_id"]
+      if env["mltop.challenge_id"] && !env["PATH_INFO"].include?("sign_in")
+        env["rack.session.options"][:path] = env["SCRIPT_NAME"]
+      end
       @app.call env
     end
   end
