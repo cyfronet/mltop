@@ -43,3 +43,5 @@ en:
   time:
     formats:
       compact: "%Y-%m-%d-%H:%M:%S"
+      short_with_zone: "%d %b, %H:%M %Z"
+

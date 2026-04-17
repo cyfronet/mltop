@@ -26,11 +26,11 @@ module ChallengeBannerHelper
   end
 
   def challenge_start_date
-    l(Current.challenge.starts_at, format: :short)
+    l(Current.challenge.starts_at, format: :short_with_zone)
   end
 
   def challenge_end_date
-    l(Current.challenge.ends_at, format: :short)
+    l(Current.challenge.ends_at, format: :short_with_zone)
   end
 
   def challenge_time_left
