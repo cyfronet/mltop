@@ -39,7 +39,8 @@ class ApplicationPolicy
   private
 
     def challenge_open?
-      Time.current.between?(Current.challenge.starts_at, Current.challenge.ends_at)
+      Time.current.between?(Current.challenge.starts_at, Current.challenge.ends_at) ||
+      Current.user.force_challenge_open?
     end
 
     def challenge_admin?
