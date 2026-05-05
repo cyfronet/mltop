@@ -21,7 +21,7 @@ class Challenge < ApplicationRecord
   validates :name, :starts_at, :ends_at, presence: true
   validates :ends_at, comparison: { greater_than: :starts_at }
 
-  VISIBILITIES = { leaderboard_released: "leaderboard_released", scores_released: "scores_released" }
+  VISIBILITIES = { internal_leaderboard: "internal_leaderboard", leaderboard_released: "leaderboard_released", scores_released: "scores_released" }
   enum :visibility, VISIBILITIES
 
   before_create :set_default_texts

@@ -60,7 +60,9 @@ class ApplicationPolicy
     end
 
     def leaderboard_released?
-      Current.challenge.leaderboard_released? || Current.user&.force_challenge_open?
+      Current.challenge.leaderboard_released? ||
+      (Current.challenge.internal_leaderboard? && (challenge_admin? || challenge_manager?)) ||
+      Current.user&.force_challenge_open?
     end
 
     class Scope
@@ -70,7 +72,9 @@ class ApplicationPolicy
       end
 
       def leaderboard_released?
-        Current.challenge.leaderboard_released?
+        Current.challenge.leaderboard_released? ||
+        (Current.challenge.internal_leaderboard? && (challenge_admin? || challenge_manager?)) ||
+        Current.user&.force_challenge_open?
       end
 
       def resolve
