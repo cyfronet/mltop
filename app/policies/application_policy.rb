@@ -60,7 +60,7 @@ class ApplicationPolicy
     end
 
     def leaderboard_released?
-      Current.challenge.leaderboard_released?
+      Current.challenge.leaderboard_released? || Current.user&.force_challenge_open?
     end
 
     class Scope

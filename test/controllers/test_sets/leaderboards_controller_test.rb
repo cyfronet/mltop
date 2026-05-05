@@ -13,6 +13,14 @@ module TestSets
       assert :unauthorized, response.status
     end
 
+    test "should get index when force_challenge open is set to true" do
+      challenge_member_signs_in("szymon")
+      challenges(:global).update(visibility: nil)
+      users(:szymon).update(force_challenge_open: true)
+      get test_set_leaderboard_path(test_set_id: test_sets("flores"))
+      assert_response :success
+    end
+
     test "should get index when leaderboards are released" do
       get test_set_leaderboard_path(test_set_id: test_sets("flores"))
       assert_response :success
