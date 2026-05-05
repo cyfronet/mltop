@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_12_122438) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_05_111125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "challenge_visibility", ["leaderboard_released", "scores_released"]
+  create_enum "challenge_visibility", ["leaderboard_released", "scores_released", "internal_leaderboard"]
   create_enum "consent_target", ["model", "challenge"]
   create_enum "evaluator_kind", ["automatic", "manual"]
   create_enum "format", ["video", "audio", "text"]

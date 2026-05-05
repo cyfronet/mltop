@@ -13,6 +13,20 @@ module TestSets
       assert :unauthorized, response.status
     end
 
+    test "should get index when internal released and is a manager/admin of challenge" do
+      challenge_member_signs_in("szymon", teams: [ "plggmeetween" ])
+      challenges(:global).update(visibility: "internal_leaderboard")
+      membership = Membership.find_by(user: users(:szymon), challenge: challenges(:global))
+      membership.update(roles: [ :manager ])
+      get test_set_leaderboard_path(test_set_id: test_sets("flores"))
+      assert_response :success
+      membership.update(roles: [ :admin ])
+      get test_set_leaderboard_path(test_set_id: test_sets("flores"))
+      assert_response :success
+      membership.update(roles: [])
+      assert :unauthorized, response.status
+    end
+
     test "should get index when force_challenge open is set to true" do
       challenge_member_signs_in("szymon")
       challenges(:global).update(visibility: nil)
