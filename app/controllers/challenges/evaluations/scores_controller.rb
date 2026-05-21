@@ -2,6 +2,8 @@ module Challenges
   module Evaluations
     class ScoresController < Evaluations::ApplicationController
       def create
+        return head :bad_request if params[:state].nil?
+
         if params[:state] == "OK"
           @evaluation.record_scores!(scores_params)
         else
@@ -12,7 +14,7 @@ module Challenges
       end
 
       def scores_params
-        params.required(:scores).permit(metrics)
+        params.require(:scores).permit(metrics)
       end
 
       def metrics
