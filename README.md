@@ -89,6 +89,17 @@ override public host you can set `HOST` environment variable:
 export HOST=mltop.public.host
 ```
 
+## Kamal (deployment)
+
+We're using kamal to deploy the app. It requires some ENV variables (see section below)
+If you need to see previous logs, they are stored in `/var/lib/docker/containers/container_id`
+
+Useful commands:
+- `kamal deploy` - deploys the app
+- `kamal logs` - check serwer logs
+- aliases in the `deploy.yml`
+
+We make a backup every Monday at 6 am
 ## ENV variables
 
 To customize the application you can set the following ENV variables:
