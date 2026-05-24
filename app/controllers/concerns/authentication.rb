@@ -33,7 +33,7 @@ module Authentication
     end
 
     def restore_authentication
-      user = User.find_by(id: cookies.signed[:user_id])
+      user = User.find_by(id: session[:user_id])
 
       if user && (!user.from_plgrid? || user.credentials_valid?)
         authenticated_as(user)
@@ -52,10 +52,10 @@ module Authentication
 
     def authenticated_as(user)
       Current.user = user
-      cookies.signed.permanent[:user_id] = { value: user.id, httpsonly: true, same_site: :lax }
+      session[:user_id] = user.id
     end
 
     def reset_authentication
-      cookies.delete(:user_id)
+      session.delete(:user_id)
     end
 end
