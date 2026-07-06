@@ -25,6 +25,7 @@ module Challenges
       @model = Current.user.models.new(permitted_attributes(Model).merge(challenge: Current.challenge))
       authorize(@model)
       if @model.save
+        SlackNotifier.send_new_submission_notification(@model)
         redirect_to submission_path(@model), notice: "Model created"
       else
         render_error :new
