@@ -23,6 +23,7 @@
             </div>
         <% end %>
         <div class="ml-4 flex shrink-0 items-center space-x-2">
+          <span class="text-sm text-zinc-500 dark:text-zinc-400">Created: <%= l hypothesis.created_at, format: :short %></span>
           <% if !hypothesis.fully_evaluated? %>
             <% if hypothesis.automatic_evaluators_not_evaluated? %>
               <%= button_to hypothesis_evaluations_path(hypothesis), class: "text-emerald-600 hover:text-white hover:bg-emerald-600 relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium ring-1 ring-inset ring-gray-300 mr-3" do %>
