@@ -1,22 +1,20 @@
-<table class="table-auto border-separate border-spacing-0 w-full border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 text-sm shadow-xs">
-  <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
-    <tr>
-      <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
-        Models
-      </th>
-      <% task.test_sets.each do |test_set| %>
-        <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
-          <%= link_to test_set.name, test_set_leaderboard_path(test_set, color: filtering_params[:color]) %>
-          <% if rows.average? %>
-            <span class="text-gray-400 cursor-pointer" title="Presented score is an average for all matching languages. If both source and target languages are specified, the score reflects a specific value.">
-              <%= info_icon("h-4 w-4 inline") %>
-            </span>
-          <% end %>
+<% task.test_sets.each do |test_set| %>
+  <table class="table-auto border-separate border-spacing-0 w-full border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 text-sm shadow-xs mb-4">
+    <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+      <tr>
+        <th colspan="1" rowspan="2" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-left">
+          Models
         </th>
-      <% end %>
-    </tr>
-    <tr>
-      <% task.test_sets.each do |test_set| %>
+          <th colspan="<%= task.metrics.size %>" class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
+            <%= link_to test_set.name, test_set_leaderboard_path(test_set, color: filtering_params[:color]) %>
+            <% if rows.average? %>
+              <span class="text-gray-400 cursor-pointer" title="Presented score is an average for all matching languages. If both source and target languages are specified, the score reflects a specific value.">
+                <%= info_icon("h-4 w-4 inline") %>
+              </span>
+            <% end %>
+          </th>
+      </tr>
+      <tr>
         <% task.metrics.each do |metric| %>
           <th class="border border-zinc-300 dark:border-zinc-600 font-semibold p-4 text-zinc-900 dark:text-zinc-200 text-center">
             <%= link_to task_leaderboard_path(task, source: filtering_params[:source], target: filtering_params[:target], mid: metric.id, tsid: test_set.id, o: metric_order(test_set, metric), color: filtering_params[:color]), class: "flex items-center justify-center" do %>
@@ -28,21 +26,19 @@
             <% end %>
           </th>
         <% end %>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% rows.each do |row| %>
-      <tr>
-        <td class="leaderboard-item">
-          <%= link_to row.name, row.model %>
-        </td>
-        <% task.test_sets.each do |test_set| %>
+      </tr>
+    </thead>
+    <tbody>
+      <% rows.each do |row| %>
+        <tr>
+          <td class="leaderboard-item">
+            <%= link_to row.name, row.model %>
+          </td>
           <% task.metrics.each do |metric| %>
             <%= score_cell row.score(test_set:, metric:) %>
           <% end %>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
