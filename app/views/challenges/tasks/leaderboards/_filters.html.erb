@@ -6,14 +6,14 @@
       <%= hidden_field_tag :o, filtering_params[:o].presence %>
       <div class="mr-4">
         <label for="source" class="block text-sm font-medium text-gray-700">Source language</label>
-        <%= select_tag "source", options_for_select([["", nil]] + rows.source_languages, params[:source]),
+        <%= select_tag "source", options_for_select([["all (avg)", nil]] + rows.source_languages, params[:source]),
             id: "source",
             class: "mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
             data: { action: "change->auto-submit#submit" } %>
       </div>
       <div class="mr-4">
         <label for="target" class="block text-sm font-medium text-gray-700">Target language</label>
-        <%= select_tag "target", options_for_select([["", nil]] + rows.target_languages, params[:target]),
+        <%= select_tag "target", options_for_select([["all (avg)", nil]] + rows.target_languages, params[:target]),
             id: "target",
             class: "mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6",
             data: { action: "change->auto-submit#submit" } %>

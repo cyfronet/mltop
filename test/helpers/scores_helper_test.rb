@@ -6,10 +6,10 @@ class ScoresHelperTest < ActionView::TestCase
   end
 
   test "best score without entry" do
-    assert_equal "rgb(4, 120, 87)", score_color(Normalized.new(1))
+    assert_equal "rgba(188,11,175, 1)", score_color(Normalized.new(1))
   end
 
   test "worst score without entry" do
-    assert_equal "rgb(220, 38, 38)", score_color(Normalized.new(0))
+    assert_equal "rgba(188,11,175, 0)", score_color(Normalized.new(0))
   end
 end
