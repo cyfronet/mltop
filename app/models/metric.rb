@@ -16,4 +16,8 @@ class Metric < ApplicationRecord
   def strict?
     strict
   end
+
+  def mandatory?
+    mandatory
+  end
 end

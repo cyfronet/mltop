@@ -3,18 +3,23 @@ blue:
   evaluator: sacrebleu
   worst_score: 0
   best_score: 100
+  mandatory: true
+
 
 chrf:
   name: chrf
   evaluator: sacrebleu
   worst_score: 0
   best_score: 100
+  mandatory: true
 
 ter:
   name: ter
   evaluator: sacrebleu
   worst_score: 100
   best_score: 0
+  mandatory: false
+  strict: false
 
 blueurt:
   name: blueurt
