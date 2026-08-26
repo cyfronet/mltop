@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_05_111125) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_074627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -125,22 +125,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_111125) do
     t.datetime "created_at", null: false
     t.string "directory", null: false
     t.enum "from", enum_type: "format"
-    t.enum "kind", default: "automatic", null: false, enum_type: "evaluator_kind"
     t.string "name", null: false
     t.text "script", null: false
     t.bigint "site_id"
     t.enum "to", enum_type: "format"
     t.datetime "updated_at", null: false
+    t.enum "kind", default: "automatic", null: false, enum_type: "evaluator_kind"
     t.index ["challenge_id"], name: "index_evaluators_on_challenge_id"
     t.index ["site_id"], name: "index_evaluators_on_site_id"
   end
 
   create_table "hypotheses", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "hypotheses_bundle_id"
     t.bigint "model_id", null: false
     t.bigint "test_set_entry_id", null: false
     t.datetime "updated_at", null: false
+    t.bigint "hypotheses_bundle_id"
     t.index ["hypotheses_bundle_id"], name: "index_hypotheses_on_hypotheses_bundle_id"
     t.index ["model_id", "test_set_entry_id"], name: "index_hypotheses_on_model_id_and_test_set_entry_id", unique: true
     t.index ["model_id"], name: "index_hypotheses_on_model_id"
@@ -148,11 +148,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_111125) do
   end
 
   create_table "hypotheses_bundles", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "error_message"
     t.bigint "model_id"
     t.string "name", null: false
+    t.string "error_message"
     t.enum "state", default: "processing", null: false, enum_type: "hypotheses_bundle_state"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["model_id"], name: "index_hypotheses_bundles_on_model_id"
   end
@@ -175,6 +175,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_05_111125) do
     t.boolean "strict", default: true, null: false
     t.datetime "updated_at", null: false
     t.float "worst_score", default: 100.0, null: false
+    t.boolean "mandatory", default: false, null: false
     t.index ["evaluator_id"], name: "index_metrics_on_evaluator_id"
   end
 

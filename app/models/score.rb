@@ -2,11 +2,12 @@ class Score < ApplicationRecord
   belongs_to :evaluation
   belongs_to :metric
 
-  validates :value, presence: true, numericality: true
+  validates :value, presence: true, numericality: true,  if: -> { metric.mandatory? }
   validates :metric, uniqueness: { scope: :evaluation_id }
   validate :value_within_range, if: -> { metric.strict? }
 
   def value_within_range
+    return if value.nil? && !metric.mandatory?
     proper_range = if metric.asc?
       (metric.best_score..metric.worst_score).cover?(value)
     else

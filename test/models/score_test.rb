@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ModelTest < ActiveSupport::TestCase
+class ScoreTest < ActiveSupport::TestCase
   test "score needs to be within strict metric range" do
     score = build(:score, value: 120)
     assert_not score.valid?
@@ -17,6 +17,30 @@ class ModelTest < ActiveSupport::TestCase
     score.value = -10
     assert score.valid?
     score.value = 10
+    assert score.valid?
+  end
+
+  test "non mandatory non strict metric" do
+    score = build(:score, value: 120)
+    score.metric.update(strict: false, mandatory: false)
+    assert score.valid?
+    score.value = -10
+    assert score.valid?
+    score.value = 10
+    assert score.valid?
+    score.value = nil
+    assert score.valid?
+  end
+
+  test "non mandatory and strict metric" do
+    score = build(:score, value: 120)
+    score.metric.update(mandatory: false, strict: true)
+    assert_not score.valid?
+    score.value = -10
+    assert_not score.valid?
+    score.value = 10
+    assert score.valid?
+    score.value = nil
     assert score.valid?
   end
 

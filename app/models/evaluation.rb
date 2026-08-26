@@ -28,7 +28,9 @@ class Evaluation < ApplicationRecord
   def record_scores!(values)
     transaction do
       metrics.each do |metric|
-        scores.create! metric:, value: values[metric.name]&.to_f
+        # nil to f is 0, but we wan't to have nil if key is missing
+        value = values.key?(metric.name) ? values[metric.name].to_f : nil
+        scores.create! metric:, value:
       end
       update! status: :completed, token: nil
     end

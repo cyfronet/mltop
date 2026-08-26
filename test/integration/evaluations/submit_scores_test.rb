@@ -42,7 +42,17 @@ class Evaluations::SubmitScoresTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "all scores needs to be given" do
+  test "partial scores can be submitted" do
+    token = @evaluation.reset_token!
+
+    post evaluation_scores_path(@evaluation),
+      params: partial_valid_scores,
+      headers: headers(token)
+
+    assert_response :success
+  end
+
+  test "valid scores need to be given" do
     token = @evaluation.reset_token!
 
     post evaluation_scores_path(@evaluation),
@@ -80,6 +90,7 @@ class Evaluations::SubmitScoresTest < ActionDispatch::IntegrationTest
     end
 
     def valid_scores   = { state: "OK", scores: { blue: 1, chrf: 2, ter: 3.3 } }
-    def invalid_scores = { state: "OK", scores: { blue: 1, chrf: 2 } }
+    def partial_valid_scores = { state: "OK", scores: { blue: 1, chrf: 2 } }.with_indifferent_access
+    def invalid_scores = { state: "OK", scores: { blue: [ "1" ], chrf: 2 } }.with_indifferent_access
     def failed_evaluation = { state: "ERROR", message: "Evaluation failed" }
 end
