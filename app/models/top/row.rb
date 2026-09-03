@@ -52,6 +52,12 @@ class Top::Row
     @cached_scores[[ test_set, metric, test_set_entry ]] ||= calculate_score(test_set:, metric:, test_set_entry:)
   end
 
+  def has_scores?(metrics:, test_set:, test_set_entry: nil)
+    metrics.any? do |metric|
+      score(test_set:, metric:, test_set_entry:).effective_value.present?
+    end
+  end
+
   private
     def calculate_score(test_set:, metric:, test_set_entry: nil)
       scores = @scores[[ test_set.id, metric.id ]]
