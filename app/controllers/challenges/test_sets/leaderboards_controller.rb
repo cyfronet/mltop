@@ -19,6 +19,13 @@ module Challenges
           .where(task: selected_task, test_set: @test_set, visibility:)
           .order(test_set: @test_set, metric: selected_metric, order: selected_order, test_set_entry: selected_test_set_entry)
         @rows.relative! if params[:color] != "absolute"
+
+        @tables = Top::Table.for_test_set(
+          rows: @rows,
+          test_set: @test_set,
+          test_set_entries: @test_set_entries,
+          metrics: selected_task.metrics
+        )
       end
 
       private

@@ -25,6 +25,12 @@ module Challenges
             )
 
         @rows.relative! if params[:color] != "absolute"
+
+        @tables = Top::Table.for_task(
+          rows: @rows,
+          test_sets: @task.test_sets,
+          metrics: @task.metrics
+        )
       end
 
       private
