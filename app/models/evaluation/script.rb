@@ -18,7 +18,10 @@ class Evaluation::Script < HPCKit::Slurm::Script
           "SOURCE_LANGUAGE=#{source}",
           "TARGET_LANGUAGE=#{target}",
           "TOKEN=#{@token}",
-          "TASK=#{task.slug}"
+          "TASK=#{task.slug}",
+          "USER_ID=#{user_id}",
+          "TEST_SET=#{test_set}",
+          "MODEL=#{model}"
         ].compact
       }
     end
@@ -53,6 +56,18 @@ class Evaluation::Script < HPCKit::Slurm::Script
 
     def current_working_directory
       @evaluation.evaluator.directory
+    end
+
+    def user_id
+      @evaluation.hypothesis.model.owner_id
+    end
+
+    def model
+      @evaluation.hypothesis.model
+    end
+
+    def test_set
+      @evaluation.hypothesis.test_set_entry.test_set
     end
 
     def challenge
