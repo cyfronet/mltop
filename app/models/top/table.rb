@@ -30,4 +30,34 @@ class Top::Table
   end
 
   def empty? = rows.empty?
+
+  def best_score?(row, metric)
+    value = score(row, metric).effective_value
+    value.present? && value == best_value(metric)
+  end
+
+  def top_row?(row)
+    top_rows.include?(row)
+  end
+
+  private
+    def top_rows
+      @top_rows ||= begin
+        wins = rows.index_with { |row| metrics.count { |metric| best_score?(row, metric) } }
+        max = wins.values.max
+        max.to_i.positive? ? wins.select { |_, count| count == max }.keys : []
+      end
+    end
+
+    def score(row, metric)
+      row.score(test_set:, metric:, test_set_entry:)
+    end
+
+    def best_value(metric)
+      @best_values ||= metrics.index_with do |m|
+        values = rows.filter_map { |row| score(row, m).effective_value }
+        m.desc? ? values.max : values.min
+      end
+      @best_values[metric]
+    end
 end

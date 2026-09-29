@@ -6,9 +6,10 @@ module ScoresHelper
     "rgba(188,11,175, #{opacity.round(3)})"
   end
 
-  def score_cell(score)
+  def score_cell(score, best: false)
     content_tag(:td, class: "score-cell dark:text-white", style: "background-color: #{score_color(score)};") do
-      number_with_precision(score&.effective_value, precision: 3) || "N/A"
+      value = number_with_precision(score&.effective_value, precision: 3) || "N/A"
+      best ? [ value, "🏆" ].join(" ") : value
     end
   end
 end

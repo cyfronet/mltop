@@ -39,9 +39,10 @@
         <tr>
           <td class="leaderboard-item">
             <%= link_to row.name, row.model %>
+            <%= "🏆" if table.top_row?(row) %>
           </td>
           <% table.metrics.each do |metric| %>
-            <%= score_cell row.score(test_set: table.test_set, metric:, test_set_entry: table.test_set_entry) %>
+            <%= score_cell row.score(test_set: table.test_set, metric:, test_set_entry: table.test_set_entry), best: table.best_score?(row, metric) %>
           <% end %>
         </tr>
       <% end %>
