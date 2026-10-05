@@ -23,6 +23,10 @@ module TestSetsHelper
     end
   end
 
+  def table_anchor(title)
+    "table-#{title.to_s.parameterize}"
+  end
+
   private
     def test_set_entry_metric_active?(test_set_entry, metric)
       metric == selected_metric && test_set_entry == selected_test_set_entry

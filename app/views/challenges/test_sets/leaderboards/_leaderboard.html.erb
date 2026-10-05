@@ -1,51 +1,58 @@
-<% @tables.each_with_index do |table, index| %>
-  <table class="mb-4 table-auto border-separate border-spacing-0 w-full border text-zinc-900 border-zinc-400 bg-zinc-50 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200 text-sm shadow-xs">
-    <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
-      <tr>
-        <th colspan="1" rowspan="2" class="leaderboard-item">
-          Models
-        </th>
-        <th colspan="<%= table.metrics.size %>" class="leaderboard-item">
-          <%= table.title %>
-        </th>
-      </tr>
-      <tr>
-        <% table.metrics.each do |metric| %>
-          <th class="leaderboard-item">
-            <% if table.test_set_entry %>
-              <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, sid: table.test_set_entry.id, o: test_set_metric_order(table.test_set_entry, metric), color: params[:color]), class: "flex items-center justify-center" do %>
-                <span class="flex items-center cursor-pointer mr-1" title="<%= "Score range: #{metric.worst_score} - #{metric.best_score}" %>">
-                  <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
-                  <%= metric.name %>
-                </span>
-                <%= test_set_sort_chevron(table.test_set_entry, metric) %>
-              <% end %>
-            <% else %>
-              <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, o: aggregated_metric_order(metric), color: params[:color]), class: "flex items-center justify-center" do %>
-                <span class="flex items-center cursor-pointer mr-1" title="<%= "Score range: #{metric.worst_score} - #{metric.best_score}" %>">
-                  <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
-                  <%= metric.name %>
-                </span>
-                <%= aggregated_metric_sort_chevron(metric) %>
-              <% end %>
+<div class="flex gap-6">
+  <%= render "challenges/_shared/leaderboards/tables_nav",
+             items: @tables.map { |t| [t.title, table_anchor(t.title)] } %>
+  <div class="min-w-0 flex-1">
+    <% @tables.each_with_index do |table, index| %>
+      <table id="<%= table_anchor(table.title) %>" class="mb-4 table-auto border-separate border-spacing-0 w-full border text-zinc-900 border-zinc-400 bg-zinc-50 dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200 text-sm shadow-xs">
+        <thead class="sticky top-0 bg-zinc-50 dark:bg-zinc-700">
+          <tr>
+            <th colspan="1" rowspan="2" class="leaderboard-item">
+              Models
+            </th>
+            <th colspan="<%= table.metrics.size %>" class="leaderboard-item">
+              <%= table.title %>
+            </th>
+          </tr>
+          <tr>
+            <% table.metrics.each do |metric| %>
+              <th class="leaderboard-item">
+                <% if table.test_set_entry %>
+                  <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, sid: table.test_set_entry.id, o: test_set_metric_order(table.test_set_entry, metric), color: params[:color]), class: "flex items-center justify-center" do %>
+                    <span class="flex items-center cursor-pointer mr-1" title="<%= "Score range: #{metric.worst_score} - #{metric.best_score}" %>">
+                      <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
+                      <%= metric.name %>
+                    </span>
+                    <%= test_set_sort_chevron(table.test_set_entry, metric) %>
+                  <% end %>
+                <% else %>
+                  <%= link_to test_set_leaderboard_path(test_set, tid: task.id, mid: metric.id, o: aggregated_metric_order(metric), color: params[:color]), class: "flex items-center justify-center" do %>
+                    <span class="flex items-center cursor-pointer mr-1" title="<%= "Score range: #{metric.worst_score} - #{metric.best_score}" %>">
+                      <%= info_icon("text-gray-400 h-4 w-4 inline mr-1") %>
+                      <%= metric.name %>
+                    </span>
+                    <%= aggregated_metric_sort_chevron(metric) %>
+                  <% end %>
+                <% end %>
+              </th>
             <% end %>
-          </th>
-        <% end %>
-      </tr>
-    </thead>
+          </tr>
+        </thead>
 
-    <tbody>
-      <% table.rows.each do |row| %>
-        <tr>
-          <td class="leaderboard-item">
-            <%= link_to row.name, row.model %>
-            <%= "🏆" if table.top_row?(row) %>
-          </td>
-          <% table.metrics.each do |metric| %>
-            <%= score_cell row.score(test_set: table.test_set, metric:, test_set_entry: table.test_set_entry), best: table.best_score?(row, metric) %>
+        <tbody>
+          <% table.rows.each do |row| %>
+            <tr>
+              <td class="leaderboard-item">
+                <%= link_to row.name, row.model %>
+                <%= "🏆" if table.top_row?(row) %>
+              </td>
+              <% table.metrics.each do |metric| %>
+                <%= score_cell row.score(test_set: table.test_set, metric:, test_set_entry: table.test_set_entry), best: table.best_score?(row, metric) %>
+              <% end %>
+            </tr>
           <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+
