@@ -64,10 +64,13 @@ class Top::Row
 
       scores = if test_set_entry
         scores.filter { |score| score.test_set_entry_id == test_set_entry.id }
+      elsif scores.all? { |score| score.effective_value.nil? }
+        []
       else
         scores
           .group_by { |score| [ score.metric_id, score.test_set_id ] }
-          .values.map do |list|
+          .values
+          .map do |list|
             Score.new(metric:, value: list.sum { |item| item.effective_value || item.metric_worst_score } / @entries_counts[test_set.id])
           end
       end

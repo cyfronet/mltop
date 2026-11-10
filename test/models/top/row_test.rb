@@ -39,6 +39,20 @@ class Top::RowTest < ActiveSupport::TestCase
       "Wrong score: (4 (en->pl) + 2 (en->it) + 4 (pl->en) + 0 (en->de)) / 4 = 2.5"
   end
 
+  test "aggregated score is nil when all score values are nil" do
+    model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
+
+    new_evaluation(model, :flores_st_en_pl, nil)
+    new_evaluation(model, :flores_st_en_it, nil)
+
+    row = Top::Row.where(task: tasks(:st)).first
+    score = row.score(test_set: test_sets(:flores), metric: metrics(:blueurt))
+
+    assert_nil score.value,
+      "Wrong score: aggregated score should be nil when all subtask scores are nil, " \
+      "worst score must not be substituted"
+  end
+
   test "filters and calculates aggregated score for specific source and target" do
     model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
 
