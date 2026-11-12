@@ -210,4 +210,17 @@ class Top::RowTest < ActiveSupport::TestCase
     rows = Top::Row.where(task: tasks(:st), visibility: Model.visibilities.values)
     assert_includes rows.map(&:model), internal_model, "Internal model should be present"
   end
+
+  test "ordered? is true only after an explicit order" do
+    model = create(:model, name: "Task model", tasks: [ tasks(:st) ])
+    new_evaluation(model, :flores_st_en_pl, 1)
+
+    rows = Top::Row.where(task: tasks(:st))
+
+    assert_not rows.ordered?, "Rows are not ordered by default"
+    assert_not rows.order(test_set: nil, metric: nil).ordered?,
+      "Order without test set and metric should be a no-op"
+    assert rows.order(test_set: test_sets(:flores), metric: metrics(:blueurt)).ordered?
+    assert_not Top::Row.none.ordered?
+  end
 end

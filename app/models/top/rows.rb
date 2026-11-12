@@ -2,7 +2,7 @@ class Top::Rows
   delegate_missing_to :@rows
   attr_reader :source_languages, :target_languages
 
-  def initialize(rows, source_languages, target_languages, source, target)
+  def initialize(rows, source_languages, target_languages, source, target, ordered: false)
     @normalizer = Top::Normalizer.new(rows)
     @rows = rows.map { |r| RowWithNormalization.new(r, @normalizer) }
 
@@ -10,7 +10,10 @@ class Top::Rows
     @target_languages = target_languages
     @source = source
     @target = target
+    @ordered = ordered
   end
+
+  def ordered? = @ordered
 
   def order(test_set:, metric:, order: "desc", test_set_entry: nil)
     if test_set && metric
@@ -29,7 +32,7 @@ class Top::Rows
         end
       end
 
-      Top::Rows.new(rows, source_languages, target_languages, @source, @target)
+      Top::Rows.new(rows, source_languages, target_languages, @source, @target, ordered: true)
     else
       self
     end
