@@ -26,7 +26,10 @@ class Top::Table
     @test_set = test_set
     @test_set_entry = test_set_entry
     @metrics = metrics
+
+    explicitly_ordered = rows.respond_to?(:ordered?) && rows.ordered?
     @rows = rows.select { |row| row.has_scores?(metrics:, test_set:, test_set_entry:) }
+    @rows = sorted_by_wins(@rows) unless explicitly_ordered
   end
 
   def empty? = rows.empty?
@@ -41,12 +44,22 @@ class Top::Table
   end
 
   private
+    def wins
+      @wins ||= rows.index_with { |row| metrics.count { |metric| best_score?(row, metric) } }
+    end
+
     def top_rows
       @top_rows ||= begin
-        wins = rows.index_with { |row| metrics.count { |metric| best_score?(row, metric) } }
         max = wins.values.max
         max.to_i.positive? ? wins.select { |_, count| count == max }.keys : []
       end
+    end
+
+    # Most wins first. Ruby's sort_by is not stable, so the original index is
+    # the tie-breaker, which keeps rows with equal wins in their existing order.
+    def sorted_by_wins(rows)
+      wins # memoize while @rows is the filtered, unsorted list
+      rows.each_with_index.sort_by { |row, index| [ -wins[row], index ] }.map(&:first)
     end
 
     def score(row, metric)
